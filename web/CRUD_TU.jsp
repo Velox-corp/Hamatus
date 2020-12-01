@@ -56,51 +56,47 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-1">
+		<div class="col-md-2">
 		</div>
-		<div class="col-md-6">
-			<nav>
-				<ul class="pagination">
-					<li class="page-item">
-						<a class="page-link" href="#">Previous</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">1</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">2</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">3</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">4</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">5</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">Next</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-		<div class="col-md-4">
-			<div class="card">
-				<h5 class="card-header">
-					Card title
-				</h5>
-				<div class="card-body">
-					<p class="card-text">
-						Card content
+		<div class="col-md-8">
+			<img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" class="rounded-circle">
+			<form role="form">
+				<div class="form-group">
+					 
+					<label for="exampleInputEmail1">
+						Email address
+					</label>
+					<input type="email" class="form-control" id="exampleInputEmail1">
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputPassword1">
+						Password
+					</label>
+					<input type="password" class="form-control" id="exampleInputPassword1">
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputFile">
+						File input
+					</label>
+					<input type="file" class="form-control-file" id="exampleInputFile">
+					<p class="help-block">
+						Example block-level help text here.
 					</p>
 				</div>
-				<div class="card-footer">
-					Card footer
-				</div>
-			</div>
+				<div class="checkbox">
+					 
+					<label>
+						<input type="checkbox"> Check me out
+					</label>
+				</div> 
+				<button type="submit" class="btn btn-primary">
+					Submit
+				</button>
+			</form>
 		</div>
-		<div class="col-md-1">
+		<div class="col-md-2">
 		</div>
 	</div>
 	<div class="row">
@@ -108,6 +104,5 @@
 		</div>
 	</div>
 </div>
-
   </body>
 </html>
