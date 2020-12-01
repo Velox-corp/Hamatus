@@ -22,22 +22,24 @@ body {
 .nav-item{
     color: #FFFFFF;
     padding: 1.2605rem 2.94118rem 1.17647rem;
-    box-shadow: 0px 0.3px 0.2rem #585858 inset;
+    /*box-shadow: 0px 0.3px 0.2rem #585858 inset;*/
 }
 
 .nav-item:active{
     background-color: #000000;
     box-shadow: 0 0.5px #999999;
-    transform: translateY(1px);
+    transform: translateY(0.05rem);
 }
 
+/*
 .nav-item:hover {
-    color: #181818;
+    color: #FFFFFF;
     background-color: #303031;
+    transform: translateY(0.25rem);
     border: none;
     outline: none;
 }
-
+*/
 
 .icono{
     max-width: 12rem;
@@ -92,7 +94,7 @@ a {
 }
 
 .folio {
-    margin-top: 3.1rem;
+    margin-top: 4rem;
 }
 
 .pagination {
@@ -107,4 +109,15 @@ a {
 
 .margin-top-1rem{
     margin-top: 1rem;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: 1rem 1.1rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
 }
