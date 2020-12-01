@@ -21,7 +21,7 @@
   <body>
 
     <div class="container-fluid">
-	<div class="row header">
+	<div class="row header align-items-center">
 		<div class="col-md-2">
 			<img alt="Hamatus" src="img/Hamatus.png" class="mx-auto d-block icono">
 		</div>
@@ -34,7 +34,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12 nav center-block">
+		<div class="col-md-12 nav center-block justify-content-center">
 			
 				<a class="nav-item nav-link" href="index.jsp">Inicio<span class="sr-only">(current)</span></a>
                                 <a class="nav-item nav-link" href="tutorial.jsp">¿Como funciona?</a>
@@ -44,35 +44,52 @@
 		</div>
 	</div>
 	<div class="row margin-top-1rem">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-3 folio">
-			<ol>
+		<div class="col-md-4 folio">
+			<ul>
 				<li class="list-item">
-					Lorem ipsum dolor sit amet
-				</li>
-				<li class="list-item">
-					Consectetur adipiscing elit
-				</li>
-				<li class="list-item">
-					Integer molestie lorem at massa
-				</li>
-				<li class="list-item">
-					Facilisis in pretium nisl aliquet
-				</li>
-				<li class="list-item">
-					Nulla volutpat aliquam velit
-				</li>
-				<li class="list-item">
-					Faucibus porta lacus fringilla vel
+                                    <h4>Clientes</h4>
+                                        <ul>
+                                            <li class="list-item">
+                                                    Consectetur adipiscing elit
+                                            </li>
+                                            <li class="list-item">
+                                                    Integer molestie lorem at massa
+                                            </li>
+                                            <li class="list-item">
+                                                    Facilisis in pretium nisl aliquet
+                                            </li>
+                                            <li class="list-item">
+                                                    Nulla volutpat aliquam velit
+                                            </li>
+                                            <li class="list-item">
+                                                    Faucibus porta lacus fringilla vel
+                                            </li>
+                                        </ul>
 				</li>
 				<li class="list-item">
 					Aenean sit amet erat nunc
 				</li>
 				<li class="list-item">
-					Eget porttitor lorem
+                                    <h4>Empresa</h4>
+                                        <ul>
+                                            <li class="list-item">
+                                                    Consectetur adipiscing elit
+                                            </li>
+                                            <li class="list-item">
+                                                    Integer molestie lorem at massa
+                                            </li>
+                                            <li class="list-item">
+                                                    Facilisis in pretium nisl aliquet
+                                            </li>
+                                            <li class="list-item">
+                                                    Nulla volutpat aliquam velit
+                                            </li>
+                                            <li class="list-item">
+                                                    Faucibus porta lacus fringilla vel
+                                            </li>
+                                        </ul>
 				</li>
-			</ol>
+			</ul>
 		</div>
 		<div class="col-md-7">
 			<nav>
@@ -113,17 +130,24 @@
 					Card footer
 				</div>
 			</div> 
-			<button type="button" class="btn btn-success">
-				Button
+                    <br>
+                    <div class="justify-content-center">
+			<button type="button" class="btn btn-success btn-lg">
+                            Save Changes
 			</button>
+                        <button type="button" class="btn btn-success btn-lg">
+                            Cancel
+			</button>
+                    </div>
 		</div>
 		<div class="col-md-1">
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-		</div>
-	</div>
-</div>
+    </div>
+        <footer class="container-fluid bg-primary text-center footer fixed-bottom">
+            <strong class="contanier text-white-50">
+                Aplicación desarrollada por el equipo Velox corp&COPY;
+            </strong>
+        </footer>
   </body>
 </html>
