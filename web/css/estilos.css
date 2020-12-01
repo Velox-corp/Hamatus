@@ -7,7 +7,88 @@ and open the template in the editor.
     Created on : 1/12/2020, 01:35:12 AM
     Author     : taspi
 */
-
-img{
-    max-width: 10rem;
+body {
+    font-family: Graphik,sans-serif;;
+    background-color: #F3F3F3;
 }
+
+.nav {
+    font-family: Graphik,sans-serif;
+    font-size: 14px;
+    color: #181818;
+    background-color: #303031;
+}
+
+.nav-item{
+    color: #FFFFFF;
+    padding: 1.2605rem 2.94118rem 1.17647rem;
+    box-shadow: 0px 0.3px 0.2rem #585858 inset;
+}
+
+.nav-item:active{
+    background-color: #000000;
+    box-shadow: 0 0.5px #999999;
+    transform: translateY(1px);
+}
+
+.nav-item:hover {
+    color: #181818;
+    background-color: #303031;
+    border: none;
+    outline: none;
+}
+
+img {
+    max-width: 12rem;
+}
+
+.header{
+    background-color: #181818;
+}
+
+h1 {
+    font-size: 2.25rem;
+    color: #303031;
+    font-weight: 400;
+}
+
+h2 {
+    font-size: 1.75rem;
+    color: #1DB0EE;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 1.25rem;
+    color: #1DB0EE;
+    font-weight: 400;
+}
+
+h4 {
+    font-size: 1rem;
+    color: #303031;
+    font-weight: 400;
+}
+
+p {
+    font-size: 13px;
+    color:#000000;
+}
+
+a {
+    font-size: 13px;
+    color:#303031;
+    overflow: hidden;
+}
+
+.pequeno {
+    font-size: 10px;
+    color:#303031;
+}
+
+.sutil {
+    font-size: 13px;
+    color:#999999;
+}
+
+
