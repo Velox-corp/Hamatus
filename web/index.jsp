@@ -110,7 +110,7 @@
 ╚═╝      ╚═════╝  ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
 
       -->
-
+      <jsp:include page="Prueba-Reu/my-footer.html" />
 </body>
 <!-- -->
 <!--<footer class="page-footer font-small blue">
@@ -120,7 +120,6 @@
     </div>
     <!-- Copyright -->
 <!--</footer>-->
-<jsp:include page="Prueba-Reu/my-footer.html" />
 </html>
 <!--
                                                     ╓╣╢╗
