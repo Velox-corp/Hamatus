@@ -16,58 +16,133 @@
   <body>
 
     <jsp:include page="Prueba-Reu/my-head.jsp" />
-	<div class="row">
-		<div class="col-md-2">
-		</div>
-		<div class="col-md-8">
-			<h3 class="text-center">
-				h3. Lorem ipsum dolor sit amet.
-			</h3>
-			<form role="form">
-				<div class="form-group">
-					 
-					<label for="exampleInputEmail1">
-						Email address
-					</label>
-					<input type="email" class="form-control" id="exampleInputEmail1">
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Password
-					</label>
-					<input type="password" class="form-control" id="exampleInputPassword1">
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputFile">
-						File input
-					</label>
-					<input type="file" class="form-control-file" id="exampleInputFile">
-					<p class="help-block">
-						Example block-level help text here.
+    
+    <main>
+    <div class="row margin-top-1rem">
+    <div class="col-md-4 folio">
+            <ul>
+                    <li class="list-item">
+                        <h4>Clientes</h4>
+                            <ul>
+                                <li class="list-item">
+                                        Consectetur adipiscing elit
+                                </li>
+                                <li class="list-item">
+                                        Integer molestie lorem at massa
+                                </li>
+                                <li class="list-item">
+                                        Facilisis in pretium nisl aliquet
+                                </li>
+                                <li class="list-item">
+                                        Nulla volutpat aliquam velit
+                                </li>
+                                <li class="list-item">
+                                        Faucibus porta lacus fringilla vel
+                                </li>
+                            </ul>
+                    </li>
+                    <li class="list-item">
+                            Aenean sit amet erat nunc
+                    </li>
+                    <li class="list-item">
+                        <h4>Empresa</h4>
+                            <ul>
+                                <li class="list-item">
+                                        Consectetur adipiscing elit
+                                </li>
+                                <li class="list-item">
+                                        Integer molestie lorem at massa
+                                </li>
+                                <li class="list-item">
+                                        Facilisis in pretium nisl aliquet
+                                </li>
+                                <li class="list-item">
+                                        Nulla volutpat aliquam velit
+                                </li>
+                                <li class="list-item">
+                                        Faucibus porta lacus fringilla vel
+                                </li>
+                            </ul>
+                    </li>
+            </ul>
+        
+        </div>
+        <div class="col-md-7">
+			<nav>
+				<ul class="pagination">
+					<li class="page-item">
+						<a class="page-link" href="#">Previous</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">1</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">2</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">3</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">4</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">5</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">Next</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="card">
+				<h5 class="card-header">
+					Card title
+				</h5>
+				<div class="card-body">
+					<p class="card-text">
+						Card content
 					</p>
 				</div>
-				<div class="checkbox">
-					 
-					<label>
-						<input type="checkbox"> Check me out
-					</label>
-				</div> 
-				<button type="submit" class="btn btn-primary">
-					Submit
-				</button>
-			</form>
+				<div class="card-footer">
+					Card footer
+				</div>
+			</div> 
+                    <br>
+                    <div class="justify-content-center">
+			<button type="button" class="btn btn-success btn-lg">
+                            Save Changes
+			</button>
+                        <button type="button" class="btn btn-success btn-lg">
+                            Cancel
+			</button>
+                    </div>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-1">
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-		</div>
-	</div>
-</div>
+        <br>
+        <div class="container">
+                <h3>Nuevo Folio</h3>
+                <hr>
+                <!--ok no se que diablos esta pasando aqui-->
+                <form class="form-group">
+                        <label for="documento">Documento</label>
+                        <input name="documento" type="text" placeholder="Text Input" class="form-control">
+                        <input name="documento" type="file" placeholder="File Upload" class="form-control-file border">
+                        <label for="">Jerarquia</label>
+                        <input type="checkbox" id="1" class="form-control">
+                        <label for="1">Jerarquia</label>
+                        <input type="checkbox" id="2" class="form-control">
+                        <label for="2">Jerarquia</label>
+                        <input type="checkbox" id="3" class="form-control">
+                        <label for="3">Jerarquia</label>
+                </form>
+                
+                
+            </div>
+        </div>
+        
+    </main>
+        
 
-  </body>
   <jsp:include page="Prueba-Reu/my-footer.html" />
+  </body>
 </html>
