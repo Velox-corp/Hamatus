@@ -15,7 +15,7 @@
   </head>
   <body>
 
-        <jsp:include page="Prueba-Reu/my-head.jsp" />
+        <jsp:include page="Prueba-Reu/my-head2.jsp" />
 	<div class="row">
 		<div class="col-md-2">
 		</div>
@@ -60,10 +60,6 @@
 			</form>
 		</div>
 		<div class="col-md-2">
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
 		</div>
 	</div>
   </body>

@@ -16,42 +16,47 @@
 
     <jsp:include page="Prueba-Reu/my-head.jsp" />
     <div class="container-fluid">
-	<div class="row">
+	<div class="row margin-top-1rem">
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
+                    <div class="container-fluid row justify-content-center">
 			<img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" class="rounded-circle">
+                    </div>
 			<form role="form">
-				<div class="form-group">
-					 
-					<label for="exampleInputEmail1">
-						Email address
-					</label>
-					<input type="email" class="form-control" id="exampleInputEmail1">
+                                <div class="row form-group justify-content-center">
+                                    <label for="InputFile">
+						Imagen
+                                    </label>
+                                    <input type="file" class="form-control-file" id="InputFile">
+                                    <p class="help-block">
+                                            Inserte imagen del empleado
+                                    </p>
+				</div>
+                                <div class="form-group">		 
+                                    <label for="nombre">
+                                            Nombre
+                                    </label>
+                                    <input type="text" class="form-control" id="nombre">
 				</div>
 				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Password
-					</label>
-					<input type="password" class="form-control" id="exampleInputPassword1">
+                                    <label for="Email">
+                                            Email
+                                    </label>
+                                    <input type="email" class="form-control" id="Email">
 				</div>
 				<div class="form-group">
-					 
-					<label for="exampleInputFile">
-						File input
-					</label>
-					<input type="file" class="form-control-file" id="exampleInputFile">
-					<p class="help-block">
-						Example block-level help text here.
-					</p>
+                                    <label for="Puesto">
+                                            Puesto
+                                    </label>
+                                    <input type="text" class="form-control" id="Puesto">
 				</div>
-				<div class="checkbox">
-					 
-					<label>
-						<input type="checkbox"> Check me out
-					</label>
-				</div> 
+                                <div class="form-group">
+                                    <label for="equipos">
+                                            Equipos
+                                    </label>
+                                    <input type="text" class="form-control" id="equipos">
+				</div>
 				<button type="submit" class="btn btn-primary">
 					Submit
 				</button>

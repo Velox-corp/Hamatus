@@ -15,7 +15,7 @@
   </head>
   <body>
 
-    <jsp:include page="Prueba-Reu/my-head.jsp" />
+    <jsp:include page="Prueba-Reu/my-head2.jsp" />
     
     <main>
     <div class="row margin-top-1rem">
@@ -125,28 +125,28 @@
                 <!--ok no se que diablos esta pasando aqui-->
                 <form class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-1 align-items-center">
                             <h4>Documento</h4>
+                            <h4>Jerarquias</h4>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-11">
                             <input name="documento" type="text" placeholder="Text Input" class="form-control">
                             <input name="documento" type="file" placeholder="File Upload" class="form-control-file border">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="defaultChecked1" checked>
+                                <label class="custom-control-label" for="defaultChecked1">Default checked</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="defaultChecked2" checked>
+                                <label class="custom-control-label" for="defaultChecked2">Default checked</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="defaultChecked3" checked>
+                                <label class="custom-control-label" for="defaultChecked3">Default checked</label>
+                            </div>
                         </div>
                     </div>
 
-                    <h4>Jerarquias</h4>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="defaultChecked1" checked>
-                        <label class="custom-control-label" for="defaultChecked1">Default checked</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="defaultChecked2" checked>
-                        <label class="custom-control-label" for="defaultChecked2">Default checked</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="defaultChecked3" checked>
-                        <label class="custom-control-label" for="defaultChecked3">Default checked</label>
-                    </div>
                     
                     <button class="form-control btn btn-success">Done</button>
                 </form>       

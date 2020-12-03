@@ -19,6 +19,7 @@
                                 <a class="nav-item nav-link" href="tutorial.jsp">¿Como funciona?</a>
                                 <a class="nav-item nav-link" href="alcance.jsp">Alcance</a>
                                 <a class="nav-item nav-link" href="nosotros.jsp">Acerca de</a>
+                                
 			
 		</div>
 	</div>
