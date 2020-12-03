@@ -16,47 +16,68 @@
   <body>
 
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-	<div class="row">
+	<div class="row margin-top-1rem">
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
 			<h3 class="text-center">
-				h3. Lorem ipsum dolor sit amet.
+				Nuevo empleado
 			</h3>
 			<form role="form">
-				<div class="form-group">
-					 
-					<label for="exampleInputEmail1">
-						Email address
-					</label>
-					<input type="email" class="form-control" id="exampleInputEmail1">
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Password
-					</label>
-					<input type="password" class="form-control" id="exampleInputPassword1">
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputFile">
-						File input
-					</label>
-					<input type="file" class="form-control-file" id="exampleInputFile">
-					<p class="help-block">
-						Example block-level help text here.
-					</p>
-				</div>
-				<div class="checkbox">
-					 
-					<label>
-						<input type="checkbox"> Check me out
-					</label>
-				</div> 
-				<button type="submit" class="btn btn-primary">
-					Submit
-				</button>
+                            <div class="form-group">
+                                <label for="Nombre">
+                                        Nombre
+                                </label>
+                                <input type="text" class="form-control" 
+                                       id="Nombre" placeholder="Inserte nombre del empleado">
+                            </div>
+                            <div class="form-group">
+                                    <label for="Email1">
+                                            Correo
+                                    </label>
+                                    <input type="email" class="form-control" 
+                                           placeholder="Inserte correo del empleado" id="Email1">
+                            </div>
+                            <div class="form-group">
+                                    <label for="Password">
+                                            Contraseña
+                                    </label>
+                                    <input type="password" class="form-control" id="Password" placeholder="Inserte contrseña del empleado">
+                            </div>
+                            <div class="form-group">
+                                    <label for="Img">
+                                            Imagen
+                                    </label>
+                                    <input type="file" class="form-control-file" id="Img">
+                                    <!--<p class="help-block">
+                                            Example block-level help text here.
+                                    </p>-->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            Opciones
+                                        </button>
+                                        <div class="dropdown-menu">
+                                          <a class="dropdown-item" href="#">Link 1</a>
+                                          <a class="dropdown-item" href="#">Link 2</a>
+                                          <a class="dropdown-item" href="#">Link 3</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7"></div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-primary">
+                                                Save changes
+                                        </button>
+                                        <button type="submit" class="btn btn-danger">
+                                                Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
 			</form>
 		</div>
 		<div class="col-md-2">

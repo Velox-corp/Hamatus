@@ -14,7 +14,7 @@
   </head>
   <body>
 
-    <jsp:include page="Prueba-Reu/my-head.jsp" />
+    <jsp:include page="Prueba-Reu/my-head2.jsp" />
     <div class="container-fluid">
 	<div class="row margin-top-1rem">
 		<div class="col-md-2">
