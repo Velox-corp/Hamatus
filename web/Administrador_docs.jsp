@@ -124,10 +124,14 @@
                 <hr>
                 <!--ok no se que diablos esta pasando aqui-->
                 <form class="form-group">
-                    <div>
-                        <h4>Documento</h4>
-                        <input name="documento" type="text" placeholder="Text Input" class="form-control">
-                        <input name="documento" type="file" placeholder="File Upload" class="form-control-file border">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>Documento</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <input name="documento" type="text" placeholder="Text Input" class="form-control">
+                            <input name="documento" type="file" placeholder="File Upload" class="form-control-file border">
+                        </div>
                     </div>
 
                     <h4>Jerarquias</h4>
