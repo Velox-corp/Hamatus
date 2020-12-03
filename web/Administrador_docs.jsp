@@ -119,24 +119,33 @@
 		<div class="col-md-1">
 		</div>
         <br>
-        <div class="container">
+        <div class="container-fluid ">
                 <h3>Nuevo Folio</h3>
                 <hr>
                 <!--ok no se que diablos esta pasando aqui-->
                 <form class="form-group">
-                        <label for="documento">Documento</label>
+                    <div>
+                        <h4>Documento</h4>
                         <input name="documento" type="text" placeholder="Text Input" class="form-control">
                         <input name="documento" type="file" placeholder="File Upload" class="form-control-file border">
-                        <label for="">Jerarquia</label>
-                        <input type="checkbox" id="1" class="form-control">
-                        <label for="1">Jerarquia</label>
-                        <input type="checkbox" id="2" class="form-control">
-                        <label for="2">Jerarquia</label>
-                        <input type="checkbox" id="3" class="form-control">
-                        <label for="3">Jerarquia</label>
-                </form>
-                
-                
+                    </div>
+
+                    <h4>Jerarquias</h4>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultChecked1" checked>
+                        <label class="custom-control-label" for="defaultChecked1">Default checked</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultChecked2" checked>
+                        <label class="custom-control-label" for="defaultChecked2">Default checked</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultChecked3" checked>
+                        <label class="custom-control-label" for="defaultChecked3">Default checked</label>
+                    </div>
+                    
+                    <button class="form-control btn btn-success">Done</button>
+                </form>       
             </div>
         </div>
         
