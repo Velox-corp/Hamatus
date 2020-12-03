@@ -7,7 +7,11 @@
         <div class="col-md-8">
         </div>
         <div class="col-md-2">
-            <h3>Nombre de usuario</h3>
+            <h3>
+                Iniciar Sesión 
+                | 
+                Registrarse
+            </h3>
         </div>
     </div>
     <div class="row">
