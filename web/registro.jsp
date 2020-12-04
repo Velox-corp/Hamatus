@@ -60,7 +60,7 @@
             <center><h1>Registro</h1></center>    
             <div class="row d-flex justify-content-center">
               <div class="col-sm-6">
-                <form action="/action_page.php">
+                <form action="../src/java/MUsuarios/Servlets/crearEmpresa" method="POST">
                     <h2>Informacion Personal</h2>
                     <hr>
                     <div class="form-group">
@@ -83,16 +83,20 @@
                     <hr>
                     <div class="form-group">
                         <label for="nameEmpresa">Nombre de la empresa:</label>
-                        <input type="name" class="form-control" id="nameEmpresa">
+                        <input type="name" class="form-control" id="nameEmpresa" name="nameEmpresa">
                       </div>
                     <div class="form-group">
                         <label for="description">Descripción:</label>
-                        <textarea class="form-control" id="description" rows="3"></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="logo">Logo (Opcional):</label>
-                        <input type="file" class="form-control-file" id="logo">
+                        <input type="file" class="form-control-file" id="logo" name="logo">
                     </div>
+                     <div class="form-group">
+                        <label for="razonSocial">Razón Social:</label>
+                        <input type="name" class="form-control" id="razonSocial" name="razonSocial">
+                      </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-8">
