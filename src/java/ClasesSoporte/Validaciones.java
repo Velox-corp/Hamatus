@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 public class Validaciones {
     
     /**
+     * Validación de un número entero por el controlador
      * @param numeroTest El número a verificar que sea un entero positivo
      * @return El boleano que comprueba que sea un número entero.
      */
@@ -46,6 +47,7 @@ public class Validaciones {
     }
     
     /**
+     * Validación de un número enterno con limites por el controlador
      * @param numeroTest El número a verificar que sea un entero positivo
      * @param maximo El valor máximo que puede  tener el número a probar.
      * @param minimo El valor Minimo que puede tener el número a probar.
@@ -81,6 +83,7 @@ public class Validaciones {
     }
     
     /**
+     * Validación de una cadena con o sin espacios por el controlador
      * @param stringTest La cadena a comparar de que sean solo letras.
      * @param considerarEspacios Indicar si se quieren considerar los espacios en la comparación o no.
      * @return El boleano que comprueba que sea una cadena.
@@ -110,6 +113,7 @@ public class Validaciones {
     }
     
     /**
+     * Validación de una fecha por el controlador
      * @param fecha la fecha a comparar en formato de cadena
      * @return El boleano que comprueba que sea una fecha valida
      */
@@ -130,6 +134,16 @@ public class Validaciones {
         
         Pattern patronFecha = Pattern.compile("^\\d{4}\\-\\d{1,2}\\-\\d{1,2}$");
         return patronFecha.matcher(fecha).find();
+    }
+    
+    /**
+     * Validación de un email por el controlador
+     * @param email, la cadena de texto con el email a verificar
+     * @return true sí si es un correo eletronico, false pues si no
+     */
+    public static boolean esEmail(String email){
+        Pattern patronEmail = Pattern.compile("");
+        return patronEmail.matcher(email).find();
     }
     
 }

@@ -148,8 +148,8 @@ CREATE TABLE IF NOT EXISTS `Hamatus`.`Empresa` (
   `ID-Empresa` INT NOT NULL AUTO_INCREMENT,
   `Nombre` TINYTEXT NOT NULL,
   `Descripcion` MEDIUMTEXT NOT NULL,
-  `Logo` BLOB NOT NULL,
-  `Razón social` TINYTEXT NOT NULL,
+  `Logo` BLOB NULL,
+  `Razon_social` TINYTEXT NOT NULL,
   PRIMARY KEY (`ID-Empresa`))
 ENGINE = InnoDB;
 

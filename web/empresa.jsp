@@ -4,7 +4,12 @@
     Author     : maste
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true" language="java" import="MUsuarios.clases.Empresa"%>
+
+<%
+    HttpSession sesionEmpresa = request.getSession();
+    Empresa emp = (Empresa) sesionEmpresa.getAttribute("empresa");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,11 +63,14 @@
         <main class="row">
 		<div class="col-md-12">
 			<h1 class="text-center text-primary">
-				{Nombre_Empresa}
+				<%=emp.getNombre()%>
 			</h1>
 			<h2 class="text-info">
-				{Razon_social}
+				<%=emp.getRazónsocial()%>
 			</h2>
+                        <p>
+                            <%=emp.getDescripcion()%>
+                        </p>
 			<p>
 				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
 			</p>
