@@ -60,7 +60,7 @@
             <center><h1>Registro</h1></center>    
             <div class="row d-flex justify-content-center">
               <div class="col-sm-6">
-                <form action="../src/java/MUsuarios/Servlets/crearEmpresa" method="POST">
+                <form action="crearEmpresa" method="POST">
                     <h2>Informacion Personal</h2>
                     <hr>
                     <div class="form-group">

@@ -97,12 +97,12 @@ public class Empresa implements Serializable {
         boolean procesoCorrecto = true;
         try{
             con = Conexion.obtenerConexion();
-            query = ("INSERT INTO Empresa (Nombre, Descripción, Logo, Razón social) values = ?, ?, ?, ?");
+            query = ("INSERT INTO hamatus.Empresa (Nombre, Descripcion, Logo, Razon_social) values (?, ?, ?, ?)");
             ps = con.prepareStatement(query);
-            ps.setString(0, emp.getNombre());
-            ps.setString(1, emp.getDescripcion());
-            ps.setBlob(2, emp.getLogo());
-            ps.setString(3, emp.getRazónsocial());
+            ps.setString(1, emp.getNombre());
+            ps.setString(2, emp.getDescripcion());
+            ps.setBlob(3, emp.getLogo());
+            ps.setString(4, emp.getRazónsocial());
             
            if(ps.executeUpdate()==1) procesoCorrecto = true;
            else procesoCorrecto = false;

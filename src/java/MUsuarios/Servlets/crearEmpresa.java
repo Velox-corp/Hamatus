@@ -5,6 +5,7 @@
  */
 package MUsuarios.Servlets;
 
+import ClasesSoporte.Validaciones;
 import MUsuarios.clases.Empresa;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,20 +45,33 @@ public class crearEmpresa extends HttpServlet {
             String razon_social = request.getParameter("razonSocial");
             Blob logo = null;
             request.getParameter("logo");
-            
-            Empresa emp = new Empresa(nombre, descripcion, logo, razon_social);
-            
-            proceso_correcto = Empresa.crearEmpresa(emp);
-            
+            boolean[] bufferValidaciones = new boolean[3];
+            bufferValidaciones[0] = Validaciones.esString(nombre, true);
+            bufferValidaciones[1] = Validaciones.esString(descripcion, true);
+            bufferValidaciones[2] = Validaciones.esString(razon_social, true);
+            for (int i = 0; i < bufferValidaciones.length; i++) {
+                if(!bufferValidaciones[i]){
+                    proceso_correcto = false;
+                    redirect = "index.jsp"; //sujeto a cambios
+                    break;
+                }
+            }
             if(proceso_correcto){
-                redirect="empresa.jsp";
-            }else{
-                redirect = "index.jsp";
+                Empresa emp = new Empresa(nombre, descripcion, logo, razon_social);
+
+                proceso_correcto = Empresa.crearEmpresa(emp);
+
+                if(proceso_correcto){
+                    redirect="empresa.jsp";
+                }else{
+                    redirect = "index.jsp";
+                }
+                HttpSession sesionEmpresa = request.getSession(true);
+                sesionEmpresa.setAttribute("empresa", emp);
+
             }
             
             response.sendRedirect(redirect);
-            
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
