@@ -122,8 +122,8 @@ a {
     border: 1px solid #dee2e6;
 }
 
-a.login {
-    font-size: 1.25rem;
-    color: #1DB0EE;
-    font-weight: 400;
+.btn-dark {
+    color: #fff;
+    background-color: #303031;
+    border-color: #303031;
 }

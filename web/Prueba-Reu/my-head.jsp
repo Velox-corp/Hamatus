@@ -4,14 +4,13 @@
         <div class="col-md-2">
             <img alt="Hamatus" src="img/Hamatus.png" class="mx-auto d-block icono">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
         </div>
-        <div class="col-md-2">
-            <h3>
-                Iniciar Sesión 
-                | 
-                Registrarse
-            </h3>
+        <div class="col-md-3">
+                <div class="btn-group">
+                    <a href="inicio_sesion.jsp" class="btn btn-dark">Iniciar Sesión</a>
+                    <a href="registro.jsp" class="btn btn-dark">Registrarse</a>
+                </div>
         </div>
     </div>
     <div class="row">
