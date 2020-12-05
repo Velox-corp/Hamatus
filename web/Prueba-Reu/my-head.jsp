@@ -2,9 +2,12 @@
 <header class="container-fluid">
     <div class="row header align-items-center">
         <div class="col-md-2">
-            <img alt="Hamatus" src="img/Hamatus.png" class="mx-auto d-block icono">
+            <img alt="Hamatus" src="img/favicon.png" class="mx-auto d-block icono">
         </div>
-        <div class="col-md-7">
+        <div class="col-md-1">
+            <h2>Hamatus</h2>
+        </div>
+        <div class="col-md-6">
         </div>
         <div class="col-md-3">
                 <div class="btn-group">
