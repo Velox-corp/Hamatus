@@ -6,6 +6,8 @@
 package MUsuarios.clases;
 
 import ClasesSoporte.Conexion;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -24,6 +26,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.http.Part;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -36,7 +39,7 @@ import javax.validation.constraints.Size;
 @Table(name = "empresa")
 @NamedQueries({
     @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e")})
-public class Empresa implements Serializable {
+public class Empresa implements Serializable{
 
     static Connection con = null;
     static String query = "";
@@ -63,7 +66,7 @@ public class Empresa implements Serializable {
     @NotNull
     @Lob
     @Column(name = "Logo")
-    private Blob logo;
+    private InputStream logo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -77,19 +80,19 @@ public class Empresa implements Serializable {
         this.iDEmpresa = iDEmpresa;
     }
 
-    public Empresa(Integer iDEmpresa, String nombre, String descripcion, Blob logo, String razónsocial) {
+    public Empresa(Integer iDEmpresa, String nombre, String descripcion, Part logo, String razónsocial) throws IOException{
         this.iDEmpresa = iDEmpresa;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.logo = logo;
+        this.logo = logo.getInputStream();
         this.razónsocial = razónsocial;
     }
     
-    public Empresa( String nombre, String descripcion, Blob logo, String razónsocial) {
+    public Empresa( String nombre, String descripcion, Part logo, String razónsocial) throws IOException{
         
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.logo = logo;
+        this.logo = logo.getInputStream();
         this.razónsocial = razónsocial;
     }
 
@@ -123,6 +126,32 @@ public class Empresa implements Serializable {
         return procesoCorrecto;
     }
     
+    public static InputStream sacarLogo(int id_emp){
+        try{
+            con = Conexion.obtenerConexion();
+            query = "Select Logo from Empresa where ID-EMpresa = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id_emp);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getBinaryStream("Logo");
+            }else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                rs.close();
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+    
     
     public Integer getIDEmpresa() {
         return iDEmpresa;
@@ -148,11 +177,11 @@ public class Empresa implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Blob getLogo() {
+    public InputStream getLogo() {
         return logo;
     }
 
-    public void setLogo(Blob logo) {
+    public void setLogo(InputStream logo) {
         this.logo = logo;
     }
 

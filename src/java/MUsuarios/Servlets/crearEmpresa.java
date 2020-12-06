@@ -11,16 +11,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Blob;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 
 /**
  *
  * @author maste
  */
+@MultipartConfig(maxFileSize = 16177215)    // para que jalen las imagenes, y representan 16MegaBytes de máximo
 public class crearEmpresa extends HttpServlet {
 
     
@@ -44,27 +48,34 @@ public class crearEmpresa extends HttpServlet {
             String nombre = request.getParameter("nameEmpresa");
             String descripcion = request.getParameter("description");
             String razon_social = request.getParameter("razonSocial");
-            Blob logo = null;
-            request.getParameter("logo");
+            Part logo = request.getPart("logo");
+            
             boolean[] bufferValidaciones = new boolean[3];
-            bufferValidaciones[0] = Validaciones.esString(nombre, true);
-            bufferValidaciones[1] = Validaciones.esString(descripcion, true);
-            bufferValidaciones[2] = Validaciones.esString(razon_social, true);
+            bufferValidaciones[0] = Validaciones.esString(nombre, true, true);
+            bufferValidaciones[1] = Validaciones.esString(descripcion, true, true);
+            bufferValidaciones[2] = Validaciones.esString(razon_social, true, true);
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
                     redirect = "index.jsp"; //sujeto a cambios
+                    System.out.println("Mal validado");
                     break;
                 }
             }
             if(proceso_correcto){
-                Empresa emp = new Empresa(nombre, descripcion, logo, razon_social);
-
+                Empresa emp = null;
+                try{
+                emp = new Empresa(nombre, descripcion, logo, razon_social);
+                }catch(IOException e){
+                    e.getMessage();
+                    e.getCause();
+                }
                 proceso_correcto = Empresa.crearEmpresa(emp);
 
                 if(proceso_correcto){
                     redirect="empresa.jsp";
                 }else{
+                    System.out.println("No se guardo en la bd");
                     redirect = "index.jsp";
                 }
                 HttpSession sesionEmpresa = request.getSession(true);

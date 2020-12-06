@@ -60,7 +60,7 @@
             <center><h1>Registro</h1></center>    
             <div class="row d-flex justify-content-center">
               <div class="col-sm-6">
-                <form action="crearEmpresa" method="POST">
+                <form action="crearEmpresa" method="POST" enctype="multipart/form-data" >
                     <h2>Informacion Personal</h2>
                     <hr>
                     <div class="form-group">
@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-group">
                         <label for="logo">Logo (Opcional):</label>
-                        <input type="file" class="form-control-file" id="logo" name="logo">
+                        <input type="file"  accept="images/*" aclass="form-control-file" id="logo" name="logo">
                     </div>
                      <div class="form-group">
                         <label for="razonSocial">Razón Social:</label>

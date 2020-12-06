@@ -86,28 +86,35 @@ public class Validaciones {
      * Validación de una cadena con o sin espacios por el controlador
      * @param stringTest La cadena a comparar de que sean solo letras.
      * @param considerarEspacios Indicar si se quieren considerar los espacios en la comparación o no.
+     * @param considerarPuntuaciones Indicar si se requieren tomar en cuanta elementos como comas o puntos.
      * @return El boleano que comprueba que sea una cadena.
      */
-    public static boolean esString(String stringTest, boolean considerarEspacios){
+    public static boolean esString(String stringTest, boolean considerarEspacios, boolean considerarPuntuaciones){
         boolean esString = true;
-        String letras = "abcdefghijklmnñopqrstuvwxyzáéíóú";
+        String letras = "abcdefghijklmnñopqrstuvwxyzáéíóúüâäàêëèïîìôöòûùã";
         if(considerarEspacios) letras += " ";
+        
+        if(considerarPuntuaciones) letras += ",.;:";
+        stringTest = stringTest.toLowerCase();
         for (int i = 0; i < stringTest.length(); i++) {
             boolean bufferEsString = true;
-            char caracter = letras.charAt(i);
+            char caracter = stringTest.charAt(i);
             for (int j = 0; j < letras.length(); j++) {
                 char caracterComparar = letras.charAt(j);
                 if(caracter == caracterComparar){
                     bufferEsString = true;
+                    j = letras.length();
                     break;
                 }else{
                     bufferEsString = false;
                 }
-                if(!bufferEsString){
+                
+            }
+            if(!bufferEsString){
+                    System.out.println("Caracter no encontrado: '" + caracter+"'"); 
                     esString = false;
                     break;
                 }
-            }
         }
         return esString;
     }
@@ -145,5 +152,13 @@ public class Validaciones {
         Pattern patronEmail = Pattern.compile("");
         return patronEmail.matcher(email).find();
     }
-    
+    /**
+     * 
+     * @param pass La contraseña a testear
+     * @return true si es una contraseña valida
+     */
+    public static boolean esPassword(String pass){
+        Pattern patronPass = Pattern.compile("[A-Za-z0-9]{8,20}");
+        return patronPass.matcher(pass).find();
+    }
 }

@@ -4,6 +4,11 @@
     Author     : maste
 --%>
 
+<%@page import="java.io.OutputStream"%>
+<%@page import="javax.sql.rowset.serial.SerialBlob"%>
+<%@page import="sun.misc.IOUtils"%>
+<%@page import="java.sql.Blob"%>
+<%@page import="java.io.InputStream"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true" language="java" import="MUsuarios.clases.Empresa"%>
 
 <%
@@ -17,7 +22,7 @@
         <title>Hamatus - Empresa -</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
-    <body>
+    <body class='container-fluid'>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
         <!--
         <header class="row">
@@ -62,9 +67,27 @@
         -->
         <main class="row">
 		<div class="col-md-12">
-			<h1 class="text-center text-primary">
-				<%=emp.getNombre()%>
-			</h1>
+                    <div class='row'>
+                        <div class='col-md-2'>
+                            <%
+                                //Gracias Tenorio por facilitarme este código de shiee
+                            InputStream iS = emp.sacarLogo(emp.getIDEmpresa());
+                            Blob logo = null;
+                            byte[] imgData = new byte[iS.available()];
+                            logo = new SerialBlob(IOUtils.readFully(iS, -1, true));
+                            response.setContentType("image/gif");
+                            OutputStream o = response.getOutputStream();
+                            o.write(logo.getBytes(1, (int) logo.length()));
+                            o.flush();
+                            o.close();    
+                            %>
+                        </div>
+                        <div class='col-md-10'>
+                            <h1 class="text-center text-primary">
+                                    <%=emp.getNombre()%>
+                            </h1>
+                        </div>
+                    </div>
 			<h2 class="text-info">
 				<%=emp.getRazónsocial()%>
 			</h2>
