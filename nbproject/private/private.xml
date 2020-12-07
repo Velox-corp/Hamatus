@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/taspi/Documents/Hamatus/web/css/estilos.css</file>
-            <file>file:/C:/Users/taspi/Documents/Hamatus/src/java/MUsuarios/Servlets/crearEmpresa.java</file>
-            <file>file:/C:/Users/taspi/Documents/Hamatus/web/Prueba-Reu/my-head.jsp</file>
-            <file>file:/C:/Users/taspi/Documents/Hamatus/web/CRUD_TU.jsp</file>
-            <file>file:/C:/Users/taspi/Documents/Hamatus/web/Prueba-Reu/my-head2.jsp</file>
+            <file>file:/C:/Users/maste/OneDrive/Documentos/GitHub/Hamatus/web/registro.jsp</file>
+            <file>file:/C:/Users/maste/OneDrive/Documentos/GitHub/Hamatus/src/java/ClasesSoporte/Conexion.java</file>
+            <file>file:/C:/Users/maste/OneDrive/Documentos/GitHub/Hamatus/src/java/MUsuarios/Servlets/crearEmpresa.java</file>
+            <file>file:/C:/Users/maste/OneDrive/Documentos/GitHub/Hamatus/web/empresa.jsp</file>
+            <file>file:/C:/Users/maste/OneDrive/Documentos/GitHub/Hamatus/src/java/ClasesSoporte/Validaciones.java</file>
+            <file>file:/C:/Users/maste/OneDrive/Documentos/GitHub/Hamatus/src/java/MUsuarios/clases/Empresa.java</file>
         </group>
     </open-files>
 </project-private>

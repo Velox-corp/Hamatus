@@ -76,14 +76,16 @@ CREATE INDEX `fk_Jerarquia-P_Jerarquia-Nivel-P1_idx` ON `Hamatus`.`Jerarquia-P` 
 DROP TABLE IF EXISTS `Hamatus`.`Usuario-Empleado` ;
 
 CREATE TABLE IF NOT EXISTS `Hamatus`.`Usuario-Empleado` (
-  `ID-Usuario-E` INT NOT NULL,
+  `ID-Usuario-E` INT NOT NULL auto_increment,
   `Nombre` TINYTEXT NOT NULL,
+  `appat` tinytext not null,
+  `apmat` tinytext not null,
   `Fecha-Nacimiento` DATE NOT NULL,
   `Correo` TEXT(45) NOT NULL,
-  `ID-Jerarquia-P` INT NOT NULL,
-  `ID-Nivel-P` INT NOT NULL,
+  `ID-Jerarquia-P` INT NULL,
+  `ID-Nivel-P` INT NULL,
   `Password` TEXT(30) NOT NULL,
-  `Foto` BLOB NOT NULL,
+  `Foto` BLOB NULL,
   PRIMARY KEY (`ID-Usuario-E`),
   CONSTRAINT `fk_Usuario-Empleado_Jerarquia-P`
     FOREIGN KEY (`ID-Jerarquia-P`)

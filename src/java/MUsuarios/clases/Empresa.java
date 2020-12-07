@@ -121,6 +121,7 @@ public class Empresa implements Serializable{
                 
             } catch (SQLException ex) {
                 Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+                procesoCorrecto = false;
             }
         }
         return procesoCorrecto;

@@ -45,15 +45,29 @@ public class crearEmpresa extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String redirect = "";
             boolean proceso_correcto = true;
-            String nombre = request.getParameter("nameEmpresa");
+            //elementos user admin empresa
+            String nombreUser = request.getParameter("name");
+            String correo = request.getParameter("email");
+            String appat = request.getParameter("appat");
+            String apmat = request.getParameter("apmat");
+            String pass = request.getParameter("pwd");
+            String pass2 = request.getParameter("pwd2");
+            //elementos empesa
+            String nombreEmp = request.getParameter("nameEmpresa");
             String descripcion = request.getParameter("description");
             String razon_social = request.getParameter("razonSocial");
             Part logo = request.getPart("logo");
             
-            boolean[] bufferValidaciones = new boolean[3];
-            bufferValidaciones[0] = Validaciones.esString(nombre, true, true);
-            bufferValidaciones[1] = Validaciones.esString(descripcion, true, true);
-            bufferValidaciones[2] = Validaciones.esString(razon_social, true, true);
+            boolean[] bufferValidaciones = new boolean[9];
+            bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
+            bufferValidaciones[1] = Validaciones.esString(appat, true, false);
+            bufferValidaciones[2] = Validaciones.esString(apmat, true, false);
+            bufferValidaciones[3] = Validaciones.esString(pass, true, false);
+            bufferValidaciones[4] = Validaciones.esEmail(correo);
+            bufferValidaciones[5] = pass.equals(pass2);
+            bufferValidaciones[6] = Validaciones.esString(nombreEmp, true, true);
+            bufferValidaciones[7] = Validaciones.esString(descripcion, true, true);
+            bufferValidaciones[8] = Validaciones.esString(razon_social, true, true);
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
@@ -65,7 +79,7 @@ public class crearEmpresa extends HttpServlet {
             if(proceso_correcto){
                 Empresa emp = null;
                 try{
-                emp = new Empresa(nombre, descripcion, logo, razon_social);
+                emp = new Empresa(nombreEmp, descripcion, logo, razon_social);
                 }catch(IOException e){
                     e.getMessage();
                     e.getCause();

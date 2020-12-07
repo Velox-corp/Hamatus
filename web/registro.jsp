@@ -61,11 +61,19 @@
             <div class="row d-flex justify-content-center">
               <div class="col-sm-6">
                 <form action="crearEmpresa" method="POST" enctype="multipart/form-data" >
-                    <h2>Informacion Personal</h2>
+                    <h2>Informacion Personal de administrador de empresa en HAMATUS</h2>
                     <hr>
                     <div class="form-group">
                         <label for="name">Nombre:</label>
                         <input type="name" class="form-control" id="name">
+                      </div>
+                    <div class="form-group">
+                        <label for="appat">Apellido Paterno:</label>
+                        <input type="name" class="form-control" id="appat">
+                      </div>
+                    <div class="form-group">
+                        <label for="apmat">Apellido Materno:</label>
+                        <input type="name" class="form-control" id="apmat">
                       </div>
                     <div class="form-group">
                       <label for="email">Direccion de correo:</label>
