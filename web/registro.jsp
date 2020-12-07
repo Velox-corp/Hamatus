@@ -76,6 +76,10 @@
                         <input type="name" class="form-control" id="apmat" name="apmat">
                       </div>
                     <div class="form-group">
+                        <label for="f_n">Fecha de nacimiento:</label>
+                        <input type="date" class="form-control" id="f_n" name="f_n">
+                      </div>
+                    <div class="form-group">
                       <label for="email">Direccion de correo: (correo de la empresa)</label>
                       <input type="email" class="form-control" id="email" name="email">
                     </div>

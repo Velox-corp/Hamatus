@@ -4,6 +4,7 @@
     Author     : maste
 --%>
 
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="java.io.OutputStream"%>
 <%@page import="javax.sql.rowset.serial.SerialBlob"%>
 <%@page import="sun.misc.IOUtils"%>
@@ -14,6 +15,7 @@
 <%
     HttpSession sesionEmpresa = request.getSession();
     Empresa emp = (Empresa) sesionEmpresa.getAttribute("empresa");
+    UsuarioEmpleado admin = (UsuarioEmpleado) sesionEmpresa.getAttribute("usuario");
 %>
 <!DOCTYPE html>
 <html>
@@ -69,7 +71,7 @@
 		<div class="col-md-12">
                     <div class='row'>
                         <div class='col-md-2'>
-                            <%
+                            <%--
                                 //Gracias Tenorio por facilitarme este código de shiee
                             InputStream iS = emp.sacarLogo(emp.getIDEmpresa());
                             Blob logo = null;
@@ -80,7 +82,7 @@
                             o.write(logo.getBytes(1, (int) logo.length()));
                             o.flush();
                             o.close();    
-                            %>
+                            --%>
                         </div>
                         <div class='col-md-10'>
                             <h1 class="text-center text-primary">
@@ -94,9 +96,23 @@
                         <p>
                             <%=emp.getDescripcion()%>
                         </p>
-			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-			</p>
+                        <hr>
+                        <h3>Opciones de administrador de empresa</h3>
+                        <%--Aquí va tocar meter algo que valide a la cuenta de admin para tener acceso a links especiales para mejor ux--%>
+                        <div class='row'>
+                            <div class='col-md-5'>
+                                <a href='organigrama.jsp' class='btn btn-primary btn-large'>
+                                    Construir distribución empresa
+                                </a>
+                            </div>
+                            <div class='col-md-2'></div>
+                            <div class='col-md-5'>
+                                <a href='Adiministrador_new.jsp' class='btn btn-secondary btn-large'>
+                                    Crear cuentas de usuarios
+                                </a>
+                            </div>
+                        </div>
+                        
 		</div>
 	</main>
     </body>

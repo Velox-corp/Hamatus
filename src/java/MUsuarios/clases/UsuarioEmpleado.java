@@ -7,6 +7,7 @@ package MUsuarios.clases;
 
 import ClasesSoporte.Conexion;
 import java.io.Serializable;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Clase corraspondiente a la entidad UsuarioEmpleado
  * @author maste
  */
 @Entity
@@ -166,33 +167,39 @@ public class UsuarioEmpleado implements Serializable {
     }
 
     //CRUD empleados
+    
     /**
-     * Metodo par ingresar la cuenta de administrador
-     * @param admin El objeto UsuarioEmpleado que contiene la información de la cuenta de administrador
-     * @return verdadero si la operación fue llevad aa cabo con exito.
+     * Método para ingresar un empleado a la bd
+     * Si es la cuenta de administrador recordar que se van a enviar nulos, de lo contrario todos los campos a excepción de la foto deben de estar
+     * @param admin: la cuenta de administrador a insertar
+     * @param id_emp: El id de la empresa al que pertenece el usuario.
+     * @return 
      */
-    public static boolean ingresarCuentaAdministrador(UsuarioEmpleado admin){
+    public static boolean ingresarAdmin(UsuarioEmpleado admin, int id_emp){
+        CallableStatement cs = null;
         try{
             con = Conexion.obtenerConexion();
-            q = "INSERT INTO Usuario-Empleado (Nombre, appat, apmat, Fecha-nacimiento, Correo, Password)"
-                    + "values (?,?,?,?,?,?)";
-            ps = con.prepareStatement(q);
-            ps.setString(1, admin.getNombre());
-            ps.setString(2, admin.getAppat());
-            ps.setString(3, admin.getApmat());
-            ps.setString(4, admin.getFechaNacimiento());
-            ps.setString(5, admin.getCorreo());
-            ps.setString(6, admin.getPassword());
-            return ps.executeUpdate() == 1;
+            q = "{call ingresarAdmin(?,?,?,?,?,?,?,?)}";
+            cs = con.prepareCall(q);
+            cs.setString(1, admin.getNombre());
+            cs.setString(2, admin.getAppat());
+            cs.setString(3, admin.getApmat());
+            cs.setString(4, admin.getFechaNacimiento());
+            cs.setString(5, admin.getCorreo());
+            cs.setString(6, admin.getPassword());
+            cs.setBytes(7, null); //chance luego hacemos que pueda meter foto tambien
+            cs.setInt(8, id_emp);
+            return cs.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No jalo el call");
             return false;
         }finally{
             try {
-                con.close();
-                ps.close();
-                q="";
-            } catch (SQLException ex) {
+                con. close();
+                cs.close();
+                q = "";
+            } catch (SQLException | NullPointerException ex) {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -200,33 +207,38 @@ public class UsuarioEmpleado implements Serializable {
     
     /**
      * Método para ingresar un empleado a la bd
-     * @param empleado
+     * Si es la cuenta de administrador recordar que se van a enviar nulos, de lo contrario todos los campos a excepción de la foto deben de estar
+     * @param empleado: El empleado a ingresar a la bd
+     * @param id_emp: El id de la empresa al que pertenece el usuario.
      * @return 
      */
-    public static boolean ingresarEmpleado(UsuarioEmpleado empleado){
+    public static boolean ingresarEmpleado(UsuarioEmpleado empleado, int id_emp){
+        CallableStatement cs = null;
         try{
             con = Conexion.obtenerConexion();
-            q = "INSERT INTO Usuario-Empleado (Nombre, appat, apmat, Fecha-nacimiento, Correo, Password, ID-Jerarquia-P, ID-Nivel-P)"
-                    + "values (?,?,?,?,?,?,?,?)";
-            ps = con.prepareStatement(q);
-            ps.setString(1, empleado.getNombre());
-            ps.setString(2, empleado.getAppat());
-            ps.setString(3, empleado.getApmat());
-            ps.setString(4, empleado.getFechaNacimiento());
-            ps.setString(5, empleado.getCorreo());
-            ps.setString(6, empleado.getPassword());
-            ps.setInt(7, empleado.iDJerarquiaP);
-            ps.setInt(8, empleado.iDNivelP);
-            return ps.executeUpdate() == 1;
+            q = "{call ingresarUsuario(?,?,?,?,?,?,?,?,?,?)}";
+            cs = con.prepareCall(q);
+            cs.setString(1, empleado.getNombre());
+            cs.setString(2, empleado.getAppat());
+            cs.setString(3, empleado.getApmat());
+            cs.setString(4, empleado.getFechaNacimiento());
+            cs.setString(5, empleado.getCorreo());
+            cs.setString(8, empleado.getPassword());
+            cs.setInt(6, empleado.getIDJerarquiaP());
+            cs.setInt(7, empleado.getIDNivelP());
+            cs.setBytes(9, empleado.getFoto());
+            cs.setInt(10, id_emp);
+            return cs.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No jalo el call");
             return false;
         }finally{
             try {
                 con. close();
-                ps.close();
+                cs.close();
                 q = "";
-            } catch (SQLException ex) {
+            } catch (SQLException | NullPointerException ex) {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

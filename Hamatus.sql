@@ -409,7 +409,21 @@ BEGIN
 	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Jerarquia_P, `Usuario_Empleado`.ID_Nivel_P, `Usuario_Empleado`.foto)
     values (nombre, appat, apmat, f_n, correo, pass, idJp, idNp, foto);
     Insert into `Empresa_Empleado` (id_usuario_e, id_empresa)
-    values ( (Select ID_Usuario_E from Usuario_Empleado where Usuario_empleado.ID_Usuario_E = last_insert_id() limit 1), idE);
+    values ( (Select MAX(ID_Usuario_E) from Usuario_Empleado), idE);
+END$$
+
+DELIMITER ;
+
+DROP procedure IF EXISTS `ingresarAdmin`;
+
+DELIMITER $$
+CREATE PROCEDURE `ingresarAdmin` (nombre tinytext, appat tinytext, apmat tinytext,
+f_n date, correo text(45), pass text(30), foto Blob, idE int)
+BEGIN
+	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.foto)
+    values (nombre, appat, apmat, f_n, correo, pass, foto);
+    Insert into `Empresa_Empleado` (ID_Usuario_E, id_empresa)
+    values ( (Select MAX(ID_Usuario_E) from Usuario_Empleado), idE);
 END$$
 
 DELIMITER ;

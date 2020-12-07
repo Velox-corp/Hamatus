@@ -7,6 +7,7 @@ package MUsuarios.Servlets;
 
 import ClasesSoporte.Validaciones;
 import MUsuarios.clases.Empresa;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Blob;
@@ -43,13 +44,14 @@ public class crearEmpresa extends HttpServlet {
         
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String redirect = "";
+            String redirect = "error.jsp";
             boolean proceso_correcto = true;
             //elementos user admin empresa
             String nombreUser = request.getParameter("nameUser");
             String correo = request.getParameter("email");
             String appat = request.getParameter("appat");
             String apmat = request.getParameter("apmat");
+            String f_n = request.getParameter("f_n");
             String pass = request.getParameter("pwd");
             String pass2 = request.getParameter("pwd2");
             //elementos empesa
@@ -57,7 +59,7 @@ public class crearEmpresa extends HttpServlet {
             String descripcion = request.getParameter("description");
             String razon_social = request.getParameter("razonSocial");
             Part logo = request.getPart("logo");
-            
+            //validar campos de datos por parte del controlador
             boolean[] bufferValidaciones = new boolean[9];
             bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
             bufferValidaciones[1] = Validaciones.esString(appat, false, false);
@@ -71,20 +73,34 @@ public class crearEmpresa extends HttpServlet {
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
-                    redirect = "error.jsp"; //sujeto a cambios
+                    redirect = "error.jsp";
                     System.out.println("Mal validado");
                     break;
                 }
             }
             if(proceso_correcto){
                 Empresa emp = null;
+                UsuarioEmpleado admin = null;
                 try{
-                emp = new Empresa(nombreEmp, descripcion, logo, razon_social);
-                }catch(IOException e){
+                    emp = new Empresa(nombreEmp, descripcion, logo, razon_social);
+                    admin = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, 0, 0, null);
+                    if (Empresa.crearEmpresa(emp)){
+                        emp.setIDEmpresa(Empresa.getIDEmpresaRegistrada());
+                        if(emp.getIDEmpresa() != -1){
+                            proceso_correcto = UsuarioEmpleado.ingresarAdmin(admin, emp.getIDEmpresa());
+                        }else{
+                            proceso_correcto = false;
+                        }
+                        
+                    }else{
+                        proceso_correcto = false;
+                    }
+                    
+                }catch(IOException | NullPointerException e){
                     e.getMessage();
-                    e.getCause();
+                    e.printStackTrace();
                 }
-                proceso_correcto = Empresa.crearEmpresa(emp);
+                
 
                 if(proceso_correcto){
                     redirect="empresa.jsp";
@@ -94,7 +110,8 @@ public class crearEmpresa extends HttpServlet {
                 }
                 HttpSession sesionEmpresa = request.getSession(true);
                 sesionEmpresa.setAttribute("empresa", emp);
-
+                sesionEmpresa.setAttribute("usuario", admin);
+                
             }
             
             response.sendRedirect(redirect);
