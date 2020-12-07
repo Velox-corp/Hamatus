@@ -49,7 +49,7 @@ public class crearEmpresa extends HttpServlet {
             String descripcion = request.getParameter("description");
             String razon_social = request.getParameter("razonSocial");
             Part logo = request.getPart("logo");
-            
+            /*Por el momento se omitiran las validaciones
             boolean[] bufferValidaciones = new boolean[3];
             bufferValidaciones[0] = Validaciones.esString(nombre, true, true);
             bufferValidaciones[1] = Validaciones.esString(descripcion, true, true);
@@ -61,14 +61,15 @@ public class crearEmpresa extends HttpServlet {
                     System.out.println("Mal validado");
                     break;
                 }
-            }
+            }*/
+            proceso_correcto = true;
             if(proceso_correcto){
                 Empresa emp = null;
                 try{
                 emp = new Empresa(nombre, descripcion, logo, razon_social);
                 }catch(IOException e){
                     e.getMessage();
-                    e.getCause();
+                    e.printStackTrace();
                 }
                 proceso_correcto = Empresa.crearEmpresa(emp);
 
@@ -80,19 +81,10 @@ public class crearEmpresa extends HttpServlet {
                 }
                 HttpSession sesionEmpresa = request.getSession(true);
                 sesionEmpresa.setAttribute("empresa", emp);
-
+                System.out.println(sesionEmpresa.getAttribute("empresa"));
             }
             
             response.sendRedirect(redirect);
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet crearEmpresa</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet crearEmpresa at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 

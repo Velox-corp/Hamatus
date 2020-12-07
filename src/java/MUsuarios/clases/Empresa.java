@@ -111,7 +111,7 @@ public class Empresa implements Serializable{
            else procesoCorrecto = false;
         }catch(Exception e){
             procesoCorrecto = false;
-            e.getMessage();
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         finally{

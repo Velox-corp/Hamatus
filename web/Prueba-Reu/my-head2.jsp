@@ -4,7 +4,12 @@
     Author     : taspi
 --%>
 
+<%@page import="MUsuarios.clases.Empresa"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    HttpSession sesionEmpresa = request.getSession();
+    Empresa emp = (Empresa) sesionEmpresa.getAttribute("empresa");
+%>
 <header class="container-fluid">
 	<div class="row header align-items-center">
 		<div class="col-md-2">
@@ -19,7 +24,7 @@
 		</div>
 		<div class="col-md-3">
 			<h3>
-				Nombre de usuario
+                            <%= emp.getNombre() %>
 			</h3>
 		</div>
 	</div>
