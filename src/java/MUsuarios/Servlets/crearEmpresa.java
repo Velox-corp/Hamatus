@@ -83,7 +83,7 @@ public class crearEmpresa extends HttpServlet {
                 UsuarioEmpleado admin = null;
                 try{
                     emp = new Empresa(nombreEmp, descripcion, logo, razon_social);
-                    admin = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, 0, 0, null);
+                    admin = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass);
                     if (Empresa.crearEmpresa(emp)){
                         emp.setIDEmpresa(Empresa.getIDEmpresaRegistrada());
                         if(emp.getIDEmpresa() != -1){
