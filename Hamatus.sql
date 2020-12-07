@@ -18,125 +18,127 @@ USE `Hamatus` ;
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Cat-Puestos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Cat-Puestos` ;
+DROP TABLE IF EXISTS `Hamatus`.`Cat_Puestos` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Cat-Puestos` (
-  `ID-Cat-Puestos` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Cat_Puestos` (
+  `ID_Cat_Puestos` INT NOT NULL,
   `Puesto` TINYTEXT NOT NULL,
-  PRIMARY KEY (`ID-Cat-Puestos`))
+  PRIMARY KEY (`ID_Cat_Puestos`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Jerarquia-Nivel-P`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Jerarquia-Nivel-P` ;
+DROP TABLE IF EXISTS `Hamatus`.`Jerarquia_Nivel_P` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia-Nivel-P` (
-  `ID-Jerarquia-P` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia_Nivel_P` (
+  `ID_Jerarquia_P` INT NOT NULL AUTO_INCREMENT,
   `Nivel` INT NOT NULL,
-  `ID-Cat-Puestos` INT NOT NULL,
-  PRIMARY KEY (`ID-Jerarquia-P`),
+  `ID_Cat_Puestos` INT NOT NULL,
+  PRIMARY KEY (`ID_Jerarquia_P`),
   CONSTRAINT `fk_Jerarquia-Nivel-P_Cat-Puestos1`
-    FOREIGN KEY (`ID-Cat-Puestos`)
-    REFERENCES `Hamatus`.`Cat-Puestos` (`ID-Cat-Puestos`)
+    FOREIGN KEY (`ID_Cat_Puestos`)
+    REFERENCES `Hamatus`.`Cat_Puestos` (`ID_Cat_Puestos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Jerarquia-Nivel-P_Cat-Puestos1_idx` ON `Hamatus`.`Jerarquia-Nivel-P` (`ID-Cat-Puestos` ASC);
+CREATE INDEX `fk_Jerarquia-Nivel-P_Cat-Puestos1_idx` ON `Hamatus`.`Jerarquia_Nivel_P` (`ID_Cat_Puestos` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Jerarquia-P`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Jerarquia-P` ;
+DROP TABLE IF EXISTS `Hamatus`.`Jerarquia_P` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia-P` (
-  `ID-Jerarquia-P` INT NOT NULL AUTO_INCREMENT,
-  `Titulo-Nodo` TINYTEXT NOT NULL,
-  `ID-Padre-Nodo` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia_P` (
+  `ID_Jerarquia_P` INT NOT NULL AUTO_INCREMENT,
+  `Titulo_Nodo` TINYTEXT NOT NULL,
+  `ID_Padre_Nodo` INT NOT NULL,
   `Ruta` MEDIUMTEXT NOT NULL,
   `Numeracion` TEXT(400) NOT NULL,
-  `ID-Nivel-P` INT NOT NULL,
-  PRIMARY KEY (`ID-Jerarquia-P`),
+  `ID_Nivel_P` INT NOT NULL,
+  PRIMARY KEY (`ID_Jerarquia_P`),
   CONSTRAINT `fk_Jerarquia-P_Jerarquia-Nivel-P1`
-    FOREIGN KEY (`ID-Nivel-P`)
-    REFERENCES `Hamatus`.`Jerarquia-Nivel-P` (`ID-Jerarquia-P`)
+    FOREIGN KEY (`ID_Nivel_P`)
+    REFERENCES `Hamatus`.`Jerarquia_Nivel_P` (`ID_Jerarquia_P`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Jerarquia-P_Jerarquia-Nivel-P1_idx` ON `Hamatus`.`Jerarquia-P` (`ID-Nivel-P` ASC);
+CREATE INDEX `fk_Jerarquia-P_Jerarquia-Nivel-P1_idx` ON `Hamatus`.`Jerarquia_P` (`ID_Nivel_P` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Usuario-Empleado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Usuario-Empleado` ;
+DROP TABLE IF EXISTS `Hamatus`.`Usuario_Empleado` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Usuario-Empleado` (
-  `ID-Usuario-E` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Usuario_Empleado` (
+  `ID_Usuario_E` INT NOT NULL auto_increment,
   `Nombre` TINYTEXT NOT NULL,
-  `Fecha-Nacimiento` DATE NOT NULL,
+  `appat` tinytext not null,
+  `apmat` tinytext not null,
+  `Fecha_Nacimiento` DATE NOT NULL,
   `Correo` TEXT(45) NOT NULL,
-  `ID-Jerarquia-P` INT NOT NULL,
-  `ID-Nivel-P` INT NOT NULL,
-  `Password` TEXT(30) NOT NULL,
-  `Foto` BLOB NOT NULL,
-  PRIMARY KEY (`ID-Usuario-E`),
-  CONSTRAINT `fk_Usuario-Empleado_Jerarquia-P`
-    FOREIGN KEY (`ID-Jerarquia-P`)
-    REFERENCES `Hamatus`.`Jerarquia-P` (`ID-Jerarquia-P`)
+  `ID_Jerarquia_P` INT NULL,
+  `ID_Nivel_P` INT NULL,
+  `pass` TEXT(30) NOT NULL,
+  `foto` BLOB NULL,
+  PRIMARY KEY (`ID_Usuario_E`),
+  CONSTRAINT `fk_Usuario-Empleado_Jerarquia_P`
+    FOREIGN KEY (`ID_Jerarquia_P`)
+    REFERENCES `Hamatus`.`Jerarquia_P` (`ID_Jerarquia_P`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuario-Empleado_Jerarquia-Niv`
-    FOREIGN KEY (`ID-Nivel-P`)
-    REFERENCES `Hamatus`.`Jerarquia-P` (`ID-Nivel-P`)
+    FOREIGN KEY (`ID_Nivel_P`)
+    REFERENCES `Hamatus`.`Jerarquia_P` (`ID_Nivel_P`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Usuario-Empleado_Jerarquia-P1_idx` ON `Hamatus`.`Usuario-Empleado` (`ID-Jerarquia-P` ASC);
+CREATE INDEX `fk_Usuario-Empleado_Jerarquia-P1_idx` ON `Hamatus`.`Usuario_Empleado` (`ID_Jerarquia_P` ASC);
 
-CREATE INDEX `fk_Usuario-Empleado_Jerarquia-Niv_idx` ON `Hamatus`.`Usuario-Empleado` (`ID-Nivel-P` ASC);
+CREATE INDEX `fk_Usuario-Empleado_Jerarquia-Niv_idx` ON `Hamatus`.`Usuario_Empleado` (`ID_Nivel_P` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Jerarquia-Nivel-D`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Jerarquia-Nivel-D` ;
+DROP TABLE IF EXISTS `Hamatus`.`Jerarquia_Nivel_D` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia-Nivel-D` (
-  `Jerarquia-Nivel-D` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia_Nivel_D` (
+  `Jerarquia_Nivel_D` INT NOT NULL,
   `Nivel` INT NOT NULL,
-  PRIMARY KEY (`Jerarquia-Nivel-D`))
+  PRIMARY KEY (`Jerarquia_Nivel_D`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Jerarquia-D`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Jerarquia-D` ;
+DROP TABLE IF EXISTS `Hamatus`.`Jerarquia_D` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia-D` (
-  `ID-Jerarquia-D` INT NOT NULL AUTO_INCREMENT,
-  `Titulo-Nodo` VARCHAR(45) NOT NULL,
-  `ID-Padre-Nodo` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Jerarquia_D` (
+  `ID_Jerarquia_D` INT NOT NULL AUTO_INCREMENT,
+  `Titulo_Nodo` VARCHAR(45) NOT NULL,
+  `ID_Padre_Nodo` INT NOT NULL,
   `Ruta` MEDIUMTEXT NOT NULL,
   `Numeracion` TEXT(400) NOT NULL,
-  `ID-Nivel-D` INT NOT NULL,
-  PRIMARY KEY (`ID-Jerarquia-D`),
+  `ID_Nivel_D` INT NOT NULL,
+  PRIMARY KEY (`ID_Jerarquia_D`),
   CONSTRAINT `fk_Jerarquia_Jerarquia-Nivel`
-    FOREIGN KEY (`ID-Nivel-D`)
-    REFERENCES `Hamatus`.`Jerarquia-Nivel-D` (`Jerarquia-Nivel-D`)
+    FOREIGN KEY (`ID_Nivel_D`)
+    REFERENCES `Hamatus`.`Jerarquia_Nivel_D` (`Jerarquia_Nivel_D`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `ID-Jerarquia_UNIQUE` ON `Hamatus`.`Jerarquia-D` (`ID-Jerarquia-D` ASC);
+CREATE UNIQUE INDEX `ID-Jerarquia_UNIQUE` ON `Hamatus`.`Jerarquia_D` (`ID_Jerarquia_D` ASC);
 
-CREATE INDEX `fk_Jerarquia_Jerarquia-Nivel_idx` ON `Hamatus`.`Jerarquia-D` (`ID-Nivel-D` ASC);
+CREATE INDEX `fk_Jerarquia_Jerarquia-Nivel_idx` ON `Hamatus`.`Jerarquia_D` (`ID_Nivel_D` ASC);
 
 
 -- -----------------------------------------------------
@@ -145,12 +147,12 @@ CREATE INDEX `fk_Jerarquia_Jerarquia-Nivel_idx` ON `Hamatus`.`Jerarquia-D` (`ID-
 DROP TABLE IF EXISTS `Hamatus`.`Empresa` ;
 
 CREATE TABLE IF NOT EXISTS `Hamatus`.`Empresa` (
-  `ID-Empresa` INT NOT NULL AUTO_INCREMENT,
+  `ID_Empresa` INT NOT NULL AUTO_INCREMENT,
   `Nombre` TINYTEXT NOT NULL,
   `Descripcion` MEDIUMTEXT NOT NULL,
   `Logo` LONGBLOB NULL,
   `Razon_social` TINYTEXT NOT NULL,
-  PRIMARY KEY (`ID-Empresa`))
+  PRIMARY KEY (`ID_Empresa`))
 ENGINE = InnoDB;
 
 
@@ -160,26 +162,26 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Hamatus`.`Division` ;
 
 CREATE TABLE IF NOT EXISTS `Hamatus`.`Division` (
-  `ID-Division` INT NOT NULL,
-  `Nombre-A` VARCHAR(45) NULL,
-  `ID-Jerarquia-D` INT NOT NULL,
-  `ID-Empresa` INT NOT NULL,
-  PRIMARY KEY (`ID-Division`),
+  `ID_Division` INT NOT NULL,
+  `Nombre_A` VARCHAR(45) NULL,
+  `ID_Jerarquia_D` INT NOT NULL,
+  `ID_Empresa` INT NOT NULL,
+  PRIMARY KEY (`ID_Division`),
   CONSTRAINT `fk_Division_Jerarquia1`
-    FOREIGN KEY (`ID-Jerarquia-D`)
-    REFERENCES `Hamatus`.`Jerarquia-D` (`ID-Jerarquia-D`)
+    FOREIGN KEY (`ID_Jerarquia_D`)
+    REFERENCES `Hamatus`.`Jerarquia-D` (`ID_Jerarquia_D`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Division_Empresa1`
-    FOREIGN KEY (`ID-Empresa`)
-    REFERENCES `Hamatus`.`Empresa` (`ID-Empresa`)
+    FOREIGN KEY (`ID_Empresa`)
+    REFERENCES `Hamatus`.`Empresa` (`ID_Empresa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Division_Jerarquia1_idx` ON `Hamatus`.`Division` (`ID-Jerarquia-D` ASC);
+CREATE INDEX `fk_Division_Jerarquia1_idx` ON `Hamatus`.`Division` (`ID_Jerarquia_D` ASC);
 
-CREATE INDEX `fk_Division_Empresa1_idx` ON `Hamatus`.`Division` (`ID-Empresa` ASC);
+CREATE INDEX `fk_Division_Empresa1_idx` ON `Hamatus`.`Division` (`ID_Empresa` ASC);
 
 
 -- -----------------------------------------------------
@@ -188,29 +190,29 @@ CREATE INDEX `fk_Division_Empresa1_idx` ON `Hamatus`.`Division` (`ID-Empresa` AS
 DROP TABLE IF EXISTS `Hamatus`.`Equipo` ;
 
 CREATE TABLE IF NOT EXISTS `Hamatus`.`Equipo` (
-  `ID-Equipo` INT NOT NULL AUTO_INCREMENT,
+  `ID_Equipo` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(45) NOT NULL,
-  `ID-Division` INT NOT NULL,
-  PRIMARY KEY (`ID-Equipo`),
+  `ID_Division` INT NOT NULL,
+  PRIMARY KEY (`ID_Equipo`),
   CONSTRAINT `fk_Equipo_Division1`
-    FOREIGN KEY (`ID-Division`)
-    REFERENCES `Hamatus`.`Division` (`ID-Division`)
+    FOREIGN KEY (`ID_Division`)
+    REFERENCES `Hamatus`.`Division` (`ID_Division`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Equipo_Division1_idx` ON `Hamatus`.`Equipo` (`ID-Division` ASC);
+CREATE INDEX `fk_Equipo_Division1_idx` ON `Hamatus`.`Equipo` (`ID_Division` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Cat-Tipo_tablon`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Cat-Tipo_tablon` ;
+DROP TABLE IF EXISTS `Hamatus`.`Cat_Tipo_tablon` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Cat-Tipo_tablon` (
-  `ID-Cat-Tablon` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Cat_Tipo_tablon` (
+  `ID_Cat_Tablon` INT NOT NULL AUTO_INCREMENT,
   `Nivel_alcance` TINYTEXT NOT NULL,
-  PRIMARY KEY (`ID-Cat-Tablon`))
+  PRIMARY KEY (`ID_Cat_Tablon`))
 ENGINE = InnoDB;
 
 
@@ -220,20 +222,20 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Hamatus`.`Tablon` ;
 
 CREATE TABLE IF NOT EXISTS `Hamatus`.`Tablon` (
-  `ID-Tablon` INT NOT NULL AUTO_INCREMENT,
-  `Titulo-Anuncio` TINYTEXT NOT NULL,
+  `ID_Tablon` INT NOT NULL AUTO_INCREMENT,
+  `Titulo_Anuncio` TINYTEXT NOT NULL,
   `Contenido` MEDIUMTEXT NOT NULL,
   `Id_division` INT NOT NULL,
   `id_tipo_tablon` INT NOT NULL,
-  PRIMARY KEY (`ID-Tablon`),
+  PRIMARY KEY (`ID_Tablon`),
   CONSTRAINT `fk_tablon_cat_tipo_tablon`
     FOREIGN KEY (`id_tipo_tablon`)
-    REFERENCES `Hamatus`.`Cat-Tipo_tablon` (`ID-Cat-Tablon`)
+    REFERENCES `Hamatus`.`Cat_Tipo_tablon` (`ID_Cat_Tablon`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tablon_division`
     FOREIGN KEY (`Id_division`)
-    REFERENCES `Hamatus`.`Division` (`ID-Division`)
+    REFERENCES `Hamatus`.`Division` (`ID_Division`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -246,157 +248,185 @@ CREATE INDEX `fk_tablon_cat_tipo_tablon_idx` ON `Hamatus`.`Tablon` (`id_tipo_tab
 -- -----------------------------------------------------
 -- Table `Hamatus`.`E-Usuario-Equipo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`E-Usuario-Equipo` ;
+DROP TABLE IF EXISTS `Hamatus`.`E_Usuario_Equipo` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`E-Usuario-Equipo` (
-  `ID-Usuario-Equipo` INT NOT NULL AUTO_INCREMENT,
-  `ID-Usuario-Empleado` INT NOT NULL,
-  `ID-Equipo` INT NOT NULL,
-  PRIMARY KEY (`ID-Usuario-Equipo`),
+CREATE TABLE IF NOT EXISTS `Hamatus`.`E_Usuario_Equipo` (
+  `ID_Usuario_Equipo` INT NOT NULL AUTO_INCREMENT,
+  `ID_Usuario_Empleado` INT NOT NULL,
+  `ID_Equipo` INT NOT NULL,
+  PRIMARY KEY (`ID_Usuario_Equipo`),
   CONSTRAINT `fk_Usuario-Equipo_Usuario-Empleado1`
-    FOREIGN KEY (`ID-Usuario-Empleado`)
-    REFERENCES `Hamatus`.`Usuario-Empleado` (`ID-Usuario-E`)
+    FOREIGN KEY (`ID_Usuario_Empleado`)
+    REFERENCES `Hamatus`.`Usuario_Empleado` (`ID_Usuario_E`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuario-Equipo_Equipo1`
-    FOREIGN KEY (`ID-Equipo`)
-    REFERENCES `Hamatus`.`Equipo` (`ID-Equipo`)
+    FOREIGN KEY (`ID_Equipo`)
+    REFERENCES `Hamatus`.`Equipo` (`ID_Equipo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Usuario-Equipo_Usuario-Empleado1_idx` ON `Hamatus`.`E-Usuario-Equipo` (`ID-Usuario-Empleado` ASC);
+CREATE INDEX `fk_Usuario-Equipo_Usuario-Empleado1_idx` ON `Hamatus`.`E_Usuario_Equipo` (`ID_Usuario_Empleado` ASC);
 
-CREATE INDEX `fk_Usuario-Equipo_Equipo1_idx` ON `Hamatus`.`E-Usuario-Equipo` (`ID-Equipo` ASC);
+CREATE INDEX `fk_Usuario-Equipo_Equipo1_idx` ON `Hamatus`.`E_Usuario_Equipo` (`ID_Equipo` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Cat-tipo_acceso`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Cat-tipo_acceso` ;
+DROP TABLE IF EXISTS `Hamatus`.`Cat_tipo_acceso` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Cat-tipo_acceso` (
-  `idC-tipo_acceso` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Cat_tipo_acceso` (
+  `idC_tipo_acceso` INT NOT NULL,
   `nombre_tipo_acceso` TINYTEXT NOT NULL,
-  PRIMARY KEY (`idC-tipo_acceso`))
+  PRIMARY KEY (`idC_tipo_acceso`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`M-Documento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`M-Documento` ;
+DROP TABLE IF EXISTS `Hamatus`.`M_Documento` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`M-Documento` (
-  `idM-Documento` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`M_Documento` (
+  `idM_Documento` INT NOT NULL,
   `id_D_DOcumento` INT NOT NULL,
   `id_usuario_P` INT NOT NULL,
-  PRIMARY KEY (`idM-Documento`),
+  PRIMARY KEY (`idM_Documento`),
   CONSTRAINT `fk_M-Documento_Usuario`
     FOREIGN KEY (`id_usuario_P`)
-    REFERENCES `Hamatus`.`Usuario-Empleado` (`ID-Usuario-E`)
+    REFERENCES `Hamatus`.`Usuario-Empleado` (`ID_Usuario_E`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_M-Documento_Usuario_idx` ON `Hamatus`.`M-Documento` (`id_usuario_P` ASC);
+CREATE INDEX `fk_M-Documento_Usuario_idx` ON `Hamatus`.`M_Documento` (`id_usuario_P` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`D-Documento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`D-Documento` ;
+DROP TABLE IF EXISTS `Hamatus`.`D_Documento` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`D-Documento` (
-  `ID-Documento` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`D_Documento` (
+  `ID_Documento` INT NOT NULL AUTO_INCREMENT,
   `Ruta` TINYTEXT NOT NULL,
   `Nombre` TEXT(50) NOT NULL,
-  `Equipo_ID-Equipo` INT NOT NULL,
+  `Equipo_ID_Equipo` INT NOT NULL,
   `Password` VARCHAR(20) NOT NULL,
   `id_tipo_acceso` INT NOT NULL,
   `Folio` VARCHAR(12) NOT NULL,
   `fecha_subida` DATE NULL,
   `hora_subida` TIME NOT NULL,
   `id_MDocumento` INT NOT NULL,
-  PRIMARY KEY (`ID-Documento`),
+  PRIMARY KEY (`ID_Documento`),
   CONSTRAINT `fk_Documento_Equipo1`
-    FOREIGN KEY (`Equipo_ID-Equipo`)
-    REFERENCES `Hamatus`.`Equipo` (`ID-Equipo`)
+    FOREIGN KEY (`Equipo_ID_Equipo`)
+    REFERENCES `Hamatus`.`Equipo` (`ID_Equipo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Documento_cta`
     FOREIGN KEY (`id_tipo_acceso`)
-    REFERENCES `Hamatus`.`Cat-tipo_acceso` (`idC-tipo_acceso`)
+    REFERENCES `Hamatus`.`Cat_tipo_acceso` (`idC_tipo_acceso`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_D-doc_M_doc`
     FOREIGN KEY (`id_MDocumento`)
-    REFERENCES `Hamatus`.`M-Documento` (`idM-Documento`)
+    REFERENCES `Hamatus`.`M-Documento` (`idM_Documento`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Documento_Equipo1_idx` ON `Hamatus`.`D-Documento` (`Equipo_ID-Equipo` ASC);
+CREATE INDEX `fk_Documento_Equipo1_idx` ON `Hamatus`.`D_Documento` (`Equipo_ID_Equipo` ASC);
 
-CREATE INDEX `fk_Documento_cta_idx` ON `Hamatus`.`D-Documento` (`id_tipo_acceso` ASC);
+CREATE INDEX `fk_Documento_cta_idx` ON `Hamatus`.`D_Documento` (`id_tipo_acceso` ASC);
 
-CREATE INDEX `fk_D-doc_M_doc_idx` ON `Hamatus`.`D-Documento` (`id_MDocumento` ASC);
+CREATE INDEX `fk_D-doc_M_doc_idx` ON `Hamatus`.`D_Documento` (`id_MDocumento` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Registro-Entrada`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Registro-Entrada` ;
+DROP TABLE IF EXISTS `Hamatus`.`Registro_Entrada` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Registro-Entrada` (
-  `ID-Registro-Entrada` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Registro_Entrada` (
+  `ID_Registro_Entrada` INT NOT NULL AUTO_INCREMENT,
   `Fecha_entrada` DATE NOT NULL,
   `hora_entrada` TIME NOT NULL,
-  `ID-Usuario-Consulta` INT NOT NULL,
-  `id_M-Documento` INT NOT NULL,
-  PRIMARY KEY (`ID-Registro-Entrada`),
+  `ID_Usuario_Consulta` INT NOT NULL,
+  `id_M_Documento` INT NOT NULL,
+  PRIMARY KEY (`ID_Registro_Entrada`),
   CONSTRAINT `fk_Registro-Entrada_Usuario-Empleado1`
-    FOREIGN KEY (`ID-Usuario-Consulta`)
-    REFERENCES `Hamatus`.`Usuario-Empleado` (`ID-Usuario-E`)
+    FOREIGN KEY (`ID_Usuario_Consulta`)
+    REFERENCES `Hamatus`.`Usuario-Empleado` (`ID_Usuario_E`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Registro_Entrada_M-Documento`
-    FOREIGN KEY (`id_M-Documento`)
-    REFERENCES `Hamatus`.`M-Documento` (`idM-Documento`)
+  CONSTRAINT `fk_Registro_Entrada_M_Documento`
+    FOREIGN KEY (`id_M_Documento`)
+    REFERENCES `Hamatus`.`M_Documento` (`idM_Documento`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Registro-Entrada_Usuario-Empleado1_idx` ON `Hamatus`.`Registro-Entrada` (`ID-Usuario-Consulta` ASC);
+CREATE INDEX `fk_Registro-Entrada_Usuario-Empleado1_idx` ON `Hamatus`.`Registro_Entrada` (`ID_Usuario_Consulta` ASC);
 
-CREATE INDEX `fk_Registro_Entrada_M-Documento_idx` ON `Hamatus`.`Registro-Entrada` (`id_M-Documento` ASC);
+CREATE INDEX `fk_Registro_Entrada_M-Documento_idx` ON `Hamatus`.`Registro_Entrada` (`id_M_Documento` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Hamatus`.`Empresa-Empleado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Hamatus`.`Empresa-Empleado` ;
+DROP TABLE IF EXISTS `Hamatus`.`Empresa_Empleado` ;
 
-CREATE TABLE IF NOT EXISTS `Hamatus`.`Empresa-Empleado` (
-  `ID-Empresa-Empleado` INT NOT NULL AUTO_INCREMENT,
-  `ID-Usuario-E` INT NOT NULL,
-  `ID-Empresa` INT NOT NULL,
-  PRIMARY KEY (`ID-Empresa-Empleado`),
+CREATE TABLE IF NOT EXISTS `Hamatus`.`Empresa_Empleado` (
+  `ID_Empresa_Empleado` INT NOT NULL AUTO_INCREMENT,
+  `ID_Usuario_E` INT NOT NULL,
+  `ID_Empresa` INT NOT NULL,
+  PRIMARY KEY (`ID_Empresa_Empleado`),
   CONSTRAINT `fk_Empresa-Empleado_Usuario-Empleado1`
-    FOREIGN KEY (`ID-Usuario-E`)
-    REFERENCES `Hamatus`.`Usuario-Empleado` (`ID-Usuario-E`)
+    FOREIGN KEY (`ID_Usuario_E`)
+    REFERENCES `Hamatus`.`Usuario_Empleado` (`ID_Usuario_E`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Empresa-Empleado_Empresa1`
-    FOREIGN KEY (`ID-Empresa`)
-    REFERENCES `Hamatus`.`Empresa` (`ID-Empresa`)
+    FOREIGN KEY (`ID_Empresa`)
+    REFERENCES `Hamatus`.`Empresa` (`ID_Empresa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Empresa-Empleado_Usuario-Empleado1_idx` ON `Hamatus`.`Empresa-Empleado` (`ID-Usuario-E` ASC);
+CREATE INDEX `fk_Empresa-Empleado_Usuario-Empleado1_idx` ON `Hamatus`.`Empresa_Empleado` (`ID_Usuario_E` ASC);
 
-CREATE INDEX `fk_Empresa-Empleado_Empresa1_idx` ON `Hamatus`.`Empresa-Empleado` (`ID-Empresa` ASC);
+CREATE INDEX `fk_Empresa-Empleado_Empresa1_idx` ON `Hamatus`.`Empresa_Empleado` (`ID_Empresa` ASC);
+
+DROP procedure IF EXISTS `ingresarUsuario`;
+
+DELIMITER $$
+CREATE PROCEDURE `ingresarUsuario` (nombre tinytext, appat tinytext, apmat tinytext,
+f_n date, correo text(45), idJP int, idNp int, pass text(30), foto Blob, idE int)
+BEGIN
+	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Jerarquia_P, `Usuario_Empleado`.ID_Nivel_P, `Usuario_Empleado`.foto)
+    values (nombre, appat, apmat, f_n, correo, pass, idJp, idNp, foto);
+    Insert into `Empresa_Empleado` (id_usuario_e, id_empresa)
+    values ( (Select MAX(ID_Usuario_E) from Usuario_Empleado), idE);
+END$$
+
+DELIMITER ;
+
+DROP procedure IF EXISTS `ingresarAdmin`;
+
+DELIMITER $$
+CREATE PROCEDURE `ingresarAdmin` (nombre tinytext, appat tinytext, apmat tinytext,
+f_n date, correo text(45), pass text(30), foto Blob, idE int)
+BEGIN
+	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.foto)
+    values (nombre, appat, apmat, f_n, correo, pass, foto);
+    Insert into `Empresa_Empleado` (ID_Usuario_E, id_empresa)
+    values ( (Select MAX(ID_Usuario_E) from Usuario_Empleado), idE);
+END$$
+
+DELIMITER ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

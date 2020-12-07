@@ -31,9 +31,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- *
+ *  Clase correspondiente a la entidad de Empresa.
  * @author maste
- * Clase correspondiente a la entidad empresa
  */
 @Entity
 @Table(name = "empresa")
@@ -96,6 +95,11 @@ public class Empresa implements Serializable{
         this.razónsocial = razónsocial;
     }
 
+    /**
+     * Método para instanc´piar una empresa dnetor del programa, fundamental para el funcionamiento de hamatus ya que es el paso 1
+     * @param emp El objeto empresa el cual posee toda la información de la empresa;
+     * @return true si se ejecuto el ingreso a la bd de manera correcta
+     */
     public static boolean crearEmpresa(Empresa emp){
         boolean procesoCorrecto = true;
         try{
@@ -121,6 +125,7 @@ public class Empresa implements Serializable{
                 
             } catch (SQLException ex) {
                 Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+                procesoCorrecto = false;
             }
         }
         return procesoCorrecto;
@@ -216,6 +221,36 @@ public class Empresa implements Serializable{
     @Override
     public String toString() {
         return "MUsuarios.clases.Empresa[ iDEmpresa=" + iDEmpresa + " ]";
+    }
+
+    /**
+     * Metódo para obtener el id de la emresa que se acaba de registrar, ya que este, pese a que es auto_increment, lo necesitamos para el encabezado de empresa empleado
+     * @return el id de la empresa que acaba de ser registrada, lanza -1 si no se pudo ejecutar la query o no se encontro la empresa
+     */
+    public static int getIDEmpresaRegistrada() {
+        try{
+           con = Conexion.obtenerConexion();
+           query = "select MAX(ID_empresa) as id_emp from empresa";
+           ps = con.prepareStatement(query);
+           rs = ps.executeQuery();
+           if(rs.next()){
+               return rs.getInt("id_emp");
+           }else{
+               return -1;
+           }
+       } catch (SQLException ex) {
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }finally{
+           try {
+               con.close();
+               ps.close();
+               rs.close();
+               query = "";
+           } catch (SQLException ex) {
+               Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
     }
     
 }

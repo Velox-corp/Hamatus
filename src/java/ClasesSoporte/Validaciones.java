@@ -111,7 +111,7 @@ public class Validaciones {
                 
             }
             if(!bufferEsString){
-                    System.out.println("Caracter no encontrado: '" + caracter+"'"); 
+                    System.out.println("Caracter no encontrado: '" + caracter+"' de la cadena: "+stringTest); 
                     esString = false;
                     break;
                 }
@@ -149,9 +149,11 @@ public class Validaciones {
      * @return true sí si es un correo eletronico, false pues si no
      */
     public static boolean esEmail(String email){
-        Pattern patronEmail = Pattern.compile("");
+        Pattern patronEmail = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         return patronEmail.matcher(email).find();
     }
+    
     /**
      * 
      * @param pass La contraseña a testear
