@@ -46,7 +46,7 @@ public class crearEmpresa extends HttpServlet {
             String redirect = "";
             boolean proceso_correcto = true;
             //elementos user admin empresa
-            String nombreUser = request.getParameter("name");
+            String nombreUser = request.getParameter("nameUser");
             String correo = request.getParameter("email");
             String appat = request.getParameter("appat");
             String apmat = request.getParameter("apmat");
@@ -60,9 +60,9 @@ public class crearEmpresa extends HttpServlet {
             
             boolean[] bufferValidaciones = new boolean[9];
             bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
-            bufferValidaciones[1] = Validaciones.esString(appat, true, false);
-            bufferValidaciones[2] = Validaciones.esString(apmat, true, false);
-            bufferValidaciones[3] = Validaciones.esString(pass, true, false);
+            bufferValidaciones[1] = Validaciones.esString(appat, false, false);
+            bufferValidaciones[2] = Validaciones.esString(apmat, false, false);
+            bufferValidaciones[3] = Validaciones.esPassword(pass);
             bufferValidaciones[4] = Validaciones.esEmail(correo);
             bufferValidaciones[5] = pass.equals(pass2);
             bufferValidaciones[6] = Validaciones.esString(nombreEmp, true, true);
@@ -71,7 +71,7 @@ public class crearEmpresa extends HttpServlet {
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
-                    redirect = "index.jsp"; //sujeto a cambios
+                    redirect = "error.jsp"; //sujeto a cambios
                     System.out.println("Mal validado");
                     break;
                 }
@@ -90,7 +90,7 @@ public class crearEmpresa extends HttpServlet {
                     redirect="empresa.jsp";
                 }else{
                     System.out.println("No se guardo en la bd");
-                    redirect = "index.jsp";
+                    redirect = "error.jsp";
                 }
                 HttpSession sesionEmpresa = request.getSession(true);
                 sesionEmpresa.setAttribute("empresa", emp);

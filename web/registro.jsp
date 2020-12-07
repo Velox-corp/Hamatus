@@ -64,28 +64,28 @@
                     <h2>Informacion Personal de administrador de empresa en HAMATUS</h2>
                     <hr>
                     <div class="form-group">
-                        <label for="name">Nombre:</label>
-                        <input type="name" class="form-control" id="name">
+                        <label for="nameUser">Nombre:</label>
+                        <input type="name" class="form-control" id="nameUser" name="nameUser">
                       </div>
                     <div class="form-group">
                         <label for="appat">Apellido Paterno:</label>
-                        <input type="name" class="form-control" id="appat">
+                        <input type="name" class="form-control" id="appat" name="appat">
                       </div>
                     <div class="form-group">
                         <label for="apmat">Apellido Materno:</label>
-                        <input type="name" class="form-control" id="apmat">
+                        <input type="name" class="form-control" id="apmat" name="apmat">
                       </div>
                     <div class="form-group">
-                      <label for="email">Direccion de correo:</label>
-                      <input type="email" class="form-control" id="email">
+                      <label for="email">Direccion de correo: (correo de la empresa)</label>
+                      <input type="email" class="form-control" id="email" name="email">
                     </div>
                     <div class="form-group">
                       <label for="pwd">Contraseña:</label>
-                      <input type="password" class="form-control" id="pwd">
+                      <input type="password" class="form-control" id="pwd" name="pwd">
                     </div>
                     <div class="form-group">
                         <label for="pwd2">Confirma tu contraseña:</label>
-                        <input type="password" class="form-control" id="pwd2">
+                        <input type="password" class="form-control" id="pwd2" name="pwd2">
                       </div>
                     <h2>Informacion de la Empresa</h2>
                     <hr>

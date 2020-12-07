@@ -111,7 +111,7 @@ public class Validaciones {
                 
             }
             if(!bufferEsString){
-                    System.out.println("Caracter no encontrado: '" + caracter+"'"); 
+                    System.out.println("Caracter no encontrado: '" + caracter+"' de la cadena: "+stringTest); 
                     esString = false;
                     break;
                 }
