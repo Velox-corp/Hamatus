@@ -4,9 +4,25 @@
         <servlet-name>crearEmpresa</servlet-name>
         <servlet-class>MUsuarios.Servlets.crearEmpresa</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>iniciarSesion</servlet-name>
+        <servlet-class>MUsuarios.Servlets.iniciarSesion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CerrarSesion</servlet-name>
+        <servlet-class>MUsuarios.Servlets.CerrarSesion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>iniciarSesion</servlet-name>
+        <url-pattern>/iniciarSesion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CerrarSesion</servlet-name>
+        <url-pattern>/CerrarSesion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

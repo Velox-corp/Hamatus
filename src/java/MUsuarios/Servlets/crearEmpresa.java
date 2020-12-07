@@ -54,6 +54,9 @@ public class crearEmpresa extends HttpServlet {
             String f_n = request.getParameter("f_n");
             String pass = request.getParameter("pwd");
             String pass2 = request.getParameter("pwd2");
+            //Validaciones  registro del empleado
+            
+            
             //elementos empesa
             String nombreEmp = request.getParameter("nameEmpresa");
             String descripcion = request.getParameter("description");

@@ -10,7 +10,7 @@
     HttpSession sesionEmpresa = request.getSession();
     Empresa emp = (Empresa) sesionEmpresa.getAttribute("empresa");
 %>
-<header class="container-fluid">
+<header >
 	<div class="row header align-items-center">
 		<div class="col-md-2">
                     <a href="anuncios.jsp">
@@ -23,9 +23,9 @@
 		<div class="col-md-6">
 		</div>
 		<div class="col-md-3">
-			<h3>
+			<h2>
                             <%= emp.getNombre() %>
-			</h3>
+			</h2>
 		</div>
 	</div>
 	<div class="row">

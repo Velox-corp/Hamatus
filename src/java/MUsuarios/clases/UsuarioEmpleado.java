@@ -243,6 +243,11 @@ public class UsuarioEmpleado implements Serializable {
             }
         }
     }
+    
+    public static boolean ConsultarEmpleado(){
+        con = Conexion.obtenerConexion();
+        return false;
+    }
             
     public Integer getIDUsuarioE() {
         return iDUsuarioE;

@@ -46,6 +46,8 @@ body {
 }
 .header{
     background-color: #181818;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 
 h1 {
