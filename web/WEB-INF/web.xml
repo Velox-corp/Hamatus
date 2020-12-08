@@ -12,6 +12,10 @@
         <servlet-name>CerrarSesion</servlet-name>
         <servlet-class>MUsuarios.Servlets.CerrarSesion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>crearEquipoTrabajo</servlet-name>
+        <servlet-class>MDistribucion.Servlets.crearEquipoTrabajo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>CerrarSesion</servlet-name>
         <url-pattern>/CerrarSesion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>crearEquipoTrabajo</servlet-name>
+        <url-pattern>/crearEquipoTrabajo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
