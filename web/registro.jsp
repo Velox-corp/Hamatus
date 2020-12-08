@@ -92,7 +92,7 @@
                     <div class="form-group">
                       <label for="email">Direccion de correo: (correo de la empresa)</label>
                       <input type="email" class="form-control" id="email" name="email"
-                             onchange="return validarEmail(this)">>
+                             onchange="return validarEmail(this)">
                     </div>
                     <div class="form-group">
                       <label for="pwd">Contraseña:</label>
@@ -102,7 +102,7 @@
                     <div class="form-group">
                         <label for="pwd2">Confirma tu contraseña:</label>
                         <input type="password" class="form-control" id="pwd2" name="pwd2" 
-                               onchange="return validarPass(this)">>
+                               onchange="return validarPass(this)">
                       </div>
                     <h2>Informacion de la Empresa</h2>
                     <hr>
