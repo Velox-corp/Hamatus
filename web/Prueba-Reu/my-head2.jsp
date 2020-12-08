@@ -5,12 +5,25 @@
 --%>
 
 <%@page import="MUsuarios.clases.Empresa"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%
-    HttpSession sesionEmpresa = request.getSession();
-    Empresa emp = (Empresa) sesionEmpresa.getAttribute("empresa");
+    HttpSession sesionUser = request.getSession();
+    String username = "";
+    String nombre_empresa = "";
+    boolean obtencionAdecuada = false;
+    try{
+        UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+        Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+        username = usuario.getNombre();
+        nombre_empresa = emp.getNombre();
+        obtencionAdecuada = true; 
+    }catch(NullPointerException ex){
+        obtencionAdecuada = false;
+    }
+    
 %>
-<header >
+<header class="container-fluid">
 	<div class="row header align-items-center">
 		<div class="col-md-2">
                     <a href="anuncios.jsp">
@@ -20,12 +33,31 @@
                 <div class="col-md-1">
                     <h2>Hamatus</h2>
                 </div>
-		<div class="col-md-6">
+                <div class="col-md-1">
+                    <%if (obtencionAdecuada){ %>
+                        <i><h3>
+                            <%=nombre_empresa%>
+                            </h3> </i>
+                        <%}else{%>
+                        <i><h3>
+				Empresa registrada
+                            </h3></i>
+                        <% }%>
+                </div>
+		<div class="col-md-5">
 		</div>
 		<div class="col-md-3">
-			<h2>
-                            <%= emp.getNombre() %>
-			</h2>
+                    <a class="active" href="CRUD_TU.jsp"> <!-- meter la página que permita edición de usuarios -->
+                        <%if (obtencionAdecuada){ %>
+                        <h3>
+                            <%=username%>
+                        </h3> 
+                        <%}else{%>
+			<h3>
+				USUARIO
+			</h3>
+                        <% }%>
+                    </a>
 		</div>
 	</div>
 	<div class="row">

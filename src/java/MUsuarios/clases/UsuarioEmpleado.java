@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -285,7 +286,110 @@ public class UsuarioEmpleado implements Serializable {
             }
         }
     }
-            
+    
+    
+    /**
+     * Metodo para obtener todos los usuarios de la base de datos
+     * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
+     */
+    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(){
+        ArrayList<UsuarioEmpleado> empleados = null;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT * FROM Usuario_empleado";
+            ps = con.prepareStatement(q);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                UsuarioEmpleado empleado = 
+                        new UsuarioEmpleado(
+                                rs.getInt("ID_usuario_e"), 
+                                rs.getString("nombre"), 
+                                rs.getString("appat"), 
+                                rs.getString("apmat"), 
+                                rs.getString("correo"), 
+                                rs.getString("fecha_nacimiento"), 
+                                rs.getString("pass"), 
+                                rs.getInt("ID_Jerarquia_P"), 
+                                rs.getInt("ID_Nivel_P"), 
+                                rs.getBytes("foto"));
+                
+                empleados.add(empleado);
+            }
+        }catch(Exception e){
+            e.getMessage();
+            e.getStackTrace();
+            return null;
+        }finally{
+            try{
+                con.close();
+                ps.close();
+                rs.close();
+                q = "";
+            }catch(SQLException ex){
+                ex.getMessage();
+                ex.getStackTrace();
+            }
+        }
+        return empleados;
+    }
+    
+    /**
+     * Metodo para obtener los usuarios pertenecientes a una división en la base de datos a partir del id del lider de división
+     * ¡¡NOTA!! Este metodo aún no está implementado completamente, de momento funciona igual a la obtención de usuarios general
+     * @param idLider El id del lider de sección, con el cual 
+     * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
+     */
+    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idLider){
+        ArrayList<UsuarioEmpleado> empleados = null;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT * FROM Usuario_empleado"; //por aquí debe de haber un WHERE tal = ?
+            ps = con.prepareStatement(q);
+            //ps.setInt(1,idLider);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                UsuarioEmpleado empleado = 
+                        new UsuarioEmpleado(
+                                rs.getInt("ID_usuario_e"), 
+                                rs.getString("nombre"), 
+                                rs.getString("appat"), 
+                                rs.getString("apmat"), 
+                                rs.getString("correo"), 
+                                rs.getString("fecha_nacimiento"), 
+                                rs.getString("pass"), 
+                                rs.getInt("ID_Jerarquia_P"), 
+                                rs.getInt("ID_Nivel_P"), 
+                                rs.getBytes("foto"));
+                empleados.add(empleado);
+            }
+        }catch(Exception e){
+            e.getMessage();
+            e.getStackTrace();
+            return null;
+        }finally{
+            try{
+                con.close();
+                ps.close();
+                rs.close();
+                q = "";
+            }catch(SQLException ex){
+                ex.getMessage();
+                ex.getStackTrace();
+            }
+        }
+        return empleados;
+    }
+    
+    /**
+     * Metodo para obtener todos los usuarios pertenecientes a un equipo. Ingresar "0" si se desea recuperar los que no tienen equipo
+     * ¡Aun no esta implementado!
+     * @param id_equipo El ide del equipo donde se buscaran todos los empleados
+     * @return la lista de empleados pertenecientes a un equipo de trabajo.
+     */
+    public static ArrayList<UsuarioEmpleado> obtenerUsuariosEquipo(int id_equipo){
+        throw new UnsupportedOperationException("Aun no lo hemos programado."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public Integer getIDUsuarioE() {
         return iDUsuarioE;
     }

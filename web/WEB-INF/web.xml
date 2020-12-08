@@ -16,6 +16,10 @@
         <servlet-name>uploadFile</servlet-name>
         <servlet-class>MUsuarios.Servlets.uploadFile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>crearEquipoTrabajo</servlet-name>
+        <servlet-class>MDistribucion.Servlets.crearEquipoTrabajo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>uploadFile</servlet-name>
         <url-pattern>/uploadFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>crearEquipoTrabajo</servlet-name>
+        <url-pattern>/crearEquipoTrabajo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
