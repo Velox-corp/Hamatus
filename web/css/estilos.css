@@ -28,7 +28,8 @@ body {
 .nav-item:active{
     background-color: #000000;
     box-shadow: 0 0.5px #999999;
-    transform: translateY(0.05rem);
+    color: #FFFFFF;
+    /*transform: translateY(0.05rem);*/
 }
 
 /*
