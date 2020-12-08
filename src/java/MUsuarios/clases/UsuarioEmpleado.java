@@ -244,9 +244,46 @@ public class UsuarioEmpleado implements Serializable {
         }
     }
     
-    public static boolean ConsultarEmpleado(){
-        con = Conexion.obtenerConexion();
-        return false;
+    /**
+     * Ok so basicamente esta funcion lo que hace es buscar el usuario solicitado
+     * es un void por que basicamente tomara atributos del usuario buscado
+     * Nota: Si vas a utilizar esta funcion hazlo encima de una clase vacia para 
+     * que no reemplace otros datos
+     * @param correo pues el correo
+     * @param pass pues la pass
+     */
+    public void ConsultarEmpleado(String correo, String pass){
+        try{
+            con = Conexion.obtenerConexion();
+            String sql = "SELECT * FROM usuario_empleado WHERE correo = ? AND pass = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, correo);
+            pstmt.setString(2, pass);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                System.out.println("Usuario encontrado nombre: " + rs.getString("nombre"));
+                this.setNombre(rs.getString("nombre"));
+                this.setAppat(rs.getString("appat"));
+                this.setApmat(rs.getString("apmat"));
+                this.setCorreo(rs.getString("correo"));
+                this.setFechaNacimiento(rs.getString("Fecha_Nacimiento"));
+                this.setPassword(rs.getString("pass"));
+                this.setIDJerarquiaP(rs.getInt("ID_Jerarquia_P"));
+                this.setIDNivelP(rs.getInt("ID_Nivel_P"));
+                this.setIDUsuarioE(rs.getInt("ID_Usuario_E"));
+                break;
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try {
+                con. close();
+                q = "";
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
             
     public Integer getIDUsuarioE() {

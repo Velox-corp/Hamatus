@@ -5,12 +5,15 @@
  */
 package MUsuarios.Servlets;
 
+import MUsuarios.clases.Empresa;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,14 +36,27 @@ public class iniciarSesion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String redirect = "error.jsp";
         try (PrintWriter out = response.getWriter()) {
-            String redirect = "error.jsp";
             boolean proceso_correcto = true;
             String correo = request.getParameter("email");
             String pass = request.getParameter("pwd");
+            UsuarioEmpleado usu = new UsuarioEmpleado();
             
             //Ejecutar busqueda
-            
+            usu.ConsultarEmpleado(correo, pass);
+            //Iniciamos sesion
+            HttpSession sesionEmpresa = request.getSession(true);
+            sesionEmpresa.setAttribute("usuario", usu);
+            Empresa emp = new Empresa(usu.getIDUsuarioE());
+            sesionEmpresa.setAttribute("empresa", emp);
+            redirect = "empresa.jsp";
+            response.sendRedirect(redirect);
+        }catch(Exception e){
+            redirect = "error.jsp";
+            response.sendRedirect(redirect);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
