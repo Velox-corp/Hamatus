@@ -54,6 +54,9 @@ public class crearEmpresa extends HttpServlet {
             String f_n = request.getParameter("f_n");
             String pass = request.getParameter("pwd");
             String pass2 = request.getParameter("pwd2");
+            //Validaciones  registro del empleado
+            
+            
             //elementos empesa
             String nombreEmp = request.getParameter("nameEmpresa");
             String descripcion = request.getParameter("description");
@@ -78,6 +81,7 @@ public class crearEmpresa extends HttpServlet {
                     break;
                 }
             }
+            proceso_correcto = true;
             if(proceso_correcto){
                 Empresa emp = null;
                 UsuarioEmpleado admin = null;
@@ -110,20 +114,12 @@ public class crearEmpresa extends HttpServlet {
                 }
                 HttpSession sesionEmpresa = request.getSession(true);
                 sesionEmpresa.setAttribute("empresa", emp);
+                System.out.println(sesionEmpresa.getAttribute("empresa"));
                 sesionEmpresa.setAttribute("usuario", admin);
                 
             }
             
             response.sendRedirect(redirect);
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet crearEmpresa</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet crearEmpresa at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 
