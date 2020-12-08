@@ -1,4 +1,4 @@
-<%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,41 +65,60 @@
                     <hr>
                     <div class="form-group">
                         <label for="nameUser">Nombre:</label>
-                        <input type="name" class="form-control" id="nameUser" name="nameUser">
+                        <input type="name" class="form-control" id="nameUser" name="nameUser" 
+                               onchange="return validarString(this, true, false)"
+                               ondrag="return validarString(this, true, false)"
+                               ondrop="return validarString(this, true, false)">
                       </div>
                     <div class="form-group">
                         <label for="appat">Apellido Paterno:</label>
-                        <input type="name" class="form-control" id="appat" name="appat">
+                        <input type="name" class="form-control" id="appat" name="appat"
+                               onchange="return validarString(this, false, false)"
+                               ondrag="return validarString(this, false, false)"
+                               ondrop="return validarString(this, false, false)">
                       </div>
                     <div class="form-group">
                         <label for="apmat">Apellido Materno:</label>
-                        <input type="name" class="form-control" id="apmat" name="apmat">
+                        <input type="name" class="form-control" id="apmat" name="apmat"
+                               onchange="return validarString(this, false, false)"
+                               ondrag="return validarString(this, false, false)"
+                               ondrop="return validarString(this, false, false)">
                       </div>
                     <div class="form-group">
                         <label for="f_n">Fecha de nacimiento:</label>
-                        <input type="date" class="form-control" id="f_n" name="f_n">
+                        <input type="date" class="form-control" id="f_n" name="f_n"
+                               onchange="return validarDate(this)">
                       </div>
                     <div class="form-group">
                       <label for="email">Direccion de correo: (correo de la empresa)</label>
-                      <input type="email" class="form-control" id="email" name="email">
+                      <input type="email" class="form-control" id="email" name="email"
+                             onchange="return validarEmail(this)">>
                     </div>
                     <div class="form-group">
                       <label for="pwd">Contraseña:</label>
-                      <input type="password" class="form-control" id="pwd" name="pwd">
+                      <input type="password" class="form-control" id="pwd" name="pwd" 
+                             onchange="return validarPass(this)">
                     </div>
                     <div class="form-group">
                         <label for="pwd2">Confirma tu contraseña:</label>
-                        <input type="password" class="form-control" id="pwd2" name="pwd2">
+                        <input type="password" class="form-control" id="pwd2" name="pwd2" 
+                               onchange="return validarPass(this)">>
                       </div>
                     <h2>Informacion de la Empresa</h2>
                     <hr>
                     <div class="form-group">
                         <label for="nameEmpresa">Nombre de la empresa:</label>
-                        <input type="name" class="form-control" id="nameEmpresa" name="nameEmpresa">
+                        <input type="name" class="form-control" id="nameEmpresa" name="nameEmpresa"
+                               onchange="return validarString(this, true, false)"
+                               ondrag="return validarString(this, true, false)"
+                               ondrop="return validarString(this, true, false)">
                       </div>
                     <div class="form-group">
                         <label for="description">Descripción:</label>
-                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3" 
+                                  onchange="return validarString(this, true, true)"
+                               ondrag="return validarString(this, true, true)"
+                               ondrop="return validarString(this, true, true)"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="logo">Logo (Opcional):</label>
@@ -107,7 +126,10 @@
                     </div>
                      <div class="form-group">
                         <label for="razonSocial">Razón Social:</label>
-                        <input type="name" class="form-control" id="razonSocial" name="razonSocial">
+                        <input type="name" class="form-control" id="razonSocial" name="razonSocial"
+                               onchange="return validarString(this, true, true)"
+                               ondrag="return validarString(this, true, true)"
+                               ondrop="return validarString(this, true, true)">
                       </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>

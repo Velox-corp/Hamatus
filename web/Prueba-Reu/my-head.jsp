@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <header class="container-fluid">
     <div class="row header align-items-center">
         <div class="col-md-2">

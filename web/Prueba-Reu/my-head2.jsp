@@ -4,7 +4,21 @@
     Author     : taspi
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
+<%
+    HttpSession sesionUser = request.getSession();
+    String username = "";
+    boolean obtencionAdecuada = false;
+    try{
+        UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+        username = usuario.getNombre();
+        obtencionAdecuada = true; 
+    }catch(NullPointerException ex){
+        obtencionAdecuada = false;
+    }
+    
+%>
 <header class="container-fluid">
 	<div class="row header align-items-center">
 		<div class="col-md-2">
@@ -18,9 +32,17 @@
 		<div class="col-md-6">
 		</div>
 		<div class="col-md-3">
+                    <a class="active" href="CRUD_TU.jsp"> <!-- meter la página que permita edición de usuarios -->
+                        <%if (obtencionAdecuada){ %>
+                        <h3>
+                            <%=username%>
+                        </h3> 
+                        <%}else{%>
 			<h3>
-				Nombre de usuario
+				USUARIO
 			</h3>
+                        <% }%>
+                    </a>
 		</div>
 	</div>
 	<div class="row">
