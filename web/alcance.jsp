@@ -53,7 +53,8 @@
                                                                
 
       -->
-      <main class="cubridor d-flex align-items-center justify-content-center container">
+      <br>
+      <main class="cubridor d-flex align-items-center justify-content-center container jumbotron">
         <div>
             <center><H1>¿Para quien?</H1></center>
             <div class="row">
