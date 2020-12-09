@@ -62,13 +62,13 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12 nav center-block justify-content-center">
-                    <a class="nav-item nav-link" href="anuncios.jsp">Anuncios</a>
-                    <a class="nav-item nav-link" href="empresa.jsp">Mi empresa</a>
-                    <a class="nav-item nav-link" href="vistaOrganigrama.jsp">Organigrama</a>
-                    <a class="nav-item nav-link" href="docs.jsp">Documentos</a>
-                    <a class="nav-item nav-link" href="equipos.jsp">Equipos</a>
-                    <a class="nav-item nav-link" href="empleados.jsp">Empleados</a>
-                    <a class="nav-item nav-link" href="Administrador_new.jsp">Crud Completo</a>
+                    <a class="nav-item nav-link btn1" href="anuncios.jsp">Anuncios</a>
+                    <a class="nav-item nav-link btn1" href="empresa.jsp">Mi empresa</a>
+                    <a class="nav-item nav-link btn1" href="vistaOrganigrama.jsp">Organigrama</a>
+                    <a class="nav-item nav-link btn1" href="docs.jsp">Documentos</a>
+                    <a class="nav-item nav-link btn1" href="equipos.jsp">Equipos</a>
+                    <a class="nav-item nav-link btn1" href="empleados.jsp">Empleados</a>
+                    <a class="nav-item nav-link btn1" href="Administrador_new.jsp">Crud Completo</a>
 		</div>
 	</div>
 </header>

@@ -15,7 +15,7 @@
   </head>
   <body>
       <!-- a reutilizar codigo se a dicho -->
-    <jsp:include page="Prueba-Reu/my-head.jsp" />
+    <jsp:include page="Prueba-Reu/my-head2.jsp" />
     <div class="row margin-top-1rem">
             <div class="col-md-4 folio">
                     <ul>

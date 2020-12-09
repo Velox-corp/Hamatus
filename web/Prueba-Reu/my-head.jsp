@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
-<header class="container-fluid">
+<header class="container-fluid cabecera">
     <div class="row header align-items-center">
         <div class="col-md-2">
             <img alt="Hamatus" src="img/favicon.png" class="mx-auto d-block icono">

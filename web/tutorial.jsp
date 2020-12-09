@@ -53,33 +53,34 @@
                                                                
 
       -->
-    <div>
-        <center>
-            <H1>Tutorial</H1>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/taWzoLpdxaI?autoplay=1&mute=1&loop=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </center>
-    </div>
-<br><br><br>
-<br><br><br>
-    <div>
-        <center>
-            <H1>Beneficios</H1>
-            <p align="justify">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab?
-            </p>
-            <button type="button" class="btn btn-primary btn-lg">Empieza ahora</button>
-        </center>
-    </div>
-
+      <main class="container">
+        <div class="cubridor d-flex justify-content-center align-items-center">
+            <div>
+                <center>
+                    <H1>Tutorial</H1>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/taWzoLpdxaI?autoplay=1&mute=1&loop=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </center>
+            </div>
+        </div>
+        <div class="jumbotron">
+            <center>
+                <H1>Beneficios</H1>
+                <p align="justify">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
+                    reprehenderit aperiam nulla officia facere! Error accusantium
+                    magnam repellat. Incidunt eum perspiciatis ab? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
+                    reprehenderit aperiam nulla officia facere! Error accusantium
+                    magnam repellat. Incidunt eum perspiciatis ab? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
+                    reprehenderit aperiam nulla officia facere! Error accusantium
+                    magnam repellat. Incidunt eum perspiciatis ab?
+                </p>
+                <button type="button" class="btn btn-primary btn-lg">Empieza ahora</button>
+            </center>
+        </div>
+    </main>
 
     <!-- 
         

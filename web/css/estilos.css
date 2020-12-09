@@ -19,7 +19,7 @@ body {
     background-color: #303031;
 }
 
-/*La animacion de los botones*/
+/*La animacion de los botones :D*/
 .nav-item{
     color: #FFFFFF;
     padding: 1.2605rem 2.94118rem 1.17647rem;
@@ -71,8 +71,7 @@ body {
 }
 .header{
     background-color: #181818;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    height: 12vh;
 }
 
 .footer-bg{
@@ -166,3 +165,10 @@ a {
     border-color: #303031;
 }
 
+.cubridor{
+    min-height: 80vh;
+}
+
+img.per{
+    max-width: 15rem;
+}
