@@ -92,6 +92,8 @@
             magnam repellat. Incidunt eum perspiciatis ab?
         </p>
     </div>
+<br><br><br>
+<br>
 
 
     <!-- 
@@ -106,8 +108,8 @@
 
       -->
 
-</body>
 <jsp:include page="Prueba-Reu/my-footer.html" />
+</body>
 </html>
 <!--
                                                     ╓╣╢╗

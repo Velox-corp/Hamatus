@@ -19,36 +19,71 @@ body {
     background-color: #303031;
 }
 
+/*La animacion de los botones*/
 .nav-item{
     color: #FFFFFF;
     padding: 1.2605rem 2.94118rem 1.17647rem;
-    /*box-shadow: 0px 0.3px 0.2rem #585858 inset;*/
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.6s all ease;
+    display: block;
+    font-size: 0.75rem;
 }
 
+.nav-item::before{
+  background: #ff7675;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: -1;
+  transition: all 0.6s ease;
+}
+
+.btn1::before{
+  width: 0%;
+  height: 100%;
+}
+
+.btn1:hover::before{
+  width: 100%;
+}
+
+/*
 .nav-item:active{
     background-color: #000000;
     box-shadow: 0 0.5px #999999;
     color: #FFFFFF;
-    /*transform: translateY(0.05rem);*/
+    transform: translateY(0.05rem);
+}*/
+
+.nav-item.nav-link:hover {
+    background-color: #000000;
+    box-shadow: 0 0.5px #999999;
+    color: #FFFFFF;
 }
 
-/*
-.nav-item:hover {
-    color: #FFFFFF;
-    background-color: #303031;
-    transform: translateY(0.25rem);
-    border: none;
-    outline: none;
-}
-*/
+
 
 .icono{
-    max-width: 5rem;
+    max-width: 8rem;
 }
 .header{
     background-color: #181818;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+}
+
+.footer-bg{
+    background-color: #181818;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    color: #FFFFFF;
+}
+
+.txt-white{
+    color: #FFFFFF;
 }
 
 h1 {
@@ -130,3 +165,4 @@ a {
     background-color: #303031;
     border-color: #303031;
 }
+
