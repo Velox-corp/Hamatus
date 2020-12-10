@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MUsuarios.Servlets;
+package MDocumentos.Servlets;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -44,7 +45,8 @@ public class uploadFile extends HttpServlet {
             throws ServletException, IOException {
         
         try (PrintWriter out = response.getWriter()) {
-            String description = request.getParameter("description"); //Se refiere al titulo
+            String pass = request.getParameter("pass");
+            //String fecha = 
             String dirc = request.getParameter("direccion"); //Se refiere al titulo
             Part filePart = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); //Basicamente nos trae el nombre del archivo

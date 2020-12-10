@@ -14,7 +14,7 @@
     </servlet>
     <servlet>
         <servlet-name>uploadFile</servlet-name>
-        <servlet-class>MUsuarios.Servlets.uploadFile</servlet-class>
+        <servlet-class>MDocumentos.Servlets.uploadFile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>crearEquipoTrabajo</servlet-name>
