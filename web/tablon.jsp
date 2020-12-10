@@ -1,3 +1,5 @@
+<%@page import="ClasesSoporte.Conexion"%>
+<%@page import="java.sql.*"%>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -47,16 +49,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="car" items="${carrito}">
+                                <c:forEach var="car" items="${anuncio}">
                                     <tr>
-                                        <td>${car.getFolio()}123</td>
+                                        <td>${car.getID()}123</td>
                                         <td>${car.getTitulo()}</td>
                                         <td>${car.getDescripcion()}</td>
                                         <td>${car.getFecha()}</td>
                                         <td>
-                                            <input type="hidden" id="idp" value="${car.getFolio()}">
-                                            <a href="Controlador?accion=Delete&idp=${car.getFolio()} " id="btnDelete">Eliminar</a>
-                                            <a href="Controlador?accion=Update&idp=${car.getFolio()} " id="btnDelete">Editar</a>
+                                            <input type="hidden" id="idp" value="${car.getID()}">
+                                            <a href="Controlador?accion=Delete&idp=${car.getID()} " id="btnDelete">Eliminar</a>
+                                            <a href="Controlador?accion=Update&idp=${car.getID()} " id="btnDelete">Editar</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
