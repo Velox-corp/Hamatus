@@ -16,9 +16,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +32,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.sql.DataSource;
+import javax.transaction.UserTransaction;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -86,10 +92,10 @@ public class UsuarioEmpleado implements Serializable {
     @Lob
     @Column(name = "Foto")
     private byte[] foto;
-    @Column(name = "ID-Nivel-P")
-    private Integer iDNivelP;
-    @Column(name = "ID-Jerarquia-P")
-    private Integer iDJerarquiaP;
+    @Column(name = "ID_Division")
+    private Integer iD_Division;
+    @Column(name = "ID_cat_privilegios")
+    private Integer iD_cat_priv;
 
     public UsuarioEmpleado() {
     }
@@ -126,11 +132,11 @@ public class UsuarioEmpleado implements Serializable {
      * @param fechaNacimiento: fecha de nacimiento del usuario solicitado
      * @param correo: correo del usuario solicitado
      * @param password: Contraseña del usuario solicitado
-     * @param idjerarquiap: id_jer del usuario solicitado
-     * @param idjerarquiaNivelD: id_nivel  del usuario solicitado
+     * @param id_division: El ide de la división a la pertenecerá
+     * @param id_cat_priv: id_nivel de la jerarquía del empleado
      * @param foto: foto  del usuario solicitado
      */
-    public UsuarioEmpleado(int id_usuario_e, String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int idjerarquiap, int idjerarquiaNivelD, byte[]foto) {
+    public UsuarioEmpleado(int id_usuario_e, String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int id_division, int id_cat_priv, byte[]foto) {
         this.iDUsuarioE = id_usuario_e;
         this.nombre = nombre;
         this.appat = appat;
@@ -138,8 +144,8 @@ public class UsuarioEmpleado implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.password = password;
-        this.iDJerarquiaP =idjerarquiap;
-        this.iDNivelP = idjerarquiaNivelD;
+        this.iD_Division = id_division;
+        this.iD_cat_priv = id_cat_priv;
         this.foto = foto;
     }
     
@@ -151,19 +157,19 @@ public class UsuarioEmpleado implements Serializable {
      * @param fechaNacimiento: fecha de nacimiento del usuario a ingresar
      * @param correo: correo del usuario a ingresar
      * @param password: Contraseña del usuario a ingresar
-     * @param idjerarquiap: id_jer del usuario a ingresar
-     * @param idjerarquiaNivelD: id_nivel del usuario a ingresar
+     * @param id_division: El ide de la división a la pertenecerá
+     * @param id_cat_priv: id_nivel de la jerarquía del empleado
      * @param foto: foto  del usuario a ingresar
      */
-    public UsuarioEmpleado(String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int idjerarquiap, int idjerarquiaNivelD, byte[]foto) {
+    public UsuarioEmpleado(String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int id_division, int id_cat_priv, byte[]foto) {
         this.nombre = nombre;
         this.appat = appat;
         this.apmat = apmat;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.password = password;
-        this.iDJerarquiaP =idjerarquiap;
-        this.iDNivelP = idjerarquiaNivelD;
+        this.iD_Division = id_division;
+        this.iD_cat_priv = id_cat_priv;
         this.foto = foto;
     }
 
@@ -225,8 +231,8 @@ public class UsuarioEmpleado implements Serializable {
             cs.setString(4, empleado.getFechaNacimiento());
             cs.setString(5, empleado.getCorreo());
             cs.setString(8, empleado.getPassword());
-            cs.setInt(6, empleado.getIDJerarquiaP());
-            cs.setInt(7, empleado.getIDNivelP());
+            cs.setInt(6, empleado.getiD_Division());
+            cs.setInt(7, empleado.getiD_cat_priv());
             cs.setBytes(9, empleado.getFoto());
             cs.setInt(10, id_emp);
             return cs.executeUpdate() == 1;
@@ -269,8 +275,8 @@ public class UsuarioEmpleado implements Serializable {
                 this.setCorreo(rs.getString("correo"));
                 this.setFechaNacimiento(rs.getString("Fecha_Nacimiento"));
                 this.setPassword(rs.getString("pass"));
-                this.setIDJerarquiaP(rs.getInt("ID_Jerarquia_P"));
-                this.setIDNivelP(rs.getInt("ID_Nivel_P"));
+                this.setiD_Division(rs.getInt("ID_Jerarquia_P"));
+                this.setiD_cat_priv(rs.getInt("ID_Nivel_P"));
                 this.setIDUsuarioE(rs.getInt("ID_Usuario_E"));
                 break;
             }
@@ -454,21 +460,7 @@ public class UsuarioEmpleado implements Serializable {
         this.foto = foto;
     }
 
-    public Integer getIDNivelP() {
-        return iDNivelP;
-    }
-
-    public void setIDNivelP(Integer iDNivelP) {
-        this.iDNivelP = iDNivelP;
-    }
-
-    public Integer getIDJerarquiaP() {
-        return iDJerarquiaP;
-    }
-
-    public void setIDJerarquiaP(Integer iDJerarquiaP) {
-        this.iDJerarquiaP = iDJerarquiaP;
-    }
+    
 
     @Override
     public int hashCode() {
@@ -494,5 +486,32 @@ public class UsuarioEmpleado implements Serializable {
     public String toString() {
         return "MUsuarios.clases.UsuarioEmpleado[ iDUsuarioE=" + iDUsuarioE + " ]";
     }
+
+
+    public Integer getiDUsuarioE() {
+        return iDUsuarioE;
+    }
+
+    public void setiDUsuarioE(Integer iDUsuarioE) {
+        this.iDUsuarioE = iDUsuarioE;
+    }
+
+    public Integer getiD_Division() {
+        return iD_Division;
+    }
+
+    public void setiD_Division(Integer iD_Division) {
+        this.iD_Division = iD_Division;
+    }
+
+    public Integer getiD_cat_priv() {
+        return iD_cat_priv;
+    }
+
+    public void setiD_cat_priv(Integer iD_cat_priv) {
+        this.iD_cat_priv = iD_cat_priv;
+    }
+
+    
     
 }
