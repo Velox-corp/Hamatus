@@ -4,6 +4,7 @@
     Author     : maste
 --%>
 
+<%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
@@ -14,13 +15,15 @@
     HttpSession sesion;
     ArrayList<UsuarioEmpleado> empleadosEquipo = new ArrayList<UsuarioEmpleado>();
     ArrayList<UsuarioEmpleado> empleadosLibres = new ArrayList<UsuarioEmpleado>();
-    //Equipo equipo; Aún no existe
+    int id_equipo;
+    Equipo equipo;
     try{
+        id_equipo = Integer.parseInt(request.getParameter("id"));
         sesion = request.getSession();
         UsuarioEmpleado liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
         //equipo = ?;
         empleadosEquipo = UsuarioEmpleado.obtenerUsuariosEquipo(liderDiv.getIDUsuarioE()); 
-        empleadosLibres = UsuarioEmpleado.obtenerUsuariosEquipo(liderDiv.getIDUsuarioE()); 
+        empleadosLibres = UsuarioEmpleado.obtenerUsuariosEquipo(0); 
     }catch(Exception e){
         redirect = "error.jsp";
         desempeño_adecuado = false;

@@ -89,18 +89,23 @@ public class Equipo implements Serializable {
     
     /**
      * Método para guardar un equipo en la base de datos
-     * @param equipoInsert
-     * @return 
+     * @param equipoInsert: EL equipo a ser insertado
+     * @return true si se ingreso correctamente el equipo
      */
     public static boolean crearEquipo(Equipo equipoInsert){
         boolean proceso_correcto = true;
         try{
             con = Conexion.obtenerConexion();
-            q = "INSERT INTO EQUIPO (nombre, idDivision) values(?,?)";
+            q = "INSERT INTO Equipo (nombre, ID_Division) values(?,?)";
             ps = con.prepareStatement(q);
             ps.setString(1,equipoInsert.getNombre());
-            ps.setInt(2, equipoInsert.iDDivision);
-            proceso_correcto = (1 == ps.executeUpdate());
+            ps.setInt(2, equipoInsert.getIDDivision());
+            if(ps.executeUpdate() == 1){
+                proceso_correcto = true;
+            }else{
+                proceso_correcto = false;
+                System.out.println("No jalo");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
             proceso_correcto = false;
@@ -111,10 +116,40 @@ public class Equipo implements Serializable {
                 ps.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
-                proceso_correcto = false;
             }
         }
         return proceso_correcto;
+    }
+    
+     /**
+     * Método para obtener el ide del ultimo equipo registrado, ya que este es auto_increment.
+     * Si ocurre algún error va retornar -1.
+     * @return id ide del equipo recien ingresado;
+     */
+    public static int obtenerIDNuevoEquipo() {
+        int id_nueva = -1;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT MAX(ID_Equipo) AS new_id FROM Equipo";
+            ps = con.prepareStatement(q);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                id_nueva = rs.getInt("new_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                q="";
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return id_nueva;
     }
     
     /**
@@ -124,7 +159,31 @@ public class Equipo implements Serializable {
      */
     public static ArrayList<Equipo> obtenerEquipos(int id_div){
         ArrayList<Equipo> equipos = new ArrayList<Equipo>();
-        
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT * FROM Equipo WHERE ID_DIvision = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, id_div);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Equipo equipo = new Equipo(rs.getInt("ID_Equipo"),
+                        rs.getString("Nombre"), 
+                rs.getInt("ID_DIvision"));
+                equipos.add(equipo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            equipos = null;
+        }finally{
+            try {
+                con.close();
+                q= "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return equipos;     
     }
     

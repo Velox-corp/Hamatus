@@ -86,13 +86,18 @@ public class EUsuarioEquipo implements Serializable {
      */
     public static boolean ingresarEmpleadoEquipo(EUsuarioEquipo relUserEquip){
         boolean proceso_correcto = true;
+        System.out.println("Un saludo");
         try{
            con = Conexion.obtenerConexion();
            q = "INSERT INTO e_usuario_equipo (ID_Usuario_Empleado, ID_Equipo) values (?,?)";
            ps = con.prepareStatement(q);
            ps.setInt(1, relUserEquip.getIDUsuarioEmpleado());
            ps.setInt(2, relUserEquip.getIdEquipo());
-           proceso_correcto = (1 == ps.executeUpdate());
+           if(1 == ps.executeUpdate()){
+               proceso_correcto = true;
+           }else{
+               System.out.println("No jaló");
+           }
         } catch (SQLException ex) {
             Logger.getLogger(EUsuarioEquipo.class.getName()).log(Level.SEVERE, null, ex);
             proceso_correcto = false;
@@ -107,6 +112,37 @@ public class EUsuarioEquipo implements Serializable {
             }
         }
         return proceso_correcto;
+    }
+    
+    /**
+     * Método para obtener el total de empleados dentor de un registro, util para la vista general de equipos, reporta .1 si no encuentra el equipo
+     * @param ID_equipo
+     * @return 
+     */
+    public static int getTotalEmpleadosEquipo(int ID_equipo){
+        int total = -1;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT COUNT(ID_Equipo) AS total FROM e_usuario_equipo WHERE ID_Equipo = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, ID_equipo);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                total = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EUsuarioEquipo.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                rs.close();
+                q = "";
+            } catch (SQLException ex) {
+                Logger.getLogger(EUsuarioEquipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return total;
     }
     
     public Integer getIDUsuarioEquipo() {

@@ -65,11 +65,13 @@
                         </label>
                         <input type="text" id='nombreEquipo' name='nombreEquipo'>
                     </div>
+                    <input type="hidden" name='id_div' value='<%=liderDiv.getiD_Division()%>' readonly='readonly'>
                     <div class="col-md-6 form-group">
                         <label for='división'>
                             División correspondiente
                         </label>
                         <input type="text" readonly="readonly"  name='division' value='<%=liderDiv.getiD_Division()%>'>
+                        
                     </div>
             </div>
             <br>
@@ -78,8 +80,7 @@
                     UsuarioEmpleado emp = empleados.get(i);
                     int mod = (i+1)%3;
                     switch(mod){
-                        case 1:
-                    %>
+                        case 1:%>
             <div class="row">
                     <div class="col-md-4">
                             <div class="card text-white bg-primary">
