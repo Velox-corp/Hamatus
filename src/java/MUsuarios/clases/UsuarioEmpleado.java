@@ -318,8 +318,8 @@ public class UsuarioEmpleado implements Serializable {
                                 rs.getString("correo"), 
                                 rs.getString("fecha_nacimiento"), 
                                 rs.getString("pass"), 
-                                rs.getInt("ID_Jerarquia_P"), 
-                                rs.getInt("ID_Nivel_P"), 
+                                rs.getInt("ID_Division"), 
+                                rs.getInt("ID_cat_privilegios"), 
                                 rs.getBytes("foto"));
                 
                 empleados.add(empleado);
@@ -366,8 +366,8 @@ public class UsuarioEmpleado implements Serializable {
                                 rs.getString("correo"), 
                                 rs.getString("fecha_nacimiento"), 
                                 rs.getString("pass"), 
-                                rs.getInt("ID_Jerarquia_P"), 
-                                rs.getInt("ID_Nivel_P"), 
+                                rs.getInt("ID_Division"), 
+                                rs.getInt("ID_cat_privilegios"), 
                                 rs.getBytes("foto"));
                 empleados.add(empleado);
             }

@@ -29,7 +29,11 @@ public class crearEquipoTrabajo extends HttpServlet {
             boolean procesoAdecuado = true;
             HttpSession sesion;
             try{
-                
+                sesion = request.getSession();
+                String nombre_Equipo = request.getParameter("nombreEquipo");
+                String name_div = request.getParameter("division");
+                int maxUsers = Integer.parseInt(request.getParameter("maxEmpleados"));
+                //obtener los cleckbox
             }catch(Exception e){
                 
             }
