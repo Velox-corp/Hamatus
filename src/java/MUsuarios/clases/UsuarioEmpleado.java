@@ -213,8 +213,8 @@ public class UsuarioEmpleado implements Serializable {
     }
     
     /**
-     * Método para ingresar un empleado a la bd
-     * Si es la cuenta de administrador recordar que se van a enviar nulos, de lo contrario todos los campos a excepción de la foto deben de estar
+     * Método para ingresar un empleado a la bd, basicamente el método a llamar para que el administrador vaya generando los usuarios
+     * *¡NOTA! Este método usa ul procedimiento almacenado desactualizado, así que se tend´ria que reajustar este método o ejecutar el insert directamente por aquí*
      * @param empleado: El empleado a ingresar a la bd
      * @param id_emp: El id de la empresa al que pertenece el usuario.
      * @return 
@@ -258,45 +258,48 @@ public class UsuarioEmpleado implements Serializable {
      * que no reemplace otros datos
      * @param correo pues el correo
      * @param pass pues la pass
+     * @return EL objeto UsuarioEmpleado con los datos del usuario que se logeo
      */
-    public void ConsultarEmpleado(String correo, String pass){
+    public static UsuarioEmpleado ConsultarEmpleado(String correo, String pass){
+        UsuarioEmpleado userLog = null;
         try{
             con = Conexion.obtenerConexion();
-            String sql = "SELECT * FROM usuario_empleado WHERE correo = ? AND pass = ?";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, correo);
-            pstmt.setString(2, pass);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){
-                System.out.println("Usuario encontrado nombre: " + rs.getString("nombre"));
-                this.setNombre(rs.getString("nombre"));
-                this.setAppat(rs.getString("appat"));
-                this.setApmat(rs.getString("apmat"));
-                this.setCorreo(rs.getString("correo"));
-                this.setFechaNacimiento(rs.getString("Fecha_Nacimiento"));
-                this.setPassword(rs.getString("pass"));
-                this.setiD_Division(rs.getInt("ID_Jerarquia_P"));
-                this.setiD_cat_priv(rs.getInt("ID_Nivel_P"));
-                this.setIDUsuarioE(rs.getInt("ID_Usuario_E"));
-                break;
+            q = "SELECT * FROM usuario_empleado WHERE Correo = ? AND pass = ? limit 1";
+            ps= con.prepareStatement(q);
+            ps.setString(1, correo);
+            ps.setString(2, pass);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                userLog = new UsuarioEmpleado();
+                userLog.setNombre(rs.getString("Nombre"));
+                userLog.setAppat(rs.getString("appat"));
+                userLog.setApmat(rs.getString("apmat"));
+                userLog.setCorreo(rs.getString("correo"));
+                userLog.setFechaNacimiento(rs.getString("Fecha_Nacimiento"));
+                userLog.setPassword(rs.getString("pass"));
+                userLog.setiD_Division(rs.getInt("ID_Division"));
+                userLog.setiD_cat_priv(rs.getInt("ID_cat_privilegios"));
+                userLog.setIDUsuarioE(rs.getInt("ID_Usuario_E"));
             }
-        }catch(Exception e){
+        }catch(SQLException | NullPointerException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
         }finally{
             try {
                 con. close();
                 q = "";
+                rs.close();
             } catch (SQLException | NullPointerException ex) {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return userLog;
     }
     
     
     /**
      * Metodo para obtener todos los usuarios de la base de datos
-     * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
+     * @return  Un ArrayLisy vectorizado que contiene a TODOS los usuarios de la base de datos
      */
     public static ArrayList<UsuarioEmpleado> obtenerUsuarios(){
         ArrayList<UsuarioEmpleado> empleados = null;
@@ -341,12 +344,12 @@ public class UsuarioEmpleado implements Serializable {
     
     /**
      * Metodo para obtener los usuarios pertenecientes a una división en la base de datos a partir del id del lider de división
-     * ¡¡NOTA!! Este metodo aún no está implementado completamente, de momento funciona igual a la obtención de usuarios general
-     * @param idLider El id del lider de sección, con el cual 
+     * ¡¡NOTA!! Este metodo aún no está implementado para funcionar como debería a partir de un usuario, de momento funciona igual a la obtención de usuarios general
+     * @param idLider El id del lider de sección.
      * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
      */
     public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idLider){
-        ArrayList<UsuarioEmpleado> empleados = null;
+        ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
         try{
             con = Conexion.obtenerConexion();
             q = "SELECT * FROM Usuario_empleado"; //por aquí debe de haber un WHERE tal = ?

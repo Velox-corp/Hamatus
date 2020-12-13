@@ -5,6 +5,7 @@
  */
 package MDistribucion.Clases;
 
+import ClasesSoporte.Conexion;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,9 +19,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
- *
+ *  Clase/Encabezado de usuario equipo, usada para poder asignar empleados a los diferentes equipos
  * @author maste
  */
 @Entity
@@ -41,7 +44,12 @@ public class EUsuarioEquipo implements Serializable {
     private int iDUsuarioEmpleado;
     @JoinColumn(name = "ID_Equipo", referencedColumnName = "ID_Equipo")
     @ManyToOne(optional = false)
-    private Equipo iDEquipo;
+    private int idEquipo;
+    
+    private static Connection con;
+    private static String q = "";
+    private static PreparedStatement ps;
+    private static ResultSet rs;
 
     public EUsuarioEquipo() {
     }
@@ -49,12 +57,58 @@ public class EUsuarioEquipo implements Serializable {
     public EUsuarioEquipo(Integer iDUsuarioEquipo) {
         this.iDUsuarioEquipo = iDUsuarioEquipo;
     }
-
-    public EUsuarioEquipo(Integer iDUsuarioEquipo, int iDUsuarioEmpleado) {
+    /**
+     * Constructor full, para consultas
+     * @param iDUsuarioEquipo: id del encabezado.
+     * @param iDUsuarioEmpleado: ide del usuario.
+     * @param idEquipo: Id del equipo
+     */
+    public EUsuarioEquipo(Integer iDUsuarioEquipo, int iDUsuarioEmpleado, int idEquipo) {
         this.iDUsuarioEquipo = iDUsuarioEquipo;
         this.iDUsuarioEmpleado = iDUsuarioEmpleado;
+        this.idEquipo = idEquipo;
     }
 
+    /**
+     * Método para crear instancias de asignaciones de usuario y equipo
+     * @param idUE: el ide del suario
+     * @param idE: el ide del equipo
+     */
+    public EUsuarioEquipo(int idUE, int idE){
+        this.iDUsuarioEmpleado = idUE;
+        this.idEquipo = idE;
+    }
+   
+    /**
+     * Método para ingresar a la bd la relación entre los empleados y el equipo, este método solo ingresa a una persona, por lo que debe de implementarse dentro de un for
+     * @param relUserEquip El objeto EUsuarioEquipo con la relación entre tablas;
+     * @return 
+     */
+    public static boolean ingresarEmpleadoEquipo(EUsuarioEquipo relUserEquip){
+        boolean proceso_correcto = true;
+        try{
+           con = Conexion.obtenerConexion();
+           q = "INSERT INTO e_usuario_equipo (ID_Usuario_Empleado, ID_Equipo) values (?,?)";
+           ps = con.prepareStatement(q);
+           ps.setInt(1, relUserEquip.getIDUsuarioEmpleado());
+           ps.setInt(2, relUserEquip.getIdEquipo());
+           proceso_correcto = (1 == ps.executeUpdate());
+        } catch (SQLException ex) {
+            Logger.getLogger(EUsuarioEquipo.class.getName()).log(Level.SEVERE, null, ex);
+            proceso_correcto = false;
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                q= "";
+            } catch (SQLException ex) {
+                Logger.getLogger(EUsuarioEquipo.class.getName()).log(Level.SEVERE, null, ex);
+                proceso_correcto = false;
+            }
+        }
+        return proceso_correcto;
+    }
+    
     public Integer getIDUsuarioEquipo() {
         return iDUsuarioEquipo;
     }
@@ -71,12 +125,12 @@ public class EUsuarioEquipo implements Serializable {
         this.iDUsuarioEmpleado = iDUsuarioEmpleado;
     }
 
-    public Equipo getIDEquipo() {
-        return iDEquipo;
+    public int getIdEquipo() {
+        return idEquipo;
     }
 
-    public void setIDEquipo(Equipo iDEquipo) {
-        this.iDEquipo = iDEquipo;
+    public void setIdEquipo(int idEquipo) {
+        this.idEquipo = idEquipo;
     }
 
     @Override
@@ -103,5 +157,5 @@ public class EUsuarioEquipo implements Serializable {
     public String toString() {
         return "MDistribucion.Clases.EUsuarioEquipo[ iDUsuarioEquipo=" + iDUsuarioEquipo + " ]";
     }
-    
+        
 }

@@ -21,10 +21,13 @@
     }catch(Exception e){
         redirect = "error.jsp";
         desempeño_adecuado = false;
+        e.getMessage();
+        e.printStackTrace();
+        e.getCause();
     }
 
     if(!desempeño_adecuado){
-        response.sendRedirect(redirect);
+        //response.sendRedirect(redirect);
     }
 %>
     
