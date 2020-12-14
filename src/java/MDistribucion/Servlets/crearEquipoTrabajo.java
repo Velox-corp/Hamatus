@@ -50,7 +50,7 @@ public class crearEquipoTrabajo extends HttpServlet {
                         //obtener los checkbox
                         for (int i = 0; i < maxUsers; i++) {
                             try{
-                                if(request.getParameter("empleado_"+i).equals("true")){
+                                if(request.getParameter("empleado_"+(i+1)).equals("true")){
                                     EUsuarioEquipo newRelacion = new EUsuarioEquipo((i+1), new_equipo.getIDEquipo());
                                     if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion)){
                                         System.out.println("No se pudo ingresar la relación");

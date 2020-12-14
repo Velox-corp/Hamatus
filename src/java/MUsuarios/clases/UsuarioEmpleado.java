@@ -390,13 +390,54 @@ public class UsuarioEmpleado implements Serializable {
     }
     
     /**
-     * Metodo para obtener todos los usuarios pertenecientes a un equipo. Ingresar "0" si se desea recuperar los que no tienen equipo
-     * ¡Aun no esta implementado!
+     * Metodo para obtener todos los usuarios pertenecientes a un equipo. 
+     * Ingresar '0' si se desea recuperar los que NO tienen equipo.
      * @param id_equipo El ide del equipo donde se buscaran todos los empleados
      * @return la lista de empleados pertenecientes a un equipo de trabajo.
      */
     public static ArrayList<UsuarioEmpleado> obtenerUsuariosEquipo(int id_equipo){
-        throw new UnsupportedOperationException("Aun no lo hemos programado."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<UsuarioEmpleado> empleados =  new ArrayList<UsuarioEmpleado>();
+        try{
+            con = Conexion.obtenerConexion();
+            if(id_equipo == 0){
+                q = "SELECT * from usuario_empleado where ID_usuario_e \n" +
+                    " not in (select ID_Usuario_Empleado from e_usuario_equipo)";
+                ps = con.prepareStatement(q);
+            }else{
+                q = "SELECT usuario_empleado.* FROM usuario_empleado join e_usuario_equipo on ID_Usuario_E = ID_Usuario_Empleado \n" +
+                    "where e_usuario_equipo.ID_Equipo = ?;";
+                ps = con.prepareStatement(q);
+                ps.setInt(1, id_equipo);
+            }
+            rs = ps.executeQuery();
+            while(rs.next()){
+                UsuarioEmpleado empleado = 
+                        new UsuarioEmpleado(
+                                rs.getInt("ID_usuario_e"), 
+                                rs.getString("nombre"), 
+                                rs.getString("appat"), 
+                                rs.getString("apmat"), 
+                                rs.getString("correo"), 
+                                rs.getString("fecha_nacimiento"), 
+                                rs.getString("pass"), 
+                                rs.getInt("ID_Division"), 
+                                rs.getInt("ID_cat_privilegios"), 
+                                rs.getBytes("foto"));
+                empleados.add(empleado);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                con.close();
+                q = "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return empleados;
     }
     
     public Integer getIDUsuarioE() {

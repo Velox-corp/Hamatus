@@ -80,6 +80,11 @@
                                             Editar equipo
                                         </a>
                                     </div>
+                                    <div class='card-footer'>
+                                        <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                            EliminarEquipo
+                                        </a>
+                                    </div>
                             </div>
                     </div>
                     <%      break;
@@ -97,6 +102,11 @@
                                             Editar equipo
                                         </a>
                                     </div>
+                                    <div class='card-footer'>
+                                        <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                            Eliminar Equipo
+                                        </a>
+                                    </div>    
                             </div>
                     </div>
                             <% break;
@@ -115,9 +125,14 @@
                                             Editar equipo
                                         </a>
                                     </div>
+                                    <div class='card-footer'>
+                                        <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                            Eliminar Equipo
+                                        </a>
+                                    </div>
                             </div>
                     </div>
-            </div>
+            </div><br>
                     <%break;
                     }//switch
                 }  // for %>

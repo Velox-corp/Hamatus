@@ -145,6 +145,32 @@ public class EUsuarioEquipo implements Serializable {
         return total;
     }
     
+   
+    public static boolean removerUsuario(int id_empleado){
+        boolean proceso_adecuado = true;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "DELETE FROM e_usuario_equipo WHERE ID_Usuario_Empleado = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, id_empleado);
+            if(ps.executeUpdate() == 1){
+                proceso_adecuado = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            proceso_adecuado = false;
+        }finally{
+            try {
+                con.close();
+                q = "";
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return proceso_adecuado;
+    }
+    
     public Integer getIDUsuarioEquipo() {
         return iDUsuarioEquipo;
     }

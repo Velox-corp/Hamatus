@@ -20,6 +20,18 @@
         <servlet-name>crearEquipoTrabajo</servlet-name>
         <servlet-class>MDistribucion.Servlets.crearEquipoTrabajo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>eliminarEquipo</servlet-name>
+        <servlet-class>MDistribucion.Servlets.eliminarEquipo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sacarDelEquipo</servlet-name>
+        <servlet-class>MDistribucion.Servlets.sacarDelEquipo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addEmpleadosEquipo</servlet-name>
+        <servlet-class>MDistribucion.Servlets.addEmpleadosEquipo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -39,6 +51,18 @@
     <servlet-mapping>
         <servlet-name>crearEquipoTrabajo</servlet-name>
         <url-pattern>/crearEquipoTrabajo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eliminarEquipo</servlet-name>
+        <url-pattern>/eliminarEquipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sacarDelEquipo</servlet-name>
+        <url-pattern>/sacarDelEquipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addEmpleadosEquipo</servlet-name>
+        <url-pattern>/addEmpleadosEquipo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

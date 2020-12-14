@@ -229,13 +229,13 @@ CREATE TABLE IF NOT EXISTS `hamatus`.`e_usuario_equipo` (
   CONSTRAINT `fk_Usuario-Equipo_Equipo1`
     FOREIGN KEY (`ID_Equipo`)
     REFERENCES `hamatus`.`equipo` (`ID_Equipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Usuario-Equipo_Usuario-Empleado1`
     FOREIGN KEY (`ID_Usuario_Empleado`)
     REFERENCES `hamatus`.`usuario_empleado` (`ID_Usuario_E`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

@@ -187,9 +187,63 @@ public class Equipo implements Serializable {
         return equipos;     
     }
     
+    /**
+     * Obtener un equipo dado su ide.
+     * @param id_equipo el ide del equipo.
+     * @return El equipo buscado.
+     */
     public static Equipo obtenerEquipo(int id_equipo){
         Equipo equipoBuscado = null;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT * FROM equipo where ID_Equipo = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, id_equipo);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                    equipoBuscado = new Equipo(rs.getInt("ID_Equipo"),
+                            rs.getString("Nombre"), 
+                    rs.getInt("ID_Division"));
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }finally{
+            try {
+                con.close();
+                q= "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return equipoBuscado;
+    }
+    
+    public static boolean eliminarEquipo(int id_equipo){
+        boolean proceso_adecuado = true;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "DELETE FROM Equipo WHERE ID_Equipo = ? limit 1";
+            ps = con.prepareStatement(q);
+            ps.setInt(1,id_equipo);
+            if(ps.executeUpdate() == 1){
+                proceso_adecuado = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            proceso_adecuado = false;
+        }finally{
+            try {
+                con.close();
+                q= "";
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return proceso_adecuado;
     }
     
     public Integer getIDEquipo() {
