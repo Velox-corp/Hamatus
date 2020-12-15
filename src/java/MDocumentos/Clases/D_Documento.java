@@ -90,8 +90,10 @@ public class D_Documento implements Serializable {
         //CallableStatement cs = null;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = ("INSERT INTO d_Documento (Ruta, Nombre, Password, Folio, id_tipo_acceso) " + 
-                    "VALUES (?, ?, ?, ?, ?)");
+            this.query = ("INSERT INTO d_Documento (Ruta, Nombre, Password,"
+                    + " Folio, id_tipo_acceso, fecha_subida, hora_subida) " 
+                    + "VALUES (?, ?, ?, ?, ?, CURDATE(), DATE_FORMAT(NOW(),"
+                    + "%H:%i:%S))");
             ps = con.prepareCall(query);
             ps.setString(1, this.ruta);
             ps.setString(2, this.nombre);
@@ -151,6 +153,17 @@ public class D_Documento implements Serializable {
         return correcto;
     }
     
+    /**
+     * Actualizar parte del doc
+     * @param nombre
+     * @param ruta: hay que tener cuidado con este primero hay que mover el archivo
+     * y despues actualizarlo con este metodo si se hace eso
+     * @param pass
+     * @param id_tipo_acceso
+     * @param folio
+     * @param ID_Documento el unico que realmente importa es este
+     * @return 
+     */
     public boolean UpdateDoc(String nombre, String ruta, String pass, 
             Integer id_tipo_acceso, String folio, Integer ID_Documento){
         boolean correcto = false;

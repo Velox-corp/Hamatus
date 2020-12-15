@@ -89,6 +89,26 @@ public class M_Documento implements Serializable {
             this.con = Conexion.obtenerConexion();
             this.query = ("DELETE FROM m_documentos WHERE idM_Documento=?");
             ps = con.prepareCall(query);
+            ps.setInt(1, idM_Documento);  
+            if(ps.executeUpdate()==1) correcto = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return correcto;
+    }
+    
+    /**
+     * Borrar la maestra del documento no es la gran cosa
+     * @return 
+     */
+    public boolean BorrarM_Documentos(){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            this.con = Conexion.obtenerConexion();
+            this.query = ("DELETE FROM m_documentos WHERE idM_Documento=?");
+            ps = con.prepareCall(query);
             ps.setInt(1, this.idM_Documento);  
             if(ps.executeUpdate()==1) correcto = true;
         } catch (Exception e) {
