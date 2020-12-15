@@ -7,7 +7,6 @@ package MUsuarios.Servlets;
 
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
-import static MUsuarios.clases.UsuarioEmpleado.ConsultarEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -23,6 +22,60 @@ import javax.servlet.http.HttpSession;
 public class iniciarSesion extends HttpServlet {
 
     /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     * Este servlet tiene la funcion de ejecutar la parte del inicio de sesion 
+     * de la pagina, creo que debemos de poner esta pagina despues de que el 
+     * usuario ya se registro pero bueno ya veremos como estara esta onda, 
+     * me voy a basar de la clase de crear empresa
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String redirect = "error.jsp";
+        try (PrintWriter out = response.getWriter()) {
+            boolean proceso_correcto = true;
+            String correo = request.getParameter("email");
+            String pass = request.getParameter("pwd");
+            UsuarioEmpleado usu = new UsuarioEmpleado();
+            
+            //Ejecutar busqueda
+            usu.ConsultarEmpleado(correo, pass);
+            //Iniciamos sesion
+            HttpSession sesionEmpresa = request.getSession(true);
+            sesionEmpresa.setAttribute("usuario", usu);
+            Empresa emp = new Empresa(usu.getIDUsuarioE());
+            sesionEmpresa.setAttribute("empresa", emp);
+            redirect = "empresa.jsp";
+            response.sendRedirect(redirect);
+        }catch(Exception e){
+            redirect = "error.jsp";
+            response.sendRedirect(redirect);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -33,32 +86,7 @@ public class iniciarSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String redirect = "error.jsp";
-            boolean proceso_correcto = true;
-            try{
-                String correo = request.getParameter("email");
-                String pass = request.getParameter("pwd");
-                UsuarioEmpleado usu = null;
-                //Ejecutar busqueda
-                usu = ConsultarEmpleado(correo, pass);
-                //Iniciamos sesion
-                HttpSession sesionEmpresa = request.getSession(true);
-
-                System.out.println(usu.getNombre());
-                sesionEmpresa.setAttribute("usuario", usu);
-                Empresa emp = Empresa.buscarEmpresa(usu.getIDUsuarioE());
-                sesionEmpresa.setAttribute("empresa", emp);
-                redirect = "empresa.jsp";
-            }catch(Exception e){
-                redirect = "error.jsp";
-
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
-            response.sendRedirect(redirect);
-            }
+        processRequest(request, response);
     }
 
     /**

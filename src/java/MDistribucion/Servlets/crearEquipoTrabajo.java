@@ -5,9 +5,6 @@
  */
 package MDistribucion.Servlets;
 
-import ClasesSoporte.Validaciones;
-import MDistribucion.Clases.EUsuarioEquipo;
-import MDistribucion.Clases.Equipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet para crear el equipo de trabajo
+ *
  * @author maste
  */
 public class crearEquipoTrabajo extends HttpServlet {
@@ -31,53 +28,16 @@ public class crearEquipoTrabajo extends HttpServlet {
             String redirect = "";
             boolean procesoAdecuado = true;
             HttpSession sesion;
-            System.out.println("Hola");
             try{
-                sesion = request.getSession();
-                String nombre_Equipo = request.getParameter("nombreEquipo");
-                int id_div = Integer.parseInt(request.getParameter("id_div"));
-                int maxUsers = Integer.parseInt(request.getParameter("maxEmpleados"));
-                if(!Validaciones.esString(nombre_Equipo, true, false) || !Validaciones.esNumeroEntero(maxUsers) || !Validaciones.esNumeroEntero(id_div)){
-                    System.out.println("La validación no te la paso");
-                    procesoAdecuado = false;
-                    redirect = "error.jsp";
-                }else{
-                    Equipo new_equipo = new Equipo(nombre_Equipo, id_div);
-                    procesoAdecuado = Equipo.crearEquipo(new_equipo);
-                    if(procesoAdecuado){
-                        new_equipo.setIDEquipo(Equipo.obtenerIDNuevoEquipo());
-                        System.out.println(new_equipo.getIDEquipo());
-                        //obtener los checkbox
-                        for (int i = 0; i < maxUsers; i++) {
-                            try{
-                                if(request.getParameter("empleado_"+(i+1)).equals("true")){
-                                    EUsuarioEquipo newRelacion = new EUsuarioEquipo((i+1), new_equipo.getIDEquipo());
-                                    if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion)){
-                                        System.out.println("No se pudo ingresar la relación");
-                                        procesoAdecuado=false;
-                                        redirect = "error.jsp";
-                                        break;
-                                    }else{
-                                    }
-                                }
-                            }catch(NullPointerException e){
-                            }
-                        }
-                    }else{
-                        System.out.println("No se pudo crear el equipo");
-                    }
-                }
                 
-            }catch(NumberFormatException e){
-                System.out.println("Excepcion");
-                e.printStackTrace();
+            }catch(Exception e){
+                
             }
             
-            if(procesoAdecuado){
-                redirect = "verEquipos.jsp";
-                
+            if(!procesoAdecuado){
+                response.sendRedirect(redirect);
             }
-            response.sendRedirect(redirect);
+            
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
