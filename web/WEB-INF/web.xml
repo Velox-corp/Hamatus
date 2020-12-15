@@ -20,6 +20,10 @@
         <servlet-name>crearEquipoTrabajo</servlet-name>
         <servlet-class>MDistribucion.Servlets.crearEquipoTrabajo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>downloadFile</servlet-name>
+        <servlet-class>MDocumentos.Servlets.downloadFile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -40,9 +44,20 @@
         <servlet-name>crearEquipoTrabajo</servlet-name>
         <url-pattern>/crearEquipoTrabajo</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>downloadFile</servlet-name>
+        <url-pattern>/downloadFile</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <resource-ref>
+        <description>jdbc:mysql://localhost:3306/hamatus?zeroDateTimeBehavior=convertToNull</description>
+        <res-ref-name>Hamatus</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
 </web-app>

@@ -96,7 +96,7 @@ public class Empresa implements Serializable{
     }
 
     /**
-     * Método para instanc´piar una empresa dnetor del programa, fundamental para el funcionamiento de hamatus ya que es el paso 1
+     * Método para instancíar una empresa dentro del programa, fundamental para el funcionamiento de hamatus ya que es el paso No 1
      * @param emp El objeto empresa el cual posee toda la información de la empresa;
      * @return true si se ejecuto el ingreso a la bd de manera correcta
      */

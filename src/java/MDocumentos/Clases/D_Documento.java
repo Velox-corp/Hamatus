@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @Table(name = "d_Documento")
 @NamedQueries({
     @NamedQuery(name = "d_Documento.findAll", query = "SELECT e FROM d_Documento e")})
-public class d_Documento implements Serializable {
+public class D_Documento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -52,15 +52,24 @@ public class d_Documento implements Serializable {
     private static ResultSet rs = null;
     private static final long serialVersionUID = 1L;
     
-    public d_Documento(){
+    public D_Documento(){
         
     }
     
-    public d_Documento(int ID){
+    public D_Documento(int ID){
         this.ID_Documento = ID;
     }
     
-    public d_Documento(String nombre, String ruta, String pass, 
+    /**
+     * @param nombre
+     * @param ruta
+     * @param pass
+     * @param id_tipo_acceso
+     * @param folio
+     * @param Equipo_ID_Equipo
+     * @param id_MDocumento
+     */
+    public D_Documento(String nombre, String ruta, String pass, 
             Integer id_tipo_acceso, String folio, Integer Equipo_ID_Equipo, 
             Integer id_MDocumento){
         this.Equipo_ID_Equipo = Equipo_ID_Equipo;
@@ -89,6 +98,76 @@ public class d_Documento implements Serializable {
             ps.setString(3, this.pass);
             ps.setString(4, this.folio);
             ps.setInt(5, this.id_tipo_acceso);
+            if(ps.executeUpdate()==1) correcto = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return correcto;
+    }
+    
+    /**
+     * Bueno bueno aqui ira una parte para borrar cierto documento
+     * *Nota*:Este metodo solo borrara su registro de la BD solo para 
+     * que el archivo sea inaccesible unciamente 
+     * @param id
+     * @return 
+     */
+    public boolean BorrarDoc( int id ){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            this.con = Conexion.obtenerConexion();
+            this.query = ("DELETE FROM d_documento WHERE ID_Documento=?");
+            ps = con.prepareCall(query);
+            ps.setInt(1, id);
+            if(ps.executeUpdate()==1) correcto = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return correcto;
+    }
+    
+    /**
+     * Bueno bueno aqui ira una parte para borrar cierto documento
+     * *Nota*:Este metodo solo borrara su registro de la BD solo para 
+     * que el archivo sea inaccesible unciamente 
+     * @return 
+     */
+    public boolean BorrarDoc(){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            this.con = Conexion.obtenerConexion();
+            this.query = ("DELETE FROM d_documento WHERE ID_Documento=?");
+            ps = con.prepareCall(query);
+            ps.setInt(1, this.ID_Documento);
+            if(ps.executeUpdate()==1) correcto = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return correcto;
+    }
+    
+    public boolean UpdateDoc(String nombre, String ruta, String pass, 
+            Integer id_tipo_acceso, String folio, Integer ID_Documento){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            this.con = Conexion.obtenerConexion();
+            this.query = ("UPDATE d_Documento SET Nombre="
+                    + nombre + ", Ruta=" + ruta + ", Password=" + pass 
+                    + ", id_tipo_acceso=" + id_tipo_acceso + ", folio="
+                    + folio + " WHERE ID_Documento=" + ID_Documento);
+            ps = con.prepareCall(query);
+            ps.setString(1, nombre);
+            ps.setString(2, ruta);
+            ps.setString(3, pass);
+            ps.setInt(4, id_tipo_acceso);
+            ps.setString(5, folio);
+            ps.setInt(6, ID_Documento);
             if(ps.executeUpdate()==1) correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -149,10 +228,10 @@ public class d_Documento implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof d_Documento)) {
+        if (!(object instanceof D_Documento)) {
             return false;
         }
-        d_Documento other = (d_Documento) object;
+        D_Documento other = (D_Documento) object;
         if ((this.ID_Documento == null && other.ID_Documento != null) || (this.ID_Documento != null && !this.ID_Documento.equals(other.ID_Documento))) {
             return false;
         }
