@@ -52,7 +52,7 @@ public class uploadFile extends HttpServlet {
         
         try (PrintWriter out = response.getWriter()) {
             String pass = request.getParameter("pass");
-            int id_tipo_acceso   = Integer.parseInt(request.getParameter("pass"));
+            int id_tipo_acceso   = Integer.parseInt(request.getParameter("id_tipo_acceso"));
             String folio         = request.getParameter("folio");
             int Equipo_ID_Equipo = Integer.parseInt(request.getParameter("Equipo_ID_Equipo"));
             int id_D_DOcumento   = Integer.parseInt(request.getParameter("id_D_DOcumento"));

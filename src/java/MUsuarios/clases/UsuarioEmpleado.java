@@ -48,6 +48,38 @@ public class UsuarioEmpleado implements Serializable {
     private static PreparedStatement ps = null;
     private static ResultSet rs = null;
     private static final long serialVersionUID = 1L;
+
+    public static Connection getCon() {
+        return con;
+    }
+
+    public static void setCon(Connection aCon) {
+        con = aCon;
+    }
+
+    public static String getQ() {
+        return q;
+    }
+
+    public static void setQ(String aQ) {
+        q = aQ;
+    }
+
+    public static PreparedStatement getPs() {
+        return ps;
+    }
+
+    public static void setPs(PreparedStatement aPs) {
+        ps = aPs;
+    }
+
+    public static ResultSet getRs() {
+        return rs;
+    }
+
+    public static void setRs(ResultSet aRs) {
+        rs = aRs;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -494,5 +526,31 @@ public class UsuarioEmpleado implements Serializable {
     public String toString() {
         return "MUsuarios.clases.UsuarioEmpleado[ iDUsuarioE=" + iDUsuarioE + " ]";
     }
+
+    public Integer getiDUsuarioE() {
+        return iDUsuarioE;
+    }
+
+    public void setiDUsuarioE(Integer iDUsuarioE) {
+        this.iDUsuarioE = iDUsuarioE;
+    }
+
+    public Integer getiDNivelP() {
+        return iDNivelP;
+    }
+
+    public void setiDNivelP(Integer iDNivelP) {
+        this.iDNivelP = iDNivelP;
+    }
+
+    public Integer getiDJerarquiaP() {
+        return iDJerarquiaP;
+    }
+
+    public void setiDJerarquiaP(Integer iDJerarquiaP) {
+        this.iDJerarquiaP = iDJerarquiaP;
+    }
+    
+    
     
 }

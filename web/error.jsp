@@ -15,14 +15,13 @@
     </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head.jsp" />
-        <br>
         <main class='row cubridor d-flex align-items-center'>
-            <div class='col-md-12 bg-danger'>
+            <div class='col-md-12 bg-danger padding-5rem'>
                 <h1 class='text-white text-center'>ERROR</h1>
                 <br>
                 <center>
                 <article>
-                    Un error, que te digo, culpa, o nuestra, o de maisicuel, o de java, o del servidor, o de un fantasma.
+                    Un error, que te digo, culpa, o nuestra, o de maisicuel, o de java, o del servidor, o de un fantasma
                 </article>
                 </center>
                 <br>

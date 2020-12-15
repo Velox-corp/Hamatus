@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,51 +22,34 @@
     <div class="row margin-top-1rem">
     <div class="col-md-4 folio">
             <ul>
-                    <li class="list-item">
-                        <h4>Clientes</h4>
-                            <ul>
-                                <li class="list-item">
-                                        Consectetur adipiscing elit
-                                </li>
-                                <li class="list-item">
-                                        Integer molestie lorem at massa
-                                </li>
-                                <li class="list-item">
-                                        Facilisis in pretium nisl aliquet
-                                </li>
-                                <li class="list-item">
-                                        Nulla volutpat aliquam velit
-                                </li>
-                                <li class="list-item">
-                                        Faucibus porta lacus fringilla vel
-                                </li>
-                            </ul>
-                    </li>
-                    <li class="list-item">
-                            Aenean sit amet erat nunc
-                    </li>
-                    <li class="list-item">
-                        <h4>Empresa</h4>
-                            <ul>
-                                <li class="list-item">
-                                        Consectetur adipiscing elit
-                                </li>
-                                <li class="list-item">
-                                        Integer molestie lorem at massa
-                                </li>
-                                <li class="list-item">
-                                        Facilisis in pretium nisl aliquet
-                                </li>
-                                <li class="list-item">
-                                        Nulla volutpat aliquam velit
-                                </li>
-                                <li class="list-item">
-                                        Faucibus porta lacus fringilla vel
-                                </li>
-                            </ul>
-                    </li>
+                <div class="col-md-4 folio">
+                    <ul>
+                      <%
+
+                        String ruta = "la ruta sera consultada de la bd";
+                        File file;
+                        File dir = new java.io.File(ruta);
+
+                        String[] list = dir.list();
+
+                        if (list.length > 0) {
+
+                            for (int i = 0; i < list.length; i++) {
+                                file = new java.io.File(ruta + list[i]);
+
+                        if (file.isFile()) {
+                        %>
+                        <li class="list-item">
+                            <a href="/downloadFile?ruta=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" target="_top"><%=list[i]%></a>
+                        </li>    
+                            <%
+                                }
+                            }
+                        }
+                        %>
+                    </ul>
+                </div>
             </ul>
-        
         </div>
         <div class="col-md-7">
 			<nav>
