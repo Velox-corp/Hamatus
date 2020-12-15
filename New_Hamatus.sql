@@ -41,16 +41,15 @@ CREATE TABLE IF NOT EXISTS `hamatus`.`empresa` (
   `Razon_social` TINYTEXT NOT NULL,
   PRIMARY KEY (`ID_Empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `hamatus`.`Cat_jerarquía`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `hamatus`.`Cat_jerarquía` ;
+DROP TABLE IF EXISTS `hamatus`.`Cat_jerarquia` ;
 
-CREATE TABLE IF NOT EXISTS `hamatus`.`Cat_jerarquía` (
+CREATE TABLE IF NOT EXISTS `hamatus`.`Cat_jerarquia` (
   `id_jerarquia` INT NOT NULL AUTO_INCREMENT,
   `detalle` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_jerarquia`))
@@ -63,7 +62,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `hamatus`.`division` ;
 
 CREATE TABLE IF NOT EXISTS `hamatus`.`division` (
-  `ID_Division` INT(11) NOT NULL,
+  `ID_Division` INT(11) NOT NULL auto_increment,
   `Nombre_A` VARCHAR(45) NULL DEFAULT NULL,
   `ID_Jerarquia` INT(11) NOT NULL,
   `ID_Empresa` INT(11) NOT NULL,
@@ -75,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `hamatus`.`division` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_division_jerarquia`
     FOREIGN KEY (`ID_Jerarquia`)
-    REFERENCES `hamatus`.`Cat_jerarquía` (`id_jerarquia`)
+    REFERENCES `hamatus`.`Cat_jerarquia` (`id_jerarquia`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -126,7 +125,6 @@ CREATE TABLE IF NOT EXISTS `hamatus`.`usuario_empleado` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `fk_empleado_division_idx` ON `hamatus`.`usuario_empleado` (`ID_Division` ASC);
@@ -231,13 +229,13 @@ CREATE TABLE IF NOT EXISTS `hamatus`.`e_usuario_equipo` (
   CONSTRAINT `fk_Usuario-Equipo_Equipo1`
     FOREIGN KEY (`ID_Equipo`)
     REFERENCES `hamatus`.`equipo` (`ID_Equipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Usuario-Equipo_Usuario-Empleado1`
     FOREIGN KEY (`ID_Usuario_Empleado`)
     REFERENCES `hamatus`.`usuario_empleado` (`ID_Usuario_E`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -301,21 +299,26 @@ CREATE INDEX `fk_tablon_division_idx` ON `hamatus`.`tablon` (`Id_division` ASC);
 USE `hamatus` ;
 
 -- -----------------------------------------------------
--- procedure ingresarAdmin
+-- procedure ingresarAdmin, sirve para ingresar al administrador de la empresa
+-- y crear el nodo de administración dentro de las divisiones de la empresa
 -- -----------------------------------------------------
 
 USE `hamatus`;
-DROP procedure IF EXISTS `hamatus`.`ingresarAdmin`;
+DROP procedure IF EXISTS `ingresarAdmin`;
+
+DELIMITER $$
+USE `hamatus`$$
+DROP procedure IF EXISTS `ingresarAdmin`;
 
 DELIMITER $$
 USE `hamatus`$$
 CREATE DEFINER=`Armando`@`%` PROCEDURE `ingresarAdmin`(nombre tinytext, appat tinytext, apmat tinytext,
-f_n date, correo text(45), pass text(30), foto Blob, idE int)
+f_n date, correo text(45), pass text(30), foto Blob, id_emp int)
 BEGIN
-	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.foto)
-    values (nombre, appat, apmat, f_n, correo, pass, foto);
-    Insert into `Empresa_Empleado` (ID_Usuario_E, id_empresa)
-    values ( (Select MAX(ID_Usuario_E) from Usuario_Empleado), idE);
+	insert into division (Nombre_A, id_jerarquia, id_empresa)
+    values ("Dirección general", 1, id_emp);
+	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Division, `Usuario_Empleado`.id_cat_privilegios, `Usuario_Empleado`.foto)
+    values (nombre, appat, apmat, f_n, correo, pass, (select `division`.ID_Division from division where ID_empresa = id_emp limit 1), 1, foto);
 END$$
 
 DELIMITER ;
@@ -339,6 +342,21 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- --------------
+-- meter unos inserts momentaneos
+-- --------------
+
+insert into hamatus.privilegios_jerarquia_u
+values (1, "Admin pagina"),
+(2, "Directivo"),
+(3, "Jefe de area"),
+(4, "Proletario");
+
+insert into hamatus.Cat_jerarquia
+values(1, "Division padre"),
+(2, "Division hija 1"),
+(3, "Division hija 2");
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -1,0 +1,178 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1/12/2020, 01:35:12 AM
+    Author     : taspi
+*/
+body {
+    font-family: Graphik,sans-serif;;
+    background-color: #F3F3F3;
+}
+
+.nav {
+    font-family: Graphik,sans-serif;
+    font-size: 14px;
+    color: #181818;
+    background-color: #303031;
+}
+
+/*La animacion de los botones :D*/
+.nav-item{
+    color: #FFFFFF;
+    padding: 1.2605rem 2.94118rem 1.17647rem;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.6s all ease;
+    display: block;
+    font-size: 0.75rem;
+}
+
+.nav-item::before{
+  background: #ff7675;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: -1;
+  transition: all 0.6s ease;
+}
+
+.btn1::before{
+  width: 0%;
+  height: 100%;
+}
+
+.btn1:hover::before{
+  width: 100%;
+}
+
+/*
+.nav-item:active{
+    background-color: #000000;
+    box-shadow: 0 0.5px #999999;
+    color: #FFFFFF;
+    transform: translateY(0.05rem);
+}*/
+
+.nav-item.nav-link:hover {
+    background-color: #000000;
+    box-shadow: 0 0.5px #999999;
+    color: #FFFFFF;
+}
+
+
+
+.icono{
+    max-width: 8rem;
+}
+.header{
+    background-color: #181818;
+    height: 12vh;
+}
+
+.footer-bg{
+    background-color: #181818;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    color: #FFFFFF;
+}
+
+.txt-white{
+    color: #FFFFFF;
+}
+
+h1 {
+    font-size: 2.25rem;
+    color: #303031;
+    font-weight: 400;
+}
+
+h2 {
+    font-size: 1.75rem;
+    color: #1DB0EE;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 1.25rem;
+    color: #1DB0EE;
+    font-weight: 400;
+}
+
+h4 {
+    font-size: 1rem;
+    color: #303031;
+    font-weight: 400;
+}
+
+p {
+    font-size: 13px;
+    color:#000000;
+}
+
+a {
+    font-size: 1rem;
+    color: #1DB0EE;
+    font-weight: 400;
+}
+
+.pequeno {
+    font-size: 10px;
+    color:#303031;
+}
+
+.sutil {
+    font-size: 13px;
+    color:#999999;
+}
+
+.folio {
+    margin-top: 4rem;
+}
+
+.pagination {
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+
+.margin-top-1rem{
+    margin-top: 1rem;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: 1rem 1.1rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.btn-dark {
+    color: #fff;
+    background-color: #303031;
+    border-color: #303031;
+}
+
+.cubridor{
+    min-height: 80vh;
+}
+
+img.per{
+    max-width: 15rem;
+}
+
+.cabecera{
+    
+}
