@@ -145,17 +145,17 @@ public class D_Documento implements Serializable {
      * Bueno bueno aqui ira una parte para borrar cierto documento
      * *Nota*:Este metodo solo borrara su registro de la BD solo para 
      * que el archivo sea inaccesible unciamente 
-     * @param id
+     * @param id_MDocumento
      * @return 
      */
-    public boolean BorrarDoc( int id ){
+    public boolean BorrarDoc( int id_MDocumento ){
         boolean correcto = false;
         //CallableStatement cs = null;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = ("DELETE FROM d_documento WHERE ID_Documento=?");
+            this.query = ("DELETE FROM d_documento WHERE id_MDocumento=?");
             ps = con.prepareCall(query);
-            ps.setInt(1, id);
+            ps.setInt(1, id_MDocumento);
             if(ps.executeUpdate()==1) correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

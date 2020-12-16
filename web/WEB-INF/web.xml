@@ -24,6 +24,14 @@
         <servlet-name>downloadFile</servlet-name>
         <servlet-class>MDocumentos.Servlets.downloadFile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateFile</servlet-name>
+        <servlet-class>MDocumentos.Servlets.updateFile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteFile</servlet-name>
+        <servlet-class>MDocumentos.Servlets.deleteFile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>downloadFile</servlet-name>
         <url-pattern>/downloadFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateFile</servlet-name>
+        <url-pattern>/updateFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteFile</servlet-name>
+        <url-pattern>/deleteFile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
