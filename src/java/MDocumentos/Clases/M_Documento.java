@@ -117,6 +117,33 @@ public class M_Documento implements Serializable {
         }
         return correcto;
     }
+    
+    /**
+     * Borrar la maestra del documento no es la gran cosa
+     * @param idM_Documento
+     * @return 
+     */
+    public boolean Consultar_mDoc(int idM_Documento, int id_usuario_p){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            this.con = Conexion.obtenerConexion();
+            this.query = ("SELECT * FROM m_Documento WHERE id_MDocumento=?");
+            ps = con.prepareCall(query);
+            ps.setInt(1, idM_Documento);
+            ResultSet res = ps.executeQuery();
+            while(res.next()){
+                System.out.println("Documento encontrado");
+                this.setIdM_Documento(rs.getInt("IdM_Documento"));
+                this.setId_D_DOcumento(rs.getInt("Id_D_DOcumento"));
+                this.setId_usuario_p(rs.getInt("Id_usuario_p"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return correcto;
+    }
 
     @Override
     public String toString() {

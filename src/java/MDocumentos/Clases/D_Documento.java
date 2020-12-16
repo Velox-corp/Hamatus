@@ -61,6 +61,39 @@ public class D_Documento implements Serializable {
     }
     
     /**
+     * Este metodo se dedicara a buscar ese doc que necesitamos, el objeto que 
+     * utilice este metodo se converira en ese objeto
+     * @param ID
+     */
+    public void ConsultarD_Doc(int ID){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            this.con = Conexion.obtenerConexion();
+            this.query = ("SELECT * FROM d_Documento WHERE id_MDocumento=?");
+            ps = con.prepareCall(query);
+            ps.setInt(1, ID);
+            ResultSet res = ps.executeQuery();
+            while(res.next()){
+                System.out.println("Documento encontrado");
+                this.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
+                this.setFecha(res.getString("fecha_subida"));
+                this.setFolio(rs.getString("Folio"));
+                this.setHora(rs.getString("hora_subida"));
+                this.setID_Documento(rs.getInt("ID_Documento"));
+                this.setId_MDocumento(rs.getInt("Id_MDocumento"));
+                this.setId_tipo_acceso(rs.getInt("Id_tipo_acceso"));
+                this.setNombre(rs.getString("Nombre"));
+                this.setPass(rs.getString("Password"));
+                this.setRuta(rs.getString("Ruta"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    /**
      * @param nombre
      * @param ruta
      * @param pass
@@ -188,7 +221,7 @@ public class D_Documento implements Serializable {
         }
         return correcto;
     }
-
+   
     public static Connection getCon() {
         return con;
     }
