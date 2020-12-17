@@ -82,7 +82,7 @@ public class EUsuarioEquipo implements Serializable {
     /**
      * Método para ingresar a la bd la relación entre los empleados y el equipo, este método solo ingresa a una persona, por lo que debe de implementarse dentro de un for
      * @param relUserEquip El objeto EUsuarioEquipo con la relación entre tablas;
-     * @return 
+     * @return true si amarra
      */
     public static boolean ingresarEmpleadoEquipo(EUsuarioEquipo relUserEquip){
         boolean proceso_correcto = true;

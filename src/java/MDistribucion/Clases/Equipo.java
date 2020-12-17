@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
- * Clase/entidad de equipo, util para crear un equipo en bruto (aquí no se ingresan los usuarios)
+ * Clase/entidad de equipo, util para crear un equipo en bruto (aquí no se ingresan los usuarios) y se desapareció
  * @author el Damián
  */
 @Entity
