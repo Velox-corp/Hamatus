@@ -7,6 +7,7 @@ package MUsuarios.Servlets;
 
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
+import static MUsuarios.clases.UsuarioEmpleado.ConsultarEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -44,7 +45,7 @@ public class iniciarSesion extends HttpServlet {
             UsuarioEmpleado usu = new UsuarioEmpleado();
             
             //Ejecutar busqueda
-            usu.ConsultarEmpleado(correo, pass);
+            usu = ConsultarEmpleado(correo, pass);
             //Iniciamos sesion
             HttpSession sesionEmpresa = request.getSession(true);
             sesionEmpresa.setAttribute("usuario", usu);
