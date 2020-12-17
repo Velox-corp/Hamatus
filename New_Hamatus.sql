@@ -41,7 +41,6 @@ CREATE TABLE IF NOT EXISTS `bn0u7lmchdieamnqsf74`.`empresa` (
   `Razon_social` TINYTEXT NOT NULL,
   PRIMARY KEY (`ID_Empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -75,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `bn0u7lmchdieamnqsf74`.`division` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_division_jerarquia`
     FOREIGN KEY (`ID_Jerarquia`)
-    REFERENCES `bn0u7lmchdieamnqsf74`.`Cat_jerarquía` (`id_jerarquia`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -230,14 +228,7 @@ CREATE TABLE IF NOT EXISTS `bn0u7lmchdieamnqsf74`.`e_usuario_equipo` (
   PRIMARY KEY (`ID_Usuario_Equipo`),
   CONSTRAINT `fk_Usuario-Equipo_Equipo1`
     FOREIGN KEY (`ID_Equipo`)
-    REFERENCES `bn0u7lmchdieamnqsf74`.`equipo` (`ID_Equipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Usuario-Equipo_Usuario-Empleado1`
-    FOREIGN KEY (`ID_Usuario_Empleado`)
-    REFERENCES `bn0u7lmchdieamnqsf74`.`usuario_empleado` (`ID_Usuario_E`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `bn0u7lmchdieamnqsf74`.`Cat_jerarquía` (`id_jerarquia`)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -308,14 +299,19 @@ USE `bn0u7lmchdieamnqsf74`;
 DROP procedure IF EXISTS `bn0u7lmchdieamnqsf74`.`ingresarAdmin`;
 
 DELIMITER $$
-USE `bn0u7lmchdieamnqsf74`$$
-CREATE PROCEDURE `ingresarAdmin`(nombre tinytext, appat tinytext, apmat tinytext,
-f_n date, correo text(45), pass text(30), foto Blob, idE int)
+    REFERENCES `bn0u7lmchdieamnqsf74`.`equipo` (`ID_Equipo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario-Equipo_Usuario-Empleado1`
+    FOREIGN KEY (`ID_Usuario_Empleado`)
+    REFERENCES `bn0u7lmchdieamnqsf74`.`usuario_empleado` (`ID_Usuario_E`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 BEGIN
-	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.foto)
-    values (nombre, appat, apmat, f_n, correo, pass, foto);
-    Insert into `Empresa_Empleado` (ID_Usuario_E, id_empresa)
-    values ( (Select MAX(ID_Usuario_E) from Usuario_Empleado), idE);
+	insert into division (Nombre_A, id_jerarquia, id_empresa)
+    values ("Dirección general", 1, id_emp);
+	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Division, `Usuario_Empleado`.id_cat_privilegios, `Usuario_Empleado`.foto)
+    values (nombre, appat, apmat, f_n, correo, pass, (select `division`.ID_Division from division where ID_empresa = id_emp limit 1), 1, foto);
 END$$
 
 DELIMITER ;
@@ -343,3 +339,7 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+USE `bn0u7lmchdieamnqsf74`$$
+CREATE PROCEDURE `ingresarAdmin`(nombre tinytext, appat tinytext, apmat tinytext,
+f_n date, correo text(45), pass text(30), foto Blob, idE int)

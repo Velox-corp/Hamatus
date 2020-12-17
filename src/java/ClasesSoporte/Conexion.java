@@ -21,9 +21,9 @@ public class Conexion {
      */
     public static Connection obtenerConexion(){
         Connection con = null;
-        String user = "root";
-        String password = "n0m3l0";
-        String url = "jdbc:mysql://localhost:3306/hamatus";
+        String user = "uhltze43t3xnfmyw";
+        String password = "UTAkwoJYjaUHpVttdWlv";
+        String url = "jdbc:mysql://uhltze43t3xnfmyw:UTAkwoJYjaUHpVttdWlv@bn0u7lmchdieamnqsf74-mysql.services.clever-cloud.com:3306/bn0u7lmchdieamnqsf74";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
