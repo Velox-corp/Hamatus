@@ -14,23 +14,23 @@
     </servlet>
     <servlet>
         <servlet-name>uploadFile</servlet-name>
-        <servlet-class>MUsuarios.Servlets.uploadFile</servlet-class>
+        <servlet-class>MDocumentos.Servlets.uploadFile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>crearEquipoTrabajo</servlet-name>
         <servlet-class>MDistribucion.Servlets.crearEquipoTrabajo</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>eliminarEquipo</servlet-name>
-        <servlet-class>MDistribucion.Servlets.eliminarEquipo</servlet-class>
+        <servlet-name>downloadFile</servlet-name>
+        <servlet-class>MDocumentos.Servlets.downloadFile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>sacarDelEquipo</servlet-name>
-        <servlet-class>MDistribucion.Servlets.sacarDelEquipo</servlet-class>
+        <servlet-name>updateFile</servlet-name>
+        <servlet-class>MDocumentos.Servlets.updateFile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>addEmpleadosEquipo</servlet-name>
-        <servlet-class>MDistribucion.Servlets.addEmpleadosEquipo</servlet-class>
+        <servlet-name>deleteFile</servlet-name>
+        <servlet-class>MDocumentos.Servlets.deleteFile</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
@@ -53,27 +53,20 @@
         <url-pattern>/crearEquipoTrabajo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>eliminarEquipo</servlet-name>
-        <url-pattern>/eliminarEquipo</url-pattern>
+        <servlet-name>downloadFile</servlet-name>
+        <url-pattern>/downloadFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>sacarDelEquipo</servlet-name>
-        <url-pattern>/sacarDelEquipo</url-pattern>
+        <servlet-name>updateFile</servlet-name>
+        <url-pattern>/updateFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>addEmpleadosEquipo</servlet-name>
-        <url-pattern>/addEmpleadosEquipo</url-pattern>
+        <servlet-name>deleteFile</servlet-name>
+        <url-pattern>/deleteFile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <resource-ref>
-        <description>jdbc:mysql://localhost:3306/hamatus?zeroDateTimeBehavior=convertToNull</description>
-        <res-ref-name>Hamatus</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
 </web-app>

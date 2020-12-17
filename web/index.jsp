@@ -10,9 +10,46 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/estilo_inicial.css'>-->
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
+    <link rel="stylesheet" type="text/css" href="css/estilos.css">
+    <!--Scripts agregados-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="JS/jquery.flexslider.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(window).load(function() {
+          $('.flexslider').flexslider({
+              touch: true,
+              pauseOnAction: false,
+              pauseOnHover: false,
+          });
+        });
+    </script>
 </head>
 <body>
     <jsp:include page="Prueba-Reu/my-head.jsp" />
+    <!--Slidershow-->
+    <div class="flexslider"  style="background-color: #F3F3F3">
+        <ul class="slides">
+            <li>
+                <img src="img/b_1.jpg" alt="">
+                <section class="flex-caption">
+                    <p style="margin-top: 13.5vw; text-align: left; margin-left: 2rem; font-family: Graphik,sans-serif;"><a href="registro.jsp" class="btn btn-dark">REGISTRARSE</a></p>
+                </section>
+            </li>
+            <li>
+                <img src="img/b_3.jpg" alt="">
+                <section class="flex-caption">
+                    <p style="margin-top: 13.5vw; text-align: left; margin-left: 2rem; font-family: Graphik,sans-serif;"><a href="registro.jsp" class="btn btn-dark">INFORMARSE</a></p>
+                </section>
+            </li>
+            <li>
+                <img src="img/b_2.jpg" alt="">
+                <section class="flex-caption">
+                    <p style="margin-top: 7vw; text-align: left; margin-left: 40rem; font-family: Graphik,sans-serif"><a href="nosotros.jsp" class="btn btn-dark" style="font-size: 3rem">&nbsp;&nbsp;&nbsp;&nbsp;¡CONÓCENOS!&nbsp;&nbsp;&nbsp;&nbsp;</a></p>
+                </section>
+            </li>
+        </ul>
+    </div>
     <!-- 
         
 ███╗   ██╗ █████╗ ██╗   ██╗██╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗    ██████╗  █████╗ ██████╗ 

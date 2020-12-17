@@ -1,3 +1,6 @@
+<%@page import="MUsuarios.clases.Empresa"%>
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page import="java.io.File"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,77 +20,76 @@
       <!-- a reutilizar codigo se a dicho -->
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
     <div class="row margin-top-1rem">
-            <div class="col-md-4 folio">
-                    <ul>
-                        <li class="list-item">
-                            <h4>Clientes</h4>
-                                <ul>
-                                    <li class="list-item">
-                                            Consectetur adipiscing elit
-                                    </li>
-                                    <li class="list-item">
-                                            Integer molestie lorem at massa
-                                    </li>
-                                    <li class="list-item">
-                                            Facilisis in pretium nisl aliquet
-                                    </li>
-                                    <li class="list-item">
-                                            Nulla volutpat aliquam velit
-                                    </li>
-                                    <li class="list-item">
-                                            Faucibus porta lacus fringilla vel
-                                    </li>
-                                </ul>
-                        </li>
-                        <li class="list-item">
-                                Aenean sit amet erat nunc
-                        </li>
-                        <li class="list-item">
-                            <h4>Empresa</h4>
-                                <ul>
-                                    <li class="list-item">
-                                            Consectetur adipiscing elit
-                                    </li>
-                                    <li class="list-item">
-                                            Integer molestie lorem at massa
-                                    </li>
-                                    <li class="list-item">
-                                            Facilisis in pretium nisl aliquet
-                                    </li>
-                                    <li class="list-item">
-                                            Nulla volutpat aliquam velit
-                                    </li>
-                                    <li class="list-item">
-                                            Faucibus porta lacus fringilla vel
-                                    </li>
-                                </ul>
-                        </li>
-                </ul>
+        <div class="col-md-4 folio">
+            <ul>
+              <%
+                HttpSession sesionUser = request.getSession();
+                boolean obtencionAdecuada = false;
+                UsuarioEmpleado usuario= null;
+                Empresa emp = null;
+                try{
+                    usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+                    emp = (Empresa) sesionUser.getAttribute("empresa");
+                    obtencionAdecuada = true; 
+                }catch(NullPointerException ex){
+                    obtencionAdecuada = false;
+                }
+                String id = usuario.getIDUsuarioE().toString();
+                String ruta = "/" + id;
+                File file;
+                File dir = new java.io.File(ruta);
+
+                String[] list = dir.list();
+
+                if (list.length > 0) {
+
+                    for (int i = 0; i < list.length; i++) {
+                        file = new java.io.File(ruta + list[i]);
+
+                if (file.isFile()) {
+                %>
+                <li class="list-item">
+                    <a href="/downloadFile?ruta=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" target="_top"><%=list[i]%></a>
+                </li>    
+                    <%
+                        }
+                    }
+                }
+                %>
+            </ul>
         </div>
+    </div>
         <div class="col-md-7">
                 <nav>
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="#">Previous</a>
+                            <a class="page-link" href="#">Subir</a>
                         </li>
                     </ul>
                 </nav>
                 <div class="card">
+                    <form class="card-body form-group" action="uploadFile" method="POST" enctype="multipart/form-data">
+                        <input class="form-control" name="File" type="file">
+                        <input class="form-control" name="pass" type="password">
+                        <input class="form-control" name="folio" type="text">
+                        <input class="form-control" name="Equipo_ID_Equipo" type="text" value="<%= usuario.getIDUsuarioE() %>">
+                        <input class="form-control" name="id_D_DOcumento" type="number">
+                        <input class="form-control" name="id_usuario_p" type="number">
+                        <button type="submit" class="btn btn-primary">Subir</button>
+                    </form>
                         <div class="card-body">
-                                <p class="card-text">
-                                        Card content
-                                </p>
+                                
+                            <div class="justify-content-center">
+                                <button type="" class="btn btn-primary">
+                                    Guardar Cambios
+                                </button>
+                                <button type="button" class="btn btn-primary">
+                                    Cancelar
+                                </button>
+                            </div>
                         </div>
                 </div> 
             <br>
-            <div class="justify-content-center">
-                <button type="button" class="btn btn-primary">
-                    Guardar Cambios
-                </button>
-                <button type="button" class="btn btn-primary">
-                    Cancelar
-                </button>
-            </div>
         </div>
         <div class="col-md-1">
         </div>

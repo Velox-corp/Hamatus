@@ -16,13 +16,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,8 +28,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.sql.DataSource;
-import javax.transaction.UserTransaction;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,6 +48,38 @@ public class UsuarioEmpleado implements Serializable {
     private static PreparedStatement ps = null;
     private static ResultSet rs = null;
     private static final long serialVersionUID = 1L;
+
+    public static Connection getCon() {
+        return con;
+    }
+
+    public static void setCon(Connection aCon) {
+        con = aCon;
+    }
+
+    public static String getQ() {
+        return q;
+    }
+
+    public static void setQ(String aQ) {
+        q = aQ;
+    }
+
+    public static PreparedStatement getPs() {
+        return ps;
+    }
+
+    public static void setPs(PreparedStatement aPs) {
+        ps = aPs;
+    }
+
+    public static ResultSet getRs() {
+        return rs;
+    }
+
+    public static void setRs(ResultSet aRs) {
+        rs = aRs;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -92,10 +118,10 @@ public class UsuarioEmpleado implements Serializable {
     @Lob
     @Column(name = "Foto")
     private byte[] foto;
-    @Column(name = "ID_Division")
-    private Integer iD_Division;
-    @Column(name = "ID_cat_privilegios")
-    private Integer iD_cat_priv;
+    @Column(name = "ID-Nivel-P")
+    private Integer iDNivelP;
+    @Column(name = "ID-Jerarquia-P")
+    private Integer iDJerarquiaP;
 
     public UsuarioEmpleado() {
     }
@@ -132,11 +158,11 @@ public class UsuarioEmpleado implements Serializable {
      * @param fechaNacimiento: fecha de nacimiento del usuario solicitado
      * @param correo: correo del usuario solicitado
      * @param password: Contraseña del usuario solicitado
-     * @param id_division: El ide de la división a la pertenecerá
-     * @param id_cat_priv: id_nivel de la jerarquía del empleado
+     * @param idjerarquiap: id_jer del usuario solicitado
+     * @param idjerarquiaNivelD: id_nivel  del usuario solicitado
      * @param foto: foto  del usuario solicitado
      */
-    public UsuarioEmpleado(int id_usuario_e, String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int id_division, int id_cat_priv, byte[]foto) {
+    public UsuarioEmpleado(int id_usuario_e, String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int idjerarquiap, int idjerarquiaNivelD, byte[]foto) {
         this.iDUsuarioE = id_usuario_e;
         this.nombre = nombre;
         this.appat = appat;
@@ -144,8 +170,8 @@ public class UsuarioEmpleado implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.password = password;
-        this.iD_Division = id_division;
-        this.iD_cat_priv = id_cat_priv;
+        this.iDJerarquiaP =idjerarquiap;
+        this.iDNivelP = idjerarquiaNivelD;
         this.foto = foto;
     }
     
@@ -157,19 +183,19 @@ public class UsuarioEmpleado implements Serializable {
      * @param fechaNacimiento: fecha de nacimiento del usuario a ingresar
      * @param correo: correo del usuario a ingresar
      * @param password: Contraseña del usuario a ingresar
-     * @param id_division: El ide de la división a la pertenecerá
-     * @param id_cat_priv: id_nivel de la jerarquía del empleado
+     * @param idjerarquiap: id_jer del usuario a ingresar
+     * @param idjerarquiaNivelD: id_nivel del usuario a ingresar
      * @param foto: foto  del usuario a ingresar
      */
-    public UsuarioEmpleado(String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int id_division, int id_cat_priv, byte[]foto) {
+    public UsuarioEmpleado(String nombre, String appat, String apmat, String fechaNacimiento, String correo, String password, int idjerarquiap, int idjerarquiaNivelD, byte[]foto) {
         this.nombre = nombre;
         this.appat = appat;
         this.apmat = apmat;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.password = password;
-        this.iD_Division = id_division;
-        this.iD_cat_priv = id_cat_priv;
+        this.iDJerarquiaP =idjerarquiap;
+        this.iDNivelP = idjerarquiaNivelD;
         this.foto = foto;
     }
 
@@ -213,8 +239,8 @@ public class UsuarioEmpleado implements Serializable {
     }
     
     /**
-     * Método para ingresar un empleado a la bd, basicamente el método a llamar para que el administrador vaya generando los usuarios
-     * *¡NOTA! Este método usa ul procedimiento almacenado desactualizado, así que se tend´ria que reajustar este método o ejecutar el insert directamente por aquí*
+     * Método para ingresar un empleado a la bd
+     * Si es la cuenta de administrador recordar que se van a enviar nulos, de lo contrario todos los campos a excepción de la foto deben de estar
      * @param empleado: El empleado a ingresar a la bd
      * @param id_emp: El id de la empresa al que pertenece el usuario.
      * @return 
@@ -231,8 +257,8 @@ public class UsuarioEmpleado implements Serializable {
             cs.setString(4, empleado.getFechaNacimiento());
             cs.setString(5, empleado.getCorreo());
             cs.setString(8, empleado.getPassword());
-            cs.setInt(6, empleado.getiD_Division());
-            cs.setInt(7, empleado.getiD_cat_priv());
+            cs.setInt(6, empleado.getIDJerarquiaP());
+            cs.setInt(7, empleado.getIDNivelP());
             cs.setBytes(9, empleado.getFoto());
             cs.setInt(10, id_emp);
             return cs.executeUpdate() == 1;
@@ -258,48 +284,45 @@ public class UsuarioEmpleado implements Serializable {
      * que no reemplace otros datos
      * @param correo pues el correo
      * @param pass pues la pass
-     * @return EL objeto UsuarioEmpleado con los datos del usuario que se logeo
      */
-    public static UsuarioEmpleado ConsultarEmpleado(String correo, String pass){
-        UsuarioEmpleado userLog = null;
+    public void ConsultarEmpleado(String correo, String pass){
         try{
             con = Conexion.obtenerConexion();
-            q = "SELECT * FROM usuario_empleado WHERE Correo = ? AND pass = ? limit 1";
-            ps= con.prepareStatement(q);
-            ps.setString(1, correo);
-            ps.setString(2, pass);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                userLog = new UsuarioEmpleado();
-                userLog.setNombre(rs.getString("Nombre"));
-                userLog.setAppat(rs.getString("appat"));
-                userLog.setApmat(rs.getString("apmat"));
-                userLog.setCorreo(rs.getString("correo"));
-                userLog.setFechaNacimiento(rs.getString("Fecha_Nacimiento"));
-                userLog.setPassword(rs.getString("pass"));
-                userLog.setiD_Division(rs.getInt("ID_Division"));
-                userLog.setiD_cat_priv(rs.getInt("ID_cat_privilegios"));
-                userLog.setIDUsuarioE(rs.getInt("ID_Usuario_E"));
+            String sql = "SELECT * FROM usuario_empleado WHERE correo = ? AND pass = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, correo);
+            pstmt.setString(2, pass);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                System.out.println("Usuario encontrado nombre: " + rs.getString("nombre"));
+                this.setNombre(rs.getString("nombre"));
+                this.setAppat(rs.getString("appat"));
+                this.setApmat(rs.getString("apmat"));
+                this.setCorreo(rs.getString("correo"));
+                this.setFechaNacimiento(rs.getString("Fecha_Nacimiento"));
+                this.setPassword(rs.getString("pass"));
+                this.setIDJerarquiaP(rs.getInt("ID_Jerarquia_P"));
+                this.setIDNivelP(rs.getInt("ID_Nivel_P"));
+                this.setIDUsuarioE(rs.getInt("ID_Usuario_E"));
+                break;
             }
-        }catch(SQLException | NullPointerException e){
+        }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
         }finally{
             try {
                 con. close();
                 q = "";
-                rs.close();
             } catch (SQLException | NullPointerException ex) {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return userLog;
     }
     
     
     /**
      * Metodo para obtener todos los usuarios de la base de datos
-     * @return  Un ArrayLisy vectorizado que contiene a TODOS los usuarios de la base de datos
+     * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
      */
     public static ArrayList<UsuarioEmpleado> obtenerUsuarios(){
         ArrayList<UsuarioEmpleado> empleados = null;
@@ -318,8 +341,8 @@ public class UsuarioEmpleado implements Serializable {
                                 rs.getString("correo"), 
                                 rs.getString("fecha_nacimiento"), 
                                 rs.getString("pass"), 
-                                rs.getInt("ID_Division"), 
-                                rs.getInt("ID_cat_privilegios"), 
+                                rs.getInt("ID_Jerarquia_P"), 
+                                rs.getInt("ID_Nivel_P"), 
                                 rs.getBytes("foto"));
                 
                 empleados.add(empleado);
@@ -344,12 +367,12 @@ public class UsuarioEmpleado implements Serializable {
     
     /**
      * Metodo para obtener los usuarios pertenecientes a una división en la base de datos a partir del id del lider de división
-     * ¡¡NOTA!! Este metodo aún no está implementado para funcionar como debería a partir de un usuario, de momento funciona igual a la obtención de usuarios general
-     * @param idLider El id del lider de sección.
+     * ¡¡NOTA!! Este metodo aún no está implementado completamente, de momento funciona igual a la obtención de usuarios general
+     * @param idLider El id del lider de sección, con el cual 
      * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
      */
     public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idLider){
-        ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
+        ArrayList<UsuarioEmpleado> empleados = null;
         try{
             con = Conexion.obtenerConexion();
             q = "SELECT * FROM Usuario_empleado"; //por aquí debe de haber un WHERE tal = ?
@@ -366,8 +389,8 @@ public class UsuarioEmpleado implements Serializable {
                                 rs.getString("correo"), 
                                 rs.getString("fecha_nacimiento"), 
                                 rs.getString("pass"), 
-                                rs.getInt("ID_Division"), 
-                                rs.getInt("ID_cat_privilegios"), 
+                                rs.getInt("ID_Jerarquia_P"), 
+                                rs.getInt("ID_Nivel_P"), 
                                 rs.getBytes("foto"));
                 empleados.add(empleado);
             }
@@ -390,54 +413,13 @@ public class UsuarioEmpleado implements Serializable {
     }
     
     /**
-     * Metodo para obtener todos los usuarios pertenecientes a un equipo. 
-     * Ingresar '0' si se desea recuperar los que NO tienen equipo.
+     * Metodo para obtener todos los usuarios pertenecientes a un equipo. Ingresar "0" si se desea recuperar los que no tienen equipo
+     * ¡Aun no esta implementado!
      * @param id_equipo El ide del equipo donde se buscaran todos los empleados
      * @return la lista de empleados pertenecientes a un equipo de trabajo.
      */
     public static ArrayList<UsuarioEmpleado> obtenerUsuariosEquipo(int id_equipo){
-        ArrayList<UsuarioEmpleado> empleados =  new ArrayList<UsuarioEmpleado>();
-        try{
-            con = Conexion.obtenerConexion();
-            if(id_equipo == 0){
-                q = "SELECT * from usuario_empleado where ID_usuario_e \n" +
-                    " not in (select ID_Usuario_Empleado from e_usuario_equipo)";
-                ps = con.prepareStatement(q);
-            }else{
-                q = "SELECT usuario_empleado.* FROM usuario_empleado join e_usuario_equipo on ID_Usuario_E = ID_Usuario_Empleado \n" +
-                    "where e_usuario_equipo.ID_Equipo = ?;";
-                ps = con.prepareStatement(q);
-                ps.setInt(1, id_equipo);
-            }
-            rs = ps.executeQuery();
-            while(rs.next()){
-                UsuarioEmpleado empleado = 
-                        new UsuarioEmpleado(
-                                rs.getInt("ID_usuario_e"), 
-                                rs.getString("nombre"), 
-                                rs.getString("appat"), 
-                                rs.getString("apmat"), 
-                                rs.getString("correo"), 
-                                rs.getString("fecha_nacimiento"), 
-                                rs.getString("pass"), 
-                                rs.getInt("ID_Division"), 
-                                rs.getInt("ID_cat_privilegios"), 
-                                rs.getBytes("foto"));
-                empleados.add(empleado);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            try {
-                con.close();
-                q = "";
-                ps.close();
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return empleados;
+        throw new UnsupportedOperationException("Aun no lo hemos programado."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public Integer getIDUsuarioE() {
@@ -504,7 +486,21 @@ public class UsuarioEmpleado implements Serializable {
         this.foto = foto;
     }
 
-    
+    public Integer getIDNivelP() {
+        return iDNivelP;
+    }
+
+    public void setIDNivelP(Integer iDNivelP) {
+        this.iDNivelP = iDNivelP;
+    }
+
+    public Integer getIDJerarquiaP() {
+        return iDJerarquiaP;
+    }
+
+    public void setIDJerarquiaP(Integer iDJerarquiaP) {
+        this.iDJerarquiaP = iDJerarquiaP;
+    }
 
     @Override
     public int hashCode() {
@@ -531,7 +527,6 @@ public class UsuarioEmpleado implements Serializable {
         return "MUsuarios.clases.UsuarioEmpleado[ iDUsuarioE=" + iDUsuarioE + " ]";
     }
 
-
     public Integer getiDUsuarioE() {
         return iDUsuarioE;
     }
@@ -540,22 +535,22 @@ public class UsuarioEmpleado implements Serializable {
         this.iDUsuarioE = iDUsuarioE;
     }
 
-    public Integer getiD_Division() {
-        return iD_Division;
+    public Integer getiDNivelP() {
+        return iDNivelP;
     }
 
-    public void setiD_Division(Integer iD_Division) {
-        this.iD_Division = iD_Division;
+    public void setiDNivelP(Integer iDNivelP) {
+        this.iDNivelP = iDNivelP;
     }
 
-    public Integer getiD_cat_priv() {
-        return iD_cat_priv;
+    public Integer getiDJerarquiaP() {
+        return iDJerarquiaP;
     }
 
-    public void setiD_cat_priv(Integer iD_cat_priv) {
-        this.iD_cat_priv = iD_cat_priv;
+    public void setiDJerarquiaP(Integer iDJerarquiaP) {
+        this.iDJerarquiaP = iDJerarquiaP;
     }
-
+    
     
     
 }

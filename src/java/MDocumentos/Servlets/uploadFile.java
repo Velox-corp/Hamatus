@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MUsuarios.Servlets;
+package MDocumentos.Servlets;
 
+import MDocumentos.Clases.D_Documento;
+import MDocumentos.Clases.M_Documento;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -29,6 +32,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**
  *
  * @author taspi
+ * 
+ * Basicamente esta cosa se activa con un formulario, y requiere los siguientes 
+ * parametros para la subida: pass, direccion y file, este ultimo en funcion
+ * de la clase Part
  */
 public class uploadFile extends HttpServlet {
     /**
@@ -44,17 +51,45 @@ public class uploadFile extends HttpServlet {
             throws ServletException, IOException {
         
         try (PrintWriter out = response.getWriter()) {
-            String description = request.getParameter("description"); //Se refiere al titulo
-            String dirc = request.getParameter("direccion"); //Se refiere al titulo
-            Part filePart = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); //Basicamente nos trae el nombre del archivo
-            InputStream fileContent = filePart.getInputStream();//El contenido en bytes del archivo
+            String pass = request.getParameter("pass");
+            int id_tipo_acceso   = Integer.parseInt(request.getParameter("id_tipo_acceso"));
+            String folio         = request.getParameter("folio");
+            int Equipo_ID_Equipo = Integer.parseInt(request.getParameter("Equipo_ID_Equipo"));
+            int id_D_DOcumento   = Integer.parseInt(request.getParameter("id_D_DOcumento"));
+            int id_usuario_p     = Integer.parseInt(request.getParameter("id_usuario_p"));
+            String ruta = request
+                    .getParameter("ruta"); //Se refiere al titulo
+            Part filePart = request
+                    .getPart("file"); // Es el archivo y es la unica menra de traerlo
+            String nombre = Paths.get(filePart.getSubmittedFileName())
+                    .getFileName().toString(); //Basicamente nos trae el nombre del archivo
+            InputStream fileContent = filePart
+                    .getInputStream();//El contenido en bytes del archivo
             
+            //Listado de datos preparados para entrar en la BD
+            M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
+            if (mdoc.registrarM_Documentos()) {
+                System.out.println("Todo correcto hasta el moemnto..");
+                System.out.println("Entrando en fase 2");
+                D_Documento ddoc = new D_Documento(nombre, ruta, pass,
+                        id_tipo_acceso,folio, Equipo_ID_Equipo, 
+                        mdoc.getIdM_Documento());
+                if (ddoc.registrarDoc()) {
+                    System.out.println("Todo Correcto uwu");
+                }else{
+                    System.out.println("Todo mal en ddoc unu");
+                }
+            }else{
+                System.out.println("Ya valio esto unu, posible error al "
+                        + "registrar la master del doc");
+            }
+            
+            //Despues de todo ese merequetenge de la BD ya empieza lo del doc
             //Creacion del directorio y del achivo
-            crearDirectorio(dirc);
+            crearDirectorio(ruta);
             
             //despues metemos en ese direcorio nuestro archivo
-            File f = crearArchivo(dirc, fileName);
+            File f = crearArchivo(ruta, nombre);
             
             OutputStream out2 = new FileOutputStream(f);//Todo el inputStream va hacia nuestro archivo
             

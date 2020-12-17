@@ -3,31 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MUsuarios.Servlets;
+package MDocumentos.Servlets;
 
-import MUsuarios.clases.Empresa;
-import MUsuarios.clases.UsuarioEmpleado;
+import MDocumentos.Clases.D_Documento;
+import MDocumentos.Clases.M_Documento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author taspi
+ * Cabe recordar que este metodo solo es para borrar la info de donde se 
+ * guarda el archivo solo es para que se vuelva inaccesible como tal el archivo 
+ * no se borra aunque esta en consideracion eso mismo
  */
-public class iniciarSesion extends HttpServlet {
+public class deleteFile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     * Este servlet tiene la funcion de ejecutar la parte del inicio de sesion 
-     * de la pagina, creo que debemos de poner esta pagina despues de que el 
-     * usuario ya se registro pero bueno ya veremos como estara esta onda, 
-     * me voy a basar de la clase de crear empresa
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -36,27 +35,32 @@ public class iniciarSesion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String redirect = "error.jsp";
         try (PrintWriter out = response.getWriter()) {
-            boolean proceso_correcto = true;
-            String correo = request.getParameter("email");
-            String pass = request.getParameter("pwd");
-            UsuarioEmpleado usu = new UsuarioEmpleado();
-            
-            //Ejecutar busqueda
-            usu.ConsultarEmpleado(correo, pass);
-            //Iniciamos sesion
-            HttpSession sesionEmpresa = request.getSession(true);
-            sesionEmpresa.setAttribute("usuario", usu);
-            Empresa emp = new Empresa(usu.getIDUsuarioE());
-            sesionEmpresa.setAttribute("empresa", emp);
-            redirect = "empresa.jsp";
-            response.sendRedirect(redirect);
-        }catch(Exception e){
-            redirect = "error.jsp";
-            response.sendRedirect(redirect);
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            /*Suponinedo que se presiono un boton o algo asi, 
+            porcedemos a hacer lo siguiente*/
+            //String pass = request.getParameter("pass");//Pide pass para borrar el doc
+            int id_MDocumento = Integer.parseInt(request.
+                    getParameter("id_MDocumento"));
+            M_Documento mdoc = new M_Documento();
+            D_Documento ddoc = new D_Documento();
+            String rec = "error.jsp";
+            boolean correcto = false;
+            try {
+                //Hasta aqui no hay problema
+                mdoc.BorrarM_Documentos(id_MDocumento);
+                ddoc.BorrarDoc(id_MDocumento);
+                correcto=true;
+            } catch (Exception e) {//EN caso de que algo extraño sucediera
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+            if (correcto) {
+                System.out.println("Bien lo borro perfectamente");
+                rec="docs.jsp";
+            }else{
+                System.out.println("No se borro el doc unu");
+            }
+            response.sendRedirect(rec);
         }
     }
 

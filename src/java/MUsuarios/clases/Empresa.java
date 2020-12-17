@@ -45,7 +45,6 @@ public class Empresa implements Serializable{
     static PreparedStatement ps = null;
     static ResultSet rs = null;
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -80,11 +79,11 @@ public class Empresa implements Serializable{
         this.iDEmpresa = iDEmpresa;
     }
 
-    public Empresa(Integer iDEmpresa, String nombre, String descripcion, InputStream logo, String razónsocial) throws IOException{
+    public Empresa(Integer iDEmpresa, String nombre, String descripcion, Part logo, String razónsocial) throws IOException{
         this.iDEmpresa = iDEmpresa;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.logo = logo;
+        this.logo = logo.getInputStream();
         this.razónsocial = razónsocial;
     }
     
@@ -97,7 +96,7 @@ public class Empresa implements Serializable{
     }
 
     /**
-     * Método para instancíar una empresa dentro del programa, fundamental para el funcionamiento de hamatus ya que es el paso No 1
+     * Método para instanc´piar una empresa dnetor del programa, fundamental para el funcionamiento de hamatus ya que es el paso 1
      * @param emp El objeto empresa el cual posee toda la información de la empresa;
      * @return true si se ejecuto el ingreso a la bd de manera correcta
      */
@@ -158,47 +157,6 @@ public class Empresa implements Serializable{
         return null;
     }
     
-    /**
-     * Método para obtener la empresa a paritr del ide del usuario
-     * @param idUsuarioE
-     * @return 
-     */
-    public static Empresa buscarEmpresa(Integer idUsuarioE) {
-        Empresa emp = null;
-        try{
-            con = Conexion.obtenerConexion();
-            query = "SELECT empresa.ID_Empresa, empresa.Nombre, empresa.Descripcion, empresa.Logo, empresa.Razon_social "
-                    + "FROM empresa INNER JOIN usuario_empleado, division "
-                    + "WHERE empresa.ID_Empresa = division.ID_Empresa "
-                    + "AND division.ID_Division = usuario_empleado.ID_division "
-                    + "AND usuario_empleado.id_usuario_e = ?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, idUsuarioE);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                emp = new Empresa(
-                        rs.getInt("ID_Empresa"), 
-                        rs.getString("Nombre"),
-                        rs.getString("Descripcion"),
-                        rs.getBinaryStream("Logo"),
-                        rs.getString("Razon_social"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            try {
-                con.close();
-                query = "";
-                ps.close();
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return emp;
-    }
     
     public Integer getIDEmpresa() {
         return iDEmpresa;

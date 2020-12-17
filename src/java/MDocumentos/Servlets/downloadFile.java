@@ -3,31 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MUsuarios.Servlets;
+package MDocumentos.Servlets;
 
-import MUsuarios.clases.Empresa;
-import MUsuarios.clases.UsuarioEmpleado;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author taspi
+ * 
+ * OK vamos a hacer esto, cuando quieran descargar un documento lo que vamos a
+ * hacer es utilizar el metodo get en un link, en teoria esto deberia de abrir 
+ * otra ventana para descargar el archivo.
+ * El link debera de aparecer de la siguiente forma:
+ * <a href="/downloadFile?ruta=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" target="_top"><%=list[i]%></a>
+ * 
+ * los demas atributos seran tomados bajo un script en la pagina JSP de la
+ * siguiente manera:
+ * <%
+        String ruta = "la ruta sera consultada de la bd";
+        java.io.File file;
+        java.io.File dir = new java.io.File(ruta);
+
+        String[] list = dir.list();
+
+        if (list.length > 0) {
+
+            for (int i = 0; i < list.length; i++) {
+                file = new java.io.File(root + list[i]);
+
+        if (file.isFile()) {
+    %>
+    * <a href="/downloadFile?ruta=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" target="_top"><%=list[i]%></a>
+            <%
+            }
+        }
+    }
+    %>
  */
-public class iniciarSesion extends HttpServlet {
+public class downloadFile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     * Este servlet tiene la funcion de ejecutar la parte del inicio de sesion 
-     * de la pagina, creo que debemos de poner esta pagina despues de que el 
-     * usuario ya se registro pero bueno ya veremos como estara esta onda, 
-     * me voy a basar de la clase de crear empresa
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -36,27 +62,7 @@ public class iniciarSesion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String redirect = "error.jsp";
         try (PrintWriter out = response.getWriter()) {
-            boolean proceso_correcto = true;
-            String correo = request.getParameter("email");
-            String pass = request.getParameter("pwd");
-            UsuarioEmpleado usu = new UsuarioEmpleado();
-            
-            //Ejecutar busqueda
-            usu.ConsultarEmpleado(correo, pass);
-            //Iniciamos sesion
-            HttpSession sesionEmpresa = request.getSession(true);
-            sesionEmpresa.setAttribute("usuario", usu);
-            Empresa emp = new Empresa(usu.getIDUsuarioE());
-            sesionEmpresa.setAttribute("empresa", emp);
-            redirect = "empresa.jsp";
-            response.sendRedirect(redirect);
-        }catch(Exception e){
-            redirect = "error.jsp";
-            response.sendRedirect(redirect);
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -72,7 +78,24 @@ public class iniciarSesion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String filePath = request.getParameter("filePath");
+        String fileName = request.getParameter("fileName");
+
+        MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+        String mimeType = mimeTypesMap.getContentType(request.getParameter("fileName"));
+
+        response.setContentType(mimeType);
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+
+        OutputStream out = response.getOutputStream();
+        FileInputStream in = new FileInputStream(filePath);
+        byte[] buffer = new byte[4096];
+        int length;
+        while ((length = in.read(buffer)) > 0) {
+            out.write(buffer, 0, length);
+        }
+        in.close();
+        out.flush();
     }
 
     /**

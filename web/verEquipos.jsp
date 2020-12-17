@@ -4,8 +4,6 @@
     Author     : maste
 --%>
 
-<%@page import="MDistribucion.Clases.EUsuarioEquipo"%>
-<%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
@@ -14,19 +12,12 @@
     String redirect = "";
     boolean desempeño_adecuado = true;
     HttpSession sesion;
-    UsuarioEmpleado liderDiv;
-    ArrayList<Equipo> equipos = new ArrayList<Equipo>();
-    int[] totalesEquipos = null;
+    //ArrayList<Equipos> equipos = new ArrayList<Equipos>();
     try{
         //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
         sesion = request.getSession();
-        liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        equipos = Equipo.obtenerEquipos(liderDiv.getIDUsuarioE());
-        totalesEquipos = new int[equipos.size()];
-        for (int i = 0; i < equipos.size(); i++) {
-            Equipo equip = equipos.get(i);
-            totalesEquipos[i] = EUsuarioEquipo.getTotalEmpleadosEquipo(equip.getIDEquipo());
-        }
+        UsuarioEmpleado liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
+        //equipos = Equipo.traerEquipos(liderdiv.getIDUsuarioE());
     }catch(Exception e){
         redirect = "error.jsp";
         desempeño_adecuado = false;
@@ -54,15 +45,30 @@
         <br>
         <div class="row">
 		<div class="col-md-12 text-center">
-                    <h4>Equipos de trabajo guardados</h4>
+                    <h4>Creación de nuevo equipo de trabajo</h4>
 		</div>
 	</div>
         <br>
-            
+            <input type="hidden" name="maxEmpleados" value="<%--=equipos.size()--%>">
+            <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for=nombreEquipo">
+                            Nombre del equipo:
+                        </label>
+                        <input type="text" id='nombreEquipo' name='nombregEquipo'>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for='división'>
+                            División correspondiente
+                        </label>
+                        <input type="text" readonly="readnoly" id='division' name='division'>
+                    </div>
+            </div>
+            <br>
             <%
-                for (int i = 0; i < equipos.size(); i++) {
-                    Equipo eq = equipos.get(i);
-                    int mod = (i+1)%3;
+                for (int i = 0; i < 5/*equipos.size(), el 5 para que no marque error*/; i++) {
+                    //Equipo eq = equipos.get(i);
+                    int mod = i%3;
                     switch(mod){
                         case 1:
                     %>
@@ -70,19 +76,11 @@
                     <div class="col-md-4">
                             <div class="card text-white bg-primary">
                                     <h5 class="card-header">
-                                            <%=eq.getNombre()%>
+                                            <%--=eq.getNombre()--%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input type='number' id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
-                                        <br>
-                                        <a class='btn btn-info' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                        <a class='btn btn-info' href='editarEquipo.jsp?id=<%--=eq.getId()--%>'>
                                             Editar equipo
-                                        </a>
-                                    </div>
-                                    <div class='card-footer'>
-                                        <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                            EliminarEquipo
                                         </a>
                                     </div>
                             </div>
@@ -92,21 +90,13 @@
                     <div class="col-md-4">
                             <div class="card text-white bg-primary">
                                     <h5 class="card-header">
-                                            <%=eq.getNombre()%>
+                                            <%--=eq.getNombre()--%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input type='number' id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
-                                        <br>
-                                        <a class='btn btn-info' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                        <a class='btn btn-info' href='editarEquipo.jsp?id=<%--=eq.getId()--%>'>
                                             Editar equipo
                                         </a>
                                     </div>
-                                    <div class='card-footer'>
-                                        <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                            Eliminar Equipo
-                                        </a>
-                                    </div>    
                             </div>
                     </div>
                             <% break;
@@ -115,24 +105,16 @@
                     <div class="col-md-4">
                             <div class="card text-white bg-primary">
                                     <h5 class="card-header">
-                                            <%=eq.getNombre()%>
+                                            <%--=eq.getNombre()--%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input type='number' id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
-                                        <br>
-                                        <a class='btn btn-info' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                        <a class='btn btn-info' href='editarEquipo.jsp?id=<%--=eq.getId()--%>'>
                                             Editar equipo
-                                        </a>
-                                    </div>
-                                    <div class='card-footer'>
-                                        <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                            Eliminar Equipo
                                         </a>
                                     </div>
                             </div>
                     </div>
-            </div><br>
+            </div>
                     <%break;
                     }//switch
                 }  // for %>

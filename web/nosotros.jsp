@@ -9,10 +9,12 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/estilo_inicial.css'>
     <script src='main.js'></script>-->
+    <link rel="stylesheet" type="text/css" href="css/estilos.css">
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
 </head>
 <body>
     <jsp:include page="Prueba-Reu/my-head.jsp" />
+    <jsp:include page="Prueba-Reu/velox.jsp" />
     <!-- 
         
 ███╗   ██╗ █████╗ ██╗   ██╗██╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗    ██████╗  █████╗ ██████╗ 
@@ -54,43 +56,6 @@
                                                                
 
       -->
-      <br>
-      <main class="cubridor d-flex align-items-center justify-content-center container jumbotron">
-        <div>
-            <center><H1>Velox</H1></center>
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab?
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab?
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab?
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab?
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                reprehenderit aperiam nulla officia facere! Error accusantium
-                magnam repellat. Incidunt eum perspiciatis ab?
-            </p>
-            <center><img class="img-fluid per" src="img/Logotipo.png"></center>
-        </div>
-    </main>
-
-
     <!-- 
         
 

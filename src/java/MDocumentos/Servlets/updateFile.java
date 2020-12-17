@@ -3,31 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MUsuarios.Servlets;
+package MDocumentos.Servlets;
 
-import MUsuarios.clases.Empresa;
-import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author taspi
+ * 
+ * Importante: Es probable que para el metodo se utilice GET pero de 
+ * preferencia utlixar POST
  */
-public class iniciarSesion extends HttpServlet {
+public class updateFile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     * Este servlet tiene la funcion de ejecutar la parte del inicio de sesion 
-     * de la pagina, creo que debemos de poner esta pagina despues de que el 
-     * usuario ya se registro pero bueno ya veremos como estara esta onda, 
-     * me voy a basar de la clase de crear empresa
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -36,27 +33,9 @@ public class iniciarSesion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String redirect = "error.jsp";
         try (PrintWriter out = response.getWriter()) {
-            boolean proceso_correcto = true;
-            String correo = request.getParameter("email");
-            String pass = request.getParameter("pwd");
-            UsuarioEmpleado usu = new UsuarioEmpleado();
+            /*Todo ese contenido aqui*/
             
-            //Ejecutar busqueda
-            usu.ConsultarEmpleado(correo, pass);
-            //Iniciamos sesion
-            HttpSession sesionEmpresa = request.getSession(true);
-            sesionEmpresa.setAttribute("usuario", usu);
-            Empresa emp = new Empresa(usu.getIDUsuarioE());
-            sesionEmpresa.setAttribute("empresa", emp);
-            redirect = "empresa.jsp";
-            response.sendRedirect(redirect);
-        }catch(Exception e){
-            redirect = "error.jsp";
-            response.sendRedirect(redirect);
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 

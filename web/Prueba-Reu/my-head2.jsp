@@ -1,9 +1,3 @@
-<%-- 
-    Document   : my-head2
-    Created on : 2/12/2020, 01:06:03 AM
-    Author     : taspi
---%>
-
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
