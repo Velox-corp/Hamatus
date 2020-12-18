@@ -122,7 +122,7 @@ public class uploadFile extends HttpServlet {
     }
     
     /**
-     * Crea nuestro archivo
+     * Crea nuestro archivo y lo guarda en el directorio
      */
     private static File crearArchivo(String dirc, String fileName){
         File f = new File(dirc + "/" + fileName);//Este es nuestro archivo que queremos guardar

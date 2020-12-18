@@ -44,6 +44,10 @@
         <servlet-name>sacarDelEquipo</servlet-name>
         <servlet-class>MDistribucion.Servlets.sacarDelEquipo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>IntroducirDoc</servlet-name>
+        <servlet-class>MDocumentos.Servlets.IntroducirDoc</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>sacarDelEquipo</servlet-name>
         <url-pattern>/sacarDelEquipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IntroducirDoc</servlet-name>
+        <url-pattern>/IntroducirDoc</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
