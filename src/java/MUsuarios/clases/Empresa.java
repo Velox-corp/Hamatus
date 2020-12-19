@@ -103,8 +103,8 @@ public class Empresa implements Serializable{
     public static boolean crearEmpresa(Empresa emp){
         boolean procesoCorrecto = true;
         try{
-            con = Conexion.obtenerConexion();
-            query = ("INSERT INTO hamatus.Empresa (Nombre, Descripcion, Logo, Razon_social) values (?, ?, ?, ?)");
+            Empresa.con = Conexion.obtenerConexion();
+            Empresa.query = ("INSERT INTO empresa (Nombre, Descripcion, Logo, Razon_social) VALUES (?, ?, ?, ?)");
             ps = con.prepareStatement(query);
             ps.setString(1, emp.getNombre());
             ps.setString(2, emp.getDescripcion());
@@ -115,13 +115,13 @@ public class Empresa implements Serializable{
            else procesoCorrecto = false;
         }catch(Exception e){
             procesoCorrecto = false;
-            System.out.println(e.getMessage());
+            System.out.println("Error: "+e.getMessage());
             e.printStackTrace();
         }
         finally{
             try {
-                ps.close();
-                con.close();
+                Empresa.ps.close();
+                Empresa.con.close();
                 
             } catch (SQLException ex) {
                 Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
