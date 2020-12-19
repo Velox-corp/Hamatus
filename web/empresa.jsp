@@ -18,7 +18,7 @@
     UsuarioEmpleado admin = (UsuarioEmpleado) sesionEmpresa.getAttribute("usuario");
 %>
 <!DOCTYPE html>
-<html>
+<html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Hamatus - Empresa -</title>
@@ -72,7 +72,7 @@
                     <div class='row'>
                         <div class='col-md-2'>
                             <%--
-                                //Gracias Tenorio por facilitarme este código de shiee
+                                /*Gracias Tenorio por facilitarme este código de shiee
                             InputStream iS = emp.sacarLogo(emp.getIDEmpresa());
                             Blob logo = null;
                             byte[] imgData = new byte[iS.available()];
@@ -81,7 +81,7 @@
                             OutputStream o = response.getOutputStream();
                             o.write(logo.getBytes(1, (int) logo.length()));
                             o.flush();
-                            o.close();    
+                            o.close();  */  
                             --%>
                         </div>
                         <div class='col-md-10'>

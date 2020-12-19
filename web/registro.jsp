@@ -1,6 +1,6 @@
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <!DOCTYPE html>
-<html>
+<html lang='es'>
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -59,7 +59,7 @@
         <div class="container">
             <center><h1>Registro</h1></center>    
             <div class="row d-flex justify-content-center">
-              <div class="col-sm-6">
+              <div class="col-sm-8">
                 <form action="crearEmpresa" method="POST" enctype="multipart/form-data" >
                     <h2>Informacion Personal de administrador de empresa en HAMATUS</h2>
                     <hr>
