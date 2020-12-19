@@ -104,7 +104,7 @@ public class Empresa implements Serializable{
         boolean procesoCorrecto = true;
         try{
             con = Conexion.obtenerConexion();
-            query = ("INSERT INTO hamatus.Empresa (Nombre, Descripcion, Logo, Razon_social) values (?, ?, ?, ?)");
+            query = ("INSERT INTO Empresa (Nombre, Descripcion, Logo, Razon_social) values (?, ?, ?, ?)");
             ps = con.prepareStatement(query);
             ps.setString(1, emp.getNombre());
             ps.setString(2, emp.getDescripcion());

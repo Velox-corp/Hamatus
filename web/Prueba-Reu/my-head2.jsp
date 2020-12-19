@@ -24,10 +24,10 @@
                         <img alt="Hamatus" src="img/favicon.png" class="mx-auto d-block icono">
                     </a>
 		</div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <h2>Hamatus</h2>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <%if (obtencionAdecuada){ %>
                         <i><h3>
                             <%=nombre_empresa%>
@@ -38,20 +38,25 @@
                             </h3></i>
                         <% }%>
                 </div>
-		<div class="col-md-5">
+		<div class="col-md-3">
 		</div>
 		<div class="col-md-3">
-                    <a class="active" href="CRUD_TU.jsp"> <!-- meter la página que permita edición de usuarios -->
-                        <%if (obtencionAdecuada){ %>
-                        <h3>
-                            <%=username%>
-                        </h3> 
-                        <%}else{%>
-			<h3>
-				USUARIO
-			</h3>
-                        <% }%>
-                    </a>
+                    <div class='btn-group'>
+                        <a class="btn btn-dark" href="CRUD_TU.jsp"> <!-- meter la página que permita edición de usuarios -->
+                            <%if (obtencionAdecuada){ %>
+                            <h4>
+                                <%=username%>
+                            </h4> 
+                            <%}else{%>
+                            <h4>
+                                    USUARIO
+                            </h4>
+                            <% }%>
+                        </a>
+                        <a class='btn btn-dark' href="CerrarSesion">
+                            <h4>Cerrar Sesión</h4>
+                        </a>
+                    </div>
 		</div>
 	</div>
 	<div class="row">

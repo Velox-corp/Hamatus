@@ -22,7 +22,7 @@ public class CerrarSesion extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     *
+     * Este servlet se encarga de cerrar la sesión de un usuario.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -33,8 +33,25 @@ public class CerrarSesion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            System.out.println("Ya se cerro la sesion");
-            String redirect = "index.jsp";
+            String redirect;
+            boolean allgood;
+            try{
+                HttpSession sesionADesconectar = request.getSession();
+                sesionADesconectar.setAttribute("usuario", null);
+                sesionADesconectar.setAttribute("empresa", null);
+                sesionADesconectar.invalidate();
+                System.out.println("Ya se cerro la sesion");
+                
+                allgood = true;
+            }catch(Exception e){
+                                allgood = false;
+            }
+            if(allgood){
+                redirect = "index.jsp";
+            }else{
+                redirect = "error.jsp";
+
+            }
             response.sendRedirect(redirect);
         }
     }
