@@ -26,7 +26,7 @@
                     <ul>
                       <%
 
-                        String ruta = "la ruta sera consultada de la bd";
+                        String ruta = "/img";
                         File file;
                         File dir = new java.io.File(ruta);
 

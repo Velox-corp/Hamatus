@@ -18,12 +18,13 @@ public class Conexion {
     /**
      *
      * @return La conexión a la bd
+     * UnU la conexion con clever cloud ya no va a ser posible
      */
     public static Connection obtenerConexion(){
         Connection con = null;
         String user = "uhltze43t3xnfmyw";
         String password = "UTAkwoJYjaUHpVttdWlv";
-        String url = "jdbc:mysql://uhltze43t3xnfmyw:UTAkwoJYjaUHpVttdWlv@bn0u7lmchdieamnqsf74-mysql.services.clever-cloud.com:3306/bn0u7lmchdieamnqsf74";
+        String url = "jdbc:mysql://bn0u7lmchdieamnqsf74-mysql.services.clever-cloud.com";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
@@ -32,7 +33,7 @@ public class Conexion {
             }else{
                 System.out.println("Fallo conexion BD UnU");
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (Exception ex) {
             System.out.println("Falló la conexión");
             System.out.println(ex.getMessage());
             ex.printStackTrace();
