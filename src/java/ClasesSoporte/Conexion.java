@@ -22,9 +22,9 @@ public class Conexion {
      */
     public static Connection obtenerConexion(){
         Connection con = null;
-        String user = "uhltze43t3xnfmyw";
-        String password = "UTAkwoJYjaUHpVttdWlv";
-        String url = "jdbc:mysql://bn0u7lmchdieamnqsf74-mysql.services.clever-cloud.com";
+        String user = "root";//"uhltze43t3xnfmyw";
+        String password = "n0m3l0";//UTAkwoJYjaUHpVttdWlv";
+        String url = "jdbc:mysql://localhost:3306/yL10l8yMbC";//"jdbc:mysql://bn0u7lmchdieamnqsf74-mysql.services.clever-cloud.com";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
