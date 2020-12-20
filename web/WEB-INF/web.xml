@@ -48,6 +48,18 @@
         <servlet-name>IntroducirDoc</servlet-name>
         <servlet-class>MDocumentos.Servlets.IntroducirDoc</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>agregarEmpleado</servlet-name>
+        <servlet-class>MUsuarios.Servlets.agregarEmpleado</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>actualizarUser</servlet-name>
+        <servlet-class>MUsuarios.Servlets.actualizarUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>borrarEmpleado</servlet-name>
+        <servlet-class>MUsuarios.Servlets.borrarEmpleado</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -95,6 +107,18 @@
     <servlet-mapping>
         <servlet-name>IntroducirDoc</servlet-name>
         <url-pattern>/IntroducirDoc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>agregarEmpleado</servlet-name>
+        <url-pattern>/agregarEmpleado</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>actualizarUser</servlet-name>
+        <url-pattern>/actualizarUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>borrarEmpleado</servlet-name>
+        <url-pattern>/borrarEmpleado</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
