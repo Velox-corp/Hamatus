@@ -65,11 +65,11 @@
                     <form action="iniciarSesion">
                         <div class="form-group">
                           <label for="email">Dirección de Correo:</label>
-                          <input type="email" class="form-control" id="email">
+                          <input type="email" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group">
                           <label for="pwd">Contraseña:</label>
-                          <input type="password" class="form-control" id="pwd">
+                          <input type="password" class="form-control" id="pwd" name="pwd">
                         </div>
                         <div class="checkbox">
                           <label><input type="checkbox"> Recuerda mi información</label>

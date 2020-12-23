@@ -44,17 +44,13 @@
                     <div class='btn-group'>
                         <a class="btn btn-dark" href="CRUD_TU.jsp"> <!-- meter la página que permita edición de usuarios -->
                             <%if (obtencionAdecuada){ %>
-                            <h4>
                                 <%=username%>
-                            </h4> 
                             <%}else{%>
-                            <h4>
-                                    USUARIO
-                            </h4>
+                                USUARIO
                             <% }%>
                         </a>
                         <a class='btn btn-dark' href="CerrarSesion">
-                            <h4>Cerrar Sesión</h4>
+                            Cerrar Sesión
                         </a>
                     </div>
 		</div>

@@ -131,6 +131,34 @@ public class Empresa implements Serializable{
         return procesoCorrecto;
     }
     
+    public static Empresa buscarEmpresa(int iDEmpresa){
+        Empresa emp = null;
+        try{
+            con = Conexion.obtenerConexion();
+            query = ("SELECT * FROM empresa WHERE ID_Empresa=? limit 1");
+            ps = con.prepareStatement(query);
+            ps.setInt(1, iDEmpresa);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                emp = new Empresa();
+                emp.setDescripcion(rs.getString("Descripcion"));
+                emp.setIDEmpresa(rs.getInt("ID_Empresa"));
+                //emp.setLogo() luego vemos como le hacemos con este
+                emp.setNombre(rs.getString("Nombre"));
+                emp.setRazónsocial(rs.getString("Razon_social"));
+            }else{
+                System.out.println("Canfle no encontro nada");
+            }
+        }catch(Exception e){
+            System.out.println("Error: "+e.getCause());
+            e.printStackTrace();
+        }
+        finally{
+            System.out.println("Termino busqueda");
+        }
+        return emp;
+    }
+    
     public static InputStream sacarLogo(int id_emp){
         try{
             con = Conexion.obtenerConexion();

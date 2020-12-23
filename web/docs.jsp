@@ -25,7 +25,7 @@
               <%
                 HttpSession sesionUser = request.getSession();
                 boolean obtencionAdecuada = false;
-                UsuarioEmpleado usuario= null;
+                UsuarioEmpleado usuario = null;
                 Empresa emp = null;
                 try{
                     usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
@@ -41,24 +41,31 @@
 
                 String[] list = dir.list();
 
-                if (list.length > 0) {
+                if (list != null) {
+                    if (list.length > 0) {
 
-                    for (int i = 0; i < list.length; i++) {
-                        file = new java.io.File(ruta + list[i]);
+                        for (int i = 0; i < list.length; i++) {
+                            file = new java.io.File(ruta + list[i]);
 
-                if (file.isFile()) {
+                    if (file.isFile()) {
                 %>
                 <li class="list-item">
                     <a href="/downloadFile?ruta=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" target="_top"><%=list[i]%></a>
                 </li>    
-                    <%
+                <%
+                            }
                         }
                     }
+                }else{
+                %>
+                <li class="list-item">
+                    Aun no existen archivos o carpetas
+                </li>  
+                <%
                 }
                 %>
             </ul>
         </div>
-    </div>
         <div class="col-md-7">
                 <nav>
                     <ul class="pagination">
@@ -75,24 +82,21 @@
                         <input class="form-control" name="Equipo_ID_Equipo" type="text" value="<%= usuario.getIDUsuarioE() %>">
                         <input class="form-control" name="id_D_DOcumento" type="number">
                         <input class="form-control" name="id_usuario_p" type="number">
-                        <button type="submit" class="btn btn-primary">Subir</button>
-                    </form>
-                        <div class="card-body">
-                                
-                            <div class="justify-content-center">
-                                <button type="" class="btn btn-primary">
-                                    Guardar Cambios
-                                </button>
-                                <button type="button" class="btn btn-primary">
-                                    Cancelar
-                                </button>
-                            </div>
+                        <div class="justify-content-center">
+                            <button type="" class="btn btn-primary">
+                                Guardar Cambios
+                            </button>
+                            <button type="button" class="btn btn-primary">
+                                Cancelar
+                            </button>
                         </div>
+                    </form
                 </div> 
             <br>
         </div>
         <div class="col-md-1">
         </div>
+    </div>
     </div>
     <jsp:include page="Prueba-Reu/my-footer.html" />
   </body>

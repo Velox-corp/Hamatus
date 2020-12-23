@@ -24,7 +24,7 @@
         <title>Hamatus - Empresa -</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
-    <body class='container-fluid'>
+    <body class=''>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
         <!--
         <header class="row">

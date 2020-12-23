@@ -49,15 +49,15 @@ public class iniciarSesion extends HttpServlet {
             //Iniciamos sesion
             HttpSession sesionEmpresa = request.getSession(true);
             sesionEmpresa.setAttribute("usuario", usu);
-            Empresa emp = new Empresa(usu.getIDUsuarioE());
+            Empresa emp = Empresa.buscarEmpresa(usu.getIDUsuarioE());
             sesionEmpresa.setAttribute("empresa", emp);
             redirect = "empresa.jsp";
-            response.sendRedirect(redirect);
         }catch(Exception e){
             redirect = "error.jsp";
-            response.sendRedirect(redirect);
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }finally{
+            response.sendRedirect(redirect);
         }
     }
 
