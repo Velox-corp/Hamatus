@@ -1,5 +1,32 @@
+<%@page import="MUsuarios.clases.Empresa"%>
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
+<%
+    HttpSession sesionAdmin;
+    UsuarioEmpleado admin;
+    //ArrayList <Division> divisiones = new ArrayList<Division>();
+    boolean procesocorrecto =  true;
+    try{
+        sesionAdmin = request.getSession();
+        admin = (UsuarioEmpleado)sesionAdmin.getAttribute("usuario");
+        if (admin.getiD_cat_priv() != 1){
+            procesocorrecto = false;
+            
+        }else{
+            //divisiones = Divison.getDivisiones();
+        }
+        procesocorrecto = true;
+    }catch(Exception e){
+        e.getMessage();
+        e.printStackTrace();
+        procesocorrecto = false;
+    }
+    if(!procesocorrecto){
+        response.sendRedirect("error.jsp");
+    }
+%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,28 +49,49 @@
 		</div>
 		<div class="col-md-8">
 			<h3 class="text-center">
-				Nuevo empleado
+				Ingrese un nuevo empleado en el sistema
 			</h3>
-			<form role="form">
+			<form role="form" action='agregarEmpleado'>
                             <div class="form-group">
-                                <label for="Nombre">
-                                        Nombre
-                                </label>
-                                <input type="text" class="form-control" 
-                                       id="Nombre" placeholder="Inserte nombre del empleado">
+                            <label for="nameUser">Nombre:</label>
+                            <input type="name" class="form-control" id="nameUser" name="nameUser" 
+                                   onchange="return validarString(this, true, false)"
+                                   ondrag="return validarString(this, true, false)"
+                                   ondrop="return validarString(this, true, false)">
+                          </div>
+                            <div class="form-group">
+                                <label for="appat">Apellido Paterno:</label>
+                                <input type="name" class="form-control" id="appat" name="appat"
+                                       onchange="return validarString(this, false, false)"
+                                       ondrag="return validarString(this, false, false)"
+                                       ondrop="return validarString(this, false, false)">
+                           </div>
+                            <div class="form-group">
+                                <label for="apmat">Apellido Materno:</label>
+                                <input type="name" class="form-control" id="apmat" name="apmat"
+                                       onchange="return validarString(this, false, false)"
+                                       ondrag="return validarString(this, false, false)"
+                                       ondrop="return validarString(this, false, false)">
+                              </div>
+                            <div class="form-group">
+                                <label for="f_n">Fecha de nacimiento:</label>
+                                <input type="date" class="form-control" id="f_n" name="f_n"
+                                       onchange="return validarDate(this)">
+                              </div>
+                            <div class="form-group">
+                              <label for="email">Direccion de correo: (correo de la empresa)</label>
+                              <input type="email" class="form-control" id="email" name="email"
+                                     onchange="return validarEmail(this)">
                             </div>
                             <div class="form-group">
-                                    <label for="Email1">
-                                            Correo
-                                    </label>
-                                    <input type="email" class="form-control" 
-                                           placeholder="Inserte correo del empleado" id="Email1">
+                              <label for="pwd">Contraseña:</label>
+                              <input type="password" class="form-control" id="pwd" name="pwd" 
+                                     onchange="return validarPass(this)">
                             </div>
                             <div class="form-group">
-                                    <label for="Password">
-                                            Contrase�a
-                                    </label>
-                                    <input type="password" class="form-control" id="Password" placeholder="Inserte contrse�a del empleado">
+                                <label for="pwd2">Confirma tu contraseña:</label>
+                                <input type="password" class="form-control" id="pwd2" name="pwd2" 
+                                       onchange="return validarPass(this)">
                             </div>
                             <div class="form-group">
                                     <label for="Img">
@@ -58,7 +106,7 @@
                                 <div class="col-md-2">
                                     <div class="dropdown">
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            Opciones
+                                            Aquí debería seleccionarse  la división o el puesto o tener para ambos
                                         </button>
                                         <div class="dropdown-menu">
                                           <a class="dropdown-item" href="#">Link 1</a>
@@ -71,10 +119,10 @@
                                 <div class="col-md-3">
                                     <div class="row">
                                         <button type="submit" class="btn btn-primary">
-                                                Save changes
+                                                Guardar empleado
                                         </button>
-                                        <button type="submit" class="btn btn-danger">
-                                                Cancel
+                                        <button type="reset" class="btn btn-danger">
+                                                Borrar campos
                                         </button>
                                     </div>
                                 </div>

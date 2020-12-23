@@ -4,7 +4,7 @@
     Author     : maste
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true" language="java" isErrorPage="true"%>
 <!DOCTYPE html>
 <html lang='es'>
     <head>

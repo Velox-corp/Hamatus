@@ -15,6 +15,7 @@
         apmat = usuario.getApmat();
         correo = usuario.getCorreo();
         fecha_nac = usuario.getFechaNacimiento();
+        //NOTA, el id no lo vamos a meter, se va obtener por parte de la sesión para ocultarlo
         obtencionAdecuada = true;
     }catch(NullPointerException e){
         obtencionAdecuada = false;
@@ -36,7 +37,7 @@
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
   </head>
   <body>
-
+      <script src='JS/interaccionBotones'></script>
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
     <div class="container-fluid">
 	<div class="row margin-top-1rem">
@@ -46,7 +47,7 @@
                     <div class="container-fluid row justify-content-center">
 			<img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" class="rounded-circle">
                     </div>
-                    <form role="form" method="POST" action=''>
+                    <form role="form" method="POST" action='actualizarUser'>
                                 <div class="row form-group justify-content-center">
                                     <label for="InputFile">
 						Imagen
@@ -60,69 +61,69 @@
                                     <label for="nombre">
                                             Nombre
                                     </label>
-                                    <input type="text" class="form-control" id="nombre" name='nombre'
+                                    <input type="text" class="form-control" id="nombre" name='nombre' readonly ='readonly'
                                            <% if(obtencionAdecuada){%>
                                            value="<%=nombre%>"
                                            <%}%>
                                             onchange="return validarString(this, true, false)"
                                ondrag="return validarString(this, true, false)"
                                ondrop="return validarString(this, true, false)">
+                                <button class="btn btn-info" onclick='return cambiarEstado("nombre")'>Editar</button>
 				</div>
                                 <div class="form-group">		 
                                     <label for="appat">
                                             Apellido paterno
                                     </label>
-                                    <input type="text" class="form-control" id="appat" name='appat'
+                                    <input type="text" class="form-control" id="appat" name='appat' readonly="readonly"
                                            <% if(obtencionAdecuada){%>
                                            value="<%=appat%>"
                                            <%}%>
                                             onchange="return validarString(this, false, false)"
                                ondrag="return validarString(this, false, false)"
                                ondrop="return validarString(this, false, false)">
+                                    <button class="btn btn-info" onclick='return cambiarEstado("appat")'>Editar</button>
 				</div>
                                 <div class="form-group">		 
                                     <label for="apmat">
                                             Apellido materno
                                     </label>
-                                    <input type="text" class="form-control" id="apmat" name='apmat'
+                                    <input type="text" class="form-control" id="apmat" name='apmat' readonly="readonly"
                                            <% if(obtencionAdecuada){%>
                                            value="<%=apmat%>"
                                            <%}%>
                                             onchange="return validarString(this, false, false)"
                                ondrag="return validarString(this, false, false)"
                                ondrop="return validarString(this, false, false)">
+                                    <button class="btn btn-info" onclick='return cambiarEstado("apmat")'>Editar</button>
 				</div>
 				<div class="form-group">
                                     <label for="Email">
                                             Email
                                     </label>
-                                    <input type="email" class="form-control" id="Email" name='Email'
+                                    <input type="email" class="form-control" id="Email" name='Email' readonly="readonly"
                                            <% if(obtencionAdecuada){%>
                                            value="<%=correo%>"
                                            <%}%>
-                                           onchange="return validarEmail(this)">>
+                                           onchange="return validarEmail(this)">
+                                    <button class="btn btn-info" onclick='return cambiarEstado("Email")'>Editar</button>
 				</div>
                                 <div class="form-group">		 
                                     <label for="fecha_nacimiento">
                                             Fecha de nacimiento
                                     </label>
-                                    <input type="date" class="form-control" id="fecha_nacimiento" name='fecha_nacimiento'
+                                    <input type="date" class="form-control" id="fecha_nacimiento" name='fecha_nacimiento' readonly="readonly"
                                            <% if(obtencionAdecuada){%>
                                            value='<%=fecha_nac%>'
                                            <%}%>
                                             onchange="return validarDate(this)">
+                                    <button class="btn btn-info" onclick='return cambiarEstado("fecha_nacimiento")'>Editar</button>
 				</div>
 				<div class="form-group">
+                                    <h3 class='text-danger'>Esto aun no esta:</h3>
                                     <label for="Puesto">
                                             Puesto
                                     </label>
                                     <input type="text" class="form-control" id="Puesto">
-				</div>
-                                <div class="form-group">
-                                    <label for="equipos">
-                                            Equipos
-                                    </label>
-                                    <input type="text" class="form-control" id="equipos">
 				</div>
                                             <br>
 				<button type="submit" class="btn btn-primary">

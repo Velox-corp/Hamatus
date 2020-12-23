@@ -220,36 +220,99 @@ public class UsuarioEmpleado implements Serializable {
      * @return 
      */
     public static boolean ingresarEmpleado(UsuarioEmpleado empleado, int id_emp){
-        CallableStatement cs = null;
         try{
             con = Conexion.obtenerConexion();
-            q = "{call ingresarUsuario(?,?,?,?,?,?,?,?,?,?)}";
-            cs = con.prepareCall(q);
-            cs.setString(1, empleado.getNombre());
-            cs.setString(2, empleado.getAppat());
-            cs.setString(3, empleado.getApmat());
-            cs.setString(4, empleado.getFechaNacimiento());
-            cs.setString(5, empleado.getCorreo());
-            cs.setString(8, empleado.getPassword());
-            cs.setInt(6, empleado.getiD_Division());
-            cs.setInt(7, empleado.getiD_cat_priv());
-            cs.setBytes(9, empleado.getFoto());
-            cs.setInt(10, id_emp);
-            return cs.executeUpdate() == 1;
+            q = "INSERT INTO usuario_empleado (Nombre, appat, apmat, Fecha_Nacimiento, Correo, pass, ID_Division, id_cat_privilegios, foro) values(?,?,?,?,?,?,?,?,?)";
+            ps = con.prepareCall(q);
+            ps.setString(1, empleado.getNombre());
+            ps.setString(2, empleado.getAppat());
+            ps.setString(3, empleado.getApmat());
+            ps.setString(4, empleado.getFechaNacimiento());
+            ps.setString(5, empleado.getCorreo());
+            ps.setString(8, empleado.getPassword());
+            ps.setInt(6, empleado.getiD_Division());
+            ps.setInt(7, empleado.getiD_cat_priv());
+            ps.setBytes(9, empleado.getFoto());
+            return ps.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("No jalo el call");
+            System.out.println("No jalo el query");
             return false;
         }finally{
             try {
                 con. close();
-                cs.close();
+                ps.close();
                 q = "";
             } catch (SQLException | NullPointerException ex) {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
+    /**
+     * Metodo para modificar los datos de un empleado
+     * @param empleado El objeto UsuarioEmpleado que posee los nuevos valores del empleado.
+     * @return true si el update se eejcutó adecuadamente
+     */
+    public static boolean modEmpleado(UsuarioEmpleado empleado){
+        try{
+            con = Conexion.obtenerConexion();
+            q = "UDATE usuario_empleado SET Nombre = ?, appat = ?, apmat = ?, Fecha_Nacimiento, Correo = ?, pass = ?, ID_Division = ? , id_cat_privilegios = ?, foro= ? WHERE ID_Usuario_E = ?";
+            ps = con.prepareCall(q);
+            ps.setString(1, empleado.getNombre());
+            ps.setString(2, empleado.getAppat());
+            ps.setString(3, empleado.getApmat());
+            ps.setString(4, empleado.getFechaNacimiento());
+            ps.setString(5, empleado.getCorreo());
+            ps.setString(8, empleado.getPassword());
+            ps.setInt(6, empleado.getiD_Division());
+            ps.setInt(7, empleado.getiD_cat_priv());
+            ps.setBytes(9, empleado.getFoto());
+            ps.setInt(10, empleado.getIDUsuarioE());
+            return ps.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No jalo el update");
+            return false;
+        }finally{
+            try {
+                con. close();
+                ps.close();
+                q = "";
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    
+    /**
+     * Metodo para despedir a un empleado
+     * @param id_empleado: el ide del empleado a eliminar
+     * @return true si el cambio se ejecutó correctamente
+     */
+    public static boolean DespedirEmpleado(int id_empleado){
+        try{
+            con = Conexion.obtenerConexion();
+            q = "DELETE FROM usuario_empleado WHERE ID_Usuario_E = ?";
+            ps = con.prepareCall(q);
+            ps.setInt(1, id_empleado);
+            return ps.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No jalo el query");
+            return false;
+        }finally{
+            try {
+                con. close();
+                ps.close();
+                q = "";
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     
     /**
      * Ok so basicamente esta funcion lo que hace es buscar el usuario solicitado
