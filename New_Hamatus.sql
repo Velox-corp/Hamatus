@@ -138,7 +138,7 @@ CREATE INDEX `fk_empleado_priv_idx` ON `usuario_empleado` (`id_cat_privilegios` 
 DROP TABLE IF EXISTS `m_documento` ;
 
 CREATE TABLE IF NOT EXISTS `m_documento` (
-  `idM_Documento` INT(11) NOT NULL,
+  `idM_Documento` INT(11) NOT NULL AUTO_INCREMENT,
   `id_D_DOcumento` INT(11) NOT NULL,
   `id_usuario_P` INT(11) NOT NULL,
   PRIMARY KEY (`idM_Documento`),

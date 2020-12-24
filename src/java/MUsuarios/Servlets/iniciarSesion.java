@@ -49,11 +49,11 @@ public class iniciarSesion extends HttpServlet {
             //Iniciamos sesion
             HttpSession sesionEmpresa = request.getSession(true);
             sesionEmpresa.setAttribute("usuario", usu);
-            Empresa emp = Empresa.buscarEmpresa(usu.getIDUsuarioE());
+            Empresa emp = Empresa.buscarEmpresa(usu.getiD_Division());
             sesionEmpresa.setAttribute("empresa", emp);
-            redirect = "empresa.jsp";
+            redirect = "/empresa.jsp";
         }catch(Exception e){
-            redirect = "error.jsp";
+            redirect = "/error.jsp";
             System.out.println(e.getMessage());
             e.printStackTrace();
         }finally{

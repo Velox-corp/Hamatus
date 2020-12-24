@@ -76,21 +76,30 @@
                 </nav>
                 <div class="card">
                     <form class="card-body form-group" action="uploadFile" method="POST" enctype="multipart/form-data">
-                        <input class="form-control" name="File" type="file">
-                        <input class="form-control" name="pass" type="password">
-                        <input class="form-control" name="folio" type="text">
-                        <input class="form-control" name="Equipo_ID_Equipo" type="text" value="<%= usuario.getIDUsuarioE() %>">
-                        <input class="form-control" name="id_D_DOcumento" type="number">
-                        <input class="form-control" name="id_usuario_p" type="number">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Insertar archivo</label>
+                            <input class="form-control-file" type="file" id="formFile" name="file" required>
+                        </div>
+                        <label for="pass">Agrege una contraseña al archivo</label>
+                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
+                        <label for="folio">Inserte un folio</label>
+                        <input class="form-control" name="folio" type="text" placeholder="Inserte folio">
+                        <label for="Equipo_ID_Equipo">Equipo_ID_Equipo</label>
+                        <input class="form-control" name="Equipo_ID_Equipo" type="number" value="<%= usuario.getIDUsuarioE() %>" readonly>
+                        <label for="id_tipo_acceso">Inserte tipo acceso</label>
+                        <input class="form-control" name="id_tipo_acceso" type="number" placeholder="Inserte tipo acceso" required>
+                        <label for="id_D_DOcumento">Inserte id_D_DOcumento</label>
+                        <input class="form-control" name="id_D_DOcumento" type="number" placeholder="Inserte id_D_DOcumento" required>
+                        <br>
                         <div class="justify-content-center">
                             <button type="" class="btn btn-primary">
-                                Guardar Cambios
+                                Subir Archivo
                             </button>
                             <button type="button" class="btn btn-primary">
                                 Cancelar
                             </button>
                         </div>
-                    </form
+                    </form>
                 </div> 
             <br>
         </div>

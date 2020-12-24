@@ -131,13 +131,14 @@ public class Empresa implements Serializable{
         return procesoCorrecto;
     }
     
-    public static Empresa buscarEmpresa(int iDEmpresa){
+    public static Empresa buscarEmpresa(int iD_Division){
         Empresa emp = null;
         try{
             con = Conexion.obtenerConexion();
-            query = ("SELECT * FROM empresa WHERE ID_Empresa=? limit 1");
+            query = ("SELECT * FROM empresa WHERE ID_Empresa="
+                    + "(SELECT ID_Empresa FROM division WHERE ID_Division=?)");
             ps = con.prepareStatement(query);
-            ps.setInt(1, iDEmpresa);
+            ps.setInt(1, iD_Division);
             rs = ps.executeQuery();
             if (rs.next()) {
                 emp = new Empresa();

@@ -7,6 +7,8 @@ package MDocumentos.Servlets;
 
 import MDocumentos.Clases.D_Documento;
 import MDocumentos.Clases.M_Documento;
+import MUsuarios.clases.Empresa;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,9 +23,11 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -37,6 +41,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * parametros para la subida: pass, direccion y file, este ultimo en funcion
  * de la clase Part
  */
+
+@MultipartConfig(maxFileSize = 16177215)
 public class uploadFile extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,18 +56,34 @@ public class uploadFile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String redirect = "error.jsp";
         try (PrintWriter out = response.getWriter()) {
-            String pass = request.getParameter("pass");
-            int id_tipo_acceso   = Integer.parseInt(request.getParameter("id_tipo_acceso"));
+            //Bueno creo que seria bueno traer una parte de la sesion
+            HttpSession sesionUser = request.getSession();
+            boolean obtencionAdecuada = false;
+            UsuarioEmpleado usuario = null;
+            Empresa emp = null;
+            try{
+                usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+                emp = (Empresa) sesionUser.getAttribute("empresa");
+                obtencionAdecuada = true; 
+            }catch(NullPointerException ex){
+                obtencionAdecuada = false;
+            }
+            
+            
+            String pass          = request.getParameter("pass");
+            int id_tipo_acceso   = Integer.parseInt(request
+                    .getParameter("id_tipo_acceso"));
             String folio         = request.getParameter("folio");
-            int Equipo_ID_Equipo = Integer.parseInt(request.getParameter("Equipo_ID_Equipo"));
-            int id_D_DOcumento   = Integer.parseInt(request.getParameter("id_D_DOcumento"));
-            int id_usuario_p     = Integer.parseInt(request.getParameter("id_usuario_p"));
-            String ruta = request
-                    .getParameter("ruta"); //Se refiere al titulo
-            Part filePart = request
-                    .getPart("file"); // Es el archivo y es la unica menra de traerlo
-            String nombre = Paths.get(filePart.getSubmittedFileName())
+            int Equipo_ID_Equipo = Integer.parseInt(request
+                    .getParameter("Equipo_ID_Equipo"));
+            int id_D_DOcumento   = Integer.parseInt(request
+                    .getParameter("id_D_DOcumento"));
+            int id_usuario_p     = usuario.getIDUsuarioE();
+            String ruta          = usuario.getIDUsuarioE().toString();
+            Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
+            String nombre        = Paths.get(filePart.getSubmittedFileName())
                     .getFileName().toString(); //Basicamente nos trae el nombre del archivo
             InputStream fileContent = filePart
                     .getInputStream();//El contenido en bytes del archivo
@@ -104,10 +126,12 @@ public class uploadFile extends HttpServlet {
             fileContent.close();
             out2.close();
             //fw.close();
+            redirect = "docs.jsp";
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        response.sendRedirect(redirect);
     }
     
     /**

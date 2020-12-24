@@ -50,7 +50,7 @@ public class M_Documento implements Serializable {
      * @param id_D_DOcumento
      * @param id_usuario_p
      */
-    public M_Documento(int id_D_DOcumento, int id_usuario_p){
+    public M_Documento(int idM_Documento, int id_D_DOcumento){
         this.id_D_DOcumento = id_D_DOcumento;
         this.id_usuario_p   = id_usuario_p;
     }

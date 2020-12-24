@@ -5,15 +5,25 @@
     HttpSession sesionUser = request.getSession();
     String username = "";
     String nombre_empresa = "";
-    boolean obtencionAdecuada = false;
+    boolean obtencionAdecuada = true;
     try{
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
         Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
         username = usuario.getNombre();
         nombre_empresa = emp.getNombre();
-        obtencionAdecuada = true; 
+        //obtencionAdecuada = true; 
     }catch(NullPointerException ex){
+        System.out.println("Algun error raro de null");
+        System.out.println(ex.getMessage());
+        ex.printStackTrace();
         obtencionAdecuada = false;
+        response.sendRedirect("/error.jsp");
+    }catch(Exception e){
+        System.out.println("Algun error raro");
+        System.out.println(e.getMessage());
+        e.printStackTrace();
+        obtencionAdecuada = false;
+        response.sendRedirect("/error.jsp");
     }
     
 %>
