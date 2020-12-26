@@ -143,9 +143,14 @@ public class uploadFile extends HttpServlet {
             }
             //redirect = "/docs.jsp";
             //response.setContentType("text/html/jsp");
-            response.sendRedirect("/docs.jsp");
+            System.out.println("La URL es:" + request.getParameter("url"));
+            if (response.isCommitted()) {
+                
+            }else{
+                System.out.println("Algo anda mal y muy mal unu");
+            }
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("El bug es dibido a:" + e.getMessage());
             System.out.println(e.getCause());
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
@@ -224,17 +229,94 @@ public class uploadFile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String redirect = request.getContextPath() + "/error.jsp";
+        try {
+            response.setContentType("text/html;charset=UTF-8");
+            //Bueno creo que seria bueno traer una parte de la sesion
+            HttpSession sesionUser = request.getSession();
+            boolean obtencionAdecuada = false;
+            UsuarioEmpleado usuario = null;
+            Empresa emp = null;
+            try{
+                usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+                emp = (Empresa) sesionUser.getAttribute("empresa");
+                obtencionAdecuada = true; 
+            }catch(NullPointerException ex){
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                obtencionAdecuada = false;
+            }
+            
+            String pass          = request.getParameter("pass");
+            int id_tipo_acceso   = Integer.parseInt(request
+                    .getParameter("id_tipo_acceso"));
+            String folio         = request.getParameter("folio");
+            int Equipo_ID_Equipo = Integer.parseInt(request
+                    .getParameter("Equipo_ID_Equipo"));
+            int id_D_DOcumento   = Integer.parseInt(request
+                    .getParameter("id_D_DOcumento"));
+            int id_usuario_p     = usuario.getIDUsuarioE();
+            String ruta          = usuario.getIDUsuarioE().toString();
+            Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
+            String nombre        = Paths.get(filePart.getSubmittedFileName())
+                    .getFileName().toString(); //Basicamente nos trae el nombre del archivo
+            
+            //Listado de datos preparados para entrar en la BD
+            M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
+            if (mdoc.registrarM_Documentos()) {
+                System.out.println("Todo correcto hasta el moemnto..");
+                System.out.println("Entrando en fase 2");
+                D_Documento ddoc = new D_Documento(nombre, ruta, pass,
+                        id_tipo_acceso,folio, Equipo_ID_Equipo, 
+                        mdoc.getIdM_Documento());
+                if (ddoc.registrarDoc()) {
+                    System.out.println("Todo Correcto uwu");
+                }else{
+                    System.out.println("Todo mal en ddoc unu");
+                }
+            }else{
+                System.out.println("Ya valio esto unu, posible error al "
+                        + "registrar la master del doc");
+            }
+            
+            OutputStream outs = null;
+            InputStream filecontent = null;
+            final PrintWriter writer = response.getWriter();
+            try {
+                crearFolder(usuario.getIDUsuarioE().toString(), request);
+                outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
+                        +usuario.getIDUsuarioE().toString()+"/")+ File.separator
+                        + nombre));
+                filecontent = filePart.getInputStream();
+
+                int read = 0;
+                final byte[] bytes = new byte[1024];
+
+                while ((read = filecontent.read(bytes)) != -1) {
+                    outs.write(bytes, 0, read);
+                }
+                
+                request.setAttribute("flag_file_ok", true);
+                request.getRequestDispatcher("docs.jsp").forward(request, response);
+                //response.sendRedirect("docs.jsp");
+                
+            } catch (FileNotFoundException fne) {
+                System.out.println("Algo de que no encontro el archivo"
+                        + " o el folder");
+                System.out.println(fne.getMessage());
+                //response.sendRedirect(request.getContextPath() + "http://localhost:8080/Hamatus/error.jsp");
+            } finally {
+                System.out.println("Aver aver aver que demonios esta pasando");
+                outs.close();
+                filecontent.close();
+                writer.close();
+            }
+        }catch(Exception e){
+            System.out.println("El bug es dibido a:" + e.getMessage());
+            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+    
+    
 }

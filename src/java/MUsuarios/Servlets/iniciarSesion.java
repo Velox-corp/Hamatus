@@ -47,17 +47,21 @@ public class iniciarSesion extends HttpServlet {
             //Ejecutar busqueda
             usu = ConsultarEmpleado(correo, pass);
             //Iniciamos sesion
-            HttpSession sesionEmpresa = request.getSession(true);
-            sesionEmpresa.setAttribute("usuario", usu);
-            Empresa emp = Empresa.buscarEmpresa(usu.getiD_Division());
-            sesionEmpresa.setAttribute("empresa", emp);
-            redirect = "/empresa.jsp";
+            if (usu != null) {
+                HttpSession sesionEmpresa = request.getSession(true);
+                sesionEmpresa.setAttribute("usuario", usu);
+                Empresa emp = Empresa.buscarEmpresa(usu.getiD_Division());
+                sesionEmpresa.setAttribute("empresa", emp);
+                redirect = "empresa.jsp";
+            }else{
+                redirect = "error.jsp";
+            }
+            response.sendRedirect(redirect);
         }catch(Exception e){
-            redirect = "/error.jsp";
             System.out.println(e.getMessage());
             e.printStackTrace();
         }finally{
-            response.sendRedirect(redirect);
+            System.out.println("En teoria deberia rediregir");
         }
     }
 

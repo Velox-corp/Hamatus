@@ -23,6 +23,14 @@
         <div class="col-md-4 folio">
             <ul>
               <%
+                  /*
+                if (request.getAttribute("flag_file_ok") != null) {
+                    if ((boolean)request.getAttribute("flag_file_ok") == true) {
+                        out.print(request.getAttribute("flag_file_ok"));
+                    }
+                }*/
+  
+                  
                 HttpSession sesionUser = request.getSession();
                 boolean obtencionAdecuada = false;
                 UsuarioEmpleado usuario = null;
@@ -34,8 +42,9 @@
                 }catch(NullPointerException ex){
                     obtencionAdecuada = false;
                 }
-                String id = usuario.getIDUsuarioE().toString();
-                String ruta = "/" + id;
+                String ruta = request.getRealPath("/archivos/"
+                        +usuario.getIDUsuarioE().toString()+"/");
+                
                 File file;
                 File dir = new java.io.File(ruta);
 
@@ -43,11 +52,9 @@
 
                 if (list != null) {
                     if (list.length > 0) {
-
-                        for (int i = 0; i < list.length; i++) {
+                        for (int i = 1; i <= list.length; i++) {
                             file = new java.io.File(ruta + list[i]);
-
-                    if (file.isFile()) {
+                            if (file.isFile()) {
                 %>
                 <li class="list-item">
                     <a href="/downloadFile?ruta=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" target="_top"><%=list[i]%></a>
@@ -63,7 +70,7 @@
                 </li>  
                 <%
                 }
-                %>
+                %>-->
             </ul>
         </div>
         <div class="col-md-7">
