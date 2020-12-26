@@ -12,6 +12,7 @@ import MUsuarios.clases.UsuarioEmpleado;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -56,8 +58,9 @@ public class uploadFile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String redirect = "error.jsp";
-        try (PrintWriter out = response.getWriter()) {
+        String redirect = request.getContextPath() + "/error.jsp";
+        try {
+            response.setContentType("text/html;charset=UTF-8");
             //Bueno creo que seria bueno traer una parte de la sesion
             HttpSession sesionUser = request.getSession();
             boolean obtencionAdecuada = false;
@@ -68,9 +71,10 @@ public class uploadFile extends HttpServlet {
                 emp = (Empresa) sesionUser.getAttribute("empresa");
                 obtencionAdecuada = true; 
             }catch(NullPointerException ex){
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
                 obtencionAdecuada = false;
             }
-            
             
             String pass          = request.getParameter("pass");
             int id_tipo_acceso   = Integer.parseInt(request
@@ -85,8 +89,6 @@ public class uploadFile extends HttpServlet {
             Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
             String nombre        = Paths.get(filePart.getSubmittedFileName())
                     .getFileName().toString(); //Basicamente nos trae el nombre del archivo
-            InputStream fileContent = filePart
-                    .getInputStream();//El contenido en bytes del archivo
             
             //Listado de datos preparados para entrar en la BD
             M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
@@ -106,32 +108,48 @@ public class uploadFile extends HttpServlet {
                         + "registrar la master del doc");
             }
             
-            //Despues de todo ese merequetenge de la BD ya empieza lo del doc
-            //Creacion del directorio y del achivo
-            crearDirectorio(ruta);
-            
-            //despues metemos en ese direcorio nuestro archivo
-            File f = crearArchivo(ruta, nombre);
-            
-            OutputStream out2 = new FileOutputStream(f);//Todo el inputStream va hacia nuestro archivo
-            
-            byte[] buf = new byte[1024];
-            int len;
+            OutputStream outs = null;
+            InputStream filecontent = null;
+            final PrintWriter writer = response.getWriter();
+            try {
+                crearFolder(usuario.getIDUsuarioE().toString(), request);
+                outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
+                        +usuario.getIDUsuarioE().toString()+"/")+ File.separator
+                        + nombre));
+                filecontent = filePart.getInputStream();
 
-            while ((len = fileContent.read(buf)) > 0) {//Metemos contenido desde fileContent
-              out2.write(buf, 0, len);//Metemos byte por byte al archivo de destino
+                int read = 0;
+                final byte[] bytes = new byte[1024];
+
+                while ((read = filecontent.read(bytes)) != -1) {
+                    outs.write(bytes, 0, read);
+                }
+                
+                outs.close();
+                filecontent.close();
+                writer.close();
+                
+                response.flushBuffer();
+            } catch (FileNotFoundException fne) {
+                System.out.println("Algo de que no encontro el archivo"
+                        + " o el folder");
+                System.out.println(fne.getMessage());
+                //response.sendRedirect(request.getContextPath() + "http://localhost:8080/Hamatus/error.jsp");
+            } finally {
+                System.out.println("Aver aver aver que demonios esta pasando");
+                outs.close();
+                filecontent.close();
+                writer.close();
             }
-
-            //Cerramos todos los flujos para evitar brechas de seguridad
-            fileContent.close();
-            out2.close();
-            //fw.close();
-            redirect = "docs.jsp";
+            //redirect = "/docs.jsp";
+            //response.setContentType("text/html/jsp");
+            response.sendRedirect("/docs.jsp");
         }catch(Exception e){
             System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+            System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
         }
-        response.sendRedirect(redirect);
     }
     
     /**
@@ -159,6 +177,25 @@ public class uploadFile extends HttpServlet {
             }
         }
         return f;
+    }
+    
+    /**
+     * Es un metodo un poco mas robusto y para un folder en especifico
+     */
+    private void crearFolder(String dirc, HttpServletRequest request){
+        //Creacion del directorio y del achivo
+        try {
+            String sCarpAct = request.getRealPath("/archivos/");
+            //String sCarpAct = ServletContext.getRealPath("/");
+            System.out.println(sCarpAct +"/"+ dirc);
+            File dir = new File(sCarpAct +"/"+ dirc);//Primero creamos el directorio
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
