@@ -32,8 +32,8 @@
         sesion = request.getSession();
         equipo = Equipo.obtenerEquipo(id_equipo);
         UsuarioEmpleado liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        empleadosEquipo = UsuarioEmpleado.obtenerUsuariosEquipo(id_equipo); 
-        empleadosLibres = UsuarioEmpleado.obtenerUsuariosEquipo(0); 
+        empleadosEquipo = UsuarioEmpleado.obtenerUsuariosEquipo(id_equipo, 0); 
+        empleadosLibres = UsuarioEmpleado.obtenerUsuariosEquipo(0, liderDiv.getiD_Division()); 
     }catch(Exception e){
         redirect = "error.jsp";
         desempeño_adecuado = false;

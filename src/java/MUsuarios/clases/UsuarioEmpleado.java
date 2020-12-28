@@ -414,10 +414,11 @@ public class UsuarioEmpleado implements Serializable {
     /**
      * Metodo para obtener los usuarios pertenecientes a una división en la base de datos a partir del id del lider de división
      * ¡¡NOTA!! Este metodo aún no está implementado para funcionar como debería a partir de un usuario, de momento funciona igual a la obtención de usuarios general
-     * @param idLider El id del lider de sección.
+     * @param idEmp el ide de la empresa
+     * @param idDiv El id de la división a la que pertenece el lider de área
      * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
      */
-    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idEmp, int idLider){
+    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idEmp, int idDiv){
         ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
         try{
             con = Conexion.obtenerConexion();
@@ -425,9 +426,11 @@ public class UsuarioEmpleado implements Serializable {
                 "join division, empresa\n" +
                 "WHERE usuario_empleado.ID_Division = division.ID_Division\n" +
                 "AND empresa.ID_Empresa = division.ID_Empresa\n" +
-                "AND empresa.ID_Empresa = ?"; //por aquí debe de haber un WHERE tal = ?
+                "AND empresa.ID_Empresa = ?\n"+
+                "AND usuario_empleado.ID_Division = ?"; //por aquí debe de haber un WHERE tal = ?
             ps = con.prepareStatement(q);
-            //ps.setInt(1,idLider);
+            ps.setInt(1,idEmp);
+            ps.setInt(2, idDiv);
             rs = ps.executeQuery();
             while(rs.next()){
                 UsuarioEmpleado empleado = 
@@ -463,19 +466,23 @@ public class UsuarioEmpleado implements Serializable {
     }
     
     /**
-     * Metodo para obtener todos los usuarios pertenecientes a un equipo. 
-     * Ingresar '0' si se desea recuperar los que NO tienen equipo.
-     * @param id_equipo El ide del equipo donde se buscaran todos los empleados
+     * Metodo para obtener todos los usuarios pertenecientes a un equipo.
+     * @param id_equipo El ide del equipo donde se buscaran todos los empleados, ingresar CERO si se quieren a los que no tienen equipo
+     * @param id_div El ide de la división perteneciente en dado caso de que se quiera obtener a los que no tienen equipo, ingresar un valor cualesquiera si el priemr parametro es verdadero
      * @return la lista de empleados pertenecientes a un equipo de trabajo.
      */
-    public static ArrayList<UsuarioEmpleado> obtenerUsuariosEquipo(int id_equipo){
+    public static ArrayList<UsuarioEmpleado> obtenerUsuariosEquipo(int id_equipo, int id_div){
         ArrayList<UsuarioEmpleado> empleados =  new ArrayList<UsuarioEmpleado>();
         try{
             con = Conexion.obtenerConexion();
             if(id_equipo == 0){
-                q = "SELECT * from usuario_empleado where ID_usuario_e \n" +
-                    " not in (select ID_Usuario_Empleado from e_usuario_equipo)";
+                q = "SELECT usuario_empleado.* from usuario_empleado\n" +
+"                         where ID_usuario_e \n" +
+"                     not in (select ID_Usuario_Empleado from e_usuario_equipo)\n" +
+"                        AND usuario_empleado.id_cat_privilegios = 4\n" +
+"                        AND usuario_empleado.ID_Division = ?";
                 ps = con.prepareStatement(q);
+                ps.setInt(1, id_div);
             }else{
                 q = "SELECT usuario_empleado.* FROM usuario_empleado join e_usuario_equipo on ID_Usuario_E = ID_Usuario_Empleado \n" +
                     "where e_usuario_equipo.ID_Equipo = ?;";

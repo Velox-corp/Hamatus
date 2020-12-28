@@ -17,7 +17,7 @@
         //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
         sesion = request.getSession();
         UsuarioEmpleado liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        empleados = UsuarioEmpleado.obtenerUsuarios(liderDiv.getIDUsuarioE()); //RECORDATORIO PARA EL FUTURO, debe traer aparte a los que no tienen equipo
+        empleados = UsuarioEmpleado.obtenerUsuariosEquipo(0, liderDiv.getiD_Division()); //RECORDATORIO PARA EL FUTURO, debe traer aparte a los que no tienen equipo
     }catch(Exception e){
         redirect = "error.jsp";
         desempeño_adecuado = false;
