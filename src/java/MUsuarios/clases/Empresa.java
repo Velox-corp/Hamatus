@@ -144,7 +144,7 @@ public class Empresa implements Serializable{
                 emp = new Empresa();
                 emp.setDescripcion(rs.getString("Descripcion"));
                 emp.setIDEmpresa(rs.getInt("ID_Empresa"));
-                //emp.setLogo() luego vemos como le hacemos con este
+                //emp.setLogo() este no se va a añadir
                 emp.setNombre(rs.getString("Nombre"));
                 emp.setRazónsocial(rs.getString("Razon_social"));
             }else{
@@ -160,10 +160,15 @@ public class Empresa implements Serializable{
         return emp;
     }
     
+    /**
+     * Metodó para obtener al logo de una emrpesa
+     * @param id_emp: El ide de la empresa
+     * @return Un inputStream que posee la informacón del logo para ser leida
+     */
     public static InputStream sacarLogo(int id_emp){
         try{
             con = Conexion.obtenerConexion();
-            query = "Select Logo from Empresa where ID-EMpresa = ?";
+            query = "Select Logo from Empresa where ID_Empresa = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();

@@ -5,12 +5,14 @@
     HttpSession sesionUser = request.getSession();
     String username = "";
     String nombre_empresa = "";
+    int idE = 0;
     boolean obtencionAdecuada = true;
     try{
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
         Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
         username = usuario.getNombre();
         nombre_empresa = emp.getNombre();
+        idE = emp.getIDEmpresa();
         //obtencionAdecuada = true; 
     }catch(NullPointerException ex){
         System.out.println("Algun error raro de null");
@@ -31,7 +33,7 @@
 	<div class="row header align-items-center">
 		<div class="col-md-2">
                     <a href="anuncios.jsp">
-                        <img alt="Hamatus" src="img/favicon.png" class="mx-auto d-block icono">
+                        <img alt="Logo Hamatus" src="img/favicon.png" class="mx-auto d-block icono">
                     </a>
 		</div>
                 <div class="col-md-2">
@@ -48,9 +50,12 @@
                             </h3></i>
                         <% }%>
                 </div>
-		<div class="col-md-3">
+		<div class="col-md-2">
+                    <%if(obtencionAdecuada){ %>
+                        <img class="rounded img-fluid" src="cargaRegistro?id=<%=idE%>" alt='Logo <%=nombre_empresa%>'>
+                    <%}%>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-4">
                     <div class='btn-group'>
                         <a class="btn btn-dark" href="CRUD_TU.jsp"> <!-- meter la página que permita edición de usuarios -->
                             <%if (obtencionAdecuada){ %>
