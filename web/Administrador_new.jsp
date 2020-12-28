@@ -51,7 +51,7 @@
 			<h3 class="text-center">
 				Ingrese un nuevo empleado en el sistema
 			</h3>
-			<form role="form" action='agregarEmpleado'>
+                    <form role="form" action='agregarEmpleado' method='POST'>
                             <div class="form-group">
                             <label for="nameUser">Nombre:</label>
                             <input type="name" class="form-control" id="nameUser" name="nameUser" 

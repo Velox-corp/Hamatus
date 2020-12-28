@@ -62,7 +62,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `division` ;
 
 CREATE TABLE IF NOT EXISTS `division` (
-  `ID_Division` INT(11) NOT NULL,
+  `ID_Division` INT(11) NOT NULL AUTO_INCREMENT,
   `Nombre_A` VARCHAR(45) NULL DEFAULT NULL,
   `ID_Jerarquia` INT(11) NOT NULL,
   `ID_Empresa` INT(11) NOT NULL,
@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `usuario_empleado` (
   CONSTRAINT `fk_empleado_priv`
     FOREIGN KEY (`id_cat_privilegios`)
     REFERENCES `privilegios_jerarquia_u` (`idprivilegio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -310,9 +310,9 @@ CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre tinytext, appat tinytext, a
 f_n date, correo text(45), pass text(30), foto Blob, idE int)   
 BEGIN
 	insert into division (Nombre_A, id_jerarquia, id_empresa)
-    values ("Dirección general", 1, id_emp);
+    values ("Dirección general", 1, idE);
 	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Division, `Usuario_Empleado`.id_cat_privilegios, `Usuario_Empleado`.foto)
-    values (nombre, appat, apmat, f_n, correo, pass, (select `division`.ID_Division from division where ID_empresa = id_E limit 1), 1, foto);
+    values (nombre, appat, apmat, f_n, correo, pass, (select `division`.ID_Division from division where ID_empresa = idE limit 1), 1, foto);
 END$$
 
 DELIMITER ;

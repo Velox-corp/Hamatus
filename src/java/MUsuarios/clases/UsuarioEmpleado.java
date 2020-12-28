@@ -222,16 +222,16 @@ public class UsuarioEmpleado implements Serializable {
     public static boolean ingresarEmpleado(UsuarioEmpleado empleado, int id_emp){
         try{
             con = Conexion.obtenerConexion();
-            q = "INSERT INTO usuario_empleado (Nombre, appat, apmat, Fecha_Nacimiento, Correo, pass, ID_Division, id_cat_privilegios, foro) values(?,?,?,?,?,?,?,?,?)";
+            q = "INSERT INTO usuario_empleado (Nombre, appat, apmat, Fecha_Nacimiento, Correo, pass, ID_Division, id_cat_privilegios, foto) values(?,?,?,?,?,?,?,?,?)";
             ps = con.prepareCall(q);
             ps.setString(1, empleado.getNombre());
             ps.setString(2, empleado.getAppat());
             ps.setString(3, empleado.getApmat());
             ps.setString(4, empleado.getFechaNacimiento());
             ps.setString(5, empleado.getCorreo());
-            ps.setString(8, empleado.getPassword());
-            ps.setInt(6, empleado.getiD_Division());
-            ps.setInt(7, empleado.getiD_cat_priv());
+            ps.setString(6, empleado.getPassword());
+            ps.setInt(7, empleado.getiD_Division());
+            ps.setInt(8, empleado.getiD_cat_priv());
             ps.setBytes(9, empleado.getFoto());
             return ps.executeUpdate() == 1;
         } catch (SQLException ex) {
@@ -257,7 +257,7 @@ public class UsuarioEmpleado implements Serializable {
     public static boolean modEmpleado(UsuarioEmpleado empleado){
         try{
             con = Conexion.obtenerConexion();
-            q = "UDATE usuario_empleado SET Nombre = ?, appat = ?, apmat = ?, Fecha_Nacimiento, Correo = ?, pass = ?, ID_Division = ? , id_cat_privilegios = ?, foro= ? WHERE ID_Usuario_E = ?";
+            q = "UPDATE usuario_empleado SET Nombre = ?, appat = ?, apmat = ?, Fecha_Nacimiento, Correo = ?, pass = ?, ID_Division = ? , id_cat_privilegios = ?, foro= ? WHERE ID_Usuario_E = ?";
             ps = con.prepareCall(q);
             ps.setString(1, empleado.getNombre());
             ps.setString(2, empleado.getAppat());
@@ -361,15 +361,21 @@ public class UsuarioEmpleado implements Serializable {
     
     
     /**
-     * Metodo para obtener todos los usuarios de la base de datos
+     * Metodo para obtener todos los usuarios de la base de datos, pertenecientes a una empresa
+     * @param idEmp: el ide de la emrpesa donde pertenecen los Usuarios
      * @return  Un ArrayLisy vectorizado que contiene a TODOS los usuarios de la base de datos
      */
-    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(){
+    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idEmp){
         ArrayList<UsuarioEmpleado> empleados = null;
         try{
             con = Conexion.obtenerConexion();
-            q = "SELECT * FROM Usuario_empleado";
+            q = "Select usuario_empleado.* from usuario_empleado\n" +
+                    "join division, empresa\n" +
+                    "WHERE usuario_empleado.ID_Division = division.ID_Division\n" +
+                    "AND empresa.ID_Empresa = division.ID_Empresa\n" +
+                    "AND empresa.ID_Empresa = ?"; // inlcuir la query especia para solo los de una empresa
             ps = con.prepareStatement(q);
+            ps.setInt(1, idEmp);
             rs = ps.executeQuery();
             while(rs.next()){
                 UsuarioEmpleado empleado = 
@@ -411,11 +417,15 @@ public class UsuarioEmpleado implements Serializable {
      * @param idLider El id del lider de sección.
      * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
      */
-    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idLider){
+    public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idEmp, int idLider){
         ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
         try{
             con = Conexion.obtenerConexion();
-            q = "SELECT * FROM Usuario_empleado"; //por aquí debe de haber un WHERE tal = ?
+            q = "Select usuario_empleado.* from usuario_empleado\n" +
+                "join division, empresa\n" +
+                "WHERE usuario_empleado.ID_Division = division.ID_Division\n" +
+                "AND empresa.ID_Empresa = division.ID_Empresa\n" +
+                "AND empresa.ID_Empresa = ?"; //por aquí debe de haber un WHERE tal = ?
             ps = con.prepareStatement(q);
             //ps.setInt(1,idLider);
             rs = ps.executeQuery();
