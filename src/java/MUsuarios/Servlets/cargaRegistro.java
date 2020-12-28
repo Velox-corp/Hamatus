@@ -5,21 +5,26 @@
  */
 package MUsuarios.Servlets;
 
+import MUsuarios.clases.Empresa;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.Blob;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
+import sun.misc.IOUtils;
 
 /**
  *
- * @author taspi
+ * @author maste
  */
-public class CerrarSesion extends HttpServlet {
+public class cargaRegistro extends HttpServlet {
 
-   
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -31,33 +36,23 @@ public class CerrarSesion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String redirect;
-            boolean allgood;
-            try{
-                HttpSession sesionADesconectar = request.getSession();
-                sesionADesconectar.setAttribute("usuario", null);
-                sesionADesconectar.setAttribute("empresa", null);
-                sesionADesconectar.invalidate();
-                System.out.println("Ya se cerro la sesion");
-                
-                allgood = true;
-            }catch(Exception e){
-                                allgood = false;
-            }
-            if(allgood){
-                redirect = "index.jsp";
-            }else{
-                redirect = "error.jsp";
-
-            }
-            response.sendRedirect(redirect);
+        try{
+            Blob blob = null;
+            int id = Integer.parseInt(request.getParameter("id"));
+            InputStream input = Empresa.sacarLogo(id);
+            byte[] imgData = new byte[input.available()];
+            blob = new SerialBlob(IOUtils.readFully(input, -1, true));
+            response.setContentType("image/gif");
+            OutputStream o = response.getOutputStream();
+            o.write(blob.getBytes(1, (int) blob.length()));
+            o.flush();
+            o.close();
+        }catch(Exception e){
+            
         }
     }
 
-
+    
     /**
      * Returns a short description of the servlet.
      *

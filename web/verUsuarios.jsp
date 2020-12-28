@@ -1,4 +1,5 @@
 
+<%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
@@ -11,10 +12,11 @@
     try{
         sesion = request.getSession();
         user = (UsuarioEmpleado) sesion.getAttribute("usuario");
+        Empresa emp = (Empresa) sesion.getAttibute("empresa");
         if (user.getiD_cat_priv() > 3){ //dentro del catalogo ya sería un empleado proletario
             todoBien = false;
         }else{
-            empleados = UsuarioEmpleado.obtenerUsuarios(user.getIDUsuarioE());
+            empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa(),user.getIDUsuarioE());
         }
     }catch(Exception e){
         e.getMessage();

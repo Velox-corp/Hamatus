@@ -69,14 +69,14 @@ public class agregarEmpleado extends HttpServlet {
                 try{
                     sesion = request.getSession();
                     Empresa emp = (Empresa) sesion.getAttribute("empresa");
-                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, redirect, correo, pass, 0, 0, null);
-                    if(UsuarioEmpleado.ingresarEmpleado(newEmpleado, 0)){
+                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, 4, 4, null); // 4 por que tengo la empresa 4, con la división 4
+                    if(UsuarioEmpleado.ingresarEmpleado(newEmpleado, emp.getIDEmpresa())){
                         redirect = "verUsuarios.jsp";
                     }
                 }catch(Exception e){
                     e.getMessage();
                     e.printStackTrace();
-                    proceso_correcto = false;
+                    redirect = "error.jsp";
                 }
             }else{
                 redirect = "error.jsp";

@@ -35,6 +35,7 @@ public class actualizarUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             boolean proceso_correcto = true;
+            boolean cambioPass = false;
             String redirect;
             HttpSession sesion = request.getSession();
             UsuarioEmpleado oldUser = (UsuarioEmpleado)sesion.getAttribute("usuario");
@@ -44,20 +45,33 @@ public class actualizarUser extends HttpServlet {
             String appat = request.getParameter("appat");
             String apmat = request.getParameter("apmat");
             String f_n = request.getParameter("f_n");
-            String oldPass = request.getParameter("pwd");
+            String oldPass = "";
+            try{
+                oldPass = request.getParameter("pwd");
+                cambioPass = (oldPass == null);
+            }catch(NullPointerException e){
+                System.out.println("No nueva pass");
+                cambioPass = false;
+            }
             String newPass = request.getParameter("Npwd");
             String newPass2 = request.getParameter("Npwd2");
-            boolean[] bufferValidaciones = new boolean[7];
+            boolean[] bufferValidaciones = new boolean[9];
             bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
             bufferValidaciones[1] = Validaciones.esString(appat, false, false);
             bufferValidaciones[2] = Validaciones.esString(apmat, false, false);
-            bufferValidaciones[3] = Validaciones.esPassword(oldPass);
-            bufferValidaciones[4] = Validaciones.esEmail(correo);
-            if(newPass != null){
+            bufferValidaciones[3] = Validaciones.esEmail(correo);
+           int contadorValidaciones;
+            if(cambioPass){
+                bufferValidaciones[4] = Validaciones.esPassword(oldPass);
                 bufferValidaciones[5] = Validaciones.esPassword(newPass);
                 bufferValidaciones[6] = Validaciones.esPassword(newPass2);
+                bufferValidaciones[7] = oldPass.equals(oldUser.getPassword());
+                bufferValidaciones[8] = newPass.equals(newPass2);
+                contadorValidaciones = 9;
+            }else{
+                contadorValidaciones = 4;
             }
-            for (int i = 0; i < bufferValidaciones.length; i++) {
+            for (int i = 0; i < contadorValidaciones; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
                     redirect = "error.jsp";

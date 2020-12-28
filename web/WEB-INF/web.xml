@@ -64,6 +64,10 @@
         <servlet-name>authAcess</servlet-name>
         <servlet-class>MDocumentos.Servlets.authAcess</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cargaRegistro</servlet-name>
+        <servlet-class>MUsuarios.Servlets.cargaRegistro</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -127,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>authAcess</servlet-name>
         <url-pattern>/authAcess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cargaRegistro</servlet-name>
+        <url-pattern>/cargaRegistro</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
