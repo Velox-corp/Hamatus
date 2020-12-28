@@ -6,11 +6,15 @@
 package MDocumentos.Clases;
 
 import ClasesSoporte.Conexion;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -220,6 +224,41 @@ public class D_Documento implements Serializable {
             e.printStackTrace();
         }
         return correcto;
+    }
+    
+    /**
+     * Este es un metodo de consula a la BD rapida para ver todos 
+     * los permisos con sus categorias
+     * @return una lista con el id y la descrición de su acceso
+     */
+    public static Hashtable<Integer, String> consultarCat_Tipo_Acceso(){
+        Hashtable<Integer, String> list = new Hashtable<Integer, String>();
+        String q;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT * FROM cat_tipo_acceso"; //por aquí debe de haber un WHERE tal = ?
+            ps = con.prepareStatement(q);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.put(rs.getInt("idC_tipo_acceso"),
+                rs.getString("nombre_tipo_acceso"));
+            }
+        }catch(Exception e){
+            e.getMessage();
+            e.getStackTrace();
+            return null;
+        }finally{
+            try{
+                con.close();
+                ps.close();
+                rs.close();
+                q = "";
+            }catch(SQLException ex){
+                ex.getMessage();
+                ex.getStackTrace();
+            }
+        }
+        return list;
     }
    
     public static Connection getCon() {

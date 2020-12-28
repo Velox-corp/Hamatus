@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.Calendar;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -114,7 +115,7 @@ public class uploadFile extends HttpServlet {
             try {
                 crearFolder(usuario.getIDUsuarioE().toString(), request);
                 outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
-                        +usuario.getIDUsuarioE().toString()+"/")+ File.separator
+                        +usuario.getiD_Division().toString()+"/")+ File.separator
                         + nombre));
                 filecontent = filePart.getInputStream();
 
@@ -134,7 +135,6 @@ public class uploadFile extends HttpServlet {
                 System.out.println("Algo de que no encontro el archivo"
                         + " o el folder");
                 System.out.println(fne.getMessage());
-                //response.sendRedirect(request.getContextPath() + "http://localhost:8080/Hamatus/error.jsp");
             } finally {
                 System.out.println("Aver aver aver que demonios esta pasando");
                 outs.close();
@@ -246,15 +246,24 @@ public class uploadFile extends HttpServlet {
                 ex.printStackTrace();
                 obtencionAdecuada = false;
             }
+            if (obtencionAdecuada) {
+            }
+            
+            String value = request.getParameter("dictionary");
+            value = value.substring(1, value.length()-1);
+            String[] keyValuePairs = value.split(",");
+            Hashtable<Integer, String> list = new Hashtable<Integer, String>();
+            for (String pair : keyValuePairs) {
+                String[] entry = pair.split("=");
+                list.put(1, value);
+            }
             
             String pass          = request.getParameter("pass");
             int id_tipo_acceso   = Integer.parseInt(request
                     .getParameter("id_tipo_acceso"));
             String folio         = request.getParameter("folio");
-            int Equipo_ID_Equipo = Integer.parseInt(request
-                    .getParameter("Equipo_ID_Equipo"));
-            int id_D_DOcumento   = Integer.parseInt(request
-                    .getParameter("id_D_DOcumento"));
+            int Equipo_ID_Equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+            int id_D_DOcumento   = 1;//no entiendo bien esto
             int id_usuario_p     = usuario.getIDUsuarioE();
             String ruta          = usuario.getIDUsuarioE().toString();
             Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
@@ -283,10 +292,9 @@ public class uploadFile extends HttpServlet {
             InputStream filecontent = null;
             final PrintWriter writer = response.getWriter();
             try {
-                crearFolder(usuario.getIDUsuarioE().toString(), request);
+                crearFolder(String.valueOf(Equipo_ID_Equipo), request);
                 outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
-                        +usuario.getIDUsuarioE().toString()+"/")+ File.separator
-                        + nombre));
+                        +Equipo_ID_Equipo+"/")+ File.separator + nombre));
                 filecontent = filePart.getInputStream();
 
                 int read = 0;
@@ -296,15 +304,13 @@ public class uploadFile extends HttpServlet {
                     outs.write(bytes, 0, read);
                 }
                 
-                request.setAttribute("flag_file_ok", true);
-                request.getRequestDispatcher("docs.jsp").forward(request, response);
-                //response.sendRedirect("docs.jsp");
+                //request.getRequestDispatcher("docs.jsp").forward(request, response);
+                response.sendRedirect("docs.jsp");
                 
             } catch (FileNotFoundException fne) {
                 System.out.println("Algo de que no encontro el archivo"
                         + " o el folder");
                 System.out.println(fne.getMessage());
-                //response.sendRedirect(request.getContextPath() + "http://localhost:8080/Hamatus/error.jsp");
             } finally {
                 System.out.println("Aver aver aver que demonios esta pasando");
                 outs.close();

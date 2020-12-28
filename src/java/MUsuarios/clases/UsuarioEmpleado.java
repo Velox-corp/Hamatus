@@ -503,6 +503,40 @@ public class UsuarioEmpleado implements Serializable {
         return empleados;
     }
     
+    /**
+     * Bueno dios aqui estoy de nuevo, un metodo magico para obtener el 
+     * equipo del usuario solo es para hacer las cosas mas sencillas
+     * a este paso debo reconocer que la clase usuario va a terminar siendo
+     * la clase mas extensa y compleja
+     * @param ID_Usuario el id del usuario
+     * @return el id del equipo del empleado
+     */
+    public static int consultarID_Equipo(int ID_Usuario){
+        int numero = 0;
+                try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT ID_Equipo FROM e_usuario_equipo WHERE ID_Usuario_Empleado=? limit 1";
+            ps= con.prepareStatement(q);
+            ps.setInt(1, ID_Usuario);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                numero = rs.getInt("ID_Equipo");
+            }
+        }catch(SQLException | NullPointerException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try {
+                con. close();
+                q = "";
+                rs.close();
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return numero;
+    }
+    
     public Integer getIDUsuarioE() {
         return iDUsuarioE;
     }

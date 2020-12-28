@@ -1,3 +1,6 @@
+<%@page import="java.util.Set"%>
+<%@page import="MDocumentos.Clases.D_Documento"%>
+<%@page import="java.util.Hashtable"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="java.io.File"%>
@@ -22,55 +25,69 @@
     <div class="row margin-top-1rem">
         <div class="col-md-4 folio">
             <ul>
-              <%
-                  /*
-                if (request.getAttribute("flag_file_ok") != null) {
-                    if ((boolean)request.getAttribute("flag_file_ok") == true) {
-                        out.print(request.getAttribute("flag_file_ok"));
-                    }
-                }*/
-  
-                  
-                HttpSession sesionUser = request.getSession();
-                boolean obtencionAdecuada = false;
-                UsuarioEmpleado usuario = null;
-                Empresa emp = null;
-                try{
-                    usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
-                    emp = (Empresa) sesionUser.getAttribute("empresa");
-                    obtencionAdecuada = true; 
-                }catch(NullPointerException ex){
-                    obtencionAdecuada = false;
-                }
-                String ruta = request.getRealPath("/archivos/"
-                        +usuario.getIDUsuarioE().toString()+"/");
-                
-                File file;
-                File dir = new java.io.File(ruta);
-
-                String[] list = dir.list();
-
-                if (list != null) {
-                    if (list.length > 0) {
-                        for (int i = 1; i <= list.length; i++) {
-                            file = new java.io.File(ruta + list[i]);
-                            if (file.isFile()) {
-                %>
-                <li class="list-item">
-                    <a href="/downloadFile?ruta=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" target="_top"><%=list[i]%></a>
-                </li>    
-                <%
-                            }
+                <li>Archivos del equipo
+                    <ul>
+                        <%
+                        HttpSession sesionUser = request.getSession();
+                        boolean obtencionAdecuada = false;
+                        UsuarioEmpleado usuario = null;
+                        Empresa emp = null;
+                        try{
+                            usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+                            emp = (Empresa) sesionUser.getAttribute("empresa");
+                        }catch(NullPointerException ex){
+                            System.out.println("Algun error raro de null");
+                            System.out.println(ex.getMessage());
+                            ex.printStackTrace();
+                            obtencionAdecuada = false;
+                            response.sendRedirect("error.jsp");
+                        }catch(Exception e){
+                            System.out.println("Algun error raro");
+                            System.out.println(e.getMessage());
+                            e.printStackTrace();
+                            obtencionAdecuada = false;
+                            response.sendRedirect("error.jsp");
                         }
-                    }
-                }else{
-                %>
-                <li class="list-item">
-                    Aun no existen archivos o carpetas
-                </li>  
-                <%
-                }
-                %>-->
+                        String ruta = request.getServletContext().getRealPath("/archivos/"
+                            +usuario.getiD_Division()+"/"); 
+                        System.out.println("La ruta es: " + ruta);
+                        if (ruta != null) {        
+                            java.io.File file;
+                            java.io.File dir = new java.io.File(ruta);
+                            String[] list = dir.list();
+                            System.out.println(list.length);
+                            if (list.length > 0) {
+                            //Lista de lo que debe de entrar
+                                for (int i=0; i < list.length; i++) {
+                                    file = new java.io.File(ruta +"/"+ list[i]);
+                                    if (file.isFile()) {
+
+                                %>
+                                <li>
+                                    <a href="downloadFile?filePath=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" 
+                                       target="_top" data-toggle="tooltip"
+                                       data-placement="left" 
+                                       title="Haga click al link para descargar el archivo"><%=list[i]%></a>
+                                    
+                                </li>
+                                <%
+                                    }
+                                }
+                            }else{
+                            %>
+                                <li>No existen archivos dentro del folder del equipo</li>
+                            <%
+                            }
+                        }else{
+                        %>
+                        <li>No existe el folder del Equipo</li>
+                        <%
+                        }
+                        %>
+                    </ul>
+                </li>
+                <li>Cliente</li>
+                <li>Empresa</li>
             </ul>
         </div>
         <div class="col-md-7">
@@ -91,12 +108,20 @@
                         <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
                         <label for="folio">Inserte un folio</label>
                         <input class="form-control" name="folio" type="text" placeholder="Inserte folio">
-                        <label for="Equipo_ID_Equipo">Equipo_ID_Equipo</label>
-                        <input class="form-control" name="Equipo_ID_Equipo" type="number" value="<%= usuario.getIDUsuarioE() %>" readonly>
-                        <label for="id_tipo_acceso">Inserte tipo acceso</label>
-                        <input class="form-control" name="id_tipo_acceso" type="number" placeholder="Inserte tipo acceso" required>
-                        <label for="id_D_DOcumento">Inserte id_D_DOcumento</label>
-                        <input class="form-control" name="id_D_DOcumento" type="number" placeholder="Inserte id_D_DOcumento" required>
+                        <label for="id_tipo_acceso">Elija tipo acceso</label>
+                        <select class="form-control" name="id_tipo_acceso">
+                            <%
+                                Hashtable<Integer, String> list = D_Documento.consultarCat_Tipo_Acceso();
+                                Set<Integer> keys = list.keySet();
+                                for (Integer key:keys) {
+                                    System.out.println(key);
+                                %>
+                                <option id="<%= key %>"><%= list.get(key) %></option>
+                                <%
+                                }
+                            %>
+                        </select>
+                            <input name="dictionary" hidden="true" value="<%= list %>">
                         <br>
                         <div class="justify-content-center">
                             <button type="" class="btn btn-primary">
@@ -113,7 +138,7 @@
         <div class="col-md-1">
         </div>
     </div>
-    </div>
     <jsp:include page="Prueba-Reu/my-footer.html" />
   </body>
+  <script src="./JS/enable_tooltip.js"></script>
 </html>
