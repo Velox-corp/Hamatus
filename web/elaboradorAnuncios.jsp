@@ -50,10 +50,8 @@
 	</header>
         -->
         <main class="row">
-            <form class="col-md-12" method="post" action="">
-			<h1 class="text-center text-primary" >
-				Creación/edición de anuncio
-			</h1>
+            <form class="col-md-12" method="post" action=""><br>
+                        <center><h1>Creación/edición de anuncio</h1></center>
 			<div class="card bg-default">
 				<h3 class="card-header">
                                     <input value='{titulo_anuncio}' name="titulo"/>
@@ -62,7 +60,7 @@
                                     <input value='{contenido_anuncio}' name='contenido'/>
 				</div>
 				<div class="card-footer">
-                                    <button type="submit"> Ejecutar</button>
+                                    <button type="submit" class="btn btn-dark"> Ejecutar</button>
 				</div>
 			</div>
 		</form>
