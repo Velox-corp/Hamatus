@@ -37,7 +37,7 @@
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
-        <script src='JS/interaccionBotones'></script>
+        <script src='JS/interaccionBotones.js'></script>
         <jsp:include page="Prueba-Reu/my-head2.jsp" /><br>
         <div class="container-fluid">
             <div class="row margin-top-1rem">
@@ -128,13 +128,6 @@
                             <div class='input-group-append'>
                                 <button class="btn btn-info" onclick='return cambiarEstado("fecha_nacimiento")'>Editar</button>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <h3 class='text-danger'>Esto aun no esta:</h3>
-                            <label for="Puesto">
-                                Puesto
-                            </label>
-                            <input type="text" class="form-control" id="Puesto">
                         </div>
 
                         <h4>Contraseña <small>(Si desea combiar su contraseña, ingrese la vieja contraseña y la nueva a establecer)</small>:</h4>
