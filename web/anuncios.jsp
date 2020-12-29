@@ -56,10 +56,8 @@
 	</header>
         -->
 	<main class="row">
-		<div class="col-md-12">
-			<h1 class="text-center text-primary">
-				Tablón de anuncios
-			</h1>
+            <div class="col-md-12"><br>
+                <center><h1>Tablón de anuncios</h1></center>
                     <%-- Aquí va tocar meter un for para que se beneren todos los anuncios --%>
 			<div class="card bg-default">
 				<h3 class="card-header">
@@ -71,10 +69,10 @@
 					</p>
 				</div>
 				<div class="card-footer btn-group btn-group-md-6" role="group">
-                                    <a class="btn btn-info" href="elaboradorAnuncios.jsp?id=<%=0%>">
+                                    <a class="btn btn-dark" href="elaboradorAnuncios.jsp?id=<%=0%>">
                                         Editar anuncio
                                     </a>
-                                    <a class="btn btn-danger" href="<%--sevletEliminaciónAnuncioNombre--%>?id=<%=0%>">
+                                    <a class="btn bd" href="<%--sevletEliminaciónAnuncioNombre--%>?id=<%=0%>">
                                         Eliminar anuncio
                                     </a>
 				</div>

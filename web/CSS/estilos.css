@@ -165,6 +165,18 @@ a {
     border-color: #303031;
 }
 
+.bd{
+   color: #fff;
+   background-color: #2291C1;
+   border-color: #2291C1;
+}
+
+.bd:hover{
+   color: #fff;
+   background-color: #1DB0EE;
+   border-color: #1DB0EE;
+}
+
 .cubridor{
     min-height: 70vh;
 }
