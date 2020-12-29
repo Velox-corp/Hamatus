@@ -56,12 +56,12 @@
 
       -->
       <div>
-        <div class="container">
-            <center><h1>Registro</h1></center>    
+        <div class="container margin-top-2rem">
+            <center><h1>Registrarse</h1></center>    
             <div class="row d-flex justify-content-center">
               <div class="col-sm-8">
                 <form action="crearEmpresa" method="POST" enctype="multipart/form-data" >
-                    <h2>Informacion Personal de administrador de empresa en HAMATUS</h2>
+                    <h2>Información personal del administrador de la empresa en Hamatus</h2>
                     <hr>
                     <div class="form-group">
                         <label for="nameUser">Nombre:</label>
@@ -90,7 +90,7 @@
                                onchange="return validarDate(this)">
                       </div>
                     <div class="form-group">
-                      <label for="email">Direccion de correo: (correo de la empresa)</label>
+                      <label for="email">Dirección de correo electrónico (correo de la empresa):</label>
                       <input type="email" class="form-control" id="email" name="email"
                              onchange="return validarEmail(this)">
                     </div>
@@ -100,11 +100,11 @@
                              onchange="return validarPass(this)">
                     </div>
                     <div class="form-group">
-                        <label for="pwd2">Confirma tu contraseña:</label>
+                        <label for="pwd2">Confirmar contraseña:</label>
                         <input type="password" class="form-control" id="pwd2" name="pwd2" 
                                onchange="return validarPass(this)">
                       </div>
-                    <h2>Informacion de la Empresa</h2>
+                    <h2>Información de la Empresa</h2>
                     <hr>
                     <div class="form-group">
                         <label for="nameEmpresa">Nombre de la empresa:</label>
@@ -121,7 +121,7 @@
                                ondrop="return validarString(this, true, true)"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="logo">Logo (Opcional):</label>
+                        <label for="logo">Logo (Opcional): </label>
                         <input type="file"  accept="images/*" aclass="form-control-file" id="logo" name="logo">
                     </div>
                      <div class="form-group">
@@ -134,7 +134,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-8">
-                          <button id="submit" name="submit" class="btn btn-primary" value="1">Registrar</button>
+                          <button id="submit" name="submit" class="btn btn-dark" value="1">Registrar</button>
                           <a href="" id="cancel" name="cancel" class="btn btn-default">Cancelar</a>
                         </div>
                       </div>
