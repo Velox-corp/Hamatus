@@ -21,7 +21,7 @@
 <html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hamatus - Empresa -</title>
+        <title>Empresa</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body class=''>

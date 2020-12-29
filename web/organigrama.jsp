@@ -62,10 +62,8 @@
 	</header>-->
         <script src='JS/'></script>
         <div class="row">
-		<div class="col-md-12">
-			<h1 class="text-center text-primary">
-				Organigrama empresa
-			</h1>
+            <div class="col-md-12"><br>
+                        <center><h1>Organigrama de la empresa</h1></center>
                         <form  method="post" action='' class='container-fluid'>
                             <div class="col-md-1">
                                     <div class="btn-group btn-group-vertical btn-group-lg" role="group">
@@ -122,7 +120,7 @@
                                                 </div>
                                         </div>
                                 </div>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-dark">
                                     Guardar diagrama
                             </button>
                         </form>

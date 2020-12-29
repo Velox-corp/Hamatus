@@ -1,9 +1,3 @@
-<%-- 
-    Document   : anuncios
-    Created on : 30/11/2020, 10:58:13 PM
-    Author     : maste
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang='es'>
