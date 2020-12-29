@@ -12,7 +12,7 @@
     try{
         sesion = request.getSession();
         user = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        Empresa emp = (Empresa) sesion.getAttibute("empresa");
+        Empresa emp = (Empresa) sesion.getAttribute("empresa");
         if (user.getiD_cat_priv() > 3){ //dentro del catalogo ya sería un empleado proletario
             todoBien = false;
         }else{
@@ -70,7 +70,10 @@
                                 <td><%=empleado.getCorreo()%></td>
                                 <td>{Nombre_division}</td>
                                 <td>{detalle_jerarquía}</td>
-                                <td><a href="borrarEmpleado?id=<%=empleado.getIDUsuarioE()%>" class="active text-danger">Eliminar</a></td>
+                                <td class='btn-group-vertical'>
+                                    <a href='editarPuesto.jsp?id=<%=empleado.getIDUsuarioE()%>'>Cambiar puesto</a>
+                                    <a href="borrarEmpleado?id=<%=empleado.getIDUsuarioE()%>" class="active text-danger">Eliminar</a>
+                                </td>
                             </tr>
                             
                         <%   }
@@ -79,6 +82,6 @@
                 </table>
             </div>
         </div>
-        <jsp:include page="Prueba-Reu/my-footer.html" />
+        <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>

@@ -68,6 +68,10 @@
         <servlet-name>cargaRegistro</servlet-name>
         <servlet-class>MUsuarios.Servlets.cargaRegistro</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cambioDePuesto</servlet-name>
+        <servlet-class>MUsuarios.Servlets.cambioDePuesto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>cargaRegistro</servlet-name>
         <url-pattern>/cargaRegistro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cambioDePuesto</servlet-name>
+        <url-pattern>/cambioDePuesto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

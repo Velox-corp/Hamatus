@@ -85,13 +85,13 @@ h1 {
 
 h2 {
     font-size: 1.75rem;
-    color: #1DB0EE;
+    color: #2291C1;
     font-weight: 400;
 }
 
 h3 {
     font-size: 1.25rem;
-    color: #1DB0EE;
+    color: #2291C1;
     font-weight: 400;
 }
 
@@ -140,6 +140,14 @@ a {
     margin-top: 1rem;
 }
 
+.margin-top-2rem{
+    margin-top: 2rem;
+}
+
+.margen {
+   margin-right: 2rem;
+}
+
 .page-link {
     position: relative;
     display: block;
@@ -157,8 +165,20 @@ a {
     border-color: #303031;
 }
 
+.bd{
+   color: #fff;
+   background-color: #2291C1;
+   border-color: #2291C1;
+}
+
+.bd:hover{
+   color: #fff;
+   background-color: #1DB0EE;
+   border-color: #1DB0EE;
+}
+
 .cubridor{
-    min-height: 80vh;
+    min-height: 70vh;
 }
 
 img.per{

@@ -1,15 +1,9 @@
-<%-- 
-    Document   : anuncios
-    Created on : 30/11/2020, 10:58:13 PM
-    Author     : maste
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hamatus - P. principal -</title>
+        <title>Página principal -</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
@@ -56,10 +50,8 @@
 	</header>
         -->
 	<main class="row">
-		<div class="col-md-12">
-			<h1 class="text-center text-primary">
-				Tablón de anuncios
-			</h1>
+            <div class="col-md-12"><br>
+                <center><h1>Tablón de anuncios</h1></center>
                     <%-- Aquí va tocar meter un for para que se beneren todos los anuncios --%>
 			<div class="card bg-default">
 				<h3 class="card-header">
@@ -71,10 +63,10 @@
 					</p>
 				</div>
 				<div class="card-footer btn-group btn-group-md-6" role="group">
-                                    <a class="btn btn-info" href="elaboradorAnuncios.jsp?id=<%=0%>">
+                                    <a class="btn btn-dark" href="elaboradorAnuncios.jsp?id=<%=0%>">
                                         Editar anuncio
                                     </a>
-                                    <a class="btn btn-danger" href="<%--sevletEliminaciónAnuncioNombre--%>?id=<%=0%>">
+                                    <a class="btn bd" href="<%--sevletEliminaciónAnuncioNombre--%>?id=<%=0%>">
                                         Eliminar anuncio
                                     </a>
 				</div>
@@ -82,5 +74,5 @@
 		</div>
         </main>
     </body>
-    <jsp:include page="Prueba-Reu/my-footer.html" />
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

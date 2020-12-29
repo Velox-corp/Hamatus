@@ -1,11 +1,7 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<meta charset="utf-8">
-<footer id="footer" class="footer-1 margin-top-1rem">
+<html>
+    <footer id="footer" class="footer-1 margin-top-1rem">
 <div class="main-footer widgets-dark typo-light footer-bg">
 <div class="container ">
 <div class="row">
@@ -13,7 +9,7 @@ and open the template in the editor.
 <div class="col-xs-12 col-sm-6 col-md-3">
 <div class="widget subscribe no-box">
 <h5 class="widget-title">Hamatus<span></span></h5> 
-<p class="txt-white">Hamatus funge como una paltaforma para el trabajo colaborativo dentro de una pyme, donde se facilita el manejo de la documentación dentro de una empresa</p>
+<p class="txt-white">Hamatus funge como una paltaforma para el trabajo colaborativo dentro de una pyme, donde se facilita el manejo de la documentación dentro de una empresa.</p>
 </div>
 </div>
 
@@ -48,8 +44,8 @@ and open the template in the editor.
 
 <div class="col-xs-12 col-sm-6 col-md-3">
 <div class="widget no-box">
-<h5 class="widget-title">Registra tu empresa ahora!<span></span></h5>
-<p class="txt-white">Crea tu propia red interna para tu empresa hoy!.</p>
+<h5 class="widget-title">¡Registra tu empresa ahora!<span></span></h5>
+<p class="txt-white">Crea tu propia red interna para tu empresa hoy.</p>
 <a class="btn btn-dark" href="registro.jsp" target="_blank">Registrate</a>
 </div>
 </div>
@@ -83,3 +79,4 @@ and open the template in the editor.
 </div>
 </div>
 </footer>
+</html>

@@ -257,18 +257,16 @@ public class UsuarioEmpleado implements Serializable {
     public static boolean modEmpleado(UsuarioEmpleado empleado){
         try{
             con = Conexion.obtenerConexion();
-            q = "UPDATE usuario_empleado SET Nombre = ?, appat = ?, apmat = ?, Fecha_Nacimiento, Correo = ?, pass = ?, ID_Division = ? , id_cat_privilegios = ?, foro= ? WHERE ID_Usuario_E = ?";
+            q = "UPDATE usuario_empleado SET Nombre = ?, appat = ?, apmat = ?, Fecha_Nacimiento = ?, Correo = ?, pass = ?, foto= ? WHERE ID_Usuario_E = ?";
             ps = con.prepareCall(q);
             ps.setString(1, empleado.getNombre());
             ps.setString(2, empleado.getAppat());
             ps.setString(3, empleado.getApmat());
             ps.setString(4, empleado.getFechaNacimiento());
             ps.setString(5, empleado.getCorreo());
-            ps.setString(8, empleado.getPassword());
-            ps.setInt(6, empleado.getiD_Division());
-            ps.setInt(7, empleado.getiD_cat_priv());
-            ps.setBytes(9, empleado.getFoto());
-            ps.setInt(10, empleado.getIDUsuarioE());
+            ps.setString(6, empleado.getPassword());
+            ps.setBytes(7, empleado.getFoto());
+            ps.setInt(8, empleado.getIDUsuarioE());
             return ps.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
@@ -285,6 +283,89 @@ public class UsuarioEmpleado implements Serializable {
         }
     }
     
+    /**
+     * Meotdo para cambiar del lado de administracion las cuentas de los Usuarios, donde se pueden cambiar, la divsión, el privilegio o ambos
+     * @param idUsuario El ide del usuario a cambiar el puesto
+     * @param idDiv El ide del la división a cambiar, ingresar cero si no se va a cambiar
+     * @param idPriv El ide del privilegio a cambiar, ingresar cero si no se va a cambiar
+     * @return 
+     */
+    public static boolean modPuestoEmpleado(int idUsuario, int idDiv, int idPriv){
+        boolean procesoCorrecto = true;
+        try{
+            con = Conexion.obtenerConexion();
+            if(idDiv != 0 && idPriv != 0){
+                q = "UPDATE usuario_empleado SET ID_Division = ?, id_cat_privilegios = ? WHERE ID_Usuario_E = ?";
+                ps = con.prepareStatement(q);
+                ps.setInt(1, idDiv);
+                ps.setInt(2, idPriv);
+                ps.setInt(3, idUsuario);
+            }else if(idDiv != 0 && idPriv == 0){
+                q = "UPDATE usuario_empleado SET ID_Division = ? WHERE ID_Usuario_E = ?";
+                ps = con.prepareStatement(q);
+                ps.setInt(1, idDiv);
+                ps.setInt(2, idUsuario);
+            }else if(idDiv == 0 && idPriv != 0){
+                q = "UPDATE usuario_empleado SET id_cat_privilegios = ? WHERE ID_Usuario_E = ?";
+                ps = con.prepareStatement(q);
+                ps.setInt(1, idPriv);
+                ps.setInt(2, idUsuario);
+            }else if(idDiv == 0 && idPriv == 0){
+                return false;
+            }
+            procesoCorrecto = (ps.executeUpdate() == 1);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            procesoCorrecto = false;
+        }finally{
+            try {
+                con.close();
+                q = "";
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return procesoCorrecto;
+    }
+    
+    /**
+     * Metodo para obtener a un usuario a partir de su ide, pero, solo obtiene el nombre, división y privilegios
+     * @param ideUser Elmide del empleaod a buscar
+     * @return un objeto UsuarioEmpleado que contiene todos los parametros que se necesitan devolver en este método
+     */
+    public static UsuarioEmpleado getPuestoEmpleadoById(int ideUser){
+        UsuarioEmpleado userPuestos = null;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT ID_Division, id_cat_privilegios, nombre, appat, apmat FROM usuario_empleado WHERE ID_Usuario_E = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, ideUser);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                userPuestos = new UsuarioEmpleado();
+                userPuestos.setIDUsuarioE(ideUser);
+                userPuestos.setNombre(rs.getString("nombre"));
+                userPuestos.setAppat(rs.getString("appat"));
+                userPuestos.setApmat(rs.getString("apmat"));
+                userPuestos.setiD_Division(rs.getInt("ID_Division"));
+                userPuestos.setiD_cat_priv(rs.getInt("id_cat_privilegios"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No jalo el query");
+            return null;
+        }finally{
+            try {
+                con. close();
+                ps.close();
+                q = "";
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return userPuestos;
+    }
     
     /**
      * Metodo para despedir a un empleado

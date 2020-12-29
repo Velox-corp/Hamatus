@@ -65,7 +65,7 @@ public class actualizarUser extends HttpServlet {
                 bufferValidaciones[4] = Validaciones.esPassword(oldPass);
                 bufferValidaciones[5] = Validaciones.esPassword(newPass);
                 bufferValidaciones[6] = Validaciones.esPassword(newPass2);
-                bufferValidaciones[7] = oldPass.equals(oldUser.getPassword());
+                bufferValidaciones[7] = oldUser.getPassword().equals(oldPass);
                 bufferValidaciones[8] = newPass.equals(newPass2);
                 contadorValidaciones = 9;
             }else{
@@ -84,9 +84,9 @@ public class actualizarUser extends HttpServlet {
                 UsuarioEmpleado updateEmpleado;
                 try{
                     if(newPass == null) {
-                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, oldPass, 0, 0, null);
+                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, oldPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
                     }else{
-                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, newPass, 0, 0, null);
+                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, newPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
                     }
                     if(UsuarioEmpleado.modEmpleado(updateEmpleado)){
                         sesion.setAttribute("usuario", updateEmpleado);

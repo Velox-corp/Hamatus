@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Creacion_equipos
-    Created on : 8/12/2020, 12:03:37 AM
-    Author     : maste
---%>
-
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
@@ -34,7 +28,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         
-        <title>Hamatus -Creación de equipos-</title>
+        <title>Creación de equipos</title>
         
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
         
@@ -122,6 +116,6 @@
                     </div>
                 </div>
         </form>
-        <jsp:include page="Prueba-Reu/my-footer.html" />
+        <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>

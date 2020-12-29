@@ -10,7 +10,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/estilo_inicial.css'>-->
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
-    <link rel="stylesheet" type="text/css" href="css/estilos.css">
+    <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
     <!--Scripts agregados-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -149,7 +149,7 @@
 ╚═╝      ╚═════╝  ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
 
       -->
-      <jsp:include page="Prueba-Reu/my-footer.html" />
+      <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </body>
 <!-- -->
 <!--<footer class="page-footer font-small blue">

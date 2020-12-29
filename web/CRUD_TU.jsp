@@ -29,7 +29,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>CRUD</title>
+        <title>CRUD | TU</title>
 
         <meta name="description" content="Source code generated using layoutit.com">
         <meta name="author" content="LayoutIt!">
@@ -37,19 +37,19 @@
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
-        <script src='JS/interaccionBotones'></script>
-        <jsp:include page="Prueba-Reu/my-head2.jsp" />
+        <script src='JS/interaccionBotones.js'></script>
+        <jsp:include page="Prueba-Reu/my-head2.jsp" /><br>
         <div class="container-fluid">
             <div class="row margin-top-1rem">
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-8">
                     <div class="container-fluid row justify-content-center">
-                        <img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" class="rounded-circle">
+                        <img alt="Bootstrap Image Preview" src="img/grupo.png" class="rounded-circle">
                     </div>
                     <form role="form" method="POST" action='actualizarUser'>
                         <div class="row form-group justify-content-center">
-                            <label for="InputFile">
+                            <label for="InputFile" class="margen">
                                 Imagen
                             </label>
                             <input type="file" class="form-control-file" id="InputFile">
@@ -129,15 +129,8 @@
                                 <button class="btn btn-info" onclick='return cambiarEstado("fecha_nacimiento")'>Editar</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <h3 class='text-danger'>Esto aun no esta:</h3>
-                            <label for="Puesto">
-                                Puesto
-                            </label>
-                            <input type="text" class="form-control" id="Puesto">
-                        </div>
 
-                        <h4>Contraseña: <small>(Si desea combiar su contraseña, ingrese la bueja contraseña y la nueva a establecer)</small></h4>
+                        <h4>Contraseña <small>(Si desea combiar su contraseña, ingrese la vieja contraseña y la nueva a establecer)</small>:</h4>
                         <br>
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
@@ -166,8 +159,8 @@
                                    ondrag="return validarPass(this)"
                                    ondrop="return validarPass(this)">
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            Actualizar info
+                        <button type="submit" class="btn btn-dark">
+                            Actualizar información
                         </button>
                     </form>
                 </div>
@@ -180,5 +173,5 @@
             </div>
         </div>
     </body>
-    <jsp:include page="Prueba-Reu/my-footer.html" />
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>
