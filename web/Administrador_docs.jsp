@@ -140,6 +140,6 @@
     </main>
         
 
-  <jsp:include page="Prueba-Reu/my-footer.html" />
+  <jsp:include page="Prueba-Reu/my-footer.jsp" />
   </body>
 </html>

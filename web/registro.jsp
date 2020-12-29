@@ -157,7 +157,7 @@
       -->
 
 </body>
-<jsp:include page="Prueba-Reu/my-footer.html" />
+<jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>
 <!--
                                                     ╓╣╢╗
