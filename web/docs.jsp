@@ -88,7 +88,7 @@
                             }
                         }else{
                         %>
-                        <li>No existe el folder del Equipo</li>
+                        <li>No existe el folder del Equipo por favor almacene un archivo para crear uno</li>
                         <%
                         }
                         %>
@@ -145,7 +145,7 @@
         <div class="col-md-1">
         </div>
     </div>
-    <jsp:include page="Prueba-Reu/my-footer.html" />
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
   </body>
   <script src="./JS/enable_tooltip.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

@@ -140,87 +140,86 @@ public class uploadFile extends HttpServlet {
             }
             if (obtencionAdecuada) {
                 System.out.println("credenciales correctas");
-            }
-            
-            String value = request.getParameter("dictionary");
-            value = value.substring(1, value.length()-1);
-            String[] keyValuePairs = value.split(",");
-            Hashtable<Integer, String> list = new Hashtable<Integer, String>();
-            for (String pair : keyValuePairs) {
-                String[] entry = pair.split("=");
-                list.put(1, value);
-            }
-            
-            String pass          = request.getParameter("pass");
-            
-            int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
-                    .getParameter("id_tipo_acceso").charAt(0)));  
-            
-            char tipo_archivo    = request.getParameter("tipo_archivo").charAt(0);
-            Calendar c1 = Calendar.getInstance();
-            String folio         = Folio.generarFolio(
-                    tipo_archivo,Character.forDigit(id_tipo_acceso, 10),
-                    c1.get(Calendar.YEAR),c1.get(Calendar.MONTH),
-                    c1.get(Calendar.DATE),c1.get(Calendar.HOUR),
-                    c1.get(Calendar.MINUTE));
-            int Equipo_ID_Equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
-            int id_D_DOcumento   = 1;//no entiendo bien esto
-            int id_usuario_p     = usuario.getIDUsuarioE();
-            String ruta          = "/archivos/"+Equipo_ID_Equipo+"/";
-            Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
-            String nombre        = Paths.get(filePart.getSubmittedFileName())
-                    .getFileName().toString(); //Basicamente nos trae el nombre del archivo
-            
-            //Listado de datos preparados para entrar en la BD
-            M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
-            if (mdoc.registrarM_Documentos()) {
-                System.out.println("Todo correcto hasta el moemnto..");
-                System.out.println("Entrando en fase 2");
-                D_Documento ddoc = new D_Documento(nombre, ruta, pass,
-                        id_tipo_acceso,folio, Equipo_ID_Equipo, 
-                        mdoc.getIdM_Documento());
-                if (ddoc.registrarDoc()) {
-                    System.out.println("Todo Correcto uwu");
+                String value = request.getParameter("dictionary");
+                value = value.substring(1, value.length()-1);
+                String[] keyValuePairs = value.split(",");
+                Hashtable<Integer, String> list = new Hashtable<Integer, String>();
+                for (String pair : keyValuePairs) {
+                    String[] entry = pair.split("=");
+                    list.put(1, value);
+                }
+                String pass          = request.getParameter("pass");
+
+                int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
+                        .getParameter("id_tipo_acceso").charAt(0)));  
+
+                char tipo_archivo    = request.getParameter("tipo_archivo").charAt(0);
+                Calendar c1 = Calendar.getInstance();
+                String folio         = Folio.generarFolio(
+                        tipo_archivo,Character.forDigit(id_tipo_acceso, 10),
+                        c1.get(Calendar.YEAR),c1.get(Calendar.MONTH),
+                        c1.get(Calendar.DATE),c1.get(Calendar.HOUR),
+                        c1.get(Calendar.MINUTE));
+                int Equipo_ID_Equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                int id_D_DOcumento   = 1;//no entiendo bien esto
+                int id_usuario_p     = usuario.getIDUsuarioE();
+                String ruta          = "/archivos/"+Equipo_ID_Equipo+"/";
+                Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
+                String nombre        = Paths.get(filePart.getSubmittedFileName())
+                        .getFileName().toString(); //Basicamente nos trae el nombre del archivo
+                //Listado de datos preparados para entrar en la BD
+                M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
+                if (mdoc.registrarM_Documentos()) {
+                    System.out.println("Todo correcto hasta el moemnto..");
+                    System.out.println("Entrando en fase 2");
+                    D_Documento ddoc = new D_Documento(nombre, ruta, pass,
+                            id_tipo_acceso,folio, Equipo_ID_Equipo, 
+                            mdoc.getIdM_Documento());
+                    if (ddoc.registrarDoc()) {
+                        System.out.println("Todo Correcto uwu");
+                        OutputStream outs = null;
+                        InputStream filecontent = null;
+                        final PrintWriter writer = response.getWriter();
+                        try {
+                            crearFolder(String.valueOf(Equipo_ID_Equipo), request);
+                            outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
+                                    +Equipo_ID_Equipo+"/")+ File.separator + nombre));
+                            filecontent = filePart.getInputStream();
+
+                            int read = 0;
+                            final byte[] bytes = new byte[1024];
+
+                            while ((read = filecontent.read(bytes)) != -1) {
+                                outs.write(bytes, 0, read);
+                            }
+
+                            response.sendRedirect("docs.jsp?flag=true");
+
+                        } catch (FileNotFoundException fne) {
+                            System.out.println("Algo de que no encontro el archivo"
+                                    + " o el folder");
+                            System.out.println(fne.getMessage());
+                        } finally {
+                            System.out.println("Aver aver aver que demonios esta pasando");
+                            outs.close();
+                            filecontent.close();
+                            writer.close();
+                        }
+                    }else{
+                        System.out.println("Todo mal en ddoc unu");
+                        response.sendRedirect("docs.jsp?flag=false");
+                    }
                 }else{
-                    System.out.println("Todo mal en ddoc unu");
+                    System.out.println("Ya valio esto unu, posible error al "
+                            + "registrar la master del doc");
+                    response.sendRedirect("docs.jsp?flag=false");
                 }
-            }else{
-                System.out.println("Ya valio esto unu, posible error al "
-                        + "registrar la master del doc");
-            }
-            
-            OutputStream outs = null;
-            InputStream filecontent = null;
-            final PrintWriter writer = response.getWriter();
-            try {
-                crearFolder(String.valueOf(Equipo_ID_Equipo), request);
-                outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
-                        +Equipo_ID_Equipo+"/")+ File.separator + nombre));
-                filecontent = filePart.getInputStream();
-
-                int read = 0;
-                final byte[] bytes = new byte[1024];
-
-                while ((read = filecontent.read(bytes)) != -1) {
-                    outs.write(bytes, 0, read);
-                }
-
-                response.sendRedirect("docs.jsp?flag=true");
-                
-            } catch (FileNotFoundException fne) {
-                System.out.println("Algo de que no encontro el archivo"
-                        + " o el folder");
-                System.out.println(fne.getMessage());
-            } finally {
-                System.out.println("Aver aver aver que demonios esta pasando");
-                outs.close();
-                filecontent.close();
-                writer.close();
             }
         }catch(Exception e){
             System.out.println("El bug es dibido a:" + e.getMessage());
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
         }
+            
     }   
 }
