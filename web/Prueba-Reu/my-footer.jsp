@@ -9,7 +9,7 @@
 <div class="col-xs-12 col-sm-6 col-md-3">
 <div class="widget subscribe no-box">
 <h5 class="widget-title">Hamatus<span></span></h5> 
-<p class="txt-white">Hamatus funge como una paltaforma para el trabajo colaborativo dentro de una pyme, donde se facilita el manejo de la documentación dentro de una empresa</p>
+<p class="txt-white">Hamatus funge como una paltaforma para el trabajo colaborativo dentro de una pyme, donde se facilita el manejo de la documentación dentro de una empresa.</p>
 </div>
 </div>
 
@@ -44,8 +44,8 @@
 
 <div class="col-xs-12 col-sm-6 col-md-3">
 <div class="widget no-box">
-<h5 class="widget-title">Registra tu empresa ahora!<span></span></h5>
-<p class="txt-white">Crea tu propia red interna para tu empresa hoy!.</p>
+<h5 class="widget-title">¡Registra tu empresa ahora!<span></span></h5>
+<p class="txt-white">Crea tu propia red interna para tu empresa hoy.</p>
 <a class="btn btn-dark" href="registro.jsp" target="_blank">Registrate</a>
 </div>
 </div>

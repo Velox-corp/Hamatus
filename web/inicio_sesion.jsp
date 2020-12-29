@@ -54,9 +54,9 @@
                                                                
 
       -->
-        <div class="container margin-top-1rem cubridor d-flex justify-content-center align-items-center">
+        <div class="container cubridor d-flex justify-content-center align-items-center">
             <div>
-                <center><h1>Inicio de sesion</h1></center>    
+                <center><h1>Iniciar sesión</h1></center><br> 
                 <div class="row d-flex justify-content-center">
                   <div class="col-sm-6">
                     <img align="right" src="img/iniciar-sesion.png">
@@ -64,7 +64,7 @@
                   <div class="col-sm-6">
                     <form action="iniciarSesion">
                         <div class="form-group">
-                          <label for="email">Dirección de Correo:</label>
+                          <label for="email">Dirección de correo electrónico:</label>
                           <input type="email" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group">
@@ -72,9 +72,9 @@
                           <input type="password" class="form-control" id="pwd" name="pwd">
                         </div>
                         <div class="checkbox">
-                          <label><input type="checkbox"> Recuerda mi información</label>
+                          <label><input type="checkbox"> Recordar mi información</label><br><br>
                         </div>
-                        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+                        <button type="submit" class="btn btn-dark">Iniciar Sesión</button>
                       </form>
                   </div>
                 </div>
