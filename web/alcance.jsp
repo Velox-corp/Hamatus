@@ -63,7 +63,22 @@
                 </div>
                 <div class="col-md-9">
                     <p>
-                    Lo dejare para al rato
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
+                    reprehenderit aperiam nulla officia facere! Error accusantium
+                    magnam repellat. Incidunt eum perspiciatis ab?
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
+                    reprehenderit aperiam nulla officia facere! Error accusantium
+                    magnam repellat. Incidunt eum perspiciatis ab?
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
+                    reprehenderit aperiam nulla officia facere! Error accusantium
+                    magnam repellat. Incidunt eum perspiciatis ab?
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
+                    reprehenderit aperiam nulla officia facere! Error accusantium
+                    magnam repellat. Incidunt eum perspiciatis ab?
                     </p>
                 </div>
             </div>
