@@ -1,9 +1,3 @@
-<%-- 
-    Document   : editarEquipo
-    Created on : 8/12/2020, 01:39:12 AM
-    Author     : maste
---%>
-
 <%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>

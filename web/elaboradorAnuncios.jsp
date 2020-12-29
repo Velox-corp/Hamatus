@@ -1,15 +1,9 @@
-<%-- 
-    Document   : elaboradorAnuncios
-    Created on : 30/11/2020, 11:56:14 PM
-    Author     : maste
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hamatus - Elaboración anuncios -</title>
+        <title>Elaboración de anuncios -</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <jsp:include page="Prueba-Reu/my-head2.jsp" />

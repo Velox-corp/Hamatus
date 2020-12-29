@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Hamatus</title>
+    <title>Alcance</title>
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
 </head>
 <body>

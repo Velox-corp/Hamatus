@@ -9,7 +9,7 @@
 <html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hamatus - P. principal -</title>
+        <title>Página principal -</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
