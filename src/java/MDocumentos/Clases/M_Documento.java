@@ -10,14 +10,11 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import java.sql.Statement;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.sql.DataSource;
 
 /**
  *
@@ -46,11 +43,10 @@ public class M_Documento implements Serializable {
     }
     
     /**
-     * @param idM_Documento
      * @param id_D_DOcumento
      * @param id_usuario_p
      */
-    public M_Documento(int idM_Documento, int id_D_DOcumento){
+    public M_Documento(int id_D_DOcumento, int id_usuario_p){
         this.id_D_DOcumento = id_D_DOcumento;
         this.id_usuario_p   = id_usuario_p;
     }
@@ -68,11 +64,20 @@ public class M_Documento implements Serializable {
                     + "VALUES (?, ?)");
             ps = con.prepareCall(query);
             ps.setInt(1, this.id_D_DOcumento);
-            ps.setInt(2, this.id_usuario_p);   
-            if(ps.executeUpdate()==1) correcto = true;
+            ps.setInt(2, this.id_usuario_p);
+            ps.executeUpdate();
+            
+            this.query = ("SELECT LAST_INSERT_ID() AS last_id FROM m_documento");
+            ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.executeUpdate();
+            ResultSet keys = ps.getGeneratedKeys();    
+            keys.next();  
+            this.idM_Documento = keys.getInt(1);
+            correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
         }
         return correcto;
     }

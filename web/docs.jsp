@@ -65,10 +65,18 @@
                                 %>
                                 <li>
                                     <a href="downloadFile?filePath=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" 
-                                       target="_top" data-toggle="tooltip"
-                                       data-placement="left" 
-                                       title="Haga click al link para descargar el archivo"><%=list[i]%></a>
-                                    
+                                       target="_top" data-toggle="tooltip" 
+                                       title="Descargar" id="<%=file.getAbsolutePath()%>"><%=list[i]%></a>
+                                       <a href="#" target="_top" data-toggle="tooltip" title="Eliminar">
+                                           <i class="fas fa-trash-alt text-danger"></i>
+                                       </a>
+                                       <a href="#" target="_top" data-toggle="tooltip" title="Modificar">
+                                           <i class="fas fa-edit text-primary"></i>
+                                       </a>
+                                       <a href="#" target="_top" data-toggle="tooltip" title="Compartir" 
+                                          onclick="copy_link('<%=file.getAbsolutePath()%>')">
+                                           <i class="fas fa-share text-primary"></i>
+                                       </a>
                                 </li>
                                 <%
                                     }
@@ -86,8 +94,6 @@
                         %>
                     </ul>
                 </li>
-                <li>Cliente</li>
-                <li>Empresa</li>
             </ul>
         </div>
         <div class="col-md-7">
@@ -106,8 +112,6 @@
                         </div>
                         <label for="pass">Agrege una contraseña al archivo</label>
                         <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
-                        <label for="folio">Inserte un folio</label>
-                        <input class="form-control" name="folio" type="text" placeholder="Inserte folio">
                         <label for="id_tipo_acceso">Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%
@@ -116,20 +120,23 @@
                                 for (Integer key:keys) {
                                     System.out.println(key);
                                 %>
-                                <option id="<%= key %>"><%= list.get(key) %></option>
+                                <option><%= key %>.<%= list.get(key) %></option>
                                 <%
                                 }
                             %>
                         </select>
-                            <input name="dictionary" hidden="true" value="<%= list %>">
+                        <input name="dictionary" value="<%= list %>" hidden="true">
+                        <label for="tipo_archivo">Elija tipo de archivo</label>
+                        <select class="form-control" name="tipo_archivo">
+                            <option>Digital</option>
+                            <option>Escaneado</option>
+                        </select>
                         <br>
                         <div class="justify-content-center">
                             <button type="" class="btn btn-primary">
                                 Subir Archivo
                             </button>
-                            <button type="button" class="btn btn-primary">
-                                Cancelar
-                            </button>
+                            <a href="docs.jsp" class="btn btn-danger">Cancelar</a>
                         </div>
                     </form>
                 </div> 
@@ -141,4 +148,6 @@
     <jsp:include page="Prueba-Reu/my-footer.html" />
   </body>
   <script src="./JS/enable_tooltip.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="./JS/sweetAlert.js"></script>
 </html>

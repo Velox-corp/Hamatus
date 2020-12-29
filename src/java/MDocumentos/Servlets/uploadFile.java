@@ -5,6 +5,7 @@
  */
 package MDocumentos.Servlets;
 
+import ClasesSoporte.Folio;
 import MDocumentos.Clases.D_Documento;
 import MDocumentos.Clases.M_Documento;
 import MUsuarios.clases.Empresa;
@@ -47,115 +48,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @MultipartConfig(maxFileSize = 16177215)
 public class uploadFile extends HttpServlet {
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        String redirect = request.getContextPath() + "/error.jsp";
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            //Bueno creo que seria bueno traer una parte de la sesion
-            HttpSession sesionUser = request.getSession();
-            boolean obtencionAdecuada = false;
-            UsuarioEmpleado usuario = null;
-            Empresa emp = null;
-            try{
-                usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
-                emp = (Empresa) sesionUser.getAttribute("empresa");
-                obtencionAdecuada = true; 
-            }catch(NullPointerException ex){
-                System.out.println(ex.getMessage());
-                ex.printStackTrace();
-                obtencionAdecuada = false;
-            }
-            
-            String pass          = request.getParameter("pass");
-            int id_tipo_acceso   = Integer.parseInt(request
-                    .getParameter("id_tipo_acceso"));
-            String folio         = request.getParameter("folio");
-            int Equipo_ID_Equipo = Integer.parseInt(request
-                    .getParameter("Equipo_ID_Equipo"));
-            int id_D_DOcumento   = Integer.parseInt(request
-                    .getParameter("id_D_DOcumento"));
-            int id_usuario_p     = usuario.getIDUsuarioE();
-            String ruta          = usuario.getIDUsuarioE().toString();
-            Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
-            String nombre        = Paths.get(filePart.getSubmittedFileName())
-                    .getFileName().toString(); //Basicamente nos trae el nombre del archivo
-            
-            //Listado de datos preparados para entrar en la BD
-            M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
-            if (mdoc.registrarM_Documentos()) {
-                System.out.println("Todo correcto hasta el moemnto..");
-                System.out.println("Entrando en fase 2");
-                D_Documento ddoc = new D_Documento(nombre, ruta, pass,
-                        id_tipo_acceso,folio, Equipo_ID_Equipo, 
-                        mdoc.getIdM_Documento());
-                if (ddoc.registrarDoc()) {
-                    System.out.println("Todo Correcto uwu");
-                }else{
-                    System.out.println("Todo mal en ddoc unu");
-                }
-            }else{
-                System.out.println("Ya valio esto unu, posible error al "
-                        + "registrar la master del doc");
-            }
-            
-            OutputStream outs = null;
-            InputStream filecontent = null;
-            final PrintWriter writer = response.getWriter();
-            try {
-                crearFolder(usuario.getIDUsuarioE().toString(), request);
-                outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
-                        +usuario.getiD_Division().toString()+"/")+ File.separator
-                        + nombre));
-                filecontent = filePart.getInputStream();
-
-                int read = 0;
-                final byte[] bytes = new byte[1024];
-
-                while ((read = filecontent.read(bytes)) != -1) {
-                    outs.write(bytes, 0, read);
-                }
-                
-                outs.close();
-                filecontent.close();
-                writer.close();
-                
-                response.flushBuffer();
-            } catch (FileNotFoundException fne) {
-                System.out.println("Algo de que no encontro el archivo"
-                        + " o el folder");
-                System.out.println(fne.getMessage());
-            } finally {
-                System.out.println("Aver aver aver que demonios esta pasando");
-                outs.close();
-                filecontent.close();
-                writer.close();
-            }
-            //redirect = "/docs.jsp";
-            //response.setContentType("text/html/jsp");
-            System.out.println("La URL es:" + request.getParameter("url"));
-            if (response.isCommitted()) {
-                
-            }else{
-                System.out.println("Algo anda mal y muy mal unu");
-            }
-        }catch(Exception e){
-            System.out.println("El bug es dibido a:" + e.getMessage());
-            System.out.println(e.getCause());
-            System.out.println(e.getLocalizedMessage());
-            e.printStackTrace();
-        }
-    }
     
     /**
      * Crea el directorio o verifica que exita el mismo
@@ -215,7 +107,7 @@ public class uploadFile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**
@@ -247,6 +139,7 @@ public class uploadFile extends HttpServlet {
                 obtencionAdecuada = false;
             }
             if (obtencionAdecuada) {
+                System.out.println("credenciales correctas");
             }
             
             String value = request.getParameter("dictionary");
@@ -259,13 +152,21 @@ public class uploadFile extends HttpServlet {
             }
             
             String pass          = request.getParameter("pass");
-            int id_tipo_acceso   = Integer.parseInt(request
-                    .getParameter("id_tipo_acceso"));
-            String folio         = request.getParameter("folio");
+            
+            int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
+                    .getParameter("id_tipo_acceso").charAt(0)));  
+            
+            char tipo_archivo    = request.getParameter("tipo_archivo").charAt(0);
+            Calendar c1 = Calendar.getInstance();
+            String folio         = Folio.generarFolio(
+                    tipo_archivo,Character.forDigit(id_tipo_acceso, 10),
+                    c1.get(Calendar.YEAR),c1.get(Calendar.MONTH),
+                    c1.get(Calendar.DATE),c1.get(Calendar.HOUR),
+                    c1.get(Calendar.MINUTE));
             int Equipo_ID_Equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
             int id_D_DOcumento   = 1;//no entiendo bien esto
             int id_usuario_p     = usuario.getIDUsuarioE();
-            String ruta          = usuario.getIDUsuarioE().toString();
+            String ruta          = "/archivos/"+Equipo_ID_Equipo+"/";
             Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
             String nombre        = Paths.get(filePart.getSubmittedFileName())
                     .getFileName().toString(); //Basicamente nos trae el nombre del archivo
@@ -303,9 +204,8 @@ public class uploadFile extends HttpServlet {
                 while ((read = filecontent.read(bytes)) != -1) {
                     outs.write(bytes, 0, read);
                 }
-                
-                //request.getRequestDispatcher("docs.jsp").forward(request, response);
-                response.sendRedirect("docs.jsp");
+
+                response.sendRedirect("docs.jsp?flag=true");
                 
             } catch (FileNotFoundException fne) {
                 System.out.println("Algo de que no encontro el archivo"
@@ -322,7 +222,5 @@ public class uploadFile extends HttpServlet {
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
         }
-    }
-    
-    
+    }   
 }

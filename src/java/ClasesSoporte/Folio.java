@@ -18,25 +18,25 @@ public class Folio {
      * Metodó para generar un folio, tu solo metes datos y el lo genera
      * @param tipoDoc Un char direccionando si el documento es digital (D) o fisico (F)
      * @param tipoAcceso Un char que direcciona si el documento es accesble por el equipo de trabajo (E) o por contraseña (C)
-     * @param año El año de subida deo documento
+     * @param anno El año de subida deo documento
      * @param mes El mes de subida del documento
-     * @param día El día de subida del documento
+     * @param dia El día de subida del documento
      * @param hora La hora de subida del documento
      * @param minutos El minuto de subida del documento
      * @return El folio filtrado a partir de los datos
      */
-    public static String generarFolio(char tipoDoc, char tipoAcceso, int año, int mes, int día, int hora, int minutos){
+    public static String generarFolio(char tipoDoc, char tipoAcceso, int anno, int mes, int dia, int hora, int minutos){
         String folio = "";
         folio += String.valueOf(tipoDoc);
         folio += String.valueOf(tipoAcceso);
-        String añoOperable = String.valueOf(año);
-        char decada = añoOperable.charAt(añoOperable.length()-1);
-        char anio = añoOperable.charAt(añoOperable.length());
+        String annoOperable = String.valueOf(anno);
+        char decada = annoOperable.charAt(2);
+        char anio = annoOperable.charAt(annoOperable.length()-1);
         folio += String.valueOf(decada);
         folio += String.valueOf(anio);
         
         folio += llenarCero(mes);
-        folio += llenarCero(día);
+        folio += llenarCero(dia);
         folio += llenarCero(hora);
         folio += llenarCero(minutos);
         return folio;

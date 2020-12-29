@@ -128,15 +128,17 @@ public class D_Documento implements Serializable {
         try {
             this.con = Conexion.obtenerConexion();
             this.query = ("INSERT INTO d_Documento (Ruta, Nombre, Password,"
-                    + " Folio, id_tipo_acceso, fecha_subida, hora_subida) " 
-                    + "VALUES (?, ?, ?, ?, ?, CURDATE(), DATE_FORMAT(NOW(),"
-                    + "%H:%i:%S))");
+                    + " Folio, id_tipo_acceso, fecha_subida, hora_subida, "
+                    + "id_MDocumento, Equipo_ID_Equipo) " 
+                    + "VALUES (?, ?, ?, ?, ?, CURDATE(), CURTIME(), ?, ?)");
             ps = con.prepareCall(query);
             ps.setString(1, this.ruta);
             ps.setString(2, this.nombre);
             ps.setString(3, this.pass);
             ps.setString(4, this.folio);
             ps.setInt(5, this.id_tipo_acceso);
+            ps.setInt(6, this.id_MDocumento);
+            ps.setInt(7, this.Equipo_ID_Equipo);   
             if(ps.executeUpdate()==1) correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
