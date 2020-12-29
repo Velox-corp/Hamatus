@@ -91,7 +91,7 @@ h2 {
 
 h3 {
     font-size: 1.25rem;
-    color: #1DB0EE;
+    color: #2291C1;
     font-weight: 400;
 }
 
@@ -142,6 +142,10 @@ a {
 
 .margin-top-2rem{
     margin-top: 2rem;
+}
+
+.margen {
+   margin-right: 2rem;
 }
 
 .page-link {

@@ -62,7 +62,7 @@
                             <%if (obtencionAdecuada){ %>
                                 <%=username%>
                             <%}else{%>
-                                USUARIO
+                                Usuario
                             <% }%>
                         </a>
                         <a class='btn btn-dark' href="CerrarSesion">
