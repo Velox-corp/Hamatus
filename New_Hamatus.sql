@@ -321,20 +321,28 @@ DELIMITER ;
 -- procedure ingresarUsuario
 -- -----------------------------------------------------
 
-DROP procedure IF EXISTS `yL10l8yMbC`.`ingresarUsuario`;
+DROP procedure IF EXISTS `yL10l8yMbC`.`obtenerAnuncios`;
 
 DELIMITER $$
-USE `yL10l8yMbC`$$
-CREATE PROCEDURE `yL10l8yMbC`.`ingresarUsuario`(nombre tinytext, appat tinytext, apmat tinytext,
-f_n date, correo text(45), idJP int, idNp int, pass text(30), foto Blob, idE int)
+CREATE PROCEDURE `obtenerAnuncios` (idE int, idDiv int)
 BEGIN
-	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Jerarquia_P, `Usuario_Empleado`.ID_Nivel_P, `Usuario_Empleado`.foto)
-    values (nombre, appat, apmat, f_n, correo, pass, idJp, idNp, foto);
-    Insert into `Empresa_Empleado` (id_usuario_e, id_empresa)
-    values ( (Select MAX(ID_Usuario_E) from Usuario_Empleado), idE);
+	select 
+	case 
+		when division.ID_Jerarquia = 1 and division.ID_Empresa = idE then "generales"
+        when division.ID_Jerarquia = 2 and division.ID_Empresa = idE  and division.ID_Division = idDiv then "particulares"
+	end, tablon.*
+    from tablon join division on tablon.Id_division = division.ID_DivisioningresarUsuario
+    where 
+		(division.ID_Jerarquia = 1 and division.ID_Empresa = idE) or
+        (division.ID_Jerarquia = 2 and division.ID_Empresa = idE and division.ID_Division = idDiv)
+	order by fecha_publicacion DESC;
 END$$
 
 DELIMITER ;
+use yL10l8yMbC;
+insert into cat_tipo_acceso values (1, ""), (2, "");
+insert into privilegios_jerarquia_u values (1, "Administrador"), (2, "Directivo"), (3, "Jefe de área"), (4, "Empleaod común");
+insert into Cat_jerarquia values (1, "División Padre"), (2, "Departamento subordinado");
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
