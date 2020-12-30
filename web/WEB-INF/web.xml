@@ -72,6 +72,18 @@
         <servlet-name>cambioDePuesto</servlet-name>
         <servlet-class>MUsuarios.Servlets.cambioDePuesto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>crearAnuncio</servlet-name>
+        <servlet-class>MTablones.Servlets.crearAnuncio</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editarAnuncio</servlet-name>
+        <servlet-class>MTablones.Servlets.editarAnuncio</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eliminarAnuncio</servlet-name>
+        <servlet-class>MTablones.Servlets.eliminarAnuncio</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -143,6 +155,18 @@
     <servlet-mapping>
         <servlet-name>cambioDePuesto</servlet-name>
         <url-pattern>/cambioDePuesto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>crearAnuncio</servlet-name>
+        <url-pattern>/crearAnuncio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editarAnuncio</servlet-name>
+        <url-pattern>/editarAnuncio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eliminarAnuncio</servlet-name>
+        <url-pattern>/eliminarAnuncio</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

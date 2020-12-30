@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MUsuarios.clases;
+package MTablones.clases;
 
 import ClasesSoporte.Conexion;
-import MDistribucion.Servlets.Anuncio;
+import MTablones.Clases.Anuncio;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,26 +18,6 @@ public class AnuncioDAO {
     ResultSet rs;
     int r;
 
-    public Anuncio buscar(int id) {
-        Anuncio p = new Anuncio();
-        String sql = "select * from tablon where ID_Tablon=" + id;
-        try {
-            con = Conexion.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                p.setId(rs.getInt(1));
-                p.setTitulo(rs.getString(2));
-                p.setDescripcion(rs.getString(3));
-                p.setFecha(rs.getString(5));
-            }
-        } catch (Exception e) {
-        }
-        return p;
-    }
-     
-   
-    
     public Anuncio listarId(int id) {
         String sql = "Select * from tablon where Id_division=" + id;
         Anuncio p = new Anuncio();
