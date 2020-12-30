@@ -65,14 +65,13 @@ public class M_Documento implements Serializable {
             ps = con.prepareCall(query);
             ps.setInt(1, this.id_D_DOcumento);
             ps.setInt(2, this.id_usuario_p);
-            ps.executeUpdate();
-            
-            this.query = ("SELECT LAST_INSERT_ID() AS last_id FROM m_documento");
-            ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.executeUpdate();
-            ResultSet keys = ps.getGeneratedKeys();    
-            keys.next();  
-            this.idM_Documento = keys.getInt(1);
+            int lastInsertedID = ps.executeUpdate();
+            ResultSet rs= ps.getGeneratedKeys();
+            if (rs.next()) 
+            {
+              System.out.println("Last Inserted ID = "+rs.getLong(1));
+              this.idM_Documento = rs.getInt(1);
+            }
             correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
