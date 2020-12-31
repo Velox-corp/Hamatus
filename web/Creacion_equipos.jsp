@@ -3,22 +3,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 
 <%
-    String redirect = "";
     boolean desempeño_adecuado = true;
     HttpSession sesion;
     ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
+    UsuarioEmpleado liderDiv = null;
     try{
         //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
         sesion = request.getSession();
-        UsuarioEmpleado liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        empleados = UsuarioEmpleado.obtenerUsuariosEquipo(0, liderDiv.getiD_Division()); //RECORDATORIO PARA EL FUTURO, debe traer aparte a los que no tienen equipo
+        liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
+        if(liderDiv.getiD_cat_priv() != 2){ //esta función solo debería ejecutarla un lider de división
+            desempeño_adecuado = false;
+        }else{
+            empleados = UsuarioEmpleado.obtenerUsuariosEquipo(0, liderDiv.getiD_Division()); //RECORDATORIO PARA EL FUTURO, debe traer aparte a los que no tienen equipo
+        }
+        
     }catch(Exception e){
-        redirect = "error.jsp";
         desempeño_adecuado = false;
     }
 
     if(!desempeño_adecuado){
-        response.sendRedirect(redirect);
+        response.sendRedirect("error.jsp");
     }
 %>
     
@@ -50,20 +54,20 @@
                         <label for=nombreEquipo">
                             Nombre del equipo:
                         </label>
-                        <input type="text" id='nombreEquipo' name='nombregEquipo'>
+                        <input type="text" id='nombreEquipo' name='nombreEquipo'>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for='división'>
                             División correspondiente
                         </label>
-                        <input type="text" readonly="readnoly" id='division' name='division'>
+                        <input type="text" readonly="readonly" id='division'  value='<%=liderDiv.getiD_Division() /*está debería cambiar por el nombre de la división*/%>' name='division'>
                     </div>
             </div>
             <br>
             <%
                 for (int i = 0; i < empleados.size(); i++) {
                     UsuarioEmpleado emp = empleados.get(i);
-                    int mod = i%3;
+                    int mod = (i+1)%3;
                     switch(mod){
                         case 1:
                     %>
@@ -74,8 +78,9 @@
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for="empleado_<%=emp.getIDUsuarioE()%>">Incluir en el equipo:</label>
-                                        <input type="checkbox" id='empleado_<%=emp.getIDUsuarioE()%>' value='true' name='empleado_<%=emp.getIDUsuarioE()%>'>
+                                        <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
+                                        <input type="checkbox" id='empleado_<%=(i+1)%>' value='true' name='empleado_<%=(i+1)%>'>
+                                        <input type='hidden' name='idE_<%=(i+1)%>' id='idE_<%=(i+1)%>' value='<%=emp.getIDUsuarioE()%>'>
                                     </div>
                             </div>
                     </div>
@@ -86,9 +91,10 @@
                                     <h5 class="card-header">
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
-                                    <div class="card-body">
-                                        <label for="empleado_<%=emp.getIDUsuarioE()%>">Incluir en el equipo:</label>
-                                        <input type="checkbox" id='empleado_<%=emp.getIDUsuarioE()%>' value='true' name='empleado_<%=emp.getIDUsuarioE()%>'>
+                                   <div class="card-body ">
+                                        <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
+                                        <input type="checkbox" id='empleado_<%=(i+1)%>' value='true' name='empleado_<%=(i+1)%>'>
+                                        <input type='hidden' name='idE_<%=(i+1)%>' id='idE_<%=(i+1)%>' value='<%=emp.getIDUsuarioE()%>'>
                                     </div>
                             </div>
                     </div>
@@ -101,18 +107,20 @@
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for="empleado_<%=emp.getIDUsuarioE()%>">Incluir en el equipo:</label>
-                                        <input type="checkbox" id='empleado_<%=emp.getIDUsuarioE()%>' value='true' name='empleado_<%=emp.getIDUsuarioE()%>'>
+                                        <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
+                                        <input type="checkbox" id='empleado_<%=(i+1)%>' value='true' name='empleado_<%=(i+1)%>'>
+                                        <input type='hidden'  name='idE_<%=(i+1)%>' id='idE_<%=(i+1)%>'  value='<%=emp.getIDUsuarioE()%>'>
                                     </div>
                             </div>
                     </div>
             </div>
+                                    
                     <%break;
                     }//switch
                 }  // for %>
-                <div class='row'>
-                    <div class='col-md-12'>
-                        <button class='btn btn-success' type="submit">Crear equipo de trabajo</button>
+                <div class='row align-items-center'>
+                    <div class='col-md-10'>
+                        <button class='btn btn-success btn-large' type="submit">Crear equipo de trabajo</button>
                     </div>
                 </div>
         </form>

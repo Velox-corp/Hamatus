@@ -165,9 +165,9 @@
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for="empleado_<%=emp.getIDUsuarioE()%>">Estado en el equipo:</label>
-                                        <!--Pendiente la nueva forma de asignación -->
-                                        <input type="checkbox" id='empleado_<%=emp.getIDUsuarioE()%>' value='true' name='empleado_<%=emp.getIDUsuarioE()%>'>
+                                         <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
+                                        <input type="checkbox" id='empleado_<%=(i+1)%>' value='true' name='empleado_<%=(i+1)%>'>
+                                        <input type='hidden' name='idE_<%=(i+1)%>' id='idE_<%=(i+1)%>' value='<%=emp.getIDUsuarioE()%>'>
                                     </div>
                             </div>
                     </div>
@@ -179,8 +179,9 @@
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for="empleado_<%=emp.getIDUsuarioE()%>">Incluir en el equipo:</label>
-                                        <input type="checkbox" id='empleado_<%=emp.getIDUsuarioE()%>' value='true' name='empleado_<%=emp.getIDUsuarioE()%>'>
+                                        <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
+                                        <input type="checkbox" id='empleado_<%=(i+1)%>' value='true' name='empleado_<%=(i+1)%>'>
+                                        <input type='hidden' name='idE_<%=(i+1)%>' id='idE_<%=(i+1)%>' value='<%=emp.getIDUsuarioE()%>'>
                                     </div>
                             </div>
                     </div>
@@ -193,8 +194,9 @@
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
                                     <div class="card-body">
-                                        <label for="empleado_<%=emp.getIDUsuarioE()%>">Incluir en el equipo:</label>
-                                        <input type="checkbox" id='empleado_<%=emp.getIDUsuarioE()%>' value='true' name='empleado_<%=emp.getIDUsuarioE()%>'>
+                                         <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
+                                        <input type="checkbox" id='empleado_<%=(i+1)%>' value='true' name='empleado_<%=(i+1)%>'>
+                                        <input type='hidden' name='idE_<%=(i+1)%>' id='idE_<%=(i+1)%>' value='<%=emp.getIDUsuarioE()%>'>
                                     </div>
                             </div>
                     </div>

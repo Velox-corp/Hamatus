@@ -79,7 +79,7 @@
                                        onchange="return validarDate(this)">
                               </div>
                             <div class="form-group">
-                              <label for="email">Direccion de correo: (correo de la empresa)</label>
+                              <label for="email">Direccion de correo electrónico: </label>
                               <input type="email" class="form-control" id="email" name="email"
                                      onchange="return validarEmail(this)">
                             </div>

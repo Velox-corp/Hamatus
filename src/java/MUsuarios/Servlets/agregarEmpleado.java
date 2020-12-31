@@ -68,8 +68,9 @@ public class agregarEmpleado extends HttpServlet {
             if(proceso_correcto){
                 try{
                     sesion = request.getSession();
-                    Empresa emp = (Empresa) sesion.getAttribute("empresa");
-                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, 4, 4, null); // 4 por que tengo la empresa 4, con la división 4
+                    UsuarioEmpleado admin = (UsuarioEmpleado) sesion.getAttribute("Usuario");
+                    Empresa emp = (Empresa) sesion.getAttribute("empresa"); 
+                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, admin.getiD_Division(), 4, null); // De momento se toma la división del admin, pero NO es así al final
                     if(UsuarioEmpleado.ingresarEmpleado(newEmpleado, emp.getIDEmpresa())){
                         redirect = "verUsuarios.jsp";
                     }
