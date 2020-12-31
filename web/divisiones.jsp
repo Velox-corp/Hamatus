@@ -1,4 +1,5 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page import="MDivisiones.Servlets.crearDivision"%>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesion = request.getSession();
