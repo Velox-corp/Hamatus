@@ -91,7 +91,7 @@ public class M_Documento implements Serializable {
         //CallableStatement cs = null;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = ("DELETE FROM m_documentos WHERE idM_Documento=?");
+            this.query = ("DELETE FROM m_documento WHERE idM_Documento=?");
             ps = con.prepareCall(query);
             ps.setInt(1, idM_Documento);  
             if(ps.executeUpdate()==1) correcto = true;

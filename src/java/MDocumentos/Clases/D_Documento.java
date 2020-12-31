@@ -98,6 +98,48 @@ public class D_Documento implements Serializable {
     }
     
     /**
+     * Otra manera de hacer lo mismo pero diferente
+     * @param ID_e del equipo
+     * @param ex este es solo para hacer relleno XD
+     */
+    public void ConsultarD_Doc(int ID_e, String fileName){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            D_Documento.con = Conexion.obtenerConexion();
+            this.query = ("SELECT * FROM d_Documento WHERE equipo_id_equipo=? AND nombre=?");
+            ps = con.prepareCall(query);
+            ps.setInt(1, ID_e);
+            ps.setString(2, fileName);
+            ResultSet res = ps.executeQuery();
+            while(res.next()){
+                System.out.println("Documento encontrado");
+                this.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
+                this.setFecha(res.getString("fecha_subida"));
+                this.setFolio(res.getString("Folio"));
+                this.setHora(res.getString("hora_subida"));
+                this.setID_Documento(res.getInt("ID_Documento"));
+                this.setId_MDocumento(res.getInt("Id_MDocumento"));
+                this.setId_tipo_acceso(res.getInt("Id_tipo_acceso"));
+                this.setNombre(res.getString("Nombre"));
+                this.setPass(res.getString("Password"));
+                this.setRuta(res.getString("Ruta"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try{
+                con.close();
+                ps.close();
+            }catch(SQLException exe){
+                exe.getMessage();
+                exe.getStackTrace();
+            }
+        }
+    }
+    
+    /**
      * @param nombre
      * @param ruta
      * @param pass
@@ -262,7 +304,7 @@ public class D_Documento implements Serializable {
         }
         return list;
     }
-   
+    
     public static Connection getCon() {
         return con;
     }
