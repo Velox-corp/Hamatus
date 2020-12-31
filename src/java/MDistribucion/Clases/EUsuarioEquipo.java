@@ -115,7 +115,7 @@ public class EUsuarioEquipo implements Serializable {
     }
     
     /**
-     * Método para obtener el total de empleados dentor de un registro, util para la vista general de equipos, reporta .1 si no encuentra el equipo
+     * Método para obtener el total de empleados dentor de un registro, util para la vista general de equipos, reporta -1 si no encuentra el equipo
      * @param ID_equipo
      * @return 
      */
@@ -145,7 +145,11 @@ public class EUsuarioEquipo implements Serializable {
         return total;
     }
     
-   
+    /**
+     * Metodó para remover a un usuario de un equipo
+     * @param id_empleado el ide del empleado a remover
+     * @return true si la operación se llevó a cabo con exito
+     */
     public static boolean removerUsuario(int id_empleado){
         boolean proceso_adecuado = true;
         try{

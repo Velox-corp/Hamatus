@@ -26,93 +26,40 @@
     </head>
     <body class=''>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-        <!--
-        <header class="row">
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-2">
-					<img alt="Logo_hamatus" class="rounded-circle" />
-				</div>
-				<div class="col-md-5">
-					<a class="text-primary text-left" href='index.jsp'>
-						Hamatus
-					</a>
-				</div>
-				<div class="col-md-5">
-					<p class="text-right">
-                                            <a class="nav-link active" href="usuario.jsp">{Username}</a>
-					</p>
-				</div>
-			</div>
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link" href="anuncios.jsp">Anuncios</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="empresa.jsp">Mi empresa</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="vistaOrganigrama.jsp">Organigrama</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="documentos.jsp">Documentos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="equipos.jsp">Equipos</a>
-				</li>
-                                <li class="nav-item">
-					<a class="nav-link" href="empleados.jsp">empleados</a>
-				</li>
-			</ul>
-		</div>
-	</header>
-        -->
         <main class="row">
 		<div class="col-md-12">
                     <div class='row'>
                         <div class='col-md-2'>
-                            <%--
-                                /*Gracias Tenorio por facilitarme este código de shiee
-                            InputStream iS = emp.sacarLogo(emp.getIDEmpresa());
-                            Blob logo = null;
-                            byte[] imgData = new byte[iS.available()];
-                            logo = new SerialBlob(IOUtils.readFully(iS, -1, true));
-                            response.setContentType("image/gif");
-                            OutputStream o = response.getOutputStream();
-                            o.write(logo.getBytes(1, (int) logo.length()));
-                            o.flush();
-                            o.close();  */  
-                            --%>
                         </div>
-                        <div class='col-md-10'>
-                            <h1 class="text-center text-primary">
-                                    <%=emp.getNombre()%>
-                            </h1>
+                        <div class='col-md-8'>
+                            <center><h1><br><%=emp.getNombre()%></h1></center>
                         </div>
                     </div>
-			<h2 class="text-info">
-				<%=emp.getRazónsocial()%>
-			</h2>
+                    <div style="margin-left: 2rem">
+                        <h3>Razón Social:</h3>
+                        <h3 style="color: #181818"><%=emp.getRazónsocial()%></h3>
+                        <h3>Descripción:</h3>
                         <p>
                             <%=emp.getDescripcion()%>
                         </p>
-                        <hr>
-                        <h3>Opciones de administrador de empresa</h3>
+                    </div>
+                    <hr>
+                    <div style="margin-left: 2rem">
+                        <h3>Opciones del Administrador de la empresa</h3><br>
                         <%--Aquí va tocar meter algo que valide a la cuenta de admin para tener acceso a links especiales para mejor ux--%>
                         <div class='row'>
-                            <div class='col-md-5'>
-                                <a href='organigrama.jsp' class='btn btn-primary btn-large'>
-                                    Construir distribución empresa
+                            <div class='col-md-4'>
+                                <a href='divisiones.jsp' class='btn btn-dark btn-large'>
+                                    Construir distribución de la empresa
                                 </a>
                             </div>
-                            <div class='col-md-2'></div>
-                            <div class='col-md-5'>
+                            <div class='col-md-4'>
                                 <a href='Adiministrador_new.jsp' class='btn btn-secondary btn-large'>
                                     Crear cuentas de usuarios
                                 </a>
                             </div>
                         </div>
-                        
+                    </div> 
 		</div>
 	</main>
     </body>

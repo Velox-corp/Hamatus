@@ -11,8 +11,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 
 <%
-    String redirect = "";
     boolean desempeño_adecuado = true;
+    boolean hayEquipos = true;
     HttpSession sesion;
     UsuarioEmpleado liderDiv;
     ArrayList<Equipo> equipos = new ArrayList<Equipo>();
@@ -22,18 +22,31 @@
         sesion = request.getSession();
         liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
         equipos = Equipo.obtenerEquipos(liderDiv.getIDUsuarioE());
-        totalesEquipos = new int[equipos.size()];
-        for (int i = 0; i < equipos.size(); i++) {
-            Equipo equip = equipos.get(i);
-            totalesEquipos[i] = EUsuarioEquipo.getTotalEmpleadosEquipo(equip.getIDEquipo());
+        if(equipos == null || equipos.size() == 0){
+            System.out.println("No equipos");
+            hayEquipos = false;
+        }else{
+            hayEquipos = true;
+            totalesEquipos = new int[equipos.size()];
+            for (int i = 0; i < equipos.size(); i++) {
+                Equipo equip = equipos.get(i);
+                totalesEquipos[i] = EUsuarioEquipo.getTotalEmpleadosEquipo(equip.getIDEquipo());
+                if(totalesEquipos[i] == -1){
+                    desempeño_adecuado = false;
+                    break;
+                }
+            }
         }
+        
     }catch(Exception e){
-        redirect = "error.jsp";
         desempeño_adecuado = false;
+        hayEquipos = false;
+        e.getMessage();
+        e.printStackTrace();
     }
 
     if(!desempeño_adecuado){
-        response.sendRedirect(redirect);
+        response.sendRedirect("error.jsp");
     }
 %>
     
@@ -59,7 +72,7 @@
 	</div>
         <br>
             
-            <%
+            <%if (hayEquipos){
                 for (int i = 0; i < equipos.size(); i++) {
                     Equipo eq = equipos.get(i);
                     int mod = (i+1)%3;
@@ -135,7 +148,24 @@
             </div>
                     <%break;
                     }//switch
-                }  // for %>
+                }  // for 
+            } // if
+            else{%>
+            <div class='row align-items-center'>
+                <div class='col-md-6 card text-white bg-info'>
+                    <h5 class='card-header text-capitalize'>No Hay Equipos</h5>
+                </div>
+                <div class='card-body'>
+                    <article class='card-text'>
+                        No se tienen equipos registrados en esta división.
+                    </article>
+                </div>
+                <div class='card-footer'>
+                    <a class='btn btn-success capitalize' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+                </div>
+            </div>
+            <br>
+            <%}%>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>

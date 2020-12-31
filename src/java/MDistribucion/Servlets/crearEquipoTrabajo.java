@@ -8,6 +8,7 @@ package MDistribucion.Servlets;
 import ClasesSoporte.Validaciones;
 import MDistribucion.Clases.EUsuarioEquipo;
 import MDistribucion.Clases.Equipo;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -28,18 +29,19 @@ public class crearEquipoTrabajo extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String redirect = "";
-            boolean procesoAdecuado = true;
+            String redirect;
+            boolean procesoAdecuado;
             HttpSession sesion;
              try{
                 sesion = request.getSession();
                 String nombre_Equipo = request.getParameter("nombreEquipo");
-                int id_div = Integer.parseInt(request.getParameter("id_div"));
+                UsuarioEmpleado liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
+                //la división del usuario obtenida desde la sesión para camuflar info
+                int id_div = liderDiv.getiD_Division();
                 int maxUsers = Integer.parseInt(request.getParameter("maxEmpleados"));
                 if(!Validaciones.esString(nombre_Equipo, true, false) || !Validaciones.esNumeroEntero(maxUsers) || !Validaciones.esNumeroEntero(id_div)){
                     System.out.println("La validación no te la paso");
                     procesoAdecuado = false;
-                    redirect = "error.jsp";
                 }else{
                     Equipo new_equipo = new Equipo(nombre_Equipo, id_div);
                     procesoAdecuado = Equipo.crearEquipo(new_equipo);
@@ -50,11 +52,11 @@ public class crearEquipoTrabajo extends HttpServlet {
                         for (int i = 0; i < maxUsers; i++) {
                             try{
                                 if(request.getParameter("empleado_"+(i+1)).equals("true")){
-                                    EUsuarioEquipo newRelacion = new EUsuarioEquipo((i+1), new_equipo.getIDEquipo());
+                                    int idE = Integer.parseInt(request.getParameter("idE_"+(i+1)));
+                                    EUsuarioEquipo newRelacion = new EUsuarioEquipo(idE, new_equipo.getIDEquipo());
                                     if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion)){
                                         System.out.println("No se pudo ingresar la relación");
                                         procesoAdecuado=false;
-                                        redirect = "error.jsp";
                                         break;
                                     }else{
                                     }
@@ -69,16 +71,18 @@ public class crearEquipoTrabajo extends HttpServlet {
                 
             }catch(NumberFormatException e){
                 System.out.println("Excepcion");
+                procesoAdecuado = false;
                 e.printStackTrace();
             }catch(Exception e){
-                
+                e.getMessage();
+                e.printStackTrace();
+                procesoAdecuado = false;
             }
             
             if(procesoAdecuado){
                 redirect = "verEquipos.jsp";
-            }
-            if(!procesoAdecuado){
-                response.sendRedirect(redirect);
+            }else{
+                redirect = "error.jsp";
             }
             response.sendRedirect(redirect);
             
