@@ -46,6 +46,10 @@ public class Divisiones implements Serializable{
     static PreparedStatement ps = null;
     static ResultSet rs = null;
     private static final long serialVersionUID = 1L;
+
+    public static boolean crearDivisiones(Divisiones div) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -141,6 +145,10 @@ public class Divisiones implements Serializable{
 
     public static void setRs(ResultSet rs) {
         Divisiones.rs = rs;
+    }
+
+    public Divisiones(String nombreD, int idem) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Integer getIDDivision() {
