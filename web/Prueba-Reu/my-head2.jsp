@@ -79,7 +79,7 @@
                     <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
                         <ul>
                             <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
-                            <li><a href="equipos.jsp" class="sub">Equipos</a></li>
+                            <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
                             <li><a href="empleados.jsp" class="sub">Empleados</a></li>
                         </ul>
                     </li>
