@@ -55,10 +55,6 @@ CREATE TABLE IF NOT EXISTS `Cat_jerarquia` (
   PRIMARY KEY (`id_jerarquia`))
 ENGINE = InnoDB;
 
--- ------------------------------------------------------
--- Categorías ya asignadas
--- ------------------------------------------------------
-
 -- -----------------------------------------------------
 -- Table `bn0u7lmchdieamnqsf74`.`division`
 -- -----------------------------------------------------
