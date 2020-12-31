@@ -6,14 +6,11 @@
 package MDocumentos.Clases;
 
 import ClasesSoporte.Conexion;
-import MUsuarios.clases.UsuarioEmpleado;
 import java.io.Serializable;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -100,7 +97,7 @@ public class D_Documento implements Serializable {
     /**
      * Otra manera de hacer lo mismo pero diferente
      * @param ID_e del equipo
-     * @param ex este es solo para hacer relleno XD
+     * @param fileName
      */
     public void ConsultarD_Doc(int ID_e, String fileName){
         boolean correcto = false;
@@ -137,6 +134,79 @@ public class D_Documento implements Serializable {
                 exe.getStackTrace();
             }
         }
+    }
+    
+    /**
+     * Sirve para confirmar que existe cierto doc
+     * @param ID_equipo
+     * @param fileName
+     * @return 
+     */
+    public static boolean ConsultarD_Doc_B(int ID_equipo, String fileName){
+        boolean correcto = false;
+        //CallableStatement cs = null;
+        try {
+            Connection con = Conexion.obtenerConexion();
+            String query = ("SELECT * FROM d_Documento WHERE equipo_id_equipo=? AND nombre=?");
+            ps = con.prepareCall(query);
+            ps.setInt(1, ID_equipo);
+            ps.setString(2, fileName);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                correcto=true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try{
+                con.close();
+                ps.close();
+            }catch(SQLException exe){
+                exe.getMessage();
+                exe.getStackTrace();
+            }
+        }
+        
+        return correcto;
+    }
+    
+    public static D_Documento ConsultarD_Doc_sget(int ID_equipo, String fileName){
+        D_Documento ddoc = null;
+        //CallableStatement cs = null;
+        try {
+            Connection con = Conexion.obtenerConexion();
+            String query = ("SELECT * FROM d_Documento WHERE equipo_id_equipo=? AND nombre=?");
+            ps = con.prepareCall(query);
+            ps.setInt(1, ID_equipo);
+            ps.setString(2, fileName);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                ddoc.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
+                ddoc.setFecha(res.getString("fecha_subida"));
+                ddoc.setFolio(res.getString("Folio"));
+                ddoc.setHora(res.getString("hora_subida"));
+                ddoc.setID_Documento(res.getInt("ID_Documento"));
+                ddoc.setId_MDocumento(res.getInt("Id_MDocumento"));
+                ddoc.setId_tipo_acceso(res.getInt("Id_tipo_acceso"));
+                ddoc.setNombre(res.getString("Nombre"));
+                ddoc.setPass(res.getString("Password"));
+                ddoc.setRuta(res.getString("Ruta"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try{
+                con.close();
+                ps.close();
+            }catch(SQLException exe){
+                exe.getMessage();
+                exe.getStackTrace();
+            }
+        }
+        
+        return ddoc;
     }
     
     /**
@@ -245,23 +315,19 @@ public class D_Documento implements Serializable {
      * @param ID_Documento el unico que realmente importa es este
      * @return 
      */
-    public boolean UpdateDoc(String nombre, String ruta, String pass, 
-            Integer id_tipo_acceso, String folio, Integer ID_Documento){
+    public boolean UpdateDoc(String nombre, String pass, 
+            Integer id_tipo_acceso, Integer ID_Documento){
         boolean correcto = false;
         //CallableStatement cs = null;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = ("UPDATE d_Documento SET Nombre="
-                    + nombre + ", Ruta=" + ruta + ", Password=" + pass 
-                    + ", id_tipo_acceso=" + id_tipo_acceso + ", folio="
-                    + folio + " WHERE ID_Documento=" + ID_Documento);
+            this.query = ("UPDATE d_Documento SET Nombre=?, Password=?,"
+                    + " id_tipo_acceso=? WHERE ID_Documento=?");
             ps = con.prepareCall(query);
             ps.setString(1, nombre);
-            ps.setString(2, ruta);
-            ps.setString(3, pass);
-            ps.setInt(4, id_tipo_acceso);
-            ps.setString(5, folio);
-            ps.setInt(6, ID_Documento);
+            ps.setString(2, pass);
+            ps.setInt(3, id_tipo_acceso);
+            ps.setInt(4, ID_Documento);
             if(ps.executeUpdate()==1) correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

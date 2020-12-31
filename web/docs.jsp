@@ -78,7 +78,9 @@
                                           onclick="deleteFile(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>')">
                                            <i class="fas fa-trash-alt text-danger"></i>
                                        </a>
-                                       <a target="_top" data-toggle="tooltip" title="Modificar">
+                                          <a target="_top" data-toggle="tooltip" 
+                                             title="Modificar" 
+                                             href="mod_docs.jsp?pass=<%= ddoc.getPass() %>">
                                            <i class="fas fa-edit text-primary"></i>
                                        </a>
                                        <a target="_top" data-toggle="tooltip" title="Compartir" 

@@ -83,6 +83,11 @@ window.onload = function(){
         error();
     }else if(getParameterByName('flag_del') == 'true'){
         confirmation_del();
+    }else if(getParameterByName('flag') == 'exist'){
+        Swal.fire({
+            title:"Lo sentimos, el archivo ya existe",
+            icon:'warning'
+        });
     }
 }
 

@@ -175,39 +175,44 @@ public class uploadFile extends HttpServlet {
                     D_Documento ddoc = new D_Documento(nombre, ruta, pass,
                             id_tipo_acceso,folio, Equipo_ID_Equipo, 
                             mdoc.getIdM_Documento());
-                    if (ddoc.registrarDoc()) {
-                        System.out.println("Todo Correcto uwu");
-                        OutputStream outs = null;
-                        InputStream filecontent = null;
-                        final PrintWriter writer = response.getWriter();
-                        try {
-                            crearFolder(String.valueOf(Equipo_ID_Equipo), request);
-                            outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
-                                    +Equipo_ID_Equipo+"/")+ File.separator + nombre));
-                            filecontent = filePart.getInputStream();
+                    if (!D_Documento.ConsultarD_Doc_B(Equipo_ID_Equipo , nombre)) {
+                        if (ddoc.registrarDoc()) {
+                            System.out.println("Todo Correcto uwu");
+                            OutputStream outs = null;
+                            InputStream filecontent = null;
+                            final PrintWriter writer = response.getWriter();
+                            try {
+                                crearFolder(String.valueOf(Equipo_ID_Equipo), request);
+                                outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
+                                        +Equipo_ID_Equipo+"/")+ File.separator + nombre));
+                                filecontent = filePart.getInputStream();
 
-                            int read = 0;
-                            final byte[] bytes = new byte[1024];
+                                int read = 0;
+                                final byte[] bytes = new byte[1024];
 
-                            while ((read = filecontent.read(bytes)) != -1) {
-                                outs.write(bytes, 0, read);
+                                while ((read = filecontent.read(bytes)) != -1) {
+                                    outs.write(bytes, 0, read);
+                                }
+
+                                response.sendRedirect("docs.jsp?flag=true");
+
+                            } catch (FileNotFoundException fne) {
+                                System.out.println("Algo de que no encontro el archivo"
+                                        + " o el folder");
+                                System.out.println(fne.getMessage());
+                            } finally {
+                                System.out.println("Aver aver aver que demonios esta pasando");
+                                outs.close();
+                                filecontent.close();
+                                writer.close();
                             }
-
-                            response.sendRedirect("docs.jsp?flag=true");
-
-                        } catch (FileNotFoundException fne) {
-                            System.out.println("Algo de que no encontro el archivo"
-                                    + " o el folder");
-                            System.out.println(fne.getMessage());
-                        } finally {
-                            System.out.println("Aver aver aver que demonios esta pasando");
-                            outs.close();
-                            filecontent.close();
-                            writer.close();
+                        }else{
+                            System.out.println("Todo mal en ddoc unu");
+                            response.sendRedirect("docs.jsp?flag=false");
                         }
                     }else{
-                        System.out.println("Todo mal en ddoc unu");
-                        response.sendRedirect("docs.jsp?flag=false");
+                        System.out.println("Hijole ya existe este doc uwu");
+                        response.sendRedirect("docs.jsp?flag=exist");
                     }
                 }else{
                     System.out.println("Ya valio esto unu, posible error al "

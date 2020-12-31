@@ -6,6 +6,8 @@
 package MDocumentos.Servlets;
 
 import MDocumentos.Clases.D_Documento;
+import MUsuarios.clases.Empresa;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,12 +15,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -43,56 +47,74 @@ public class updateFile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String rec = "error.jsp";
+        try {
             try {
-                /*Todo ese contenido aqui
-                Lo que se cambia en la BD es nombe, ruta, pass, id_tipo_acceso y folio*/
-                /*ahora si esto es lo que se cambia del file*/
-                Part filePart = request
-                        .getPart("file"); // Es el archivo y es la unica menra de traerlo
-                String nombre = Paths.get(filePart.getSubmittedFileName())
-                        .getFileName().toString(); //Basicamente nos trae el nombre del archivo
-                InputStream fileContent = filePart
-                        .getInputStream();//El contenido en bytes del archivo
-                String pass = request.getParameter("pass");
-                int id_tipo_acceso   = Integer.parseInt(request.getParameter("id_tipo_acceso"));
-                String folio         = request.getParameter("folio");
-                String ruta = request
-                        .getParameter("ruta"); //Se refiere al titulo de la carpeta
-                int id_D_DOcumento   = Integer.parseInt(request.getParameter("id_D_DOcumento"));
-
-                D_Documento ddoc = new D_Documento();
-                ddoc.UpdateDoc(nombre, ruta, pass, id_tipo_acceso,
-                        folio, id_D_DOcumento);//Y pues ya esto seria todo en BD
-
-                //Ahora falta en el archivo como tal
-                File archivo = new File(ruta);
-                if(archivo.exists()) {
-                    // El fichero ya existe
-                    OutputStream out2 = new FileOutputStream(archivo);//Todo el inputStream va hacia nuestro archivo
-
-                    byte[] buf = new byte[1024];
-                    int len;
-
-                    while ((len = fileContent.read(buf)) > 0) {//Metemos contenido desde fileContent
-                        out2.write(buf, 0, len);//Metemos byte por byte al archivo de destino
-                    }
-
-                    //Cerramos todos los flujos para evitar brechas de seguridad
-                    fileContent.close();
-                    out2.close();
-                    rec = "docs.jsp";
-                } else {
-                      // El fichero no existe y porlo tanto XD
-                      System.out.println("No se encontro el archivo");
+                 HttpSession sesionUser = request.getSession();
+            boolean obtencionAdecuada = false;
+            UsuarioEmpleado usuario = null;
+            Empresa emp = null;
+            try{
+                usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+                emp = (Empresa) sesionUser.getAttribute("empresa");
+                obtencionAdecuada = true; 
+            }catch(NullPointerException ex){
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                obtencionAdecuada = false;
+            }
+            if (obtencionAdecuada) {
+                System.out.println("credenciales correctas");
+                String value = request.getParameter("dictionary");
+                value = value.substring(1, value.length()-1);
+                String[] keyValuePairs = value.split(",");
+                Hashtable<Integer, String> list = new Hashtable<Integer, String>();
+                for (String pair : keyValuePairs) {
+                    String[] entry = pair.split("=");
+                    list.put(1, value);
                 }
+                String pass          = request.getParameter("pass");
+
+                int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
+                        .getParameter("id_tipo_acceso").charAt(0)));  
+
+                Part filePart        = request.getPart("file");
+                String nombre        = Paths.get(filePart.getSubmittedFileName())
+                        .getFileName().toString(); //Basicamente nos trae el nombre del archivo
+                //Listado de datos preparados para entrar en la BD
+                int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                D_Documento ddoc = D_Documento.ConsultarD_Doc_sget(ID_equipo, nombre);
+                if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ID_equipo)){
+                    System.out.println("Ok ahora la parte del archivo");
+                    OutputStream outs = null;
+                    InputStream filecontent = null;
+                    //final PrintWriter writer = response.getWriter();
+                    File file = new File(request.getServletContext().getRealPath("/archivos/"
+                            +ID_equipo+"/" + nombre));
+                    outs = new FileOutputStream(file);//A donde se diregen los bytes
+                    filecontent = filePart.getInputStream();
+                    int read = 0;
+                    final byte[] bytes = new byte[1024];
+ 
+                    while ((read = filecontent.read(bytes)) != -1) {
+                        outs.write(bytes, 0, read);
+                    }
+                }else{
+                    System.out.println("Ni modo ya valio en esta otra parte");
+                    response.sendRedirect("docs.jsp?flag=false");
+                }
+                
+            }else{
+                response.sendRedirect("error.jsp");
+            }
             } catch (Exception e) {
                 System.out.println("Error al hacer update de un doc");
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
-            response.sendRedirect(rec);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
         }
     }
 
