@@ -1,12 +1,4 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 1/12/2020, 01:35:12 AM
-    Author     : taspi
-*/
+
 body {
     font-family: 'Graphik',sans-serif;
     background-color: #F3F3F3;
@@ -409,3 +401,64 @@ img.per{
     font-size: .9vw;
 }
 /*FIN Nosotros*/
+
+/*my-head2*/
+#menu_gral ul {
+    list-style-type: none; 
+    text-align: center;
+    font-size: 0;
+    width: 100%;
+}
+#menu_gral > ul li {
+    display: inline-block;
+    width: 20%;
+    position: relative;
+    background: #303031;
+}
+#menu_gral li a {
+    display: block;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+}
+#menu_gral li:hover a, #menu_gral li a:focus {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+#menu_gral li ul {
+    position: absolute;
+    width: 0;
+    overflow: hidden;
+}
+#menu_gral li:hover ul, #menu_gral li:focus ul {
+    width: 100%;
+    margin: 0 -4vw -4vw -4vw;
+    padding: 0 4vw 4vw 4vw;
+    z-index: 5;
+}
+#menu_gral li li {
+    display: block;
+    width: 100%;
+}
+
+#menu_gral li:hover li a, #menu_gral li:focus li a {
+    font-family: Graphik,sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.7rem;
+    border-top: 1px solid #E5E5E5;
+    background: #303031;
+}
+
+#menu_gral li li a:hover, #menu_gral li li a:focus {
+    background: #000000; 
+}
+.sub {
+    font-family: Graphik,sans-serif;
+    background-color: #303031;
+    color: #FFFFFF;
+    padding: 10%;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+/*FIN*/
