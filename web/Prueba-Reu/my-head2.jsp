@@ -78,7 +78,7 @@
                     <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                     <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
                         <ul>
-                            <li><a href="#" class="sub">Divisiones</a></li>
+                            <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                             <li><a href="equipos.jsp" class="sub">Equipos</a></li>
                             <li><a href="empleados.jsp" class="sub">Empleados</a></li>
                         </ul>
