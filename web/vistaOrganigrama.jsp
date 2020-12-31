@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hamatus -Vista Organigrama-</title>
+        <title>Vista Del Organigrama</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
@@ -57,10 +57,8 @@
         
         <main>
             <div class="row">
-		<div class="col-md-12">
-			<h1 class="text-center text-primary">
-				Organigrama empresa
-			</h1>
+                <div class="col-md-12"><br>
+                        <center><h1>Organigrama de la empresa</h1></center>
 			<div class="row">
 				<div class="col-md-12" id='organigrama'>
 				</div>
