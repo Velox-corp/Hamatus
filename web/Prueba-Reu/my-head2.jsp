@@ -71,18 +71,6 @@
                     </div>
 		</div>
 	</div>
-<<<<<<< HEAD
-	<div class="row">
-		<div class="col-md-12 nav center-block justify-content-center">
-                    <a class="nav-item nav-link btn1" href="controlA?accion=home">Anuncios</a>
-                    <a class="nav-item nav-link btn1" href="empresa.jsp">Mi empresa</a>
-                    <a class="nav-item nav-link btn1" href="vistaOrganigrama.jsp">Organigrama</a>
-                    <a class="nav-item nav-link btn1" href="docs.jsp">Documentos</a>
-                    <a class="nav-item nav-link btn1" href="equipos.jsp">Equipos</a>
-                    <a class="nav-item nav-link btn1" href="empleados.jsp">Empleados</a>
-                    <a class="nav-item nav-link btn1" href="Administrador_new.jsp">Crud Completo</a>
-		</div>
-=======
         <div class="row">
             <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
                 <ul style="background-color: #303031">
@@ -99,6 +87,5 @@
                     <li><a href="Administrador_new.jsp" class="nav-item nav-link btn1">Crud Completo</a></li>
                 </ul>
             </nav>
->>>>>>> cd4ec699a13e81b6b50368cd0665210d6df892ee
 	</div>
 </header>
