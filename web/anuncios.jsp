@@ -1,4 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="ClasesSoporte.Conexion"%>
+<%@page import="java.sql.*"%>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang='es'>
     <head>
@@ -9,69 +12,76 @@
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
     <body>
         <!--
-	<header class="row">
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-2">
-					<img alt="Logo_hamatus" class="rounded-circle" />
-				</div>
-				<div class="col-md-5">
+        <header class="row">
+                <div class="col-md-12">
+                        <div class="row">
+                                <div class="col-md-2">
+                                        <img alt="Logo_hamatus" class="rounded-circle" />
+                                </div>
+                                <div class="col-md-5">
                                     <a class="text-primary text-left" href='index.jsp'>
-						Hamatus
-					</a>
-				</div>
-				<div class="col-md-5">
-					<p class="text-right">
+                                                Hamatus
+                                        </a>
+                                </div>
+                                <div class="col-md-5">
+                                        <p class="text-right">
                                             <a class="nav-link active" href="usuario.jsp">{Username}</a>
-					</p>
-				</div>
-			</div>
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link" href="anuncios.jsp">Anuncios</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="empresa.jsp">Mi empresa</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link " href="vistaOrganigrama.jsp">Organigrama</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link " href="documentos.jsp">Documentos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link " href="equipos.jsp">Equipos</a>
-				</li>
+                                        </p>
+                                </div>
+                        </div>
+                        <ul class="nav nav-tabs">
                                 <li class="nav-item">
-					<a class="nav-link " href="empleados.jsp">empleados</a>
-				</li>
-			</ul>
-		</div>
-	</header>
+                                        <a class="nav-link" href="anuncios.jsp">Anuncios</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link" href="empresa.jsp">Mi empresa</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link " href="vistaOrganigrama.jsp">Organigrama</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link " href="documentos.jsp">Documentos</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link " href="equipos.jsp">Equipos</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link " href="empleados.jsp">empleados</a>
+                                </li>
+                        </ul>
+                </div>
+        </header>
         -->
-	<main class="row">
+        <main class="row">
             <div class="col-md-12"><br>
-                <center><h1>Tablón de anuncios</h1></center>
+                <center><h1>Tablón de anuncios</h1></center><a href="tablon.jsp" id="btnAdd"><i class="far fa-plus-square" arial-hidden="true">Agregar Nuevo</i></a>
                     <%-- Aquí va tocar meter un for para que se beneren todos los anuncios --%>
-			<div class="card bg-default">
-				<h3 class="card-header">
-					{titulo_anuncio}
-				</h3>
-				<div class="card-body">
-					<p class="card-text">
-						{mensaje_anuncio}
-					</p>
-				</div>
-				<div class="card-footer btn-group btn-group-md-6" role="group">
-                                    <a class="btn btn-dark" href="elaboradorAnuncios.jsp?id=<%=0%>">
-                                        Editar anuncio
-                                    </a>
-                                    <a class="btn bd" href="<%--sevletEliminaciónAnuncioNombre--%>?id=<%=0%>">
-                                        Eliminar anuncio
-                                    </a>
-				</div>
-			</div>
-		</div>
+                <div class="card bg-default">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <c:forEach var="p" items="${anuncios}">
+                                <thead class="thead-dark" >
+                                    <tr>
+                                        <th colspan="3" text-align: center>${p.getTitulo()}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>${p.getId()}</td>
+                                        <td>${p.getDescripcion()}</td>
+                                        <td>${p.getFecha()}</td>
+                                        <td>
+                                            <input type="hidden" id="ida" value="${p.getId()}">
+                                            <a href="controlA?accion=Delete&ida=${p.getId()} " id="btnDelete"><i class="fa fa-trash" arial-hidden="true"></i></a>
+                                            <a href="controlA?accion=ListarID&ida=${p.getId()}" id="btnEdit" class="ml-1"><i class="fa fa-pen" arial-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </main>
     </body>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />

@@ -84,6 +84,10 @@
         <servlet-name>eliminarAnuncio</servlet-name>
         <servlet-class>MTablones.Servlets.eliminarAnuncio</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controlA</servlet-name>
+        <servlet-class>MTablones.Servlets.controlA</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>eliminarAnuncio</servlet-name>
         <url-pattern>/eliminarAnuncio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controlA</servlet-name>
+        <url-pattern>/controlA</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
