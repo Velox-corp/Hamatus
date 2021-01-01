@@ -100,8 +100,7 @@ public class Division implements Serializable{
             Division.query = ("INSERT INTO division (Nombre_A, ID_Jerarquia, ID_Empresa) values(?,?,?)");
             System.out.println("------------------------");
             System.out.println(div.getNombre() + "" + idj + "" + id_emp);
-            ps = con.prepareStatement(query);
-            ps = con.prepareCall(q);
+            ps = con.prepareStatement(Division.query);
             ps.setString(1, div.getNombre());
             ps.setInt(2, idj);
             ps.setInt(3, id_emp);

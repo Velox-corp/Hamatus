@@ -44,7 +44,7 @@ public class crearDivision extends HttpServlet {
             //elementos user admin empresa
             String nombreD = request.getParameter("nombreD");
             //Validaciones  registro de la division
-            
+            System.out.println("Nombre división: " + nombreD);
             //validar campos de datos por parte del controlador
             boolean[] bufferValidaciones = new boolean[1];
             bufferValidaciones[0] = Validaciones.esString(nombreD, true, false);
@@ -61,7 +61,8 @@ public class crearDivision extends HttpServlet {
                 Empresa emp = null;
                 Division div = null;
                 try{
-                    
+                    HttpSession sesion = request.getSession();
+                    emp = (Empresa) sesion.getAttribute("empresa");
                     div = new Division(nombreD);
                     
                     if(emp.getIDEmpresa() != -1){

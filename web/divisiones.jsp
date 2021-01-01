@@ -34,12 +34,12 @@
         <div class="container margin-top-2rem">   
             <div class="row d-flex justify-content-center">
               <div class="col-sm-8">
-                <form action="crearDivision" method="POST" enctype="multipart/form-data" >
+                <form action="crearDivision" method="POST"  >
                     <h2>Crear Nueva División</h2>
                     <hr>
                     <div class="form-group">
                         <label for="nombreD">Nombre:</label>
-                        <input type="name" class="form-control" id="nombreD" name="nombreD" 
+                        <input type="text" class="form-control" id="nombreD" name="nombreD" 
                                onchange="return validarString(this, true, false)"
                                ondrag="return validarString(this, true, false)"
                                ondrop="return validarString(this, true, false)">
