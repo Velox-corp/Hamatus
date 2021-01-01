@@ -15,18 +15,22 @@
     </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head.jsp" />
-        <main class='row cubridor d-flex align-items-center'>
+        <main class='row cubridor  text-white d-flex align-items-center'>
             <div class='col-md-12 bg-danger padding-5rem'>
                 <h1 class='text-white text-center'>ERROR</h1>
                 <br>
-                <center>
-                <article>
-                    Un error, que te digo, culpa, o nuestra, o de maisicuel, o de java, o del servidor, o de un fantasma
+                <article class='text-center'>
+                    <strong>Posibles Causas del error</strong>
+                    <ul>
+                        <li>Error de validación de ingresos del usuario</li>
+                        <li>Error de autentificación y/o autorización del usuario</li>
+                        <li>Error en operaciones en la base de datos</li>
+                        <li>Y no me se más, chance el programa simplemente murió</li>
+                    </ul>
                 </article>
-                </center>
                 <br>
                 
-                <center><a class='btn btn-danger' href='index.jsp'>Volver al index</a></center>
+                <center><a class='btn btn-outline-danger' href='index.jsp'>Volver al index</a></center>
             </div>
         </main>
         <div

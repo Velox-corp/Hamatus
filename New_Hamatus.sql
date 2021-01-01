@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS `Cat_jerarquia` (
   PRIMARY KEY (`id_jerarquia`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `bn0u7lmchdieamnqsf74`.`division`
 -- -----------------------------------------------------
@@ -341,7 +340,7 @@ END$$
 DELIMITER ;
 use yL10l8yMbC;
 insert into cat_tipo_acceso values (1, ""), (2, "");
-insert into privilegios_jerarquia_u values (1, "Administrador"), (2, "Directivo"), (3, "Jefe de área"), (4, "Empleaod común");
+insert into privilegios_jerarquia_u values (1, "Administrador"), (2, "Directivo"), (3, "Jefe de área"), (4, "Empleado general");
 insert into Cat_jerarquia values (1, "División Padre"), (2, "Departamento subordinado");
 
 SET SQL_MODE=@OLD_SQL_MODE;

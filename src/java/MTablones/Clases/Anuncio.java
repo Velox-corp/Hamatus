@@ -28,6 +28,14 @@ public class Anuncio {
         this.fecha = fecha;
         this.idDivision = idDivision;
     }
+    
+    public Anuncio( String titulo, String descripcion, String fecha, int idDivision) {
+        
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.idDivision = idDivision;
+    }
 
     public Anuncio(String titulo, String descripcion, int idDivision){
         this.titulo = titulo;

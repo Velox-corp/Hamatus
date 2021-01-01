@@ -37,47 +37,28 @@
                     <h5 class="card-header">
                         Anuncio
                     </h5>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>FOLIO</th>
-                                    <th>TITULO</th>
-                                    <th>DESCRIPCION</th>
-                                    <th>FECHA</th>
-                                    <th>ACCIONES</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="car" items="${anuncio}">
-                                    <tr>
-                                        <td>${car.getID()}123</td>
-                                        <td>${car.getTitulo()}</td>
-                                        <td>${car.getDescripcion()}</td>
-                                        <td>${car.getFecha()}</td>
-                                        <td>
-                                            <input type="hidden" id="idp" value="${car.getID()}">
-                                            <a href="Controlador?accion=Delete&idp=${car.getID()} " id="btnDelete">Eliminar</a>
-                                            <a href="Controlador?accion=Update&idp=${car.getID()} " id="btnDelete">Editar</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
                     <img alt="Hamatus" src="img/Hamatus.png" class="mx-auto d-block img-fluid">
                 </div>
                 <br>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Input Texto" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary" type="button">Go!</button>
-                    </div>
+                    <form action="controlA?accion=Agregar" method="post">
+                        <div class="form-group">
+                            <label for="nombre">Titulo</label>
+                            <input type="text" class="form-control" id="tituloa" name="tituloa" placeholder="Titulo" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion</label>
+                            <input type="text" class="form-control" id="descripciona" name="descripciona" placeholder="Anuncio" required="required">
+                        </div>
+                        <div class="form-group">
+                            <input type="date" class="form-control" id="fechaa">
+                        </div>
+                        <button type="submit" name="enviar" class="btn btn-primary">Guardar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                    </form> 
+
                 </div>
             </div>
             <div class="col-md-4 folio">
-                <input type="date" class="form-control">
-                <br>
                 <div class="card">
                     <h5 class="card-header">
                         Folio

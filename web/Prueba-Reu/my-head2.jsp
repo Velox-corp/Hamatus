@@ -1,7 +1,7 @@
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
-<link rel="stylesheet" type="text/css" href="CSS/estilos.css">
+<link rel="stylesheet" type="text/css" href="css/estilos.css">
 <%
     HttpSession sesionUser = request.getSession();
     String username = "";
@@ -71,9 +71,10 @@
                     </div>
 		</div>
 	</div>
+<<<<<<< HEAD
 	<div class="row">
 		<div class="col-md-12 nav center-block justify-content-center">
-                    <a class="nav-item nav-link btn1" href="anuncios.jsp">Anuncios</a>
+                    <a class="nav-item nav-link btn1" href="controlA?accion=home">Anuncios</a>
                     <a class="nav-item nav-link btn1" href="empresa.jsp">Mi empresa</a>
                     <a class="nav-item nav-link btn1" href="vistaOrganigrama.jsp">Organigrama</a>
                     <a class="nav-item nav-link btn1" href="docs.jsp">Documentos</a>
@@ -81,5 +82,23 @@
                     <a class="nav-item nav-link btn1" href="empleados.jsp">Empleados</a>
                     <a class="nav-item nav-link btn1" href="Administrador_new.jsp">Crud Completo</a>
 		</div>
+=======
+        <div class="row">
+            <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
+                <ul style="background-color: #303031">
+                    <li><a class="nav-item nav-link btn1" href="anuncios.jsp">Anuncios</a></li>
+                    <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
+                    <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                        <ul>
+                            <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
+                            <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
+                            <li><a href="empleados.jsp" class="sub">Empleados</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                    <li><a href="Administrador_new.jsp" class="nav-item nav-link btn1">Crud Completo</a></li>
+                </ul>
+            </nav>
+>>>>>>> cd4ec699a13e81b6b50368cd0665210d6df892ee
 	</div>
 </header>

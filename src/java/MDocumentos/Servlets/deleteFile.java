@@ -7,12 +7,16 @@ package MDocumentos.Servlets;
 
 import MDocumentos.Clases.D_Documento;
 import MDocumentos.Clases.M_Documento;
+import MUsuarios.clases.Empresa;
+import MUsuarios.clases.UsuarioEmpleado;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,32 +39,60 @@ public class deleteFile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /*Suponinedo que se presiono un boton o algo asi, 
-            porcedemos a hacer lo siguiente*/
-            //String pass = request.getParameter("pass");//Pide pass para borrar el doc
-            int id_MDocumento = Integer.parseInt(request.
-                    getParameter("id_MDocumento"));
-            M_Documento mdoc = new M_Documento();
-            D_Documento ddoc = new D_Documento();
-            String rec = "error.jsp";
-            boolean correcto = false;
-            try {
-                //Hasta aqui no hay problema
-                mdoc.BorrarM_Documentos(id_MDocumento);
-                ddoc.BorrarDoc(id_MDocumento);
-                correcto=true;
-            } catch (Exception e) {//EN caso de que algo extraño sucediera
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+        try{
+            HttpSession sesionUser = request.getSession();
+            boolean obtencionAdecuada = false;
+            UsuarioEmpleado usuario = null;
+            Empresa emp = null;
+            try{
+                usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+                emp = (Empresa) sesionUser.getAttribute("empresa");
+                obtencionAdecuada = true; 
+            }catch(NullPointerException ex){
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                obtencionAdecuada = false;
             }
-            if (correcto) {
-                System.out.println("Bien lo borro perfectamente");
-                rec="docs.jsp";
-            }else{
-                System.out.println("No se borro el doc unu");
+            if (obtencionAdecuada) {
+                /*Suponinedo que se presiono un boton o algo asi, 
+                porcedemos a hacer lo siguiente*/
+                //String pass = request.getParameter("pass");//Pide pass para borrar el doc
+                int id_MDocumento = Integer.parseInt(request.
+                        getParameter("id_M"));
+                M_Documento mdoc = new M_Documento();
+                String rec = "error.jsp";
+                boolean correcto = false;
+                int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                try {
+                    //Hasta aqui no hay problema
+                    mdoc.BorrarM_Documentos(id_MDocumento);
+                    String filename = request.getParameter("fileName");
+                    File fichero = new File(request.getRealPath("/archivos/"+ID_equipo+"/"+ filename));
+                    if (fichero.delete()) {
+                        System.out.println("Borrado uwu");
+                        correcto=true;
+                    }else{
+                        System.out.println("No borrado unu");
+                        correcto=false;
+                    }
+                } catch (Exception e) {//EN caso de que algo extraño sucediera
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+                if (correcto) {
+                    System.out.println("Bien lo borro perfectamente");
+                    rec="docs.jsp?flag_del=true";
+                }else{
+                    System.out.println("No se borro el doc unu");
+                    rec="docs.jsp?flag_del=false";
+                }
+                response.sendRedirect(rec);
             }
-            response.sendRedirect(rec);
+            
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
         }
     }
 

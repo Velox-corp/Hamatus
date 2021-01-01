@@ -5,6 +5,7 @@
  */
 package MDocumentos.Servlets;
 
+import MDocumentos.Clases.D_Documento;
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
@@ -86,27 +87,22 @@ public class authAcess extends HttpServlet {
             obtencionAdecuada = false;
             response.sendRedirect("error.jsp");
         }
-        String pass = "";
-        
+        String pass = request.getParameter("pass");
+        String fileName = request.getParameter("fileName");
+        int e = Integer.parseInt(request.getParameter("e"));
+        D_Documento ddoc = new D_Documento();
         try {
-            Connection con = null;
-            String query = ("SELECT usuario_empleado.Nombre, m_documento.idM_Documento FROM ((usuario_empleado" +
-                    "INNER JOIN m_documento ON usuario_empleado.ID_Usuario_E = m_documento.id_usuario_P)" +
-                    "INNER JOIN d_documento ON d_documento.id_MDocumento = m_documento.idM_Documento)" +
-                    "WHERE usuario_empleado.ID_Usuario_E=? limit=1");
-            PreparedStatement ps = con.prepareCall(query);
-            ps.setInt(1, usuario.getIDUsuarioE());
-            ResultSet res = ps.executeQuery();
-            if (res.next()) {
-                System.out.println("Documento encontrado");
-                
+            ddoc.ConsultarD_Doc(e, fileName);
+            if (pass.equals(ddoc.getPass())) {
+                System.out.println("Ok esta todo bien");
+                response.sendRedirect("downloadFile?e="+e+"&fileName="+fileName);
             }else{
-                System.out.println("Aparentemente no encontro nada");
-                response.sendRedirect("acceso_doc.jsp");
+                System.out.println("Vaya vaya");
+                response.sendRedirect("Access.jsp?flag=wrong_pass&e="+e+"&fileName="+fileName);
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
