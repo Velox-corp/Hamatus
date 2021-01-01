@@ -1,4 +1,10 @@
 <%-- 
+    Document   : authAccess
+    Created on : 31/12/2020, 03:11:21 PM
+    Author     : taspi
+--%>
+
+<%-- 
     Document   : mod_docs
     Created on : 31/12/2020, 12:40:19 AM
     Author     : taspi
@@ -47,35 +53,18 @@
           </div>
           <div class="col-md-6 card">
               <div class="card-body">
-                  <form action="updateFile" method="POST" enctype="multipart/form-data">
-                      <div class="mb-3">
-                    <label for="file" class="form-label">Insertar archivo(Nota:si usted quiere actualizar el archivo introduzca el archivo en caso contrario dejelo libre)</label>
-                    <input class="form-control-file" type="file" id="formFile" name="file">
-                </div>
-                <label for="pass">Agrege una contraseña al archivo</label>
-                <input class="form-control" name="pass" type="password" 
-                       placeholder="Inserte contraseña" required value="<%= request.getParameter("pass") %>">
-                <label for="id_tipo_acceso">Elija tipo acceso</label>
-                <select class="form-control" name="id_tipo_acceso">
-                    <%
-                        Hashtable<Integer, String> list = D_Documento.consultarCat_Tipo_Acceso();
-                        Set<Integer> keys = list.keySet();
-                        for (Integer key:keys) {
-                            System.out.println(key);
-                        %>
-                        <option><%= key %>.<%= list.get(key) %></option>
-                        <%
-                        }
-                    %>
-                    </select>
-                    <input name="dictionary" value="<%= list %>" hidden="true">
-                    <input name="nombre" value="<%= request.getParameter("nombre") %>" hidden="true">
+                  <h3>Acceso a documento: <%= request.getParameter("fileName") %></h3>
+                  <form action="authAcess" method="POST">
+                    <label>Ingrese contraseña de acceso</label>
+                    <input name="pass" type="password" class="form-control" placeholder="Ingrese contraseña">
+                    <input name="fileName" type="text" hidden="true" value="<%= request.getParameter("fileName") %>">
+                    <input name="e" type="text" hidden="true" value="<%= request.getParameter("e") %>">
                     <br>
                     <div class="justify-content-center">
                         <button type="" class="btn btn-primary">
-                            Actualizar Archivo
+                            Acceder
                         </button>
-                        <a href="docs.jsp" class="btn btn-primary">Volver</a>
+                        <a href="docs.jsp" class="btn btn-primary">Cancelar</a>
                     </div>
                   </form>
               </div>
@@ -86,4 +75,7 @@
         </div>
 </body>
 <jsp:include page="Prueba-Reu/my-footer.jsp" />
+  <script src="./JS/enable_tooltip.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="./JS/sweetAlert.js"></script>
 </html>

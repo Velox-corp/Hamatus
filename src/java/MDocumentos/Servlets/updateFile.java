@@ -19,6 +19,7 @@ import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,7 @@ import javax.servlet.http.Part;
  * preferencia utlizar POST, hay una pequeña trampa con este metodo ya que es 
  * probable que sea como sobre escribir el archivo
  */
+@MultipartConfig(maxFileSize = 16177215)
 public class updateFile extends HttpServlet {
 
     /**
@@ -72,35 +74,51 @@ public class updateFile extends HttpServlet {
                     String[] entry = pair.split("=");
                     list.put(1, value);
                 }
-                String pass          = request.getParameter("pass");
+                String pass   = request.getParameter("pass");
+                String nombre = request.getParameter("nombre");
 
                 int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
                         .getParameter("id_tipo_acceso").charAt(0)));  
+                Part filePart = null;
+                try {
+                    filePart      = request.getPart("file");
+                } catch (Exception e) {
+                    System.out.println("Bueno no encontro el archivo pero eso no significa nada malo");
+                }
+                if (!(filePart == null)) {
+                    //Listado de datos preparados para entrar en la BD
+                    int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                    D_Documento ddoc = new D_Documento();
+                    ddoc.ConsultarD_Doc(ID_equipo, nombre);
+                    if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ddoc.getID_Documento())){
+                        System.out.println("Ok ahora la parte del archivo");
+                        OutputStream outs = null;
+                        InputStream filecontent = null;
+                        //final PrintWriter writer = response.getWriter();
+                        File file = new File(request.getServletContext().getRealPath("/archivos/"
+                                +ID_equipo+"/" + nombre));
+                        outs = new FileOutputStream(file);//A donde se diregen los bytes
+                        filecontent = filePart.getInputStream();
+                        int read = 0;
+                        final byte[] bytes = new byte[1024];
 
-                Part filePart        = request.getPart("file");
-                String nombre        = Paths.get(filePart.getSubmittedFileName())
-                        .getFileName().toString(); //Basicamente nos trae el nombre del archivo
-                //Listado de datos preparados para entrar en la BD
-                int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
-                D_Documento ddoc = D_Documento.ConsultarD_Doc_sget(ID_equipo, nombre);
-                if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ID_equipo)){
-                    System.out.println("Ok ahora la parte del archivo");
-                    OutputStream outs = null;
-                    InputStream filecontent = null;
-                    //final PrintWriter writer = response.getWriter();
-                    File file = new File(request.getServletContext().getRealPath("/archivos/"
-                            +ID_equipo+"/" + nombre));
-                    outs = new FileOutputStream(file);//A donde se diregen los bytes
-                    filecontent = filePart.getInputStream();
-                    int read = 0;
-                    final byte[] bytes = new byte[1024];
- 
-                    while ((read = filecontent.read(bytes)) != -1) {
-                        outs.write(bytes, 0, read);
+                        while ((read = filecontent.read(bytes)) != -1) {
+                            outs.write(bytes, 0, read);
+                        }
+                        response.sendRedirect("docs.jsp?flag=true");
+                    }else{
+                        System.out.println("Ni modo ya valio en esta otra parte");
+                        response.sendRedirect("docs.jsp?flag=false");
                     }
                 }else{
-                    System.out.println("Ni modo ya valio en esta otra parte");
-                    response.sendRedirect("docs.jsp?flag=false");
+                    //Listado de datos preparados para entrar en la BD
+                    int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                    D_Documento ddoc = D_Documento.ConsultarD_Doc_sget(ID_equipo, nombre);
+                    if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ID_equipo)){
+                        response.sendRedirect("docs.jsp?flag=true");
+                    }else{
+                        response.sendRedirect("docs.jsp?flag=false");
+                    }
                 }
                 
             }else{
