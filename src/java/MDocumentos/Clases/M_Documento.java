@@ -132,7 +132,7 @@ public class M_Documento implements Serializable {
         //CallableStatement cs = null;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = ("SELECT * FROM m_Documento WHERE id_MDocumento=?");
+            this.query = ("SELECT * FROM m_Documento WHERE id_M_Documento=?");
             ps = con.prepareCall(query);
             ps.setInt(1, idM_Documento);
             ResultSet res = ps.executeQuery();
@@ -147,6 +147,37 @@ public class M_Documento implements Serializable {
             e.printStackTrace();
         }
         return correcto;
+    }
+    
+    /**
+     * Subir para arriba XD, este metodo tiene el proposito de hacer los registros
+     * de las entradas de los uaurios
+     * @param id_persona
+     * @return 
+     */
+    public boolean registrarRegistro(int id_persona){
+        boolean right = false;
+        try {
+            this.con = Conexion.obtenerConexion();
+            this.query = ("INSERT INTO registro_entrada (fecha_entrada,"
+                    + " hora_entrada, id_usuario_consulta, id_m_documento)"
+                    + "VALUES (CURDATE(), CURTIME(), ?, ?)");
+            ps = con.prepareCall(query);
+            ps.setInt(1, this.getIdM_Documento());
+            ps.setInt(2, id_persona);
+            if(ps.executeUpdate()==1) right = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+        } finally{
+            try {
+                this.con.close();
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+        return right;
     }
 
     @Override

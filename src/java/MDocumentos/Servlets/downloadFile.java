@@ -5,6 +5,10 @@
  */
 package MDocumentos.Servlets;
 
+import MDocumentos.Clases.D_Documento;
+import MDocumentos.Clases.M_Documento;
+import MUsuarios.clases.Empresa;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -78,24 +83,61 @@ public class downloadFile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String filePath = request.getParameter("filePath");
-        String fileName = request.getParameter("fileName");
-
-        MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-        String mimeType = mimeTypesMap.getContentType(request.getParameter("fileName"));
-
-        response.setContentType(mimeType);
-        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-
-        OutputStream out = response.getOutputStream();
-        FileInputStream in = new FileInputStream(filePath);
-        byte[] buffer = new byte[4096];
-        int length;
-        while ((length = in.read(buffer)) > 0) {
-            out.write(buffer, 0, length);
+        HttpSession sesionUser = request.getSession();
+        boolean obtencionAdecuada = false;
+        UsuarioEmpleado usuario = null;
+        Empresa emp = null;
+        try{
+            usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+            emp = (Empresa) sesionUser.getAttribute("empresa");
+        }catch(NullPointerException ex){
+            System.out.println("Algun error raro de null");
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+            obtencionAdecuada = false;
+            response.sendRedirect("error.jsp");
+        }catch(Exception e){
+            System.out.println("Algun error raro");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            obtencionAdecuada = false;
+            response.sendRedirect("error.jsp");
         }
-        in.close();
-        out.flush();
+        
+        M_Documento mdoc = new M_Documento();
+        D_Documento ddoc = new D_Documento();
+        
+        
+        int ID_equipo = Integer.parseInt(request.getParameter("e"));
+        
+        String filePath = request.getServletContext().getRealPath("/archivos/" + ID_equipo);
+        String fileName = request.getParameter("fileName");
+        filePath += ("/"+fileName);
+        
+        ddoc.ConsultarD_Doc(ID_equipo, fileName);
+        mdoc.Consultar_mDoc(ddoc.getID_Documento(), usuario.getIDUsuarioE());
+        if (mdoc.registrarRegistro(usuario.getIDUsuarioE())) {
+            MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+            String mimeType = mimeTypesMap.getContentType(fileName);
+
+            response.setContentType(mimeType);
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+
+            OutputStream out = response.getOutputStream();
+            FileInputStream in = new FileInputStream(filePath);
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+            in.close();
+            out.flush();
+        }else{
+            System.out.println("Ara ara asi que no te has registrado UwU");
+            System.out.println("ni siquiera deberias de estar aqui");
+            response.sendRedirect("error.jsp");
+        }
+
     }
 
     /**

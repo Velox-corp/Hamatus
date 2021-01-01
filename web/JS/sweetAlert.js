@@ -33,8 +33,18 @@ function error(){
     });
 }
 
+function wrong_pass(){
+    Swal.fire({
+        title: "Contraseña incorrecta",
+        text:'Ingrese otra vez la contraseña',
+        icon:'error'
+    });
+}
+
 function copy_link(id){
-    navigator.clipboard.writeText(id).then(function() {
+    const text = window.location.host + "/Hamatus/" + id;
+    console.log(text);
+    navigator.clipboard.writeText(text).then(function() {
     /* clipboard successfully set */
         Swal.fire({
             text:'Comparta el link para poder mostrar este archivo a otros colaboradores de la empresa',
@@ -88,6 +98,8 @@ window.onload = function(){
             title:"Lo sentimos, el archivo ya existe",
             icon:'warning'
         });
+    }else if(getParameterByName('flag') == 'wrong_pass'){
+        wrong_pass();
     }
 }
 

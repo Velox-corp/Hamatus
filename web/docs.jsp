@@ -49,9 +49,9 @@
                             obtencionAdecuada = false;
                             response.sendRedirect("error.jsp");
                         }
-                        int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                        int IDequipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
                         String ruta = request.getServletContext().getRealPath("/archivos/"
-                            +ID_equipo+"/"); 
+                            +IDequipo+"/"); 
                         System.out.println("La ruta es: " + ruta);
                         if (ruta != null) {        
                             java.io.File file;
@@ -66,11 +66,11 @@
                                         M_Documento mdoc = new M_Documento();
                                         D_Documento ddoc = new D_Documento();
                                         //Definimos primero a ddoc
-                                        ddoc.ConsultarD_Doc(ID_equipo, file.getName());
+                                        ddoc.ConsultarD_Doc(IDequipo, file.getName());
                                         mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
                                 %>
                                 <li>
-                                    <a href="downloadFile?filePath=<%=file.getAbsolutePath()%>&fileName=<%=file.getName()%>" 
+                                    <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>" 
                                        target="_top" data-toggle="tooltip" 
                                        title="Descargar" id="<%=file.getAbsolutePath()%>"
                                        ><%=list[i]%></a>
@@ -80,11 +80,11 @@
                                        </a>
                                           <a target="_top" data-toggle="tooltip" 
                                              title="Modificar" 
-                                             href="mod_docs.jsp?pass=<%= ddoc.getPass() %>">
+                                             href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>">
                                            <i class="fas fa-edit text-primary"></i>
                                        </a>
                                        <a target="_top" data-toggle="tooltip" title="Compartir" 
-                                          onclick="copy_link('<%=file.getAbsolutePath()%>')">
+                                          onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
                                            <i class="fas fa-share text-primary"></i>
                                        </a>
                                 </li>

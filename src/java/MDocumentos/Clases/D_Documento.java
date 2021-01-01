@@ -182,8 +182,8 @@ public class D_Documento implements Serializable {
             ps.setString(2, fileName);
             ResultSet res = ps.executeQuery();
             if (res.next()) {
-                ddoc.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
                 ddoc.setFecha(res.getString("fecha_subida"));
+                ddoc.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
                 ddoc.setFolio(res.getString("Folio"));
                 ddoc.setHora(res.getString("hora_subida"));
                 ddoc.setID_Documento(res.getInt("ID_Documento"));
