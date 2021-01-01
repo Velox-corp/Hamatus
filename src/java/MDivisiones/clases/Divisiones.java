@@ -47,9 +47,6 @@ public class Divisiones implements Serializable{
     static ResultSet rs = null;
     private static final long serialVersionUID = 1L;
 
-    public static boolean crearDivisiones(Divisiones div) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -59,7 +56,7 @@ public class Divisiones implements Serializable{
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Nombre")
-    private String nombre;
+    private String nombreD;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -78,13 +75,13 @@ public class Divisiones implements Serializable{
 
     public Divisiones(int IDDivision, String nombre, int IDJerarquia, int IDEmpresa) throws IOException{
         this.IDDivision = IDDivision;
-        this.nombre = nombre;
+        this.nombreD = nombre;
         this.IDJerarquia = IDJerarquia;
         this.IDEmpresa = IDEmpresa;
     }
     
     public Divisiones(String nombre, int IDJerarquia, int IDEmpresa) throws IOException{
-        this.nombre = nombre;
+        this.nombreD = nombre;
         this.IDJerarquia = IDJerarquia;
         this.IDEmpresa = IDEmpresa;
     }
@@ -148,9 +145,11 @@ public class Divisiones implements Serializable{
     }
 
     public Divisiones(String nombreD, int idem) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.nombreD = nombreD;
+        this.IDJerarquia = IDJerarquia;
+        this.IDEmpresa = IDEmpresa;
     }
-
+    
     public Integer getIDDivision() {
         return IDDivision;
     }
@@ -160,11 +159,11 @@ public class Divisiones implements Serializable{
     }
 
     public String getNombre() {
-        return nombre;
+        return nombreD;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombreD = nombre;
     }
 
     public Integer getIDJerarquia() {
