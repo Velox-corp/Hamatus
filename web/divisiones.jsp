@@ -4,6 +4,16 @@
 <%@page import="MDivisiones.clases.diviDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
+<%
+    HttpSession sesion = request.getSession();
+    boolean obtencionAdecuada = false;
+    try {
+        UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
+        obtencionAdecuada = true;
+    } catch (NullPointerException e) {
+        obtencionAdecuada = false;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,6 +27,7 @@
         <div class="container margin-top-2rem">   
             <div class="row d-flex justify-content-center">
               <div class="col-sm-8">
+                <% if (obtencionAdecuada) {%>
                 <form action="crearDivision" method="POST"  >
                     <h2>Crear Nueva División</h2>
                     <hr>
@@ -39,17 +50,21 @@
                     <h2>Divisiones Actuales</h2>
                     <hr>
                     <c:forEach var="d" items="${divisiones}">
+                        <input type="hidden" class="form-control" id="id" name='id' value="${d.getId()}">
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nombre:</span>
                             </div>
                             <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${d.getNombre()}">
                             <div class='input-group-append'>
-                                <button class="btn btn-info" onclick='return cambiarEstado("nombreD")'>Eliminar</button>
+                                <button type="submit" class="btn btn-dark">
+                                    Eliminar
+                                </button>
                             </div>                        
                         </div>
                     </c:forEach>
                 </form>
+                <%}%>
               </div>
             </div>
         </div><br>
