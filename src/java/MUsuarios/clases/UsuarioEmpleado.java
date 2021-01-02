@@ -6,6 +6,7 @@
 package MUsuarios.clases;
 
 import ClasesSoporte.Conexion;
+import MSeguridad.Clases.AES;
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -188,12 +189,12 @@ public class UsuarioEmpleado implements Serializable {
             con = Conexion.obtenerConexion();
             q = "{call ingresarAdmin(?,?,?,?,?,?,?,?)}";
             cs = con.prepareCall(q);
-            cs.setString(1, admin.getNombre());
-            cs.setString(2, admin.getAppat());
-            cs.setString(3, admin.getApmat());
-            cs.setString(4, admin.getFechaNacimiento());
-            cs.setString(5, admin.getCorreo());
-            cs.setString(6, admin.getPassword());
+            cs.setBytes(1,AES.cifrar(admin.getNombre()));
+            cs.setBytes(2,AES.cifrar(admin.getAppat()));
+            cs.setBytes(3,AES.cifrar(admin.getApmat()));
+            cs.setBytes(4,AES.cifrar(admin.getFechaNacimiento()));
+            cs.setBytes(5,AES.cifrar(admin.getCorreo()));
+            cs.setBytes(6,AES.cifrar(admin.getPassword()));
             cs.setBytes(7, null); //chance luego hacemos que pueda meter foto tambien
             cs.setInt(8, id_emp);
             return cs.executeUpdate() == 1;
@@ -224,12 +225,12 @@ public class UsuarioEmpleado implements Serializable {
             con = Conexion.obtenerConexion();
             q = "INSERT INTO usuario_empleado (Nombre, appat, apmat, Fecha_Nacimiento, Correo, pass, ID_Division, id_cat_privilegios, foto) values(?,?,?,?,?,?,?,?,?)";
             ps = con.prepareCall(q);
-            ps.setString(1, empleado.getNombre());
-            ps.setString(2, empleado.getAppat());
-            ps.setString(3, empleado.getApmat());
-            ps.setString(4, empleado.getFechaNacimiento());
-            ps.setString(5, empleado.getCorreo());
-            ps.setString(6, empleado.getPassword());
+            ps.setBytes(1,AES.cifrar(empleado.getNombre()));
+            ps.setBytes(2,AES.cifrar(empleado.getAppat()));
+            ps.setBytes(3,AES.cifrar(empleado.getApmat()));
+            ps.setBytes(4,AES.cifrar(empleado.getFechaNacimiento()));
+            ps.setBytes(5,AES.cifrar(empleado.getCorreo()));
+            ps.setBytes(6,AES.cifrar(empleado.getPassword()));
             ps.setInt(7, empleado.getiD_Division());
             ps.setInt(8, empleado.getiD_cat_priv());
             ps.setBytes(9, empleado.getFoto());
@@ -259,12 +260,12 @@ public class UsuarioEmpleado implements Serializable {
             con = Conexion.obtenerConexion();
             q = "UPDATE usuario_empleado SET Nombre = ?, appat = ?, apmat = ?, Fecha_Nacimiento = ?, Correo = ?, pass = ?, foto= ? WHERE ID_Usuario_E = ?";
             ps = con.prepareCall(q);
-            ps.setString(1, empleado.getNombre());
-            ps.setString(2, empleado.getAppat());
-            ps.setString(3, empleado.getApmat());
-            ps.setString(4, empleado.getFechaNacimiento());
-            ps.setString(5, empleado.getCorreo());
-            ps.setString(6, empleado.getPassword());
+            ps.setBytes(1,AES.cifrar(empleado.getNombre()));
+            ps.setBytes(2,AES.cifrar(empleado.getAppat()));
+            ps.setBytes(3,AES.cifrar(empleado.getApmat()));
+            ps.setBytes(4,AES.cifrar(empleado.getFechaNacimiento()));
+            ps.setBytes(5,AES.cifrar(empleado.getCorreo()));
+            ps.setBytes(6,AES.cifrar(empleado.getPassword()));
             ps.setBytes(7, empleado.getFoto());
             ps.setInt(8, empleado.getIDUsuarioE());
             return ps.executeUpdate() == 1;
@@ -345,9 +346,9 @@ public class UsuarioEmpleado implements Serializable {
             if(rs.next()){
                 userPuestos = new UsuarioEmpleado();
                 userPuestos.setIDUsuarioE(ideUser);
-                userPuestos.setNombre(rs.getString("nombre"));
-                userPuestos.setAppat(rs.getString("appat"));
-                userPuestos.setApmat(rs.getString("apmat"));
+                userPuestos.setNombre(AES.descifrar(rs.getBytes("nombre")));
+                userPuestos.setAppat(AES.descifrar(rs.getBytes("appat")));
+                userPuestos.setApmat(AES.descifrar(rs.getBytes("apmat")));
                 userPuestos.setiD_Division(rs.getInt("ID_Division"));
                 userPuestos.setiD_cat_priv(rs.getInt("id_cat_privilegios"));
             }
@@ -410,17 +411,17 @@ public class UsuarioEmpleado implements Serializable {
             con = Conexion.obtenerConexion();
             q = "SELECT * FROM usuario_empleado WHERE Correo = ? AND pass = ? limit 1";
             ps= con.prepareStatement(q);
-            ps.setString(1, correo);
-            ps.setString(2, pass);
+            ps.setBytes(1, AES.cifrar(correo));
+            ps.setBytes(2, AES.cifrar(pass));
             rs = ps.executeQuery();
             if(rs.next()){
                 userLog = new UsuarioEmpleado();
-                userLog.setNombre(rs.getString("Nombre"));
-                userLog.setAppat(rs.getString("appat"));
-                userLog.setApmat(rs.getString("apmat"));
-                userLog.setCorreo(rs.getString("correo"));
-                userLog.setFechaNacimiento(rs.getString("Fecha_Nacimiento"));
-                userLog.setPassword(rs.getString("pass"));
+                userLog.setNombre(AES.descifrar(rs.getBytes("nombre")));
+                userLog.setAppat(AES.descifrar(rs.getBytes("appat")));
+                userLog.setApmat(AES.descifrar(rs.getBytes("apmat")));
+                userLog.setCorreo(AES.descifrar(rs.getBytes("correo")));
+                userLog.setFechaNacimiento(AES.descifrar(rs.getBytes("Fecha_nacimiento")));
+                userLog.setPassword(AES.descifrar(rs.getBytes("pass")));
                 userLog.setiD_Division(rs.getInt("ID_Division"));
                 userLog.setiD_cat_priv(rs.getInt("ID_cat_privilegios"));
                 userLog.setIDUsuarioE(rs.getInt("ID_Usuario_E"));
@@ -462,12 +463,12 @@ public class UsuarioEmpleado implements Serializable {
                 UsuarioEmpleado empleado = 
                         new UsuarioEmpleado(
                                 rs.getInt("ID_usuario_e"), 
-                                rs.getString("nombre"), 
-                                rs.getString("appat"), 
-                                rs.getString("apmat"), 
-                                rs.getString("correo"), 
-                                rs.getString("fecha_nacimiento"), 
-                                rs.getString("pass"), 
+                                AES.descifrar(rs.getBytes("nombre")), 
+                                AES.descifrar(rs.getBytes("appat")), 
+                                AES.descifrar(rs.getBytes("apmat")), 
+                                AES.descifrar(rs.getBytes("correo")), 
+                                AES.descifrar(rs.getBytes("Fecha_nacimiento")), 
+                                AES.descifrar(rs.getBytes("pass")), 
                                 rs.getInt("ID_Division"), 
                                 rs.getInt("ID_cat_privilegios"), 
                                 rs.getBytes("foto"));
@@ -517,12 +518,12 @@ public class UsuarioEmpleado implements Serializable {
                 UsuarioEmpleado empleado = 
                         new UsuarioEmpleado(
                                 rs.getInt("ID_usuario_e"), 
-                                rs.getString("nombre"), 
-                                rs.getString("appat"), 
-                                rs.getString("apmat"), 
-                                rs.getString("correo"), 
-                                rs.getString("fecha_nacimiento"), 
-                                rs.getString("pass"), 
+                                AES.descifrar(rs.getBytes("nombre")), 
+                                AES.descifrar(rs.getBytes("appat")), 
+                                AES.descifrar(rs.getBytes("apmat")), 
+                                AES.descifrar(rs.getBytes("correo")), 
+                                AES.descifrar(rs.getBytes("Fecha_nacimiento")), 
+                                AES.descifrar(rs.getBytes("pass")),
                                 rs.getInt("ID_Division"), 
                                 rs.getInt("ID_cat_privilegios"), 
                                 rs.getBytes("foto"));
@@ -574,13 +575,12 @@ public class UsuarioEmpleado implements Serializable {
             while(rs.next()){
                 UsuarioEmpleado empleado = 
                         new UsuarioEmpleado(
-                                rs.getInt("ID_usuario_e"), 
-                                rs.getString("nombre"), 
-                                rs.getString("appat"), 
-                                rs.getString("apmat"), 
-                                rs.getString("correo"), 
-                                rs.getString("fecha_nacimiento"), 
-                                rs.getString("pass"), 
+                                AES.descifrar(rs.getBytes("nombre")), 
+                                AES.descifrar(rs.getBytes("appat")), 
+                                AES.descifrar(rs.getBytes("apmat")), 
+                                AES.descifrar(rs.getBytes("correo")), 
+                                AES.descifrar(rs.getBytes("Fecha_nacimiento")), 
+                                AES.descifrar(rs.getBytes("pass")),
                                 rs.getInt("ID_Division"), 
                                 rs.getInt("ID_cat_privilegios"), 
                                 rs.getBytes("foto"));
