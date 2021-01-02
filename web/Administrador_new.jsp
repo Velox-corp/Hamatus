@@ -8,18 +8,19 @@
     UsuarioEmpleado admin;
     Empresa emp;
     ArrayList <Division> divisiones = new ArrayList<Division>();
-    boolean procesocorrecto =  true;
+    boolean procesocorrecto;
     try{
         sesionAdmin = request.getSession();
         admin = (UsuarioEmpleado)sesionAdmin.getAttribute("usuario");
         
-        if (admin.getiD_cat_priv() != 1){
-            procesocorrecto = false;
-            divisiones = Division.obtenerDivisiones(((Empresa)sesionAdmin.getAttribute("empresa")).getIDEmpresa());
+        if (admin.getiD_cat_priv() == 1){
+            procesocorrecto = true;
+            emp = (Empresa)sesionAdmin.getAttribute("empresa");
+            divisiones = Division.obtenerDivisiones(emp.getIDEmpresa());
         }else{
+            procesocorrecto = false;
             //divisiones = Divison.getDivisiones();
         }
-        procesocorrecto = true;
     }catch(Exception e){
         e.getMessage();
         e.printStackTrace();
@@ -108,17 +109,16 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <select class="form-select form-select-lg" name="division" id="division" onchange="return alterarPuestos()">
-                                        <option selected>Seleccione la división a la que pertenece</option>
-                                        <option>Dirección general</option>
+                                    <select class="form-select" name="division" id="division" onchange="return alterarPuestos()">
+                                        <option  value='null' selected>Seleccione la división a la que pertenece</option>
                                         <% for (int i = 0; i < divisiones.size(); i++) {
                                             Division div = divisiones.get(i); %>
-                                            <option value="<%=div.getId_Division()%>"> <%=div.getNombre()%></option>
+                                            <option value="<%=div.getNombre()%>"> <%=div.getNombre()%></option>
                                         <% } %>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <select class="form-select form-select-lg" id="jerarquia" name="jerarquía">
+                                    <select class="form-select" id="jerarquia" name="jerarquía">
                                         
                                     </select>
                                 </div>
@@ -138,6 +138,7 @@
 		<div class="col-md-2">
 		</div>
 	</div>
+                                    <script src='JS/manejoDivYJer.js'></script>
   </body>
   <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

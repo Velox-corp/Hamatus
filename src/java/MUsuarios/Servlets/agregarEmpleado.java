@@ -6,6 +6,7 @@
 package MUsuarios.Servlets;
 
 import ClasesSoporte.Validaciones;
+import MUsuarios.clases.CatPuestos;
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
@@ -47,7 +48,9 @@ public class agregarEmpleado extends HttpServlet {
             String f_n = request.getParameter("f_n");
             String pass = request.getParameter("pwd");
             String pass2 = request.getParameter("pwd2");
-            
+            String jerarquia = request.getParameter("jerarquia");
+            String division = request.getParameter("division");
+            int id_jer = CatPuestos.traducirNombre(division);
             boolean[] bufferValidaciones = new boolean[6];
             bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
             bufferValidaciones[1] = Validaciones.esString(appat, false, false);
@@ -70,7 +73,7 @@ public class agregarEmpleado extends HttpServlet {
                     sesion = request.getSession();
                     UsuarioEmpleado admin = (UsuarioEmpleado) sesion.getAttribute("Usuario");
                     Empresa emp = (Empresa) sesion.getAttribute("empresa"); 
-                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, admin.getiD_Division(), 4, null); // De momento se toma la división del admin, pero NO es así al final
+                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, admin.getiD_Division(), id_jer, null); // De momento se toma la división del admin, pero NO es así al final
                     if(UsuarioEmpleado.ingresarEmpleado(newEmpleado, emp.getIDEmpresa())){
                         redirect = "verUsuarios.jsp";
                     }

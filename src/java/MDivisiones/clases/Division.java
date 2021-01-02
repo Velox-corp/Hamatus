@@ -141,7 +141,7 @@ public class Division implements Serializable{
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();
             while(rs.next()){
-                Division div = new Division(rs.getInt("ID_Empresa"));
+                Division div = new Division(rs.getInt("ID_Division"),rs.getString("Nombre_A"),rs.getInt("ID_Jerarquia"),rs.getInt("ID_Empresa"));
                 divisiones.add(div);
             }
         } catch (SQLException ex) {
