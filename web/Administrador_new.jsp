@@ -1,17 +1,21 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="MDivisiones.clases.Division"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesionAdmin;
     UsuarioEmpleado admin;
-    //ArrayList <Division> divisiones = new ArrayList<Division>();
+    Empresa emp;
+    ArrayList <Division> divisiones = new ArrayList<Division>();
     boolean procesocorrecto =  true;
     try{
         sesionAdmin = request.getSession();
         admin = (UsuarioEmpleado)sesionAdmin.getAttribute("usuario");
+        
         if (admin.getiD_cat_priv() != 1){
             procesocorrecto = false;
-            
+            divisiones = Division.obtenerDivisiones(((Empresa)sesionAdmin.getAttribute("empresa")).getIDEmpresa());
         }else{
             //divisiones = Divison.getDivisiones();
         }
@@ -103,20 +107,22 @@
                                     </p>-->
                             </div>
                             <div class="row">
-                                <div class="col-md-2">
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            Aquí debería seleccionarse  la división o el puesto o tener para ambos
-                                        </button>
-                                        <div class="dropdown-menu">
-                                          <a class="dropdown-item" href="#">Link 1</a>
-                                          <a class="dropdown-item" href="#">Link 2</a>
-                                          <a class="dropdown-item" href="#">Link 3</a>
-                                        </div>
-                                    </div>
+                                <div class="col-md-4">
+                                    <select class="form-select form-select-lg" name="division" id="division" onchange="return alterarPuestos()">
+                                        <option selected>Seleccione la división a la que pertenece</option>
+                                        <option>Dirección general</option>
+                                        <% for (int i = 0; i < divisiones.size(); i++) {
+                                            Division div = divisiones.get(i); %>
+                                            <option value="<%=div.getId_Division()%>"> <%=div.getNombre()%></option>
+                                        <% } %>
+                                    </select>
                                 </div>
-                                <div class="col-md-7"></div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <select class="form-select form-select-lg" id="jerarquia" name="jerarquía">
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="row">
                                         <button type="submit" class="btn btn-primary">
                                                 Guardar empleado

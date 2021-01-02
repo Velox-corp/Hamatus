@@ -305,8 +305,8 @@ DROP procedure IF EXISTS `yL10l8yMbC`.`ingresarAdmin`;
 
 DELIMITER $$
 USE `yL10l8yMbC`$$
-CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre tinytext, appat tinytext, apmat tinytext,
-f_n date, correo text(45), pass text(30), foto Blob, idE int)   
+CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre VARBINARY(128), appat VARBINARY(128), apmat VARBINARY(128),
+f_n VARBINARY(128), correo VARBINARY(128), pass VARBINARY(128), foto Blob, idE int)   
 BEGIN
 	insert into division (Nombre_A, id_jerarquia, id_empresa)
     values ("Dirección general", 1, idE);
