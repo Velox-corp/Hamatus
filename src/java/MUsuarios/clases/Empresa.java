@@ -6,6 +6,7 @@
 package MUsuarios.clases;
 
 import ClasesSoporte.Conexion;
+import MSeguridad.Clases.AES;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -106,10 +107,10 @@ public class Empresa implements Serializable{
             Empresa.con = Conexion.obtenerConexion();
             Empresa.query = ("INSERT INTO empresa (Nombre, Descripcion, Logo, Razon_social) VALUES (?, ?, ?, ?)");
             ps = con.prepareStatement(query);
-            ps.setString(1, emp.getNombre());
-            ps.setString(2, emp.getDescripcion());
+            ps.setBytes(1, AES.cifrar(emp.getNombre()));
+            ps.setBytes(2, AES.cifrar(emp.getDescripcion()));
             ps.setBlob(3, emp.getLogo());
-            ps.setString(4, emp.getRazónsocial());
+            ps.setBytes(4, AES.cifrar(emp.getRazónsocial()));
             
            if(ps.executeUpdate()==1) procesoCorrecto = true;
            else procesoCorrecto = false;
@@ -142,11 +143,11 @@ public class Empresa implements Serializable{
             rs = ps.executeQuery();
             if (rs.next()) {
                 emp = new Empresa();
-                emp.setDescripcion(rs.getString("Descripcion"));
+                emp.setDescripcion(AES.descifrar(rs.getBytes("Descripcion")));
                 emp.setIDEmpresa(rs.getInt("ID_Empresa"));
                 //emp.setLogo() este no se va a añadir
-                emp.setNombre(rs.getString("Nombre"));
-                emp.setRazónsocial(rs.getString("Razon_social"));
+                emp.setNombre(AES.descifrar(rs.getBytes("Nombre")));
+                emp.setRazónsocial(AES.descifrar(rs.getBytes("Razon_social")));
             }else{
                 System.out.println("Canfle no encontro nada");
             }

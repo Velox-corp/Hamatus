@@ -35,10 +35,10 @@ DROP TABLE IF EXISTS `empresa` ;
 
 CREATE TABLE IF NOT EXISTS `empresa` (
   `ID_Empresa` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` TINYTEXT NOT NULL,
-  `Descripcion` MEDIUMTEXT NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
+  `Descripcion` VARBINARY(128) NOT NULL,
   `Logo` LONGBLOB NULL DEFAULT NULL,
-  `Razon_social` TINYTEXT NOT NULL,
+  `Razon_social` VARBINARY(128) NOT NULL,
   PRIMARY KEY (`ID_Empresa`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -165,8 +165,8 @@ CREATE TABLE IF NOT EXISTS `equipo` (
   CONSTRAINT `fk_Equipo_Division1`
     FOREIGN KEY (`ID_Division`)
     REFERENCES `division` (`ID_Division`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE cascade
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -198,8 +198,8 @@ CREATE TABLE IF NOT EXISTS `d_documento` (
   CONSTRAINT `fk_Documento_Equipo1`
     FOREIGN KEY (`Equipo_ID_Equipo`)
     REFERENCES `equipo` (`ID_Equipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Documento_cta`
     FOREIGN KEY (`id_tipo_acceso`)
     REFERENCES `cat_tipo_acceso` (`idC_tipo_acceso`)
@@ -228,13 +228,13 @@ CREATE TABLE IF NOT EXISTS `e_usuario_equipo` (
   CONSTRAINT `fk_Usuario-Equipo_Equipo1`
     FOREIGN KEY (`ID_Equipo`)
 	REFERENCES `equipo` (`ID_Equipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Usuario-Equipo_Usuario-Empleado1`
     FOREIGN KEY (`ID_Usuario_Empleado`)
     REFERENCES `usuario_empleado` (`ID_Usuario_E`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -258,8 +258,8 @@ CREATE TABLE IF NOT EXISTS `registro_entrada` (
   CONSTRAINT `fk_Registro_Entrada_M_Documento`
     FOREIGN KEY (`id_M_Documento`)
     REFERENCES `m_documento` (`idM_Documento`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_registro_usuario`
     FOREIGN KEY (`ID_Usuario_Consulta`)
     REFERENCES `usuario_empleado` (`ID_Usuario_E`)
@@ -288,8 +288,8 @@ CREATE TABLE IF NOT EXISTS `tablon` (
   CONSTRAINT `fk_tablon_division`
     FOREIGN KEY (`Id_division`)
     REFERENCES `division` (`ID_Division`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

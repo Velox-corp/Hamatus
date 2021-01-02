@@ -31,55 +31,59 @@ import sun.misc.BASE64Encoder;
 
 public class AES implements Serializable{
 
-    private Cipher cifrador;
-    private String clave;
-    
+    private static Cipher cifrador;
+    private static final String clavePrueba= "gurmnhorgvmeigdv";
     public AES(){
-        try {
-            this.cifrador = Cipher.getInstance("AES");
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException ex) {
-            Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
     
-     public byte[] cifrar(String msj, String clave){
+     public static byte[] cifrar(String msj){
         byte cifrado[] = null;
          try {
             //conexión bd
-            this.clave = clave;
+            cifrador = Cipher.getInstance("AES");
             
-            SecretKeySpec key = new SecretKeySpec(clave.getBytes(), "AES");
+            SecretKeySpec key = new SecretKeySpec(clavePrueba.getBytes(), "AES");
             
-            this.cifrador.init(Cipher.ENCRYPT_MODE,key);
+            cifrador.init(Cipher.ENCRYPT_MODE,key);
             
             
             cifrado = cifrador.doFinal(msj.getBytes());
-            
+             System.out.println(cifrado);
             //no se si tendría que luego tednría que convertir a String el cifrado
             
-            System.out.println("Encripacion finalizada de AES");
+            //System.out.println("Encripacion finalizada de AES");
         } catch (InvalidKeyException ex) {
             Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
         } catch (BadPaddingException ex) {
             Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalBlockSizeException ex) {
             Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cifrado;
     }
      
-    public String descifrar(byte[] descifrado){
+    public static String descifrar(byte[] descifrado){
         String valor_descfirado = "";
         try {
+            System.out.println(descifrado);
+            cifrador = Cipher.getInstance("AES");
+            SecretKeySpec key = new SecretKeySpec(clavePrueba.getBytes(), "AES");
             
-            SecretKeySpec key = new SecretKeySpec(this.clave.getBytes(), "AES");
+            cifrador.init(Cipher.DECRYPT_MODE, key);
             
-            this.cifrador.init(Cipher.DECRYPT_MODE, key);
+            valor_descfirado = new String (cifrador.doFinal(descifrado));
             
-            valor_descfirado = Arrays.toString(cifrador.doFinal(descifrado));
-            
-            System.out.println("Desencriptación finalizada de AES");
+            //System.out.println("Desencriptación finalizada de AES");
         } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
+            Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
             Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valor_descfirado;
