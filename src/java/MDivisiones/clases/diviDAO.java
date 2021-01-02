@@ -12,19 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import ClasesSoporte.Conexion;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class diviDAO {
-    Connection con;
-    Conexion cn=new Conexion();
-    PreparedStatement ps;
-    ResultSet rs;
+    private static Connection con;
+    private static  String q;
+    private static PreparedStatement ps;
+    private static ResultSet rs;
     
     public List listar() {
         List<divi>divisiones=new ArrayList();
-        String sql="SELECT * FROM yl10l8ymbc.division";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
+            con = Conexion.obtenerConexion();
+            q = "SELECT * FROM yl10l8ymbc.division";
+            ps = con.prepareStatement(q);
             rs = ps.executeQuery();
             while (rs.next()) {
                 divi d =new divi();
@@ -33,13 +36,20 @@ public class diviDAO {
                 d.setIdj(rs.getInt(3));
                 d.setIde(rs.getInt(4));
                 divisiones.add(d);
-                System.out.println("Corrio");
             }
-        } catch (Exception e) {
-            System.out.println("Ocurrio un error diviDAO");
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+        } catch (SQLException ex) {
+            Logger.getLogger(diviDAO.class.getName()).log(Level.SEVERE, null, ex);
+            divisiones = null;
+        }finally{
+            try {
+                con.close();
+                q= "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(diviDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return divisiones;
+        return divisiones;     
     }
 }

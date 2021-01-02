@@ -2,7 +2,7 @@
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="MDivisiones.clases.divi"%>
 <%@page import="MDivisiones.clases.diviDAO"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <!DOCTYPE html>
 <html>
