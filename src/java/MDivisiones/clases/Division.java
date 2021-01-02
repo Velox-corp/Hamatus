@@ -6,11 +6,13 @@
 package MDivisiones.clases;
 
 import ClasesSoporte.Conexion;
+import MSeguridad.Clases.AES;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
@@ -130,11 +132,39 @@ public class Division implements Serializable{
         return procesoCorrecto;
     }
     
+    public static ArrayList<Division> obtenerDivisiones(int id_emp){
+        ArrayList<Division> divisiones = new ArrayList<Division>();
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT * FROM division WHERE ID_Empresa = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, id_emp);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Division div = new Division(rs.getInt("ID_Empresa"));
+                divisiones.add(div);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+            divisiones = null;
+        }finally{
+            try {
+                con.close();
+                q= "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return divisiones;     
+    }
+    
     public static boolean eliminarDivision(Division div, int id_emp){
         boolean procesoCorrecto = true;
         try{
             Division.con = Conexion.obtenerConexion();
-            Division.query = ("DELETE FROM yl10l8ymbc.division WHERE ID_Division=? AND ID_Empresa=?");
+            Division.query = ("DELETE FROM division WHERE ID_Division=? AND ID_Empresa=?");
             ps = con.prepareStatement(Division.query);
             ps.setInt(1, div.getId_Division());
             ps.setInt(2, id_emp);
