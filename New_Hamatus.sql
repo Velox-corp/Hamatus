@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS `empresa` ;
 CREATE TABLE IF NOT EXISTS `empresa` (
   `ID_Empresa` INT(11) NOT NULL AUTO_INCREMENT,
   `Nombre` VARBINARY(128) NOT NULL,
-  `Descripcion` VARBINARY(128) NOT NULL,
+  `Descripcion` VARBINARY(256) NOT NULL,
   `Logo` LONGBLOB NULL DEFAULT NULL,
   `Razon_social` VARBINARY(128) NOT NULL,
   PRIMARY KEY (`ID_Empresa`))
@@ -103,14 +103,14 @@ DROP TABLE IF EXISTS `usuario_empleado` ;
 
 CREATE TABLE IF NOT EXISTS `usuario_empleado` (
   `ID_Usuario_E` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` TINYTEXT NOT NULL,
-  `appat` TINYTEXT NOT NULL,
-  `apmat` TINYTEXT NOT NULL,
-  `Fecha_Nacimiento` DATE NOT NULL,
-  `Correo` TINYTEXT NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
+  `appat` VARBINARY(128) NOT NULL,
+  `apmat` VARBINARY(128) NOT NULL,
+  `Fecha_Nacimiento` VARBINARY(128) NOT NULL,
+  `Correo` VARBINARY(128) NOT NULL,
   `ID_Division` INT(11) NOT NULL,
   `id_cat_privilegios` INT NOT NULL,
-  `pass` TINYTEXT NOT NULL,
+  `pass` VARBINARY(128) NOT NULL,
   `foto` BLOB NULL DEFAULT NULL,
   PRIMARY KEY (`ID_Usuario_E`),
   CONSTRAINT `fk_empleado_division`
@@ -159,7 +159,7 @@ DROP TABLE IF EXISTS `equipo` ;
 
 CREATE TABLE IF NOT EXISTS `equipo` (
   `ID_Equipo` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` VARCHAR(45) NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
   `ID_Division` INT(11) NOT NULL,
   PRIMARY KEY (`ID_Equipo`),
   CONSTRAINT `fk_Equipo_Division1`
@@ -180,14 +180,14 @@ DROP TABLE IF EXISTS `d_documento` ;
 
 CREATE TABLE IF NOT EXISTS `d_documento` (
   `ID_Documento` INT(11) NOT NULL AUTO_INCREMENT,
-  `Ruta` TINYTEXT NOT NULL,
-  `Nombre` TINYTEXT NOT NULL,
+  `Ruta` VARBINARY(128) NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
   `Equipo_ID_Equipo` INT(11) NOT NULL,
-  `Password` VARCHAR(20) NOT NULL,
+  `Password`VARBINARY(128) NOT NULL,
   `id_tipo_acceso` INT(11) NOT NULL,
-  `Folio` VARCHAR(12) NOT NULL,
-  `fecha_subida` DATE NULL DEFAULT NULL,
-  `hora_subida` TIME NOT NULL,
+  `Folio` VARBINARY(128) NOT NULL,
+  `fecha_subida` VARBINARY(128) NULL DEFAULT NULL,
+  `hora_subida` VARBINARY(128) NOT NULL,
   `id_MDocumento` INT(11) NOT NULL,
   PRIMARY KEY (`ID_Documento`),
   CONSTRAINT `fk_D-doc_M_doc`
@@ -250,8 +250,8 @@ DROP TABLE IF EXISTS `registro_entrada` ;
 
 CREATE TABLE IF NOT EXISTS `registro_entrada` (
   `ID_Registro_Entrada` INT(11) NOT NULL AUTO_INCREMENT,
-  `Fecha_entrada` DATE NOT NULL,
-  `hora_entrada` TIME NOT NULL,
+  `Fecha_entrada` VARBINARY(128) NOT NULL,
+  `hora_entrada` VARBINARY(128) NOT NULL,
   `ID_Usuario_Consulta` INT(11) NOT NULL,
   `id_M_Documento` INT(11) NOT NULL,
   PRIMARY KEY (`ID_Registro_Entrada`),
