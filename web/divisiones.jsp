@@ -1,24 +1,39 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page import="MDivisiones.clases.Division"%>
+<%@page import="java.util.ArrayList"%>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
-    HttpSession sesion = request.getSession();
-    boolean obtencionAdecuada = false;
-    String nombre = "";
-    String appat = "";
-    String apmat = "";
-    String correo = "";
-    String fecha_nac = "";
-    try {
-        UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        nombre = usuario.getNombre();
-        appat = usuario.getAppat();
-        apmat = usuario.getApmat();
-        correo = usuario.getCorreo();
-        fecha_nac = usuario.getFechaNacimiento();
-        //NOTA, el id no lo vamos a meter, se va obtener por parte de la sesión para ocultarlo
-        obtencionAdecuada = true;
-    } catch (NullPointerException e) {
+    boolean obtencionAdecuada = true;
+    boolean hayDivisiones = true;
+    HttpSession sesion;
+    Division idemp;
+    ArrayList<Division> divisiones = new ArrayList<Division>();
+    int[] totalesDivisiones = null;
+    try{
+        //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
+        sesion = request.getSession();
+        idemp = (Division) sesion.getAttribute("division");
+        divisiones = Division.obtenerDivisiones(idemp.getId_Empresa());
+        if(divisiones == null || divisiones.size() == 0){
+            System.out.println("No divisiones");
+            hayDivisiones = false;
+        }else{
+            hayDivisiones = true;
+            totalesDivisiones = new int[divisiones.size()];
+            for (int i = 0; i < divisiones.size(); i++) {
+                Division div = divisiones.get(i);
+            }
+        }
+        
+    }catch(Exception e){
         obtencionAdecuada = false;
+        hayDivisiones = false;
+        e.getMessage();
+        e.printStackTrace();
+    }
+
+    if(!obtencionAdecuada){
+        response.sendRedirect("error.jsp");
     }
 %>
 <!DOCTYPE html>
@@ -50,7 +65,7 @@
                           <a href="" id="cancel" name="cancel" class="btn btn-default">Cancelar</a>
                         </div>
                     </div>
-                </form><%--
+                </form>
                 <form role="form" method="POST" action='eliminarDivision'>
                     <hr>
                     <h2>Divisiones Actuales</h2>
@@ -59,21 +74,27 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nombre:</span>
                             </div>
-                            <input type="text" class="form-control" id="nombre" name='nombre' readonly ='readonly'
-                                   <% if (obtencionAdecuada) {%>
-                                   value="<%=nombre%>"
-                                   <%}%>
+                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly'
+                                   <% if (obtencionAdecuada) {
+                                       for (int i = 0; i < divisiones.size(); i++) {
+                                            Division div = divisiones.get(i);
+                                    %>
+                                   value="<%=div.getNombre()%>"
+                                   <%}}
+                                   
+                                   
+                                   %>
                                    onchange="return validarString(this, true, false)"
                                    ondrag="return validarString(this, true, false)"
                                    ondrop="return validarString(this, true, false)">
                             <div class='input-group-append'>
-                            <button class="btn btn-info" onclick='return cambiarEstado("nombre")'>Eliminar</button>
+                            <button class="btn btn-info" onclick='return cambiarEstado("nombreD")'>Eliminar</button>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-dark">
                         Actualizar información
                     </button>
-                </form>--%>
+                </form>
               </div>
             </div>
         </div><br>
