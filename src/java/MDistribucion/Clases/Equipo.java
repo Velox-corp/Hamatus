@@ -6,6 +6,7 @@
 package MDistribucion.Clases;
 
 import ClasesSoporte.Conexion;
+import MSeguridad.Clases.AES;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -98,7 +99,7 @@ public class Equipo implements Serializable {
             con = Conexion.obtenerConexion();
             q = "INSERT INTO Equipo (nombre, ID_Division) values(?,?)";
             ps = con.prepareStatement(q);
-            ps.setString(1,equipoInsert.getNombre());
+            ps.setBytes(1,AES.cifrar(equipoInsert.getNombre()));
             ps.setInt(2, equipoInsert.getIDDivision());
             if(ps.executeUpdate() == 1){
                 proceso_correcto = true;
@@ -167,7 +168,7 @@ public class Equipo implements Serializable {
             rs = ps.executeQuery();
             while(rs.next()){
                 Equipo equipo = new Equipo(rs.getInt("ID_Equipo"),
-                        rs.getString("Nombre"), 
+                        AES.descifrar(rs.getBytes("Nombre")), 
                 rs.getInt("ID_DIvision"));
                 equipos.add(equipo);
             }
@@ -202,7 +203,7 @@ public class Equipo implements Serializable {
             rs = ps.executeQuery();
             if(rs.next()){
                     equipoBuscado = new Equipo(rs.getInt("ID_Equipo"),
-                            rs.getString("Nombre"), 
+                            AES.descifrar(rs.getBytes("Nombre")),  
                     rs.getInt("ID_Division"));
                 }
         } catch (SQLException ex) {

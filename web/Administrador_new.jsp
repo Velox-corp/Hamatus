@@ -1,21 +1,26 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="MDivisiones.clases.Division"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesionAdmin;
     UsuarioEmpleado admin;
-    //ArrayList <Division> divisiones = new ArrayList<Division>();
-    boolean procesocorrecto =  true;
+    Empresa emp;
+    ArrayList <Division> divisiones = new ArrayList<Division>();
+    boolean procesocorrecto;
     try{
         sesionAdmin = request.getSession();
         admin = (UsuarioEmpleado)sesionAdmin.getAttribute("usuario");
-        if (admin.getiD_cat_priv() != 1){
-            procesocorrecto = false;
-            
+        
+        if (admin.getiD_cat_priv() == 1){
+            procesocorrecto = true;
+            emp = (Empresa)sesionAdmin.getAttribute("empresa");
+            divisiones = Division.obtenerDivisiones(emp.getIDEmpresa());
         }else{
+            procesocorrecto = false;
             //divisiones = Divison.getDivisiones();
         }
-        procesocorrecto = true;
     }catch(Exception e){
         e.getMessage();
         e.printStackTrace();
@@ -103,20 +108,21 @@
                                     </p>-->
                             </div>
                             <div class="row">
-                                <div class="col-md-2">
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            Aquí debería seleccionarse  la división o el puesto o tener para ambos
-                                        </button>
-                                        <div class="dropdown-menu">
-                                          <a class="dropdown-item" href="#">Link 1</a>
-                                          <a class="dropdown-item" href="#">Link 2</a>
-                                          <a class="dropdown-item" href="#">Link 3</a>
-                                        </div>
-                                    </div>
+                                <div class="col-md-4">
+                                    <select class="form-select" name="division" id="division" onchange="return alterarPuestos()">
+                                        <option  value='null' selected>Seleccione la división a la que pertenece</option>
+                                        <% for (int i = 0; i < divisiones.size(); i++) {
+                                            Division div = divisiones.get(i); %>
+                                            <option value="<%=div.getNombre()%>"> <%=div.getNombre()%></option>
+                                        <% } %>
+                                    </select>
                                 </div>
-                                <div class="col-md-7"></div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <select class="form-select" id="jerarquia" name="jerarquía">
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="row">
                                         <button type="submit" class="btn btn-primary">
                                                 Guardar empleado
@@ -132,6 +138,7 @@
 		<div class="col-md-2">
 		</div>
 	</div>
+                                    <script src='JS/manejoDivYJer.js'></script>
   </body>
   <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

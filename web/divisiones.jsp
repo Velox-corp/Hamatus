@@ -1,22 +1,14 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
-<%@page import="MDivisiones.Servlets.crearDivisiones"%>
+<%@page import="MDivisiones.clases.Division"%>
+<%@page import="MDivisiones.clases.divi"%>
+<%@page import="MDivisiones.clases.diviDAO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesion = request.getSession();
     boolean obtencionAdecuada = false;
-    String nombre = "";
-    String appat = "";
-    String apmat = "";
-    String correo = "";
-    String fecha_nac = "";
     try {
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        nombre = usuario.getNombre();
-        appat = usuario.getAppat();
-        apmat = usuario.getApmat();
-        correo = usuario.getCorreo();
-        fecha_nac = usuario.getFechaNacimiento();
-        //NOTA, el id no lo vamos a meter, se va obtener por parte de la sesión para ocultarlo
         obtencionAdecuada = true;
     } catch (NullPointerException e) {
         obtencionAdecuada = false;
@@ -35,12 +27,13 @@
         <div class="container margin-top-2rem">   
             <div class="row d-flex justify-content-center">
               <div class="col-sm-8">
-                <form action="crearDivisiones" method="POST" enctype="multipart/form-data" >
+                <% if (obtencionAdecuada) {%>
+                <form action="crearDivision" method="POST"  >
                     <h2>Crear Nueva División</h2>
                     <hr>
                     <div class="form-group">
-                        <label for="nameUser">Nombre:</label>
-                        <input type="name" class="form-control" id="nameUser" name="nombreD" 
+                        <label for="nombreD">Nombre:</label>
+                        <input type="text" class="form-control" id="nombreD" name="nombreD" 
                                onchange="return validarString(this, true, false)"
                                ondrag="return validarString(this, true, false)"
                                ondrop="return validarString(this, true, false)">
@@ -56,25 +49,22 @@
                     <hr>
                     <h2>Divisiones Actuales</h2>
                     <hr>
+                    <c:forEach var="d" items="${divisiones}">
+                        <input type="hidden" class="form-control" id="id" name='id' value="${d.getId()}">
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nombre:</span>
                             </div>
-                            <input type="text" class="form-control" id="nombre" name='nombre' readonly ='readonly'
-                                   <% if (obtencionAdecuada) {%>
-                                   value="<%=nombre%>"
-                                   <%}%>
-                                   onchange="return validarString(this, true, false)"
-                                   ondrag="return validarString(this, true, false)"
-                                   ondrop="return validarString(this, true, false)">
+                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${d.getNombre()}">
                             <div class='input-group-append'>
-                            <button class="btn btn-info" onclick='return cambiarEstado("nombre")'>Eliminar</button>
+                                <button type="submit" class="btn btn-dark">
+                                    Eliminar
+                                </button>
+                            </div>                        
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-dark">
-                        Actualizar información
-                    </button>
+                    </c:forEach>
                 </form>
+                <%}%>
               </div>
             </div>
         </div><br>

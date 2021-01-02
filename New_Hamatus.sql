@@ -35,10 +35,10 @@ DROP TABLE IF EXISTS `empresa` ;
 
 CREATE TABLE IF NOT EXISTS `empresa` (
   `ID_Empresa` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` TINYTEXT NOT NULL,
-  `Descripcion` MEDIUMTEXT NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
+  `Descripcion` VARBINARY(256) NOT NULL,
   `Logo` LONGBLOB NULL DEFAULT NULL,
-  `Razon_social` TINYTEXT NOT NULL,
+  `Razon_social` VARBINARY(128) NOT NULL,
   PRIMARY KEY (`ID_Empresa`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -103,14 +103,14 @@ DROP TABLE IF EXISTS `usuario_empleado` ;
 
 CREATE TABLE IF NOT EXISTS `usuario_empleado` (
   `ID_Usuario_E` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` TINYTEXT NOT NULL,
-  `appat` TINYTEXT NOT NULL,
-  `apmat` TINYTEXT NOT NULL,
-  `Fecha_Nacimiento` DATE NOT NULL,
-  `Correo` TINYTEXT NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
+  `appat` VARBINARY(128) NOT NULL,
+  `apmat` VARBINARY(128) NOT NULL,
+  `Fecha_Nacimiento` VARBINARY(128) NOT NULL,
+  `Correo` VARBINARY(128) NOT NULL,
   `ID_Division` INT(11) NOT NULL,
   `id_cat_privilegios` INT NOT NULL,
-  `pass` TINYTEXT NOT NULL,
+  `pass` VARBINARY(128) NOT NULL,
   `foto` BLOB NULL DEFAULT NULL,
   PRIMARY KEY (`ID_Usuario_E`),
   CONSTRAINT `fk_empleado_division`
@@ -159,14 +159,14 @@ DROP TABLE IF EXISTS `equipo` ;
 
 CREATE TABLE IF NOT EXISTS `equipo` (
   `ID_Equipo` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` VARCHAR(45) NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
   `ID_Division` INT(11) NOT NULL,
   PRIMARY KEY (`ID_Equipo`),
   CONSTRAINT `fk_Equipo_Division1`
     FOREIGN KEY (`ID_Division`)
     REFERENCES `division` (`ID_Division`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE cascade
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -180,14 +180,14 @@ DROP TABLE IF EXISTS `d_documento` ;
 
 CREATE TABLE IF NOT EXISTS `d_documento` (
   `ID_Documento` INT(11) NOT NULL AUTO_INCREMENT,
-  `Ruta` TINYTEXT NOT NULL,
-  `Nombre` TINYTEXT NOT NULL,
+  `Ruta` VARBINARY(128) NOT NULL,
+  `Nombre` VARBINARY(128) NOT NULL,
   `Equipo_ID_Equipo` INT(11) NOT NULL,
-  `Password` VARCHAR(20) NOT NULL,
+  `Password`VARBINARY(128) NOT NULL,
   `id_tipo_acceso` INT(11) NOT NULL,
-  `Folio` VARCHAR(12) NOT NULL,
-  `fecha_subida` DATE NULL DEFAULT NULL,
-  `hora_subida` TIME NOT NULL,
+  `Folio` VARBINARY(128) NOT NULL,
+  `fecha_subida` VARBINARY(128) NULL DEFAULT NULL,
+  `hora_subida` VARBINARY(128) NOT NULL,
   `id_MDocumento` INT(11) NOT NULL,
   PRIMARY KEY (`ID_Documento`),
   CONSTRAINT `fk_D-doc_M_doc`
@@ -198,8 +198,8 @@ CREATE TABLE IF NOT EXISTS `d_documento` (
   CONSTRAINT `fk_Documento_Equipo1`
     FOREIGN KEY (`Equipo_ID_Equipo`)
     REFERENCES `equipo` (`ID_Equipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Documento_cta`
     FOREIGN KEY (`id_tipo_acceso`)
     REFERENCES `cat_tipo_acceso` (`idC_tipo_acceso`)
@@ -228,13 +228,13 @@ CREATE TABLE IF NOT EXISTS `e_usuario_equipo` (
   CONSTRAINT `fk_Usuario-Equipo_Equipo1`
     FOREIGN KEY (`ID_Equipo`)
 	REFERENCES `equipo` (`ID_Equipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Usuario-Equipo_Usuario-Empleado1`
     FOREIGN KEY (`ID_Usuario_Empleado`)
     REFERENCES `usuario_empleado` (`ID_Usuario_E`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -250,16 +250,16 @@ DROP TABLE IF EXISTS `registro_entrada` ;
 
 CREATE TABLE IF NOT EXISTS `registro_entrada` (
   `ID_Registro_Entrada` INT(11) NOT NULL AUTO_INCREMENT,
-  `Fecha_entrada` DATE NOT NULL,
-  `hora_entrada` TIME NOT NULL,
+  `Fecha_entrada` VARBINARY(128) NOT NULL,
+  `hora_entrada` VARBINARY(128) NOT NULL,
   `ID_Usuario_Consulta` INT(11) NOT NULL,
   `id_M_Documento` INT(11) NOT NULL,
   PRIMARY KEY (`ID_Registro_Entrada`),
   CONSTRAINT `fk_Registro_Entrada_M_Documento`
     FOREIGN KEY (`id_M_Documento`)
     REFERENCES `m_documento` (`idM_Documento`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_registro_usuario`
     FOREIGN KEY (`ID_Usuario_Consulta`)
     REFERENCES `usuario_empleado` (`ID_Usuario_E`)
@@ -288,8 +288,8 @@ CREATE TABLE IF NOT EXISTS `tablon` (
   CONSTRAINT `fk_tablon_division`
     FOREIGN KEY (`Id_division`)
     REFERENCES `division` (`ID_Division`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -305,8 +305,8 @@ DROP procedure IF EXISTS `yL10l8yMbC`.`ingresarAdmin`;
 
 DELIMITER $$
 USE `yL10l8yMbC`$$
-CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre tinytext, appat tinytext, apmat tinytext,
-f_n date, correo text(45), pass text(30), foto Blob, idE int)   
+CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre VARBINARY(128), appat VARBINARY(128), apmat VARBINARY(128),
+f_n VARBINARY(128), correo VARBINARY(128), pass VARBINARY(128), foto Blob, idE int)   
 BEGIN
 	insert into division (Nombre_A, id_jerarquia, id_empresa)
     values ("Dirección general", 1, idE);

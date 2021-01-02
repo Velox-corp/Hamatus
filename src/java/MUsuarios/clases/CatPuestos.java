@@ -5,7 +5,14 @@
  */
 package MUsuarios.clases;
 
+import ClasesSoporte.Conexion;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +36,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CatPuestos implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public static int traducirNombre(String division) {
+        try{
+            Connection con = Conexion.obtenerConexion();
+            String q = "SELECT idprivilegio from privilegios_jerarquia_u where tit_permiso = ?";
+            PreparedStatement ps = con.prepareStatement(q);
+            ps.setString(1, division);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("idprivilegio");
+            }else{
+                return -1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CatPuestos.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
     @Id
     @Basic(optional = false)
     @NotNull

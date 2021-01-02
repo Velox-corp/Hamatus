@@ -1,7 +1,7 @@
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
-<link rel="stylesheet" type="text/css" href="css/estilos.css">
+<link rel="stylesheet" type="text/css" href="CSS/estilos.css">
 <%
     HttpSession sesionUser = request.getSession();
     String username = "";
@@ -33,7 +33,7 @@
 <header class="container-fluid">
 	<div class="row header align-items-center">
 		<div class="col-md-2">
-                    <a href="anuncios.jsp">
+                    <a href ="controlA?accion=home">
                         <img alt="Logo Hamatus" src="img/favicon.png" class="mx-auto d-block icono">
                     </a>
 		</div>
@@ -42,13 +42,13 @@
                 </div>
                 <div class="col-md-2">
                     <%if (obtencionAdecuada){ %>
-                        <i><h3>
+                        <i><h2>
                             <%=nombre_empresa%>
-                            </h3> </i>
+                            </h2> </i>
                         <%}else{%>
-                        <i><h3>
+                        <i><h2>
 				Empresa registrada
-                            </h3></i>
+                            </h2></i>
                         <% }%>
                 </div>
 		<div class="col-md-2">
@@ -74,7 +74,7 @@
         <div class="row">
             <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
                 <ul style="background-color: #303031">
-                    <li><a class="nav-item nav-link btn1" href="anuncios.jsp">Anuncios</a></li>
+                    <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                     <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                     <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
                         <ul>
