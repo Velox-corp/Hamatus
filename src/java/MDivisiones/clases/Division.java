@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
@@ -126,70 +125,6 @@ public class Division implements Serializable{
         return procesoCorrecto;
     }
     
-    public static ArrayList<Division> obtenerDivisiones(int id_emp){
-        ArrayList<Division> divisiones = new ArrayList<Division>();
-        try{
-            con = Conexion.obtenerConexion();
-            q = "Select Nombre_A from yL10l8yMbC.division where division.ID_Jerarquia=\"2\" and division.ID_Empresa = ?";
-            ps = con.prepareStatement(q);
-            ps.setInt(1, id_emp);
-            rs = ps.executeQuery();
-            String nombre = "";
-            while(rs.next()){
-                nombre = rs.getString("Nombre_A"); 
-                Division division = new Division(rs.getString(nombre));
-                divisiones.add(division);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
-            divisiones = null;
-        }finally{
-            try {
-                con.close();
-                q= "";
-                ps.close();
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return divisiones;     
-    }
-    
-    /**
-    public static boolean eliminarDivision(Division div, int id_emp){
-        boolean procesoCorrecto = true;
-        int idj = 2;
-        try{
-            Division.con = Conexion.obtenerConexion();
-            Division.query = ("INSERT INTO division (Nombre_A, ID_Jerarquia, ID_Empresa) values(?,?,?)");
-            System.out.println("------------------------");
-            System.out.println(div.getNombre() + "" + idj + "" + id_emp);
-            ps = con.prepareStatement(Division.query);
-            ps.setString(1, div.getNombre());
-            ps.setInt(2, idj);
-            ps.setInt(3, id_emp);
-            
-           if(ps.executeUpdate()==1) procesoCorrecto = true;
-           else procesoCorrecto = false;
-        }catch(Exception e){
-            procesoCorrecto = false;
-            System.out.println("Error: "+e.getCause());
-            e.printStackTrace();
-        }
-        finally{
-            try {
-                Division.ps.close();
-                Division.con.close();
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
-                procesoCorrecto = false;
-            }
-        }
-        return procesoCorrecto;
-    }
-**/
     public static Connection getCon() {
         return con;
     }

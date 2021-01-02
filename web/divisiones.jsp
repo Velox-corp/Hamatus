@@ -1,41 +1,9 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MDivisiones.clases.Division"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="MDivisiones.clases.divi"%>
+<%@page import="MDivisiones.clases.diviDAO"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
-<%
-    boolean obtencionAdecuada = true;
-    boolean hayDivisiones = true;
-    HttpSession sesion;
-    Division idemp;
-    ArrayList<Division> divisiones = new ArrayList<Division>();
-    int[] totalesDivisiones = null;
-    try{
-        //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
-        sesion = request.getSession();
-        idemp = (Division) sesion.getAttribute("division");
-        divisiones = Division.obtenerDivisiones(idemp.getId_Empresa());
-        if(divisiones == null || divisiones.size() == 0){
-            System.out.println("No divisiones");
-            hayDivisiones = false;
-        }else{
-            hayDivisiones = true;
-            totalesDivisiones = new int[divisiones.size()];
-            for (int i = 0; i < divisiones.size(); i++) {
-                Division div = divisiones.get(i);
-            }
-        }
-        
-    }catch(Exception e){
-        obtencionAdecuada = false;
-        hayDivisiones = false;
-        e.getMessage();
-        e.printStackTrace();
-    }
-
-    if(!obtencionAdecuada){
-        response.sendRedirect("error.jsp");
-    }
-%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -70,30 +38,17 @@
                     <hr>
                     <h2>Divisiones Actuales</h2>
                     <hr>
+                    <c:forEach var="d" items="${divisiones}">
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nombre:</span>
                             </div>
-                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly'
-                                   <% if (obtencionAdecuada) {
-                                       for (int i = 0; i < divisiones.size(); i++) {
-                                            Division div = divisiones.get(i);
-                                    %>
-                                   value="<%=div.getNombre()%>"
-                                   <%}}
-                                   
-                                   
-                                   %>
-                                   onchange="return validarString(this, true, false)"
-                                   ondrag="return validarString(this, true, false)"
-                                   ondrop="return validarString(this, true, false)">
+                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${d.getNombre()}">
                             <div class='input-group-append'>
-                            <button class="btn btn-info" onclick='return cambiarEstado("nombreD")'>Eliminar</button>
+                                <button class="btn btn-info" onclick='return cambiarEstado("nombreD")'>Eliminar</button>
+                            </div>                        
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-dark">
-                        Actualizar información
-                    </button>
+                    </c:forEach>
                 </form>
               </div>
             </div>
