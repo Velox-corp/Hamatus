@@ -85,6 +85,11 @@ public class Division implements Serializable{
      * @param id_j: El ide de la jerarquia a la que pertenece
      * @param id_emp: El id de la empresa correspondiente
      */
+    public Division(int id_division, int id_emp) {
+        this.id_Division = id_division;
+        this.nombre = nombre;
+    }
+    
     public Division(int id_division, String nombre, int id_j, int id_emp) {
         this.id_Division = id_division;
         this.nombre = nombre;
@@ -104,6 +109,35 @@ public class Division implements Serializable{
             ps.setString(1, div.getNombre());
             ps.setInt(2, idj);
             ps.setInt(3, id_emp);
+            
+           if(ps.executeUpdate()==1) procesoCorrecto = true;
+           else procesoCorrecto = false;
+        }catch(Exception e){
+            procesoCorrecto = false;
+            System.out.println("Error: "+e.getCause());
+            e.printStackTrace();
+        }
+        finally{
+            try {
+                Division.ps.close();
+                Division.con.close();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+                procesoCorrecto = false;
+            }
+        }
+        return procesoCorrecto;
+    }
+    
+    public static boolean eliminarDivision(Division div, int id_emp){
+        boolean procesoCorrecto = true;
+        try{
+            Division.con = Conexion.obtenerConexion();
+            Division.query = ("DELETE FROM yl10l8ymbc.division WHERE ID_Division=? AND ID_Empresa=?");
+            ps = con.prepareStatement(Division.query);
+            ps.setInt(1, div.getId_Division());
+            ps.setInt(2, id_emp);
             
            if(ps.executeUpdate()==1) procesoCorrecto = true;
            else procesoCorrecto = false;

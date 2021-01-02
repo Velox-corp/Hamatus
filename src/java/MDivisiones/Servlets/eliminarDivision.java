@@ -42,14 +42,11 @@ public class eliminarDivision extends HttpServlet {
             String redirect = "error.jsp";
             boolean proceso_correcto = true;
             String id = request.getParameter("id");
-            String nombreD = request.getParameter("nombreD");
             //Validaciones  registro de la division
             System.out.println("ID división: " + id);
-            System.out.println("Nombre división: " + nombreD);
             //validar campos de datos por parte del controlador
-            boolean[] bufferValidaciones = new boolean[2];
-            bufferValidaciones[0] = Validaciones.esString(nombreD, true, false);
-            bufferValidaciones[1] = Validaciones.esString(id, true, false);
+            boolean[] bufferValidaciones = new boolean[1];
+            bufferValidaciones[0] = Validaciones.esString(id, true, false);
             
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
@@ -65,10 +62,10 @@ public class eliminarDivision extends HttpServlet {
                 try{
                     HttpSession sesion = request.getSession();
                     emp = (Empresa) sesion.getAttribute("empresa");
-                    div = new Division(nombreD);
+                    div = new Division(id);
                     
                     if(emp.getIDEmpresa() != -1){
-                        proceso_correcto = Division.crearDivision(div, emp.getIDEmpresa());
+                        proceso_correcto = Division.eliminarDivision(div, emp.getIDEmpresa());
                         System.out.println(div);
                         System.out.println(emp.getIDEmpresa());
                         
