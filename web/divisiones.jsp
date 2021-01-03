@@ -1,9 +1,13 @@
+<%@page import="MDivisiones.clases.divi"%>
+<%@page import="MDivisiones.clases.Division"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesion = request.getSession();
     boolean obtencionAdecuada = false;
+    ArrayList<divi> divisiones = new ArrayList<divi>();
     try {
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
         obtencionAdecuada = true;
@@ -42,6 +46,12 @@
                         </div>
                     </div>
                 </form>
+                <% for (int i = 0; i < divisiones.size(); i++) {
+                                divi division = divisiones.get(i);%> 
+                            <input type="text" id="nombreD" value="<%=division.getNombre()%>">
+                        <%   }
+                     %>
+                <%--
                 <c:forEach var="p" items="${divisiones}">
                 <form role="form" method="POST" action='eliminarDivision'>
                     <hr>
@@ -60,7 +70,7 @@
                             </div>                        
                         </div>
                 </form>
-                </c:forEach>
+                </c:forEach>--%>
                 <%}%>
               </div>
             </div>
