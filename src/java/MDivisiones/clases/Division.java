@@ -220,6 +220,36 @@ public class Division implements Serializable{
         return idDiv;
     }
     
+    public static String traducirID(int id_emp){
+        String nombreD = "";
+        try{
+            Division.con = Conexion.obtenerConexion();
+            Division.query = ("SELECT Nombre_A FROM division WHERE ID_Empresa = ?");
+            ps = con.prepareStatement(Division.query);
+            ps.setInt(1, id_emp);
+            
+            if(rs.next()){
+                nombreD = rs.getString("Nombre_A");
+                
+            }else{
+                nombreD="";
+            }
+        }catch(Exception e){
+            System.out.println("Error: "+e.getCause());
+            e.printStackTrace();
+        }
+        finally{
+            try {
+                Division.ps.close();
+                Division.con.close();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return nombreD;
+    }
+    
     public static Connection getCon() {
         return con;
     }
