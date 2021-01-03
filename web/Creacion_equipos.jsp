@@ -1,3 +1,4 @@
+<%@page import="MDivisiones.clases.Division"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
@@ -11,7 +12,7 @@
         //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
         sesion = request.getSession();
         liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        if(liderDiv.getiD_cat_priv() != 2){ //esta función solo debería ejecutarla un lider de división
+        if(liderDiv.getiD_cat_priv() != 3){ //esta función solo debería ejecutarla un lider de división
             desempeño_adecuado = false;
         }else{
             empleados = UsuarioEmpleado.obtenerUsuariosEquipo(0, liderDiv.getiD_Division()); //RECORDATORIO PARA EL FUTURO, debe traer aparte a los que no tienen equipo
@@ -60,7 +61,8 @@
                         <label for='división'>
                             División correspondiente
                         </label>
-                        <input type="text" readonly="readonly" id='division'  value='<%=liderDiv.getiD_Division() /*está debería cambiar por el nombre de la división*/%>' name='division'>
+                        <input type="text" readonly="readonly" id='division'  value='<%=Division.traducirID(liderDiv.getiD_Division()) /*está debería cambiar por el nombre de la división*/%>' name='division'>
+                        <input type='hidden' readonly="readonly" id='divH' name='divH' value='<%=liderDiv.getiD_Division()%>'>
                     </div>
             </div>
             <br>
@@ -117,8 +119,13 @@
                                     
                     <%break;
                     }//switch
-                }  // for %>
-                <div class='row align-items-center'>
+                }  // for
+                if(empleados.size() % 3 != 0){
+                    %>
+                    </div>
+                    <%} %>
+                    <br>
+                    <div class='row align-items-center'>
                     <div class='col-md-10'>
                         <button class='btn btn-success btn-large' type="submit">Crear equipo de trabajo</button>
                     </div>

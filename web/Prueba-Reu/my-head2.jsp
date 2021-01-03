@@ -8,12 +8,14 @@
     String nombre_empresa = "";
     int idE = 0;
     boolean obtencionAdecuada = true;
+    int indexCat = 1;
     try{
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
         Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
         username = usuario.getNombre();
         nombre_empresa = emp.getNombre();
         idE = emp.getIDEmpresa();
+        indexCat = usuario.getiD_cat_priv();
         //obtencionAdecuada = true; 
     }catch(NullPointerException ex){
         System.out.println("Algun error raro de null");
@@ -72,20 +74,85 @@
 		</div>
 	</div>
         <div class="row">
-            <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
-                <ul style="background-color: #303031">
-                    <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
-                    <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                    <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
-                        <ul>
-                            <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
-                            <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
-                            <li><a href="empleados.jsp" class="sub">Empleados</a></li>
+            <%switch(indexCat){
+                case 1: %>
+                    <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
+                        <ul style="background-color: #303031">
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
+                            <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
+                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                                <ul>
+                                    <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
+                                    <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a class="nav-item nav-link btn1">Usuarios</a>
+                                <ul>
+                                    <li><a href="Administrador_new.jsp" class='sub' >Agregar Usuarios</a></li>
+                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Usuarios</a></li>
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-                    <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
-                    <li><a href="Administrador_new.jsp" class="nav-item nav-link btn1">Crud Completo</a></li>
-                </ul>
-            </nav>
+                    </nav>
+                <%  break;
+                case 2: %>
+                    <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
+                        <ul style="background-color: #303031">
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
+                            <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
+                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                                <ul>
+                                    <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
+                                    <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a class="nav-item nav-link btn1">Usuarios</a>
+                                <ul>
+                                    <li><a href="Administrador_new.jsp" class='sub' >Agregar Usuarios</a></li>
+                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Usuarios</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                <%  break;
+                case 3: %>
+                    <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
+                        <ul style="background-color: #303031">
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
+                            <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
+                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                                <ul>
+                                    <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
+                                    <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
+                                    <li><a href="Creacion_equipos.jsp" class="sub">Crear Equipo</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a class="nav-item nav-link btn1">Usuarios</a>
+                                <ul>
+                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Usuarios</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                <%  break;
+                case 4: %>
+                    <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
+                        <ul style="background-color: #303031">
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
+                            <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
+                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                                <ul>
+                                    <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
+                                    <li><a href="#?" class="sub">Mi Equipo</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                        </ul>
+                    </nav>
+                    <% break;
+            }%> 
 	</div>
 </header>

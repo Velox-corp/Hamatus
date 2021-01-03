@@ -11,6 +11,7 @@ function cambiarEstado(nombreInput){
     }catch (exception) {
         input.readOnly= true;
     } finally {
-        return true;
+        return false;
     }
+    return false;
 }

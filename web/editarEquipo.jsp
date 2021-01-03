@@ -1,3 +1,4 @@
+<%@page import="MDivisiones.clases.Division"%>
 <%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
@@ -55,40 +56,43 @@
         <br>
         <div class="row">
 		<div class="col-md-12 text-center">
-                    <h3>Edición del equipo de trabajo <%=equipo.getNombre()%></h3>
+                    <h2 class='text-primary'>Edición del equipo de trabajo <%=equipo.getNombre()%></h2>
 		</div>
 	</div>
         <br>
         
         <div class="row">
             <div class="col-md-12 text-center">
-                <h4>Datos del equipo</h4>
+                <h3 class='text-info'>Datos del equipo</h3>
             </div>
 	</div>
         <br>
+        <script src='JS/interaccionBotones.js'></script>
             <div class="row">
                     <div class="col-md-6 form-group">
                         <label for=nombreEquipo">
                             Nombre del equipo
                         </label>
                         <input type="text" id='nombreEquipo' name='nombregEquipo' value='<%=equipo.getNombre()%>' readonly="readonly">
+                        <button class='btn btn-primary' onclick="return cambiarEstado('nombregEquipo')">Editar</button>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for='división'>
                             División correspondiente
                         </label>
-                        <input type="text" readonly="readonly" id='division' name='division'>
+                        <input type="text" readonly="readonly" id='division' name='division' value='<%=Division.traducirID(equipo.getIDDivision())%>'>
                     </div>
             </div>
             <br>
             <div class='row'>
                 <div class='col-md-12 text-center'>
-                    <h4 class='text-center'>Empleados del equipo:</h4>
+                    <h3 class='text-center text-info'>Empleados del equipo:</h3>
                 </div>
             </div>
                     
             <br>
             <% //for del equipo
+                if(empleadosEquipo.size() != 0){
                 for (int i = 0; i < empleadosEquipo.size(); i++) {
                     UsuarioEmpleado emp = empleadosEquipo.get(i);
                     int mod = (i+1)%3;
@@ -140,11 +144,22 @@
             </div><br>
                 <%break;
                 }//switch
-            }  // for %>
+            }  // for
+            if(empleadosEquipo.size()% 3 != 0){ %>
+                </div>
+            <%}
+            }else{
+            %>
+            <div class='row'>
+                <div clas='col-md-12'>
+                    <h3 class='text-danger'>NO hay usuarios en el equipo</h3>
+                </div>
+            </div>
+            <% } %>
             <br>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h4>Empleados disponibles a añadir</h4>
+                    <h3 class='text-info'>Empleados disponibles a añadir</h3>
                 </div>
             </div> 
             <br>
@@ -152,6 +167,7 @@
                 <input type="hidden" name='maxUsers' value='<%=empleadosLibres.size()%>'>
                 <input type='hidden' name='idEquipo' value='<%=id_equipo%>'>
             <% //for sin equipo
+                if(empleadosLibres.size() != 0){
                 for (int i = 0; i < empleadosLibres.size(); i++) {
                     UsuarioEmpleado emp = empleadosLibres.get(i);
                     int mod = (i+1)%3;
@@ -203,9 +219,19 @@
             </div><br>
                     <%break;
                     }//switch
-                }  // for %>
-                
-                
+                }  // for
+                if(empleadosLibres.size() % 3 != 0){
+                    %>
+                    </div>
+                    <% } 
+                    } else{
+                    %>
+                <div class='row'>
+                <div clas='col-md-12'>
+                    <h2 class='text-danger text-center'>No hay usuarios disponibles a asignar</h2>
+                </div>
+                    <% } %> 
+            </div>
             <div class='row'>
                 <div class='col-md-12'>
                     <button class='btn btn-success' type="submit">Ejecutar cambios</button>

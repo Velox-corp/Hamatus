@@ -21,9 +21,8 @@
         //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
         sesion = request.getSession();
         liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        equipos = Equipo.obtenerEquipos(liderDiv.getIDUsuarioE());
+        equipos = Equipo.obtenerEquipos(liderDiv.getiD_Division());
         if(equipos == null || equipos.size() == 0){
-            System.out.println("No equipos");
             hayEquipos = false;
         }else{
             hayEquipos = true;
@@ -149,19 +148,23 @@
                     <%break;
                     }//switch
                 }  // for 
+                if(equipos.size() % 3 != 0){ %>
+                </div>
+            <% }    
             } // if
             else{%>
             <div class='row align-items-center'>
                 <div class='col-md-6 card text-white bg-info'>
                     <h5 class='card-header text-capitalize'>No Hay Equipos</h5>
-                </div>
-                <div class='card-body'>
-                    <article class='card-text'>
-                        No se tienen equipos registrados en esta división.
-                    </article>
-                </div>
-                <div class='card-footer'>
-                    <a class='btn btn-success capitalize' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+                
+                    <div class='card-body'>
+                        <article class='card-text'>
+                            No se tienen equipos registrados en esta división.
+                        </article>
+                    </div>
+                    <div class='card-footer'>
+                        <a class='btn btn-success capitalize' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+                    </div>
                 </div>
             </div>
             <br>
