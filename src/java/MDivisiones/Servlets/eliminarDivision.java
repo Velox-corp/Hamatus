@@ -33,7 +33,7 @@ public class eliminarDivision extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
@@ -41,51 +41,34 @@ public class eliminarDivision extends HttpServlet {
             
             String redirect = "error.jsp";
             boolean proceso_correcto = true;
-            String id = request.getParameter("id");
-            //Validaciones  registro de la division
-            System.out.println("ID división: " + id);
-            //validar campos de datos por parte del controlador
-            boolean[] bufferValidaciones = new boolean[1];
-            bufferValidaciones[0] = Validaciones.esString(id, true, false);
-            
-            for (int i = 0; i < bufferValidaciones.length; i++) {
-                if(!bufferValidaciones[i]){
-                    proceso_correcto = false;
-                    redirect = "error.jsp";
-                    System.out.println("Mal validado");
-                    break;
-                }
-            }
-            if(proceso_correcto){
-                Empresa emp = null;
+            Empresa emp = null;
                 Division div = null;
-                try{
-                    HttpSession sesion = request.getSession();
+            int id;
+            try{
+                id = Integer.parseInt(request.getParameter("id"));
+                HttpSession sesion = request.getSession();
                     emp = (Empresa) sesion.getAttribute("empresa");
                     div = new Division(id);
                     
                     if(emp.getIDEmpresa() != -1){
                         proceso_correcto = Division.eliminarDivision(div, emp.getIDEmpresa());
-                        System.out.println(div);
-                        System.out.println(emp.getIDEmpresa());
                         
                     }else{
                         proceso_correcto = false;
                     }
-                    
-                }catch(NullPointerException e){
-                    e.getMessage();
-                    e.printStackTrace();
-                }
-                
+            }catch(Exception e){
+                e.getMessage();
+                e.printStackTrace();
+                proceso_correcto = false;
+            } 
 
-                if(proceso_correcto){
-                    redirect="empresa.jsp";
+            if(proceso_correcto){
+                    redirect="divisiones.jsp";
                 }else{
                     System.out.println("No se guardo en la bd");
                     redirect = "error.jsp";
                 }                
-            }
+            
             
             response.sendRedirect(redirect);
         }

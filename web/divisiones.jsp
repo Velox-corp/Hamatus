@@ -1,3 +1,4 @@
+<%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MDivisiones.clases.divi"%>
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,10 +8,11 @@
 <%
     HttpSession sesion = request.getSession();
     boolean obtencionAdecuada = false;
-    ArrayList<divi> divisiones = new ArrayList<divi>();
+    ArrayList<Division> divisiones = new ArrayList<Division>();
     try {
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
         obtencionAdecuada = true;
+        divisiones = Division.obtenerDivisiones( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
     } catch (NullPointerException e) {
         obtencionAdecuada = false;
     }
@@ -47,8 +49,16 @@
                     </div>
                 </form>
                 <% for (int i = 0; i < divisiones.size(); i++) {
-                                divi division = divisiones.get(i);%> 
-                            <input type="text" id="nombreD" value="<%=division.getNombre()%>">
+                                Division division = divisiones.get(i);%> 
+                                <div class="card bg-info text-white">
+                                    <div class="card-header text-center">
+                                        <h4 class="card-title"><%=division.getNombre()%></h4>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <a class="btn btn-danger" href="eliminarDivision?id=<%=division.getId_Division()%>">ELIMINAR</a>
+                                    </div>
+                                </div>
+                                
                         <%   }
                      %>
                 <%--
