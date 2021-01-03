@@ -110,7 +110,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <select class="form-select" name="division" id="division" onchange="return alterarPuestos()">
-                                        <option  value='null' selected>Seleccione la división a la que pertenece</option>
+                                        <option  value='cero' selected>Seleccione la división a la que pertenece</option>
                                         <% for (int i = 0; i < divisiones.size(); i++) {
                                             Division div = divisiones.get(i); %>
                                             <option value="<%=div.getNombre()%>"> <%=div.getNombre()%></option>

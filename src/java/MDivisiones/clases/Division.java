@@ -225,10 +225,10 @@ public class Division implements Serializable{
         String nombreD = "";
         try{
             Division.con = Conexion.obtenerConexion();
-            Division.query = ("SELECT Nombre_A FROM division WHERE ID_Empresa = ?");
+            Division.query = ("SELECT Nombre_A FROM division WHERE ID_Division = ?");
             ps = con.prepareStatement(Division.query);
             ps.setInt(1, id_emp);
-            
+            rs = ps.executeQuery();
             if(rs.next()){
                 nombreD = rs.getString("Nombre_A");
                 

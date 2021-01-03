@@ -1,4 +1,5 @@
 
+<%@page import="MDivisiones.clases.Division"%>
 <%@page import="MUsuarios.clases.CatPuestos"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="java.util.ArrayList"%>
@@ -80,7 +81,7 @@
                                 <td><%=empleado.getNombre()%></td>
                                 <td><%=empleado.getFechaNacimiento()%></td>
                                 <td><%=empleado.getCorreo()%></td>
-                                <td><%--=Division.traducirID(empleado.getiD_Division)--%></td>
+                                <td><%=Division.traducirID(empleado.getiD_Division())%></td>
                                 <td><%=CatPuestos.traducirID(empleado.getiD_cat_priv())%></td>
                                 <td class='btn-group-vertical'>
                                     <% if ((empleado.getiD_cat_priv() > 1 && user.getiD_cat_priv() == 1) || (empleado.getiD_cat_priv() > 2 && user.getiD_cat_priv() == 2) || (empleado.getiD_cat_priv() > 3 && user.getiD_cat_priv() == 3)){ %>

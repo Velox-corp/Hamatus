@@ -6,15 +6,14 @@ function alterarPuestos(){
     let selectDiv = document.getElementById("division");
     let index = selectDiv.selectedIndex;
     let opcion = selectDiv.options[index].value;
-    console.log(opcion);
-    selectJer.style.display = 'block';
+    console.log(opcion == "Dirección general");
     switch(opcion){
         case "Dirección general":
             let directivo =new Option("Directivo","2");
             selectJer.options[0] = directivo;
             selectJer.options[1] = null;
             break;
-        case null:
+        case "cero":
             selectJer.options[0] = null;
             selectJer.options[1] = null;
             break;
@@ -25,5 +24,6 @@ function alterarPuestos(){
             selectJer.options[1] = empleadoG;
             break;
     }
+    selectJer.style.display = 'block';
 }
 
