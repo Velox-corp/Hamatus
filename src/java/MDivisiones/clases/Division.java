@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
@@ -189,19 +190,22 @@ public class Division implements Serializable{
         return procesoCorrecto;
     }
     
-    public static boolean IDDivision(Division div, int id_emp){
-        boolean procesoCorrecto = true;
+    public static int IDDivision(Division div, int id_emp){
+        int idDiv = -1;
         try{
             Division.con = Conexion.obtenerConexion();
             Division.query = ("SELECT ID_Division FROM division WHERE Nombre_A = ? AND ID_Empresa = ?");
             ps = con.prepareStatement(Division.query);
             ps.setString(1, div.getNombre());
             ps.setInt(2, id_emp);
-            
-           if(ps.executeUpdate()==1) procesoCorrecto = true;
-           else procesoCorrecto = false;
+            rs = ps.executeQuery();
+            if(rs.next()){
+                idDiv = rs.getInt("ID_Division");
+            }else{
+                idDiv = -1;
+            }
         }catch(Exception e){
-            procesoCorrecto = false;
+            idDiv = -1;
             System.out.println("Error: "+e.getCause());
             e.printStackTrace();
         }
@@ -212,10 +216,65 @@ public class Division implements Serializable{
                 
             } catch (SQLException ex) {
                 Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
-                procesoCorrecto = false;
             }
         }
-        return procesoCorrecto;
+        return idDiv;
+    }
+    
+    public static String traducirID(int id_emp){
+        String nombreD = "";
+        try{
+            Division.con = Conexion.obtenerConexion();
+            Division.query = ("SELECT Nombre_A FROM division WHERE ID_Division = ?");
+            ps = con.prepareStatement(Division.query);
+            ps.setInt(1, id_emp);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                nombreD = rs.getString("Nombre_A");
+                
+            }else{
+                nombreD="";
+            }
+        }catch(Exception e){
+            System.out.println("Error: "+e.getCause());
+            e.printStackTrace();
+        }
+        finally{
+            try {
+                Division.ps.close();
+                Division.con.close();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return nombreD;
+    }
+    
+    public List lista(int id_emp) {
+        List<divi> divisiones = new ArrayList();
+        int idj = 2;
+        try {
+            con = Conexion.obtenerConexion();
+            Division.query = ("SELECT * FROM division WHERE ID_Jerarquia = ? AND ID_Empresa = ?");
+            ps = con.prepareStatement(Division.query);
+            ps.setInt(1, idj);
+            ps.setInt(2, id_emp);          
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                divi p =new divi();
+                p.setId(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setIdj(rs.getInt(3));
+                p.setIde(rs.getInt(4));
+                divisiones.add(p);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Ocurrio un error Division");
+            Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+            divisiones = null;
+        }
+        return divisiones;
     }
     
     public static Connection getCon() {

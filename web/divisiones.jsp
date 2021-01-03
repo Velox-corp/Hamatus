@@ -1,12 +1,13 @@
-<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
-<%@page import="MDivisiones.clases.Division"%>
 <%@page import="MDivisiones.clases.divi"%>
-<%@page import="MDivisiones.clases.diviDAO"%>
+<%@page import="MDivisiones.clases.Division"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesion = request.getSession();
     boolean obtencionAdecuada = false;
+    ArrayList<divi> divisiones = new ArrayList<divi>();
     try {
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
         obtencionAdecuada = true;
@@ -45,25 +46,31 @@
                         </div>
                     </div>
                 </form>
+                <% for (int i = 0; i < divisiones.size(); i++) {
+                                divi division = divisiones.get(i);%> 
+                            <input type="text" id="nombreD" value="<%=division.getNombre()%>">
+                        <%   }
+                     %>
+                <%--
+                <c:forEach var="p" items="${divisiones}">
                 <form role="form" method="POST" action='eliminarDivision'>
                     <hr>
                     <h2>Divisiones Actuales</h2>
                     <hr>
-                    <c:forEach var="d" items="${divisiones}">
-                        <input type="hidden" class="form-control" id="id" name='id' value="${d.getId()}">
+                        <input type="hidden" id="ida" value="${p.getId()}">
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nombre:</span>
-                            </div>
-                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${d.getNombre()}">
+                            </div
+                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${p.getNombre()}">
                             <div class='input-group-append'>
                                 <button type="submit" class="btn btn-dark">
                                     Eliminar
                                 </button>
                             </div>                        
                         </div>
-                    </c:forEach>
                 </form>
+                </c:forEach>--%>
                 <%}%>
               </div>
             </div>

@@ -54,7 +54,7 @@
                                 </a>
                             </div>
                             <div class='col-md-4'>
-                                <a href='Adiministrador_new.jsp' class='btn btn-secondary btn-large'>
+                                <a href='Administrador_new.jsp' class='btn btn-secondary btn-large'>
                                     Crear cuentas de usuarios
                                 </a>
                             </div>

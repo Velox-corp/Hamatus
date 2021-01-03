@@ -5,6 +5,8 @@
  */
 package MUsuarios.Servlets;
 
+import MDivisiones.clases.Division;
+import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,10 +41,20 @@ public class cambioDePuesto extends HttpServlet {
             int ideNewPrivilegio = 0;
             try{
                 sesion = request.getSession();
-                if(((UsuarioEmpleado)sesion.getAttribute("usuario")).getiD_cat_priv() < 3){
+                if(((UsuarioEmpleado)sesion.getAttribute("usuario")).getiD_cat_priv() > 2){
                     redirect = "error.jsp";
                 }else{
                     //aquí meter algo que traduzca las string de div y privilegios a ides
+                    Empresa emp = (Empresa)sesion.getAttribute("empresa");
+                    try{
+                        ideNewPrivilegio = Integer.parseInt(request.getParameter("newPriv"));
+                    }catch(NullPointerException | NumberFormatException npe){
+                        ideNewPrivilegio = 0;
+                    }
+                    ideNewPuesto = Division.IDDivision(new Division(request.getParameter("newDiv")), emp.getIDEmpresa());
+                    if(ideNewPuesto == -1){
+                        ideNewPuesto = 0;
+                    }
                     if(UsuarioEmpleado.modPuestoEmpleado(Integer.parseInt(request.getParameter("ideUserCambio")), ideNewPuesto, ideNewPrivilegio)){
                         redirect = "verUsuarios.jsp";
                     }else{

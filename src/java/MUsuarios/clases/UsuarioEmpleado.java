@@ -220,7 +220,7 @@ public class UsuarioEmpleado implements Serializable {
      * @param id_emp: El id de la empresa al que pertenece el usuario.
      * @return 
      */
-    public static boolean ingresarEmpleado(UsuarioEmpleado empleado, int id_emp){
+    public static boolean ingresarEmpleado(UsuarioEmpleado empleado){
         try{
             con = Conexion.obtenerConexion();
             q = "INSERT INTO usuario_empleado (Nombre, appat, apmat, Fecha_Nacimiento, Correo, pass, ID_Division, id_cat_privilegios, foto) values(?,?,?,?,?,?,?,?,?)";
@@ -232,6 +232,7 @@ public class UsuarioEmpleado implements Serializable {
             ps.setBytes(5,AES.cifrar(empleado.getCorreo()));
             ps.setBytes(6,AES.cifrar(empleado.getPassword()));
             ps.setInt(7, empleado.getiD_Division());
+            System.out.println(empleado.getiD_cat_priv());
             ps.setInt(8, empleado.getiD_cat_priv());
             ps.setBytes(9, empleado.getFoto());
             return ps.executeUpdate() == 1;
@@ -448,14 +449,10 @@ public class UsuarioEmpleado implements Serializable {
      * @return  Un ArrayLisy vectorizado que contiene a TODOS los usuarios de la base de datos
      */
     public static ArrayList<UsuarioEmpleado> obtenerUsuarios(int idEmp){
-        ArrayList<UsuarioEmpleado> empleados = null;
+        ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
         try{
             con = Conexion.obtenerConexion();
-            q = "Select usuario_empleado.* from usuario_empleado\n" +
-                    "join division, empresa\n" +
-                    "WHERE usuario_empleado.ID_Division = division.ID_Division\n" +
-                    "AND empresa.ID_Empresa = division.ID_Empresa\n" +
-                    "AND empresa.ID_Empresa = ?"; // inlcuir la query especia para solo los de una empresa
+            q = "Select usuario_empleado.* from usuario_empleado join division, empresa WHERE usuario_empleado.ID_Division = division.ID_Division AND empresa.ID_Empresa = division.ID_Empresa AND division.ID_Empresa = ?";
             ps = con.prepareStatement(q);
             ps.setInt(1, idEmp);
             rs = ps.executeQuery();
@@ -495,7 +492,6 @@ public class UsuarioEmpleado implements Serializable {
     
     /**
      * Metodo para obtener los usuarios pertenecientes a una división en la base de datos a partir del id del lider de división
-     * ¡¡NOTA!! Este metodo aún no está implementado para funcionar como debería a partir de un usuario, de momento funciona igual a la obtención de usuarios general
      * @param idEmp el ide de la empresa
      * @param idDiv El id de la división a la que pertenece el lider de área
      * @return  Un ArrayLisy vectorizado que contiene a todos los usuarios de la base de datos
@@ -504,11 +500,11 @@ public class UsuarioEmpleado implements Serializable {
         ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
         try{
             con = Conexion.obtenerConexion();
-            q = "Select usuario_empleado.* from usuario_empleado\n" +
-                "join division, empresa\n" +
-                "WHERE usuario_empleado.ID_Division = division.ID_Division\n" +
-                "AND empresa.ID_Empresa = division.ID_Empresa\n" +
-                "AND empresa.ID_Empresa = ?\n"+
+            q = "Select usuario_empleado.* from usuario_empleado " +
+                "join division, empresa " +
+                "WHERE usuario_empleado.ID_Division = division.ID_Division " +
+                "AND empresa.ID_Empresa = division.ID_Empresa " +
+                "AND empresa.ID_Empresa = ? "+
                 "AND usuario_empleado.ID_Division = ?"; //por aquí debe de haber un WHERE tal = ?
             ps = con.prepareStatement(q);
             ps.setInt(1,idEmp);
