@@ -1,7 +1,4 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
-<%@page import="MDivisiones.clases.Division"%>
-<%@page import="MDivisiones.clases.divi"%>
-<%@page import="MDivisiones.clases.diviDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
@@ -45,25 +42,25 @@
                         </div>
                     </div>
                 </form>
+                <c:forEach var="p" items="${divisiones}">
                 <form role="form" method="POST" action='eliminarDivision'>
                     <hr>
                     <h2>Divisiones Actuales</h2>
                     <hr>
-                    <c:forEach var="d" items="${divisiones}">
-                        <input type="hidden" class="form-control" id="id" name='id' value="${d.getId()}">
+                        <input type="hidden" id="ida" value="${p.getId()}">
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nombre:</span>
-                            </div>
-                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${d.getNombre()}">
+                            </div
+                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${p.getNombre()}">
                             <div class='input-group-append'>
                                 <button type="submit" class="btn btn-dark">
                                     Eliminar
                                 </button>
                             </div>                        
                         </div>
-                    </c:forEach>
                 </form>
+                </c:forEach>
                 <%}%>
               </div>
             </div>
