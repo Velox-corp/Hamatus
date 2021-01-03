@@ -15,7 +15,7 @@
     try{
         sesion = request.getSession();
         admin = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        if (admin.getiD_cat_priv() > 3){ //dentro del catalogo ya sería un empleado proletario
+        if (admin.getiD_cat_priv() > 2){ //dentro del catalogo ya sería un empleado proletario
             todoBien = false;
         }else{
             idEmpleado = Integer.parseInt(request.getParameter("id"));

@@ -1,4 +1,5 @@
 
+<%@page import="MUsuarios.clases.CatPuestos"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
@@ -6,17 +7,28 @@
 
 <%
     HttpSession sesion;
-    UsuarioEmpleado user;
+    UsuarioEmpleado user = null;
     boolean todoBien = true;
     ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
     try{
         sesion = request.getSession();
         user = (UsuarioEmpleado) sesion.getAttribute("usuario");
         Empresa emp = (Empresa) sesion.getAttribute("empresa");
-        if (user.getiD_cat_priv() > 3){ //dentro del catalogo ya sería un empleado proletario
-            todoBien = false;
-        }else{
-            empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa(),user.getIDUsuarioE());
+        switch(user.getiD_cat_priv()){ //dentro del catalogo ya sería un empleado proletario
+            case 1:
+                empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa());
+                break;
+            case 2:
+                empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa());
+                break;
+            case 3:
+                empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa(),user.getiD_Division());
+                break;
+            case 4:
+                todoBien = false;
+                break;
+            default:
+                break;
         }
     }catch(Exception e){
         e.getMessage();
@@ -32,7 +44,7 @@
 <html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hamatus -vista de empleados-</title>
+        <title>Hamatus -Vista de empleados-</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
@@ -44,8 +56,8 @@
         </div>
         <br>
         <div class="row align-items-center">
-            <div class="col-md-11 align-items-center">
-                <table class="table table-hover table-responsive">
+            <div class="col-md-12 align-items-center">
+                <table class="table table-hover table-responsive align-items-center">
                     <thead>
                         <tr>
                             <th>Apellido paterno</th>
@@ -68,11 +80,15 @@
                                 <td><%=empleado.getNombre()%></td>
                                 <td><%=empleado.getFechaNacimiento()%></td>
                                 <td><%=empleado.getCorreo()%></td>
-                                <td>{Nombre_division}</td>
-                                <td>{detalle_jerarquía}</td>
+                                <td><%--=Division.traducirID(empleado.getiD_Division)--%></td>
+                                <td><%=CatPuestos.traducirID(empleado.getiD_cat_priv())%></td>
                                 <td class='btn-group-vertical'>
+                                    <% if ((empleado.getiD_cat_priv() > 1 && user.getiD_cat_priv() == 1) || (empleado.getiD_cat_priv() > 2 && user.getiD_cat_priv() == 2) || (empleado.getiD_cat_priv() > 3 && user.getiD_cat_priv() == 3)){ %>
                                     <a href='editarPuesto.jsp?id=<%=empleado.getIDUsuarioE()%>'>Cambiar puesto</a>
                                     <a href="borrarEmpleado?id=<%=empleado.getIDUsuarioE()%>" class="active text-danger">Eliminar</a>
+                                    <%}else{ %>
+                                    Ninguna
+                                    <% } %>
                                 </td>
                             </tr>
                             
@@ -80,6 +96,9 @@
                         } %>
                     </tbody>
                 </table>
+                    <br><% if(user.getiD_cat_priv() == 1){ %>
+                    <a class='text-center bn btn-dark' href='Administrador_new.jsp'>Agregar más Usuarios</a>
+                            <% }%>
             </div>
         </div>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />

@@ -49,9 +49,12 @@ public class agregarEmpleado extends HttpServlet {
             String f_n = request.getParameter("f_n");
             String pass = request.getParameter("pwd");
             String pass2 = request.getParameter("pwd2");
-            String jerarquia = request.getParameter("jerarquia");
+            int jerarquia = Integer.parseInt(request.getParameter("jerarquia"));
             String division = request.getParameter("division");
-            int id_jer = CatPuestos.traducirNombre(jerarquia);
+            System.out.println("division: "+division);
+            if(division == "Seleccione la división a la que pertenece"){
+                proceso_correcto = false;
+            }
             boolean[] bufferValidaciones = new boolean[6];
             bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
             bufferValidaciones[1] = Validaciones.esString(appat, false, false);
@@ -63,7 +66,6 @@ public class agregarEmpleado extends HttpServlet {
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
-                    redirect = "error.jsp";
                     System.out.println("Mal validado");
                     break;
                 }
@@ -75,17 +77,19 @@ public class agregarEmpleado extends HttpServlet {
                     UsuarioEmpleado admin = (UsuarioEmpleado) sesion.getAttribute("Usuario");
                     Empresa emp = (Empresa) sesion.getAttribute("empresa"); 
                     Division divInsert = new Division(division);
-                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, Division.IDDivision(divInsert, emp.getIDEmpresa()), id_jer, null); // De momento se toma la división del admin, pero NO es así al final
-                    if(UsuarioEmpleado.ingresarEmpleado(newEmpleado, emp.getIDEmpresa())){
-                        redirect = "verUsuarios.jsp";
-                    }
+                    UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, Division.IDDivision(divInsert, emp.getIDEmpresa()), jerarquia, null);
+                    proceso_correcto = (UsuarioEmpleado.ingresarEmpleado(newEmpleado));
                 }catch(Exception e){
                     e.getMessage();
                     e.printStackTrace();
-                    redirect = "error.jsp";
                 }
             }else{
-                redirect = "error.jsp";
+                
+            }
+            if(proceso_correcto){
+                redirect = "verUsuarios.jsp";
+            }else{
+                redirect= "error.jsp";
             }
             response.sendRedirect(redirect);
             /* TODO output your page here. You may use following sample code. */

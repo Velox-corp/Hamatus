@@ -1,5 +1,4 @@
 let selectJer = document.querySelector("#jerarquia");
-console.log(selectJer);
 let selectDiv = document.getElementById("division");
 selectJer.style.display = 'none';
 function alterarPuestos(){
@@ -9,15 +8,22 @@ function alterarPuestos(){
     let opcion = selectDiv.options[index].value;
     console.log(opcion);
     selectJer.style.display = 'block';
-    if(opcion=="Dirección General"){
-        let directivo =new Option("Directivo","2");
-        selectJer.options[0] = directivo;
-        selectJer.options[1] = null;
-    }else{
-        let liderDiv =new Option("Lider Division","3");
-        let empleadoG =new Option("Empleado General","4");
-        selectJer.options[0] = liderDiv;
-        selectJer.options[1] = empleadoG;
+    switch(opcion){
+        case "Dirección general":
+            let directivo =new Option("Directivo","2");
+            selectJer.options[0] = directivo;
+            selectJer.options[1] = null;
+            break;
+        case null:
+            selectJer.options[0] = null;
+            selectJer.options[1] = null;
+            break;
+        default:
+            let liderDiv =new Option("Jefe de área","3");
+            let empleadoG =new Option("Empleado general","4");
+            selectJer.options[0] = liderDiv;
+            selectJer.options[1] = empleadoG;
+            break;
     }
 }
 

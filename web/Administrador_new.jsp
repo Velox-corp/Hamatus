@@ -108,7 +108,7 @@
                                     </p>-->
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <select class="form-select" name="division" id="division" onchange="return alterarPuestos()">
                                         <option  value='null' selected>Seleccione la división a la que pertenece</option>
                                         <% for (int i = 0; i < divisiones.size(); i++) {
@@ -116,13 +116,12 @@
                                             <option value="<%=div.getNombre()%>"> <%=div.getNombre()%></option>
                                         <% } %>
                                     </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <select class="form-select" id="jerarquia" name="jerarquía">
+                                    <br>
+                                    <select class="form-select" id="jerarquia" name="jerarquia">
                                         
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="row">
                                         <button type="submit" class="btn btn-primary">
                                                 Guardar empleado

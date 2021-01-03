@@ -44,14 +44,37 @@ public class CatPuestos implements Serializable {
             PreparedStatement ps = con.prepareStatement(q);
             ps.setString(1, division);
             ResultSet rs = ps.executeQuery();
+            System.out.println("Ide: "+rs.getInt("idprivilegio"));
             if(rs.next()){
+                
                 return rs.getInt("idprivilegio");
+                
             }else{
                 return -1;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CatPuestos.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
+        }
+    }
+    
+    public static String traducirID(int idCat) {
+        try{
+            Connection con = Conexion.obtenerConexion();
+            String q = "SELECT tit_permiso from privilegios_jerarquia_u where idprivilegio = ?";
+            PreparedStatement ps = con.prepareStatement(q);
+            ps.setInt(1, idCat);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                
+                return rs.getString("tit_permiso");
+                
+            }else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CatPuestos.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
     @Id
