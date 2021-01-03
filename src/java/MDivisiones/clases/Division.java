@@ -189,19 +189,22 @@ public class Division implements Serializable{
         return procesoCorrecto;
     }
     
-    public static boolean IDDivision(Division div, int id_emp){
-        boolean procesoCorrecto = true;
+    public static int IDDivision(Division div, int id_emp){
+        int idDiv = -1;
         try{
             Division.con = Conexion.obtenerConexion();
             Division.query = ("SELECT ID_Division FROM division WHERE Nombre_A = ? AND ID_Empresa = ?");
             ps = con.prepareStatement(Division.query);
             ps.setString(1, div.getNombre());
             ps.setInt(2, id_emp);
-            
-           if(ps.executeUpdate()==1) procesoCorrecto = true;
-           else procesoCorrecto = false;
+            rs = ps.executeQuery();
+            if(rs.next()){
+                idDiv = rs.getInt("ID_Division");
+            }else{
+                idDiv = -1;
+            }
         }catch(Exception e){
-            procesoCorrecto = false;
+            idDiv = -1;
             System.out.println("Error: "+e.getCause());
             e.printStackTrace();
         }
@@ -212,10 +215,9 @@ public class Division implements Serializable{
                 
             } catch (SQLException ex) {
                 Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
-                procesoCorrecto = false;
             }
         }
-        return procesoCorrecto;
+        return idDiv;
     }
     
     public static Connection getCon() {
