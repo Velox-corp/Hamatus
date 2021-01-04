@@ -100,6 +100,14 @@ window.onload = function(){
         });
     }else if(getParameterByName('flag') == 'wrong_pass'){
         wrong_pass();
+    }else if(getParameterByName('flag') == 'true_pass'){
+        var pass = getParameterByName('pass');
+        Swal.fire({
+        position: 'top-end',
+        title: "Documento correctamente guardado",
+        text:"La contraseña es:" + pass,
+        icon:'success',
+    });
     }
 }
 

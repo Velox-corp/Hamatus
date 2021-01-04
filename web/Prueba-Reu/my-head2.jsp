@@ -1,7 +1,7 @@
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
-<link rel="stylesheet" type="text/css" href="css/estilos.css">
+<link rel="stylesheet" type="text/css" href="CSS/estilos.css">
 <script src="JS/Validaciones.js"></script>
 <%
     HttpSession sesionUser = request.getSession();
@@ -10,6 +10,7 @@
     int idE = 0;
     boolean obtencionAdecuada = true;
     int indexCat = 1;
+    int divT=0;
     try{
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
         Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
@@ -17,6 +18,7 @@
         nombre_empresa = emp.getNombre();
         idE = emp.getIDEmpresa();
         indexCat = usuario.getiD_cat_priv();
+        divT=usuario.getiD_Division();
         //obtencionAdecuada = true; 
     }catch(NullPointerException ex){
         System.out.println("Algun error raro de null");
@@ -56,7 +58,7 @@
                 </div>
 		<div class="col-md-2">
                     <%if(obtencionAdecuada){ %>
-                        <img class="mx-auto d-block icono img-fluid" src="cargaRegistro?id=<%=idE%>" alt='Logo <%=nombre_empresa%>'>
+                        <img class="rounded img-fluid" src="cargaRegistro?id=<%=idE%>" alt='Logo <%=nombre_empresa%>'>
                     <%}%>
 		</div>
 		<div class="col-md-4">
@@ -79,9 +81,9 @@
                 case 1: %>
                     <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
                         <ul style="background-color: #303031">
-                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=ListarTipo&tipo_div=<%=divT%>">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Organización empresa</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
@@ -100,9 +102,9 @@
                 case 2: %>
                     <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
                         <ul style="background-color: #303031">
-                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=ListarTipo&tipo_div=<%=divT%>">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Organización empresa</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
@@ -122,7 +124,7 @@
                         <ul style="background-color: #303031">
                             <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Organización empresa</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
                                     <li><a href="Creacion_equipos.jsp" class="sub">Crear Equipo</a></li>
@@ -142,7 +144,7 @@
                         <ul style="background-color: #303031">
                             <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Organización empresa</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="MyEquipo.jsp" class="sub">Mi Equipo</a></li>
                                 </ul>
