@@ -67,7 +67,7 @@
                                    <%}%>
                                    onchange="return validarString(this, true, false)"
                                    ondrag="return validarString(this, true, false)"
-                                   ondrop="return validarString(this, true, false)">
+                                   ondrop="return validarString(this, true, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                             <div class='input-group-append'>
                                 <button class="btn btn-info" onclick='return cambiarEstado("nombre")'>Editar</button>
                             </div>
@@ -83,7 +83,7 @@
                                    <%}%>
                                    onchange="return validarString(this, false, false)"
                                    ondrag="return validarString(this, false, false)"
-                                   ondrop="return validarString(this, false, false)">
+                                   ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                             <div class='input-group-append'>
                                 <button class="btn btn-info" onclick='return cambiarEstado("appat")'>Editar</button>
                             </div>
@@ -99,7 +99,7 @@
                                    onchange="return validarString(this, false, false)"
                                    ondrag="return validarString(this, false, false)"
                                    ondrop="return validarString(this, false, false)">
-                            <div class="input-group-append">
+                            <div class="input-group-append" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                                 <button class="btn btn-info" onclick='return cambiarEstado("apmat")'>Editar</button>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                    <% if (obtencionAdecuada) {%>
                                    value="<%=correo%>"
                                    <%}%>
-                                   onchange="return validarEmail(this)">
+                                   onchange="return validarEmail(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="250">
                             <div class='input-group-append'>
                                 <button class="btn btn-info" onclick='return cambiarEstado("Email")'>Editar</button>
                             </div>
@@ -124,7 +124,7 @@
                                    <% if (obtencionAdecuada) {%>
                                    value='<%=fecha_nac%>'
                                    <%}%>
-                                   onchange="return validarDate(this)">
+                                   onchange="return validarDate(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
                             <div class='input-group-append'>
                                 <button class="btn btn-info" onclick='return cambiarEstado("fecha_nacimiento")'>Editar</button>
                             </div>
@@ -139,7 +139,7 @@
                             <input type="password" class="form-control" id="pwd" name='pwd'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
-                                   ondrop="return validarPass(this)">
+                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                         </div>
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
@@ -148,7 +148,7 @@
                             <input type="password" class="form-control" id="Npwd" name='Npwd'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
-                                   ondrop="return validarPass(this)">
+                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                         </div>
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
@@ -157,7 +157,7 @@
                             <input type="password" class="form-control" id="Npwd2" name='Npwd2'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
-                                   ondrop="return validarPass(this)">
+                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                         </div>
                         <button type="submit" class="btn btn-dark">
                             Actualizar información
