@@ -230,7 +230,7 @@
                 <nav>
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="#" style="color: #F3F3F3; background-color: #2291C1">Subir</a>
+                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1">Subir</a>
                         </li>
                     </ul>
                 </nav>
@@ -241,7 +241,7 @@
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
                         </div>
                         <label for="pass"><br>Agrege una contraseña al archivo</label>
-                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
+                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña">
                         <label for="id_tipo_acceso"><br>Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%

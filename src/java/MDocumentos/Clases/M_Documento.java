@@ -6,11 +6,13 @@
 package MDocumentos.Clases;
 
 import ClasesSoporte.Conexion;
+import MSeguridad.Clases.AES;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -132,16 +134,17 @@ public class M_Documento implements Serializable {
         //CallableStatement cs = null;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = ("SELECT * FROM m_Documento WHERE id_M_Documento=?");
+            this.query = ("SELECT * FROM m_Documento WHERE idM_Documento=?");
             ps = con.prepareCall(query);
             ps.setInt(1, idM_Documento);
             ResultSet res = ps.executeQuery();
             while(res.next()){
                 System.out.println("Documento encontrado");
-                this.setIdM_Documento(rs.getInt("IdM_Documento"));
-                this.setId_D_DOcumento(rs.getInt("Id_D_DOcumento"));
-                this.setId_usuario_p(rs.getInt("Id_usuario_p"));
+                this.setIdM_Documento(res.getInt("idM_Documento"));
+                this.setId_D_DOcumento(res.getInt("id_D_DOcumento"));
+                this.setId_usuario_p(res.getInt("id_usuario_p"));
             }
+            correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -159,12 +162,19 @@ public class M_Documento implements Serializable {
         boolean right = false;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = ("INSERT INTO registro_entrada (fecha_entrada,"
-                    + " hora_entrada, id_usuario_consulta, id_m_documento)"
-                    + "VALUES (CURDATE(), CURTIME(), ?, ?)");
+            this.query = ("INSERT INTO registro_entrada (Fecha_entrada,"
+                    + " hora_entrada, ID_Usuario_Consulta, id_M_documento)"
+                    + "VALUES (?, ?, ?, ?)");
+            Calendar c1 = Calendar.getInstance();
+            String fecha = c1.get(Calendar.DATE) + "-" + c1.get(Calendar.MONTH) 
+                    + "-" + c1.get(Calendar.YEAR);
+            String hora = c1.get(Calendar.HOUR) + ":" + c1.get(Calendar.MINUTE) 
+                    + ":" + c1.get(Calendar.SECOND);
             ps = con.prepareCall(query);
-            ps.setInt(1, this.getIdM_Documento());
-            ps.setInt(2, id_persona);
+            ps.setBytes(1, AES.cifrar(fecha));
+            ps.setBytes(2, AES.cifrar(hora));
+            ps.setInt(4, this.getIdM_Documento());
+            ps.setInt(3, id_persona);
             if(ps.executeUpdate()==1) right = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

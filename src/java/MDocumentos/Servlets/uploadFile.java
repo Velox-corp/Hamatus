@@ -148,7 +148,7 @@ public class uploadFile extends HttpServlet {
                     String[] entry = pair.split("=");
                     list.put(1, value);
                 }
-                String pass          = request.getParameter("pass");
+                String pass = null;
 
                 int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
                         .getParameter("id_tipo_acceso").charAt(0)));  
@@ -160,6 +160,16 @@ public class uploadFile extends HttpServlet {
                         c1.get(Calendar.YEAR),c1.get(Calendar.MONTH),
                         c1.get(Calendar.DATE),c1.get(Calendar.HOUR),
                         c1.get(Calendar.MINUTE));
+                try {
+                    pass = request.getParameter("pass");
+                } catch (Exception e) {
+                    System.out.println("No hay contraseña procedemos a darle una");
+                }
+                
+                if ("".equals(pass)) {
+                    pass = folio;
+                }
+                
                 int Equipo_ID_Equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
                 int id_D_DOcumento   = 1;//no entiendo bien esto
                 int id_usuario_p     = usuario.getIDUsuarioE();
@@ -193,8 +203,12 @@ public class uploadFile extends HttpServlet {
                                 while ((read = filecontent.read(bytes)) != -1) {
                                     outs.write(bytes, 0, read);
                                 }
-
-                                response.sendRedirect("docs.jsp?flag=true");
+                                
+                                if (pass.equals(folio)) {
+                                    response.sendRedirect("docs.jsp?flag=true_pass&pass="+pass);
+                                }else{
+                                    response.sendRedirect("docs.jsp?flag=true");
+                                }
 
                             } catch (FileNotFoundException fne) {
                                 System.out.println("Algo de que no encontro el archivo"
