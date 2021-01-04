@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="MDistribucion.Clases.Equipo"%>
+<%@page import="java.util.List"%>
 <%@page import="MDocumentos.Clases.M_Documento"%>
 <%@page import="java.util.Set"%>
 <%@page import="MDocumentos.Clases.D_Documento"%>
@@ -23,34 +26,151 @@
   <body>
       <!-- a reutilizar codigo se a dicho -->
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
+    <%
+        HttpSession sesionUser = request.getSession();
+        boolean obtencionAdecuada = false;
+        UsuarioEmpleado usuario = null;
+        Empresa emp = null;
+        try{
+            usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+            emp = (Empresa) sesionUser.getAttribute("empresa");
+        }catch(NullPointerException ex){
+            System.out.println("Algun error raro de null");
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+            obtencionAdecuada = false;
+            response.sendRedirect("error.jsp");
+        }catch(Exception e){
+            System.out.println("Algun error raro");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            obtencionAdecuada = false;
+            response.sendRedirect("error.jsp");
+        }
+        int IDequipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+        if (usuario.getiD_cat_priv() == 5) {
+            //Bueno bueno aqui vamos basicamente la idea es que vea todos 
+            //los archivos de todos los equipos
+            ArrayList<Equipo> equipos = Equipo.obtenerEquipos(usuario.getiD_Division());
+            
+    %>
+    <div class="row margin-top-1rem">
+        <% for(Equipo eq: equipos){%> 
+        <div class="col-md-4 folio">
+            <ul>
+                <li>Archivos del equipo: <%= eq.getNombre() %>
+                    <ul>
+                        <%String ruta_j = request.getServletContext().getRealPath("/archivos/"
+                            +eq.getIDEquipo()+"/"); 
+                        System.out.println("La ruta es: " + ruta_j);
+                        if (ruta_j != null) {        
+                            java.io.File file_j;
+                            java.io.File dir_j = new java.io.File(ruta_j);
+                            String[] list_j = dir_j.list();
+                            System.out.println(list_j.length);
+                            if (list_j.length > 0) {
+                                //Lista de lo que debe de entrar
+                                for (int i=0; i < list_j.length; i++) {
+                                    file_j = new java.io.File(ruta_j +"/"+ list_j[i]);
+                                    if (file_j.isFile()) {
+                                        M_Documento mdoc = new M_Documento();
+                                        D_Documento ddoc = new D_Documento();
+                                        //Definimos primero a ddoc
+                                        ddoc.ConsultarD_Doc(eq.getIDEquipo(), file_j.getName());
+                                        mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
+                                    %>
+                                    <li>
+                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file_j.getName()%>" 
+                                           target="_top" data-toggle="tooltip" 
+                                           title="Descargar" id="<%=file_j.getAbsolutePath()%>"
+                                           ><%=list_j[i]%></a>
+                                           <a target="_top" data-toggle="tooltip" title="Eliminar" 
+                                              onclick="deleteFile(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>')">
+                                               <i class="fas fa-trash-alt text-danger"></i>
+                                           </a>
+                                              <a target="_top" data-toggle="tooltip" 
+                                                 title="Modificar" 
+                                                 href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>">
+                                               <i class="fas fa-edit text-primary"></i>
+                                           </a>
+                                           <a target="_top" data-toggle="tooltip" title="Compartir" 
+                                              onclick="copy_link('Access.jsp?fileName=<%=file_j.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
+                                               <i class="fas fa-share text-primary"></i>
+                                           </a>
+                                    </li>
+                                    <%
+                                    }
+                                }
+                            }else{
+                            %>
+                                <li>No existen archivos dentro del folder del equipo</li>
+                            <%
+                            }
+                        }else{%>
+                        <li>No existe el folder del Equipo</li>
+                        <%}%>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-7">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#">Subir</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="card">
+                    <form class="card-body form-group" action="uploadFile" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Insertar archivo</label>
+                            <input class="form-control-file" type="file" id="formFile" name="file" required>
+                        </div>
+                        <label for="pass">Agrege una contraseña al archivo</label>
+                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
+                        <label for="id_tipo_acceso">Elija tipo acceso</label>
+                        <select class="form-control" name="id_tipo_acceso">
+                            <%
+                                Hashtable<Integer, String> list = D_Documento.consultarCat_Tipo_Acceso();
+                                Set<Integer> keys = list.keySet();
+                                for (Integer key:keys) {
+                                    System.out.println(key);
+                                %>
+                                <option><%= key %>.<%= list.get(key) %></option>
+                                <%
+                                }
+                            %>
+                        </select>
+                        <input name="dictionary" value="<%= list %>" hidden="true">
+                        <label for="tipo_archivo">Elija tipo de archivo</label>
+                        <select class="form-control" name="tipo_archivo">
+                            <option>Digital</option>
+                            <option>Escaneado</option>
+                        </select>
+                        <br>
+                        <div class="justify-content-center">
+                            <button type="" class="btn btn-primary">
+                                Subir Archivo
+                            </button>
+                            <a href="docs.jsp" class="btn btn-danger">Cancelar</a>
+                        </div>
+                    </form>
+                </div> 
+            <br>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+        <%}%>
+    </div>
+    <%}else if (IDequipo != 0) {%>
     <div class="row margin-top-1rem">
         <div class="col-md-4 folio">
             <ul>
                 <li>Archivos del equipo
                     <ul>
-                        <%
-                        HttpSession sesionUser = request.getSession();
-                        boolean obtencionAdecuada = false;
-                        UsuarioEmpleado usuario = null;
-                        Empresa emp = null;
-                        try{
-                            usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
-                            emp = (Empresa) sesionUser.getAttribute("empresa");
-                        }catch(NullPointerException ex){
-                            System.out.println("Algun error raro de null");
-                            System.out.println(ex.getMessage());
-                            ex.printStackTrace();
-                            obtencionAdecuada = false;
-                            response.sendRedirect("error.jsp");
-                        }catch(Exception e){
-                            System.out.println("Algun error raro");
-                            System.out.println(e.getMessage());
-                            e.printStackTrace();
-                            obtencionAdecuada = false;
-                            response.sendRedirect("error.jsp");
-                        }
-                        int IDequipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
-                        String ruta = request.getServletContext().getRealPath("/archivos/"
+                        <%String ruta = request.getServletContext().getRealPath("/archivos/"
                             +IDequipo+"/"); 
                         System.out.println("La ruta es: " + ruta);
                         if (ruta != null) {        
@@ -68,7 +188,7 @@
                                         //Definimos primero a ddoc
                                         ddoc.ConsultarD_Doc(IDequipo, file.getName());
                                         mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
-                                %>
+                        %>
                                 <li>
                                     <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>" 
                                        target="_top" data-toggle="tooltip" 
@@ -155,6 +275,59 @@
         <div class="col-md-1">
         </div>
     </div>
+    <% }else if(usuario.getiD_cat_priv() == 1 && IDequipo == 0){%>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">No tienes acceso a la herramienta de documentos</h1>
+            <p class="lead">Eres un administrador por lo tanto no tienes acceso 
+                a la herramienta de documentos al no poseer un equipo</p>
+            <hr class="my-4">
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+            </p>
+        </div>     
+    </div>
+    <% }else if(usuario.getiD_cat_priv() == 2 && IDequipo == 0){%>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">No tienes acceso a la herramienta de documentos</h1>
+            <p class="lead">Eres un directivo por lo tanto no tienes acceso a la herramienta de documentos, 
+            de ser necesario un documento solicita un link de acceso al documento con un colaborador de la empresa</p>
+            <hr class="my-4">
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+            </p>
+        </div>     
+    </div>
+    <% }else if(usuario.getiD_cat_priv() == 3 && IDequipo == 0){%>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">No tienes acceso a la herramienta de documentos</h1>
+            <p class="lead">Eres un jefe de area por lo tanto no tienes acceso 
+                a la herramienta de documentos al no poseer un equipo</p>
+            <hr class="my-4">
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+            </p>
+        </div>     
+    </div>
+    <%}else {%>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">No tienes un equipo asignado</h1>
+            <p class="lead">No tienes un equipo asignado con el que puedas trabajar, 
+                pero de ser necesario acceder a cierto documento por favor solicitar
+                un link de acceso a un colaborador de la empresa o pedir a un jefe 
+                de area ingresar a un equipo de trabajo</p>
+            <hr class="my-4">
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+            </p>
+        </div>     
+    </div>
+    <%
+       }
+    %>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
   </body>
   <script src="./JS/enable_tooltip.js"></script>
