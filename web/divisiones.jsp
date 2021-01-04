@@ -48,39 +48,21 @@
                         </div>
                     </div>
                 </form>
+                <hr>
+                <h2>Divisiones Actuales</h2>
+                <hr>
                 <% for (int i = 0; i < divisiones.size(); i++) {
                                 Division division = divisiones.get(i);%> 
-                                <div class="card bg-info text-white">
-                                    <div class="card-header text-center">
-                                        <h4 class="card-title"><%=division.getNombre()%></h4>
+                                <div class="input-group mb-3" style="background-color: #e9ecef">		 
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nombre:</span><h4 class="card-title"><%=division.getNombre()%></h4>
                                     </div>
                                     <div class="card-body text-center">
-                                        <a class="btn btn-danger" href="eliminarDivision?id=<%=division.getId_Division()%>">ELIMINAR</a>
+                                        <a href="javascript:funcion()"><a class="btn btn-secondary btn-large" href="eliminarDivision?id=<%=division.getId_Division()%>" onclick="return confirmation()">ELIMINAR</a>
                                     </div>
-                                </div>
-                                
+                                </div>                                
                         <%   }
                      %>
-                <%--
-                <c:forEach var="p" items="${divisiones}">
-                <form role="form" method="POST" action='eliminarDivision'>
-                    <hr>
-                    <h2>Divisiones Actuales</h2>
-                    <hr>
-                        <input type="hidden" id="ida" value="${p.getId()}">
-                        <div class="input-group mb-3">		 
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Nombre:</span>
-                            </div
-                            <input type="text" class="form-control" id="nombreD" name='nombreD' readonly ='readonly' value="${p.getNombre()}">
-                            <div class='input-group-append'>
-                                <button type="submit" class="btn btn-dark">
-                                    Eliminar
-                                </button>
-                            </div>                        
-                        </div>
-                </form>
-                </c:forEach>--%>
                 <%}%>
               </div>
             </div>

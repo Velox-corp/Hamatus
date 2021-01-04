@@ -291,3 +291,23 @@ function validoIS(formulario) {
 	}
         
 }
+
+function valida(f) {
+    if (f.tituloa.value.length >20){
+	alert("Escribe como máximo 30 letras en el campo del Titulo");
+	f.txtnom.focus();
+	return(false);
+    }
+}
+
+function confirmation() 
+     {
+        if(confirm("ADVERTENCIA: Si eliminas esta division, se eliminarán los demás datos relacionados con este, ¿Deseas continuar?"))
+	{
+	   return true;
+	}
+	else
+	{
+	   return false;
+	}
+     }

@@ -19,32 +19,31 @@
     </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-        <div class="row margin-top-1rem">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-
+        <center><h1>Editar anuncio</h1></center>
+        <div class="container margin-top-2rem">
+        <div class="row d-flex justify-content-center">
+              <div class="col-sm-8">
                     <form action="controlA?accion=Update" method="post">
 
                         <c:forEach var="p" items="${anuncios}">
                             <input type="hidden" id="idmod" name="idmod" value="${p.getId()}">
                             <div class="form-group">
-                                <label for="nombre">Titulo</label>
-                                <input type="text" value="${p.getTitulo()}" class="form-control" id="mod_titulo" name="mod_titulo" required="required">
+                                <label for="nombre">Título</label>
+                                <input type="text" value="${p.getTitulo()}" class="form-control" id="mod_titulo" name="mod_titulo" required="required" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false">
                             </div>
                             <div class="form-group">
-                                <label for="descripcion">Descripcion</label>
-                                <input type="text" value="${p.getDescripcion()}" class="form-control" id="mod_descripcion" name="mod_descripcion" required="required">
+                                <label for="descripcion">Descripción</label>
+                                <input type="text" value="${p.getDescripcion()}" class="form-control" id="mod_descripcion" name="mod_descripcion" required="required" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false">
                             </div>
                             <div class="form-group">
-                                <input type="date" class="form-control" id="fechaa">
+                                <input type="date" class="form-control" id="fechaa" required="required" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false">
                             </div>
-                            <button type="submit" name="enviar" class="btn btn-primary">Guardar<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                            <button type="submit" name="enviar" class="btn btn-dark">Guardar<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
 
                         </c:forEach> 
                     </form> 
-
-                </div>
             </div>
+        </div>
         </div>
     </body>
 </html>

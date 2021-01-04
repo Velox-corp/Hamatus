@@ -54,9 +54,11 @@
         -->
         <main class="row">
             <div class="col-md-12"><br>
-                <center><h1>Tablón de anuncios</h1></center><a href="tablon.jsp" id="btnAdd"><i class="far fa-plus-square" arial-hidden="true">Agregar Nuevo</i></a>
+                <center><h1>Tablón de anuncios</h1></center>
+                <div style="margin: 2vw">
+                    <a href="tablon.jsp" id="btnAdd"><i class="far fa-plus-square" arial-hidden="true" style="color:#2291C1"> Agregar Nuevo</i></a>
                     <%-- Aquí va tocar meter un for para que se beneren todos los anuncios --%>
-                <div class="card bg-default">
+                    <br><div class="card bg-default">
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <c:forEach var="p" items="${anuncios}">
@@ -72,14 +74,15 @@
                                         <td>${p.getFecha()}</td>
                                         <td>
                                             <input type="hidden" id="ida" value="${p.getId()}">
-                                            <a href="controlA?accion=Delete&ida=${p.getId()} " id="btnDelete"><i class="fa fa-trash" arial-hidden="true"></i></a>
-                                            <a href="controlA?accion=ListarID&ida=${p.getId()}" id="btnEdit" class="ml-1"><i class="fa fa-pen" arial-hidden="true"></i></a>
+                                            <a href="controlA?accion=Delete&ida=${p.getId()} " id="btnDelete"><i class="fa fa-trash" arial-hidden="true" style="color: black"></i></a>
+                                            <a href="controlA?accion=ListarID&ida=${p.getId()}" id="btnEdit" class="ml-1"><i class="fa fa-pen" arial-hidden="true" style="color: black"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </c:forEach>
                         </table>
                     </div>
+                </div>
                 </div>
             </div>
         </main>
