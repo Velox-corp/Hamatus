@@ -38,7 +38,7 @@
 <div class="col-xs-12 col-sm-6 col-md-3">
 
 <div class="widget no-box">
-<h5 class="widget-title">Contactanos<span></span></h5>
+<h5 class="widget-title">Contáctanos<span></span></h5>
 
 <p><a href="mailto:veloox.corp@gmail.com" title="glorythemes">veloox.corp@gmail.com</a></p>
 <ul class="social-footer2">
