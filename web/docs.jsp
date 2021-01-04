@@ -110,7 +110,7 @@
                 <nav>
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="#">Subir</a>
+                            <a class="page-link" href="#" style="color: #F3F3F3; background-color: #2291C1">Subir</a>
                         </li>
                     </ul>
                 </nav>
@@ -120,9 +120,9 @@
                             <label for="file" class="form-label">Insertar archivo</label>
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
                         </div>
-                        <label for="pass">Agrege una contraseña al archivo</label>
+                        <label for="pass"><br>Agrege una contraseña al archivo</label>
                         <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
-                        <label for="id_tipo_acceso">Elija tipo acceso</label>
+                        <label for="id_tipo_acceso"><br>Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%
                                 Hashtable<Integer, String> list = D_Documento.consultarCat_Tipo_Acceso();
@@ -136,17 +136,17 @@
                             %>
                         </select>
                         <input name="dictionary" value="<%= list %>" hidden="true">
-                        <label for="tipo_archivo">Elija tipo de archivo</label>
+                        <label for="tipo_archivo"><br>Elija tipo de archivo</label>
                         <select class="form-control" name="tipo_archivo">
                             <option>Digital</option>
                             <option>Escaneado</option>
                         </select>
                         <br>
                         <div class="justify-content-center">
-                            <button type="" class="btn btn-primary">
+                            <button type="" class="btn btn-dark">
                                 Subir Archivo
                             </button>
-                            <a href="docs.jsp" class="btn btn-danger">Cancelar</a>
+                            <a href="docs.jsp" class="btn btn-dark">Cancelar</a>
                         </div>
                     </form>
                 </div> 
