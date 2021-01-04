@@ -57,10 +57,10 @@
         </div>
         <br>
         <div class="row align-items-center">
-            <div class="col-md-12 align-items-center">
-                <table class="table table-hover table-responsive align-items-center">
+            <div class="col-md-12 align-items-center text-center">
+                <table class="table table-hover table-responsive  text-center align-items-center">
                     <thead>
-                        <tr>
+                        <tr class="bg-primary">
                             <th>Apellido paterno</th>
                             <th>Apellido materno</th>
                             <th>Nombre(s)</th>
@@ -98,7 +98,7 @@
                     </tbody>
                 </table>
                     <br><% if(user.getiD_cat_priv() == 1){ %>
-                    <a class='text-center bn btn-dark' href='Administrador_new.jsp'>Agregar más Usuarios</a>
+                    <a class='text-center btn btn-dark' href='Administrador_new.jsp'>Agregar más Usuarios</a>
                             <% }%>
             </div>
         </div>

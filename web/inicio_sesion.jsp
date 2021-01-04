@@ -65,11 +65,11 @@
                     <form action="iniciarSesion">
                         <div class="form-group">
                           <label for="email">Dirección de correo electrónico:</label>
-                          <input type="email" class="form-control" id="email" name="email">
+                          <input type="email" class="form-control" id="email" name="email" oncopy="return false" onpaste="return false" placeholder="Email" autocomplete="off">
                         </div>
                         <div class="form-group">
                           <label for="pwd">Contraseña:</label>
-                          <input type="password" class="form-control" id="pwd" name="pwd">
+                          <input type="password" class="form-control" id="pwd" name="pwd" oncopy="return false" onpaste="return false" placeholder="Contraseña">
                         </div>
                         <div class="checkbox">
                           <label><input type="checkbox"> Recordar mi información</label><br><br>

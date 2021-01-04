@@ -188,6 +188,38 @@ public class Equipo implements Serializable {
         return equipos;     
     }
     
+    
+    public static ArrayList<Equipo> obtenerAllEquipos(int idemp){
+        ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT Equipo.* FROM Equipo JOIN Division ON equipo.ID_Division = division.ID_Division WHERE division.ID_Empresa = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, idemp);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Equipo equipo = new Equipo(rs.getInt("ID_Equipo"),
+                        AES.descifrar(rs.getBytes("Nombre")), 
+                rs.getInt("ID_Division"));
+                equipos.add(equipo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            equipos = null;
+        }finally{
+            try {
+                con.close();
+                q= "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return equipos;     
+    }
+    
+    
     /**
      * Obtener un equipo dado su ide.
      * @param id_equipo el ide del equipo.

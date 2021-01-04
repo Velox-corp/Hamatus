@@ -44,11 +44,11 @@ public class actualizarUser extends HttpServlet {
             String correo = request.getParameter("Email");
             String appat = request.getParameter("appat");
             String apmat = request.getParameter("apmat");
-            String f_n = request.getParameter("f_n");
+            String f_n = request.getParameter("fecha_nacimiento");
             String oldPass = "";
             try{
                 oldPass = request.getParameter("pwd");
-                cambioPass = (oldPass == null);
+                cambioPass = !(oldPass == null || oldPass.equals(""));
             }catch(NullPointerException e){
                 System.out.println("No nueva pass");
                 cambioPass = false;
@@ -67,15 +67,15 @@ public class actualizarUser extends HttpServlet {
                 bufferValidaciones[6] = Validaciones.esPassword(newPass2);
                 bufferValidaciones[7] = oldUser.getPassword().equals(oldPass);
                 bufferValidaciones[8] = newPass.equals(newPass2);
-                contadorValidaciones = 9;
+                contadorValidaciones = 8;
             }else{
-                contadorValidaciones = 4;
+                contadorValidaciones = 3;
             }
-            for (int i = 0; i < contadorValidaciones; i++) {
+            for (int i = 0; i <= contadorValidaciones; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
                     redirect = "error.jsp";
-                    System.out.println("Mal validado");
+                    System.out.println("Mal validado en el buffer:"+(i));
                     break;
                 }
             }
@@ -83,20 +83,24 @@ public class actualizarUser extends HttpServlet {
             if(proceso_correcto){
                 UsuarioEmpleado updateEmpleado;
                 try{
-                    if(newPass == null) {
+                    if(!cambioPass) {
+                        System.out.println("Contraseña igual");
                         updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, oldPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
                     }else{
+                        System.out.println("new Contraseña");
                         updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, newPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
                     }
                     if(UsuarioEmpleado.modEmpleado(updateEmpleado)){
                         sesion.setAttribute("usuario", updateEmpleado);
+                        redirect = "CRUD_TU.jsp";
                     }else{
                         redirect = "error.jsp";
                     }
                     
-                    redirect = "CRUD_TU.jsp";
                 }catch(Exception e){
                     redirect = "error.jsp";
+                    e.getMessage();
+                    e.printStackTrace();
                 }
                 
             }else{

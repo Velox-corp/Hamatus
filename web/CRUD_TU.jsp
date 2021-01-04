@@ -136,7 +136,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Antigua contraseña:</span>
                             </div>
-                            <input type="text" class="form-control" id="pwd" name='pwd'
+                            <input type="password" class="form-control" id="pwd" name='pwd'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
                                    ondrop="return validarPass(this)">
@@ -145,7 +145,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nueva contraseña:</span>
                             </div>
-                            <input type="text" class="form-control" id="Npwd" name='Npwd'
+                            <input type="password" class="form-control" id="Npwd" name='Npwd'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
                                    ondrop="return validarPass(this)">
@@ -154,7 +154,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Confirmar contraseña:</span>
                             </div>
-                            <input type="text" class="form-control" id="Npwd2" name='Npwd2'
+                            <input type="password" class="form-control" id="Npwd2" name='Npwd2'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
                                    ondrop="return validarPass(this)">

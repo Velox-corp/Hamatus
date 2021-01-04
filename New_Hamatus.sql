@@ -62,7 +62,7 @@ DROP TABLE IF EXISTS `division` ;
 
 CREATE TABLE IF NOT EXISTS `division` (
   `ID_Division` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre_A` VARCHAR(45) NULL DEFAULT NULL,
+  `Nombre_A` VARBINARY(128) NOT NULL,
   `ID_Jerarquia` INT(11) NOT NULL,
   `ID_Empresa` INT(11) NOT NULL,
   PRIMARY KEY (`ID_Division`),
@@ -309,7 +309,7 @@ CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre VARBINARY(128), appat VARBI
 f_n VARBINARY(128), correo VARBINARY(128), pass VARBINARY(128), foto Blob, idE int)   
 BEGIN
 	insert into division (Nombre_A, id_jerarquia, id_empresa)
-    values ("Dirección general", 1, idE);
+    values (aes_encrypt("Dirección general","gurmnhorgvmeigdv") , 1, idE);
 	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Division, `Usuario_Empleado`.id_cat_privilegios, `Usuario_Empleado`.foto)
     values (nombre, appat, apmat, f_n, correo, pass, (select `division`.ID_Division from division where ID_empresa = idE limit 1), 1, foto);
 END$$
@@ -330,7 +330,7 @@ BEGIN
 		when division.ID_Jerarquia = 1 and division.ID_Empresa = idE then "generales"
         when division.ID_Jerarquia = 2 and division.ID_Empresa = idE  and division.ID_Division = idDiv then "particulares"
 	end, tablon.*
-    from tablon join division on tablon.Id_division = division.ID_DivisioningresarUsuario
+    from tablon join division on tablon.Id_division = division.ID_Division
     where 
 		(division.ID_Jerarquia = 1 and division.ID_Empresa = idE) or
         (division.ID_Jerarquia = 2 and division.ID_Empresa = idE and division.ID_Division = idDiv)
@@ -339,7 +339,7 @@ END$$
 
 DELIMITER ;
 use yL10l8yMbC;
-insert into cat_tipo_acceso values (1, ""), (2, "");
+insert into cat_tipo_acceso values (1, "jefe de equipo"), (2, "Empleados generales");
 insert into privilegios_jerarquia_u values (1, "Administrador"), (2, "Directivo"), (3, "Jefe de área"), (4, "Empleado general");
 insert into Cat_jerarquia values (1, "División Padre"), (2, "Departamento subordinado");
 
