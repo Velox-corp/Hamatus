@@ -56,29 +56,16 @@
       <br>
       <main class="cubridor d-flex align-items-center justify-content-center container jumbotron">
         <div>
-            <center><h1 style="margin-right: 20vw">¿Para quién?</h1></center>
+            <center><h1 style="margin-right: 38vw">Alcance</h1></center>
             <div class="row">
-                <div class="col-md-3">
-                    <img class="img-fluid" src="img/social-reach.png">
+                <div class="col-md-2">
+                    <img class="img-fluid" src="img/social-reach.png" style="height: 10vw">
                 </div>
                 <div class="col-md-9">
                     <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                    reprehenderit aperiam nulla officia facere! Error accusantium
-                    magnam repellat. Incidunt eum perspiciatis ab?
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                    reprehenderit aperiam nulla officia facere! Error accusantium
-                    magnam repellat. Incidunt eum perspiciatis ab?
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                    reprehenderit aperiam nulla officia facere! Error accusantium
-                    magnam repellat. Incidunt eum perspiciatis ab?
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Debitis ab placeat sit minima explicabo vitae ut ipsum,
-                    reprehenderit aperiam nulla officia facere! Error accusantium
-                    magnam repellat. Incidunt eum perspiciatis ab?
+                        Hamatus tiene como alcance:<br>
+                        - El registro de los empleados únicamente por un administrador, brindándoles un usuario y contraseña específicos, existiendo un usuario capaz de registrar documentos para todas las áreas, así como la capacidad de proporcionar “folios” en caso de que algún empleado requiera un documento físico. Los empleados pueden registrar documentos únicamente dentro de su área.
+                    <br>- La empresa puede personalizar el software, como el nombre, las áreas que habrá y la cantidad de usuarios que estarán registrados.
                     </p>
                 </div>
             </div>

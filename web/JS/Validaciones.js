@@ -51,7 +51,7 @@ function validarEmail (htmlElement){
     let patronemail = /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/;
     
     if(!patronemail.test(email)){
-        alert("Ingreso inadecuado");
+        alert("Ingrese correctamente el correo eléctronico");
         htmlElement.focus();
     }
     return patronemail.test(email);
@@ -68,7 +68,7 @@ function validarDate (htmlElement){
     let date = htmlElement.value;
     let patronfecha = /^\d{4}\-\d{1,2}\-\d{1,2}$/; //esta no valida que metan 30 de febrero
     if(!patronfecha.test(date)){
-        alert("Ingreso inadecuado");
+        alert("Ingrese correctamente la fecha");
         htmlElement.focus();
     }
     return patronfecha.test(date);
@@ -85,7 +85,7 @@ function validarPass(htmlElement){
     let pass = htmlElement.value;
     let patron_pass = /[A-Za-z0-9]{8,20}/;
     if(!patron_pass.test(pass)){
-        alert("Ingreso inadecuado");
+        alert("Ingrese correctamente la contraseña");
         htmlElement.focus();
     }
     return patron_pass.test(pass);
@@ -154,4 +154,140 @@ expresion = /\w+@\w+\.+[a-z]/;
         alert("Contraseña muy larga");
         return false;
     }
+}
+
+//AGREGADO
+function valido(registro) {
+	
+	if (registro.nameEmpresa.value.length >20){
+		alert("Escribe como máximo 30 letras en el campo del Nombre de la empresa");
+		registro.txtnom.focus();
+		return(false);
+	}
+        
+        if (registro.razonSocial.value.length >20){
+		alert("Escribe como máximo 20 letras en el campo de Razón Social");
+		registro.txtnom.focus();
+		return(false);
+	}
+        
+        if (registro.nameUser.value.length >20){
+		alert("Escribe como máximo 20 letras en el campo de Nombre");
+		registro.txtnom.focus();
+		return(false);
+	}
+        
+        if (registro.appat.value.length >20){
+		alert("Escribe como máximo 20 letras en el campo de Apellido Paterno");
+		registro.txtappat.focus();
+		return(false);
+	}
+        
+        if (registro.apmat.value.length >20){
+		alert("Escribe como máximo 20 letras en el campo de Apellido Materno");
+		registro.txtapmat.focus();
+		return(false);
+	}
+        
+        if (registro.f_n.value.length <10){
+		alert("Por favor revisa la fecha de tu nacimiento");
+		registro.txtf.focus();
+		return(false);
+	}
+        
+        if (registro.f_n.value.length >10){
+		alert("Por favor revisa la fecha de tu nacimiento");
+		registro.txtf.focus();
+		return(false);
+	}
+        
+        if (registro.description.value.length >250){
+		alert("Por favor, como máximo 250 carácteres en el campo de descripción de la empresa");
+		registro.txtd.focus();
+		return(false);
+	}
+        
+        if (registro.pwd.value.length >30){
+		alert("Tu contraseña no puede ser mayor a 30 carácteres");
+		registro.txtcontra.focus();
+		return(false);
+	}
+        
+        if (registro.pwd.value.length <10){
+		alert("Tu contraseña no puede ser menor a 10 carácteres");
+		registro.txtcontra.focus();
+		return(false);
+	}
+        
+        if (registro.pwd2.value.length >30){
+		alert("Tu contraseña no puede ser mayor a 30 carácteres");
+		registro.txtcontra.focus();
+		return(false);
+	}
+        
+        if (registro.pwd2.value.length <10){
+		alert("Tu contraseña no puede ser menor a 10 carácteres");
+		registro.txtcontra.focus();
+		return(false);
+	}
+        
+        if (registro.nameUser.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.appat.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.apmat.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.f_n.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.email.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.pwd.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.pwd2.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.nameEmpresa.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.description.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+        if (registro.razonSocial.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+}
+
+function validoIS(formulario) {
+    
+        if (formulario.email.value.length ==0 || formulario.pwd.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
 }
