@@ -56,15 +56,15 @@
                   <h3>Acceso a documento: <%= request.getParameter("fileName") %></h3>
                   <form action="authAcess" method="POST">
                     <label>Ingrese contraseña de acceso</label>
-                    <input name="pass" type="password" class="form-control" placeholder="Ingrese contraseña">
+                    <input name="pass" type="password" class="form-control" placeholder="Ingrese contraseña" oncopy="return false" onpaste="return false">
                     <input name="fileName" type="text" hidden="true" value="<%= request.getParameter("fileName") %>">
                     <input name="e" type="text" hidden="true" value="<%= request.getParameter("e") %>">
                     <br>
                     <div class="justify-content-center">
-                        <button type="" class="btn btn-primary">
+                        <button type="" class="btn btn-dark">
                             Acceder
                         </button>
-                        <a href="docs.jsp" class="btn btn-primary">Cancelar</a>
+                        <a href="docs.jsp" class="btn btn-dark">Cancelar</a>
                     </div>
                   </form>
               </div>
