@@ -46,7 +46,7 @@
                     <hr>
                     <div style="margin-left: 2rem">
                         <h3>Opciones del Administrador de la empresa</h3><br>
-                        <%--Aquí va tocar meter algo que valide a la cuenta de admin para tener acceso a links especiales para mejor ux--%>
+                        <%if(admin.getiD_cat_priv() ==1 || admin.getiD_cat_priv() ==2){%>
                         <div class='row'>
                             <div class='col-md-4'>
                                 <a href='divisiones.jsp' class='btn btn-dark btn-large'>
@@ -59,6 +59,7 @@
                                 </a>
                             </div>
                         </div>
+                        <% } %>
                     </div> 
 		</div>
 	</main>

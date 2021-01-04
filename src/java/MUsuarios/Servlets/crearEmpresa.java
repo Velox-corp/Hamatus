@@ -6,6 +6,7 @@
 package MUsuarios.Servlets;
 
 import ClasesSoporte.Validaciones;
+import MDivisiones.clases.Division;
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
@@ -87,10 +88,12 @@ public class crearEmpresa extends HttpServlet {
                 try{
                     emp = new Empresa(nombreEmp, descripcion, logo, razon_social);
                     admin = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass);
+                    admin.setiD_cat_priv(1);
                     if (Empresa.crearEmpresa(emp)){
                         emp.setIDEmpresa(Empresa.getIDEmpresaRegistrada());
                         if(emp.getIDEmpresa() != -1){
                             proceso_correcto = UsuarioEmpleado.ingresarAdmin(admin, emp.getIDEmpresa());
+                            admin.setiD_Division(Division.getDivGen(emp.getIDEmpresa()));
                         }else{
                             proceso_correcto = false;
                         }

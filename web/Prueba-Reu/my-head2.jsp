@@ -110,7 +110,6 @@
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
                             <li><a class="nav-item nav-link btn1">Usuarios</a>
                                 <ul>
-                                    <li><a href="Administrador_new.jsp" class='sub' >Agregar Usuarios</a></li>
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Usuarios</a></li>
                                 </ul>
                             </li>
@@ -124,7 +123,6 @@
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                             <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
-                                    <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
                                     <li><a href="Creacion_equipos.jsp" class="sub">Crear Equipo</a></li>
                                 </ul>
@@ -145,8 +143,7 @@
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                             <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
-                                    <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
-                                    <li><a href="#?" class="sub">Mi Equipo</a></li>
+                                    <li><a href="MyEquipo.jsp" class="sub">Mi Equipo</a></li>
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
@@ -156,3 +153,4 @@
             }%> 
 	</div>
 </header>
+        <br>

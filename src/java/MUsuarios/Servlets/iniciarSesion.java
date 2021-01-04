@@ -54,7 +54,7 @@ public class iniciarSesion extends HttpServlet {
                 sesionEmpresa.setAttribute("empresa", emp);
                 redirect = "empresa.jsp";
             }else{
-                redirect = "error.jsp";
+                redirect = "inicio_sesion.jsp";
             }
             response.sendRedirect(redirect);
         }catch(Exception e){

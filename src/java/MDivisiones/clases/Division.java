@@ -46,6 +46,7 @@ public class Division implements Serializable{
     private static PreparedStatement ps = null;
     private static ResultSet rs = null;
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -109,7 +110,7 @@ public class Division implements Serializable{
             System.out.println("------------------------");
             System.out.println(div.getNombre() + "" + idj + "" + id_emp);
             ps = con.prepareStatement(Division.query);
-            ps.setString(1, div.getNombre());
+            ps.setBytes(1, AES.cifrar(div.getNombre()));
             ps.setInt(2, idj);
             ps.setInt(3, id_emp);
             
@@ -142,7 +143,7 @@ public class Division implements Serializable{
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();
             while(rs.next()){
-                Division div = new Division(rs.getInt("ID_Division"),rs.getString("Nombre_A"),rs.getInt("ID_Jerarquia"),rs.getInt("ID_Empresa"));
+                Division div = new Division(rs.getInt("ID_Division"),AES.descifrar(rs.getBytes("Nombre_A")),rs.getInt("ID_Jerarquia"),rs.getInt("ID_Empresa"));
                 divisiones.add(div);
             }
         } catch (SQLException ex) {
@@ -181,7 +182,7 @@ public class Division implements Serializable{
             try {
                 Division.ps.close();
                 Division.con.close();
-                
+                Division.query = "";
             } catch (SQLException ex) {
                 Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
                 procesoCorrecto = false;
@@ -196,7 +197,7 @@ public class Division implements Serializable{
             Division.con = Conexion.obtenerConexion();
             Division.query = ("SELECT ID_Division FROM division WHERE Nombre_A = ? AND ID_Empresa = ?");
             ps = con.prepareStatement(Division.query);
-            ps.setString(1, div.getNombre());
+            ps.setBytes(1, AES.cifrar(div.getNombre()));
             ps.setInt(2, id_emp);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -213,7 +214,8 @@ public class Division implements Serializable{
             try {
                 Division.ps.close();
                 Division.con.close();
-                
+                rs.close();
+                Division.query = "";
             } catch (SQLException ex) {
                 Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -230,7 +232,7 @@ public class Division implements Serializable{
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();
             if(rs.next()){
-                nombreD = rs.getString("Nombre_A");
+                nombreD = AES.descifrar(rs.getBytes("Nombre_A"));
                 
             }else{
                 nombreD="";
@@ -243,7 +245,8 @@ public class Division implements Serializable{
             try {
                 Division.ps.close();
                 Division.con.close();
-                
+                rs.close();
+                Division.query = "";
             } catch (SQLException ex) {
                 Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -275,6 +278,35 @@ public class Division implements Serializable{
             divisiones = null;
         }
         return divisiones;
+    }
+    
+    public static Integer getDivGen(Integer idEmpresa) {
+        int idDir;
+        try{
+            con = Conexion.obtenerConexion();
+            query = "SELECT ID_Division from Division where ID_Empresa = ? AND ID_Jerarquia = 1";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, idEmpresa);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                idDir = rs.getInt("ID_Division");
+            }else{
+                idDir = -1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+            idDir = -1;
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                rs.close();
+                query = "";
+            } catch (SQLException ex) {
+                Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return idDir;
     }
     
     public static Connection getCon() {
