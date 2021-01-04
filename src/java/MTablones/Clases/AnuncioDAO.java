@@ -90,7 +90,7 @@ public class AnuncioDAO {
     }
     
     public void agregar(Anuncio anuncio) {
-        String sql = "insert into tablon(`Titulo_Anuncio`, `Contenido`,`fecha_publicacion`) values (?,?,?)" ;
+        String sql = "insert into tablon(`Titulo_Anuncio`, `Contenido`,`fecha_publicacion`, Id_division) values (?,?,?,?)" ;
         try {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
@@ -98,6 +98,7 @@ public class AnuncioDAO {
             ps.setString(1, anuncio.getTitulo());
             ps.setString(2, anuncio.getDescripcion());
             ps.setString(3, anuncio.getFecha());
+            ps.setInt(4,anuncio.getIdDivision());
             ps.executeUpdate();
             
         } catch (Exception e) {
