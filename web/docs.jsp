@@ -283,7 +283,7 @@
                 a la herramienta de documentos al no poseer un equipo</p>
             <hr class="my-4">
             <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+              <a class="btn btn-dark btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
             </p>
         </div>     
     </div>
@@ -295,7 +295,7 @@
             de ser necesario un documento solicita un link de acceso al documento con un colaborador de la empresa</p>
             <hr class="my-4">
             <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+              <a class="btn btn-dark btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
             </p>
         </div>     
     </div>
@@ -307,7 +307,7 @@
                 a la herramienta de documentos al no poseer un equipo</p>
             <hr class="my-4">
             <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+              <a class="btn btn-dark btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
             </p>
         </div>     
     </div>
@@ -321,7 +321,7 @@
                 de area ingresar a un equipo de trabajo</p>
             <hr class="my-4">
             <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
+              <a class="btn btn-dark btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
             </p>
         </div>     
     </div>

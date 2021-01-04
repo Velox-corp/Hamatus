@@ -64,21 +64,21 @@
                         <input type="name" class="form-control" id="nameUser" name="nameUser" 
                                onchange="return validarString(this, true, false)"
                                ondrag="return validarString(this, true, false)"
-                               ondrop="return validarString(this, true, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                               ondrop="return validarString(this, true, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                       </div>
                     <div class="form-group">
                         <label for="appat">Apellido Paterno:</label>
                         <input type="name" class="form-control" id="appat" name="appat"
                                onchange="return validarString(this, false, false)"
                                ondrag="return validarString(this, false, false)"
-                               ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                               ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                       </div>
                     <div class="form-group">
                         <label for="apmat">Apellido Materno:</label>
                         <input type="name" class="form-control" id="apmat" name="apmat"
                                onchange="return validarString(this, false, false)"
                                ondrag="return validarString(this, false, false)"
-                               ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                               ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                       </div>
                     <div class="form-group">
                         <label for="f_n">Fecha de nacimiento:</label>
@@ -88,17 +88,17 @@
                     <div class="form-group">
                       <label for="email">Dirección de correo electrónico (correo de la empresa):</label>
                       <input type="email" class="form-control" id="email" name="email"
-                             onchange="return validarEmail(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                             onchange="return validarEmail(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="250">
                     </div>
                     <div class="form-group">
                       <label for="pwd">Contraseña:</label>
                       <input type="password" class="form-control" id="pwd" name="pwd" 
-                             onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                             onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                     </div>
                     <div class="form-group">
                         <label for="pwd2">Confirmar contraseña:</label>
                         <input type="password" class="form-control" id="pwd2" name="pwd2" 
-                               onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                               onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                       </div>
                     <h2>Información de la Empresa</h2>
                     <hr>

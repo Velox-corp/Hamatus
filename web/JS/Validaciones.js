@@ -177,14 +177,14 @@ function valido(registro) {
 		return(false);
 	}
         
-        if (registro.appat.value.length >20){
-		alert("Escribe como máximo 20 letras en el campo de Apellido Paterno");
+        if (registro.appat.value.length >30){
+		alert("Escribe como máximo 30 letras en el campo de Apellido Paterno");
 		registro.txtappat.focus();
 		return(false);
 	}
         
-        if (registro.apmat.value.length >20){
-		alert("Escribe como máximo 20 letras en el campo de Apellido Materno");
+        if (registro.apmat.value.length >30){
+		alert("Escribe como máximo 30 letras en el campo de Apellido Materno");
 		registro.txtapmat.focus();
 		return(false);
 	}

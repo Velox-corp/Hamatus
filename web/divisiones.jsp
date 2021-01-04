@@ -39,7 +39,7 @@
                         <input type="text" class="form-control" id="nombreD" name="nombreD" 
                                onchange="return validarString(this, true, false)"
                                ondrag="return validarString(this, true, false)"
-                               ondrop="return validarString(this, true, false)">
+                               ondrop="return validarString(this, true, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
                     </div>
                     <div class="form-group">
                         <div class="col-md-8">
