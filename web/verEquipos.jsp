@@ -75,13 +75,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         
-        <title>Hamatus -Visualización de equipos-</title>
+        <title>Visualización de equipos</title>
         
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
         
     </head>
     
-    <body class='container-fluid'>
+    <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
         <br>
         <div class="row">
@@ -190,8 +190,8 @@
             else{
             if(liderDiv.getiD_cat_priv() == 3){ %>
             
-                <div class='row align-items-center'>
-                    <div class='col-md-6 card align-items-center text-white bg-info'>
+                <div class='row d-flex justify-content-center'>
+                    <div class='col-md-6 card align-items-center text-white' style="background-color: #2291C1">
                         <h5 class='card-header text-capitalize'>No Hay Equipos</h5>
 
                         <div class='card-body'>
@@ -207,13 +207,13 @@
             <br>
             
             <%}else{%>
-             <div class='row align-items-center'>
-                    <div class='col-md-6 card text-white align-items-center bg-info'>
+             <div class='row d-flex justify-content-center'>
+                    <div class='col-md-6 card text-white align-items-center' style="background-color: #2291C1">
                         <h5 class='card-header text-capitalize'>No Hay Equipos</h5>
 
                         <div class='card-body'>
                             <article class='card-text'>
-                                No se tienen equipos registrados en ninguna división.
+                                No se tienen equipos registrados en ninguna división
                             </article>
                         </div>
                     </div>
