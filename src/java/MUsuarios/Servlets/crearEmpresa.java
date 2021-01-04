@@ -105,7 +105,7 @@ public class crearEmpresa extends HttpServlet {
                 }catch(IOException | NullPointerException e){
                     e.getMessage();
                     e.printStackTrace();
-                }
+                  }
                 
 
                 if(proceso_correcto){

@@ -81,7 +81,7 @@ public class crearDivision extends HttpServlet {
                 
 
                 if(proceso_correcto){
-                    redirect="empresa.jsp";
+                    redirect="divisiones.jsp";
                 }else{
                     System.out.println("No se guardo en la bd");
                     redirect = "error.jsp";

@@ -39,14 +39,10 @@
         
     </head>
     
-    <body class='container-fluid'>
+    <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-        <br>
-        <div class="row">
-		<div class="col-md-12 text-center">
-                    <h4>Creación de nuevo equipo de trabajo</h4>
-		</div>
-	</div>
+        <div class="container margin-top-1rem">
+            <center><h1>Crear equipos</h1></center>    
         <br>
         <form method="post" action="crearEquipoTrabajo">
             <input type="hidden" name="maxEmpleados" value="<%=empleados.size()%>">
@@ -55,17 +51,16 @@
                         <label for=nombreEquipo">
                             Nombre del equipo:
                         </label>
-                        <input type="text" id='nombreEquipo' name='nombreEquipo'>
+                        <input class="h4 form-control" type="text" id='nombreEquipo' name='nombreEquipo' oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                     </div>
                     <div class="col-md-6 form-group">
                         <label for='división'>
-                            División correspondiente
+                            División correspondiente:
                         </label>
-                        <input type="text" readonly="readonly" id='division'  value='<%=Division.traducirID(liderDiv.getiD_Division()) /*está debería cambiar por el nombre de la división*/%>' name='division'>
+                        <input class="h4 form-control" type="text" readonly="readonly" id='division'  value='<%=Division.traducirID(liderDiv.getiD_Division()) /*está debería cambiar por el nombre de la división*/%>' name='division'>
                         <input type='hidden' readonly="readonly" id='divH' name='divH' value='<%=liderDiv.getiD_Division()%>'>
                     </div>
             </div>
-            <br>
             <%
                 for (int i = 0; i < empleados.size(); i++) {
                     UsuarioEmpleado emp = empleados.get(i);
@@ -75,7 +70,7 @@
                     %>
             <div class="row">
                     <div class="col-md-4">
-                            <div class="card text-white bg-primary">
+                            <div class="card text-white" style="background-color: #6c757d">
                                     <h5 class="card-header">
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
@@ -127,10 +122,11 @@
                     <br>
                     <div class='row align-items-center'>
                     <div class='col-md-10'>
-                        <button class='btn btn-success btn-large' type="submit">Crear equipo de trabajo</button>
+                        <button class='btn btn-dark btn-large' type="submit">Crear equipo de trabajo</button>
                     </div>
                 </div>
         </form>
+        </div>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>

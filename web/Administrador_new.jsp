@@ -53,50 +53,48 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
-			<h3 class="text-center">
-				Ingrese un nuevo empleado en el sistema
-			</h3>
-                    <form role="form" action='agregarEmpleado' method='POST'>
+                    <center><h1>Ingrese un nuevo empleado en el sistema</h1></center>    
+                    <form role="form" action='agregarEmpleado' method='POST' onsubmit="return valido(this)" name="registro">
                             <div class="form-group">
                             <label for="nameUser">Nombre:</label>
                             <input type="name" class="form-control" id="nameUser" name="nameUser" 
                                    onchange="return validarString(this, true, false)"
                                    ondrag="return validarString(this, true, false)"
-                                   ondrop="return validarString(this, true, false)">
+                                   ondrop="return validarString(this, true, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                           </div>
                             <div class="form-group">
                                 <label for="appat">Apellido Paterno:</label>
                                 <input type="name" class="form-control" id="appat" name="appat"
                                        onchange="return validarString(this, false, false)"
                                        ondrag="return validarString(this, false, false)"
-                                       ondrop="return validarString(this, false, false)">
+                                       ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                            </div>
                             <div class="form-group">
                                 <label for="apmat">Apellido Materno:</label>
                                 <input type="name" class="form-control" id="apmat" name="apmat"
                                        onchange="return validarString(this, false, false)"
                                        ondrag="return validarString(this, false, false)"
-                                       ondrop="return validarString(this, false, false)">
+                                       ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                               </div>
                             <div class="form-group">
                                 <label for="f_n">Fecha de nacimiento:</label>
                                 <input type="date" class="form-control" id="f_n" name="f_n"
-                                       onchange="return validarDate(this)">
+                                       onchange="return validarDate(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
                               </div>
                             <div class="form-group">
-                              <label for="email">Direccion de correo electrónico: </label>
+                              <label for="email">Dirección de correo electrónico: </label>
                               <input type="email" class="form-control" id="email" name="email"
-                                     onchange="return validarEmail(this)">
+                                     onchange="return validarEmail(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="250">
                             </div>
                             <div class="form-group">
                               <label for="pwd">Contraseña:</label>
                               <input type="password" class="form-control" id="pwd" name="pwd" 
-                                     onchange="return validarPass(this)">
+                                     onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                             </div>
                             <div class="form-group">
                                 <label for="pwd2">Confirma tu contraseña:</label>
                                 <input type="password" class="form-control" id="pwd2" name="pwd2" 
-                                       onchange="return validarPass(this)">
+                                       onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                             </div>
                             <div class="form-group">
                                     <label for="Img">
@@ -123,10 +121,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-dark">
                                                 Guardar empleado
                                         </button>
-                                        <button type="reset" class="btn btn-danger">
+                                        <button type="reset" class="btn btn-default">
                                                 Borrar campos
                                         </button>
                                     </div>

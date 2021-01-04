@@ -462,3 +462,9 @@ img.per{
     font-size: 0.75rem;
 }
 /*FIN*/
+
+.ti{
+    font-family: Graphik,sans-serif;
+    color: #FFFFFF;
+    background-color: #2291C1;
+}
