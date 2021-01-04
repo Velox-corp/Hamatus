@@ -175,6 +175,38 @@ public class EUsuarioEquipo implements Serializable {
         return proceso_adecuado;
     }
     
+    /**
+     * Musca el equipo de un usuario a partir del ide del mismo
+     * @param ideUser el die del usuario
+     * @return el ide del equipo
+     */
+    public static int buscarEquipo(int ideUser){
+        int idEquipo = 0;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT ID_Equipo FROM e_usuario_equipo WHERE ID_Usuario_Empleado = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, ideUser);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                idEquipo = rs.getInt("ID_Equipo");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            idEquipo = -1;
+        }finally{
+            try {
+                con.close();
+                q = "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return idEquipo;
+    }
+    
     public Integer getIDUsuarioEquipo() {
         return iDUsuarioEquipo;
     }
