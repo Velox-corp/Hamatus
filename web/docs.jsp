@@ -128,7 +128,7 @@
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
                         </div>
                         <label for="pass">Agrege una contraseña al archivo</label>
-                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
+                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                         <label for="id_tipo_acceso">Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%
@@ -241,7 +241,7 @@
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
                         </div>
                         <label for="pass"><br>Agrege una contraseña al archivo</label>
-                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" required>
+                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                         <label for="id_tipo_acceso"><br>Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%
