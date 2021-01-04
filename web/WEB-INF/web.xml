@@ -88,6 +88,10 @@
         <servlet-name>controlA</servlet-name>
         <servlet-class>MTablones.Servlets.controlA</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Opciones</servlet-name>
+        <servlet-class>MTablones.Clases.Opciones</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>controlA</servlet-name>
         <url-pattern>/controlA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Opciones</servlet-name>
+        <url-pattern>/Opciones</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
