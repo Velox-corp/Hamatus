@@ -26,7 +26,7 @@
     </head>
     <body class=''>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-        <main class="row">
+        <main>
 		<div class="col-md-12">
                     <div class='row'>
                         <div class='col-md-2'>
@@ -35,13 +35,18 @@
                             <center><h1><br><%=emp.getNombre()%></h1></center>
                         </div>
                     </div>
-                    <div style="margin-left: 2rem">
-                        <h3>Razón Social:</h3>
-                        <h3 style="color: #181818"><%=emp.getRazónsocial()%></h3>
-                        <h3>Descripción:</h3>
-                        <p>
-                            <%=emp.getDescripcion()%>
-                        </p>
+                    <div class='row'>
+                        <div  class='col-md-8' style="margin-left: 2rem">
+                            <h3>Razón Social:</h3>
+                            <h3 style="color: #181818"><%=emp.getRazónsocial()%></h3>
+                            <h3>Descripción:</h3>
+                            <p>
+                                <%=emp.getDescripcion()%>
+                            </p>
+                        </div>
+                        <div class='col-md-3'>
+                            <img class="mx-auto d-block icono img-fluid" src="cargaRegistro?id=<%=emp.getIDEmpresa()%>" alt='Logo <%=emp.getNombre()%>'>
+                        </div>
                     </div>
                     <hr>
                     <%if(admin.getiD_cat_priv() ==1 || admin.getiD_cat_priv() ==2){%>

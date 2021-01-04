@@ -45,22 +45,24 @@
 <html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hamatus -Vista de empleados-</title>
+        <title>Vista de empleados</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
         <div class='row'>
             <div class='col-md-12'>
-                <h3 class='text-center'>Empleados</h3>
+                <center><h1>Empleados</h1></center>    
             </div>
         </div>
         <br>
-        <div class="row align-items-center">
-            <div class="col-md-12 align-items-center text-center">
+        <div class="row margin-top-1rem">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
                 <table class="table table-hover table-responsive  text-center align-items-center">
                     <thead>
-                        <tr class="bg-primary">
+                        <tr class="ti">
                             <th>Apellido paterno</th>
                             <th>Apellido materno</th>
                             <th>Nombre(s)</th>
@@ -68,7 +70,7 @@
                             <th>Correo</th>
                             <th>Division</th>
                             <th>Puesto</th>
-                            <th class="text-danger">Acciones</th>
+                            <th style="background-color: #6c757d">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

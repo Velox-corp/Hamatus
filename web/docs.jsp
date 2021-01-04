@@ -282,9 +282,6 @@
             <p class="lead">Eres un administrador por lo tanto no tienes acceso 
                 a la herramienta de documentos al no poseer un equipo</p>
             <hr class="my-4">
-            <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
-            </p>
         </div>     
     </div>
     <% }else if(usuario.getiD_cat_priv() == 2 && IDequipo == 0){%>
@@ -294,9 +291,6 @@
             <p class="lead">Eres un directivo por lo tanto no tienes acceso a la herramienta de documentos, 
             de ser necesario un documento solicita un link de acceso al documento con un colaborador de la empresa</p>
             <hr class="my-4">
-            <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
-            </p>
         </div>     
     </div>
     <% }else if(usuario.getiD_cat_priv() == 3 && IDequipo == 0){%>
@@ -306,9 +300,6 @@
             <p class="lead">Eres un jefe de area por lo tanto no tienes acceso 
                 a la herramienta de documentos al no poseer un equipo</p>
             <hr class="my-4">
-            <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
-            </p>
         </div>     
     </div>
     <%}else {%>
@@ -320,9 +311,6 @@
                 un link de acceso a un colaborador de la empresa o pedir a un jefe 
                 de area ingresar a un equipo de trabajo</p>
             <hr class="my-4">
-            <p class="lead">
-              <a class="btn btn-primary btn-lg" href="tutorial.jsp" role="button">Ver mas</a>
-            </p>
         </div>     
     </div>
     <%
