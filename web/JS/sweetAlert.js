@@ -41,6 +41,14 @@ function wrong_pass(){
     });
 }
 
+function true_pass(pass){
+    Swal.fire({
+        title: "Documento correctamente guardado",
+        text:"La contraseña es: " + pass ,
+        icon:'success'
+    });
+}
+
 function copy_link(id){
     const text = window.location.host + "/Hamatus/" + id;
     console.log(text);
@@ -84,6 +92,7 @@ function deleteFile(id_m, fileName){
     });
 }
 
+
 window.onload = function(){
     if (getParameterByName('flag') == 'true') {
         confirmation();
@@ -102,12 +111,7 @@ window.onload = function(){
         wrong_pass();
     }else if(getParameterByName('flag') == 'true_pass'){
         var pass = getParameterByName('pass');
-        Swal.fire({
-        position: 'top-end',
-        title: "Documento correctamente guardado",
-        text:"La contraseña es:" + pass,
-        icon:'success',
-    });
+        true_pass(pass);
     }
 }
 
