@@ -83,12 +83,8 @@
     
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-        <br>
-        <div class="row">
-		<div class="col-md-12 text-center">
-                    <h4>Equipos de trabajo guardados</h4>
-		</div>
-	</div>
+        <div class="container margin-top-1rem">
+            <center><h1>Equipos de trabajo guardados</h1></center>
         <br>
             
             <%if (hayEquipos){
@@ -100,22 +96,22 @@
                     %>
             <div class="row">
                     <div class="col-md-4">
-                            <div class="card text-white bg-primary">
+                            <div class="card text-white" style="background-color: #6c757d">
                                     <h5 class="card-header">
                                             <%=eq.getNombre()%>
                                     </h5>
                                     <div class="card-body">
                                         <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
+                                        <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
                                         <br>
                                     <% if(!sonTotales){ %>
-                                            <a class='btn btn-info' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
                                                 Editar equipo
                                             </a>
                                         </div>
                                         <div class='card-footer'>
-                                            <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                                EliminarEquipo
+                                            <a class='btn btn-info' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                                Eliminar equipo
                                             </a>
                                         </div>
                                     <% } else{ %>
@@ -123,26 +119,26 @@
                                     </div>   
                                     <% } %>
                             </div>
-                    </div>
+                    </div><br>
                     <%      break;
                         case 2: %>
                     <div class="col-md-4">
-                            <div class="card text-white bg-primary">
+                            <div class="card text-white" style="background-color: #6c757d">
                                     <h5 class="card-header">
                                             <%=eq.getNombre()%>
                                     </h5>
                                     <div class="card-body">
                                         <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
+                                        <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
                                         <br>
                                         <% if(!sonTotales){ %>
-                                            <a class='btn btn-info' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
                                                 Editar equipo
                                             </a>
                                         </div>
                                         <div class='card-footer'>
-                                            <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                                EliminarEquipo
+                                            <a class='btn btn-info' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                                Eliminar equipo
                                             </a>
                                         </div>
                                     <% } else{ %>
@@ -150,27 +146,27 @@
                                     </div>   
                                     <% } %>   
                             </div>
-                    </div>
+                    </div><br>
                             <% break;
                         case 0:
                             %>
                     <div class="col-md-4">
-                            <div class="card text-white bg-primary">
+                            <div class="card text-white" style="background-color: #6c757d">
                                     <h5 class="card-header">
                                             <%=eq.getNombre()%>
                                     </h5>
                                     <div class="card-body">
                                         <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
+                                        <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
                                         <br>
                                         <% if(!sonTotales){ %>
-                                            <a class='btn btn-info' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
                                                 Editar equipo
                                             </a>
                                         </div>
                                         <div class='card-footer'>
-                                            <a class='btn btn-danger' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                                EliminarEquipo
+                                            <a class='btn btn-info' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                                Eliminar equipo
                                             </a>
                                         </div>
                                     <% } else{ %>
@@ -179,7 +175,7 @@
                                     <% } %>
                             </div>
                     </div>
-            </div>
+                </div><br>
                     <%break;
                     }//switch
                 }  // for 
@@ -200,7 +196,7 @@
                             </article>
                         </div>
                         <div class='card-footer'>
-                            <a class='btn btn-success capitalize' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+                            <a class='btn btn-dark capitalize' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
                         </div>
                     </div>
                 </div>
@@ -220,6 +216,7 @@
                 </div>
              <% } 
         } %>
+    </div>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>
