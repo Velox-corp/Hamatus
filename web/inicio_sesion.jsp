@@ -62,14 +62,14 @@
                     <img align="right" src="img/iniciar-sesion.png">
                   </div>
                   <div class="col-sm-6">
-                    <form action="iniciarSesion">
+                    <form action="iniciarSesion" name="formulario" onsubmit="return validoIS(this)">
                         <div class="form-group">
                           <label for="email">Dirección de correo electrónico:</label>
-                          <input type="email" class="form-control" id="email" name="email" oncopy="return false" onpaste="return false" placeholder="Email" autocomplete="off">
+                          <input type="email" class="form-control" id="email" name="email" oncopy="return false" onpaste="return false" placeholder="Email" autocomplete="off" ondrag="return false"  ondrop="return false">
                         </div>
                         <div class="form-group">
                           <label for="pwd">Contraseña:</label>
-                          <input type="password" class="form-control" id="pwd" name="pwd" oncopy="return false" onpaste="return false" placeholder="Contraseña">
+                          <input type="password" class="form-control" id="pwd" name="pwd" oncopy="return false" onpaste="return false" placeholder="Contraseña" ondrag="return false"  ondrop="return false">
                         </div>
                         <div class="checkbox">
                           <label><input type="checkbox"> Recordar mi información</label><br><br>

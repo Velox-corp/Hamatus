@@ -282,3 +282,12 @@ function valido(registro) {
 	}
         
 }
+
+function validoIS(formulario) {
+    
+        if (formulario.email.value.length ==0 || formulario.pwd.value.length ==0) {
+            alert("Por favor, Introduce todos los datos solicitados correctamente");
+            return(false);
+	}
+        
+}
