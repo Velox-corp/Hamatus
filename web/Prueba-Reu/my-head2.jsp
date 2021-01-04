@@ -81,7 +81,7 @@
                         <ul style="background-color: #303031">
                             <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
@@ -102,7 +102,7 @@
                         <ul style="background-color: #303031">
                             <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
@@ -123,7 +123,7 @@
                         <ul style="background-color: #303031">
                             <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
@@ -144,7 +144,7 @@
                         <ul style="background-color: #303031">
                             <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
-                            <li><a href="vistaOrganigrama.jsp" class="nav-item nav-link btn1">Organigrama</a>
+                            <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="#?" class="sub">Mi Equipo</a></li>
