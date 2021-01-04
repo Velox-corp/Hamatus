@@ -2,6 +2,7 @@
 <%@page import="java.sql.*"%>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="JS/Validaciones.js"></script>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -51,7 +52,7 @@
                             <input type="text" maxlength="500" class="form-control" id="descripciona" name="descripciona" placeholder="Anuncio" required="required" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false">
                         </div>
                         <div class="form-group">
-                            <input type="date" class="form-control" id="fechaa" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                            <input type="date" class="form-control" id="fechaa" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" onchange="return validarDate(this)">
                         </div>
                         <button type="submit" name="enviar" class="btn btn-dark">Guardar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                     </form> 
