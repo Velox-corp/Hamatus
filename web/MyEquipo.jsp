@@ -31,7 +31,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>Hamatus -Mi equipo-</title>
+        <title>Mi equipo</title>
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
@@ -39,21 +39,20 @@
         
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6 bg-info card text-white align-items-center">
+            <div class="col-md-6 card text-white align-items-center" style="background-color: #6c757d">
                 <div class="card-header">
-                     <h2 class="card-title">Mi equipo</h2>
+                    <h2 class="card-title" style="color: white">Mi equipo</h2>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
                         Usted pertenece al equipo: <strong><%=equipo.getNombre()%></strong>
                     </div>
                     <br>
-                    <a class="card-link text-white" href="docs.jsp">Trabaje con su equipo Aquí</a>
+                    <a class="btn btn-dark" href="docs.jsp">Trabaje con su equipo Aquí</a>
                 </div>
             </div>
             <div class="col-md-3"></div>
-        </div>
-        
-        <jsp:include page="Prueba-Reu/my-footer.jsp" />
+        </div><br><br><br><br>
     </body>
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

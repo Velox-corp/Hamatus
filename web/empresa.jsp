@@ -48,7 +48,7 @@
                             <img class="mx-auto d-block icono img-fluid" src="cargaRegistro?id=<%=emp.getIDEmpresa()%>" alt='Logo <%=emp.getNombre()%>'>
                         </div>
                     </div>
-                    <hr>
+                        <hr><br><br>
                     <%if(admin.getiD_cat_priv() ==1 || admin.getiD_cat_priv() ==2){%>
                     <div style="margin-left: 2rem">
                         <h3>Opciones del Administrador de la empresa</h3><br>
