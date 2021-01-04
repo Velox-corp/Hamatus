@@ -18,9 +18,9 @@
     }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html">
         <title>Divisiones</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
@@ -55,10 +55,12 @@
                                 Division division = divisiones.get(i);%> 
                                 <div class="input-group mb-3" style="background-color: #e9ecef">		 
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Nombre:</span><h4 class="card-title"><%=division.getNombre()%></h4>
+                                        <span class="input-group-text">Nombre:</span>
                                     </div>
-                                    <div class="card-body text-center">
-                                        <a href="javascript:funcion()"><a class="btn btn-secondary btn-large" href="eliminarDivision?id=<%=division.getId_Division()%>" onclick="return confirmation()">ELIMINAR</a>
+                                    <input class="h4 form-control" value='<%=division.getNombre()%>' readonly='readonly'/>
+                                    <div class="input-group-append">
+                                        <a href="javascript:funcion()">
+                                            <a class="btn btn-secondary btn-large" href="eliminarDivision?id=<%=division.getId_Division()%>" onclick="return confirmation()">ELIMINAR</a>
                                     </div>
                                 </div>                                
                         <%   }
