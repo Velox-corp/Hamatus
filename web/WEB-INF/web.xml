@@ -92,6 +92,14 @@
         <servlet-name>Opciones</servlet-name>
         <servlet-class>MTablones.Clases.Opciones</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>uploadFile_J</servlet-name>
+        <servlet-class>MDocumentos.Servlets.uploadFile_J</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteFile_J</servlet-name>
+        <servlet-class>MDocumentos.Servlets.deleteFile_J</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -183,6 +191,14 @@
     <servlet-mapping>
         <servlet-name>Opciones</servlet-name>
         <url-pattern>/Opciones</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadFile_J</servlet-name>
+        <url-pattern>/uploadFile_J</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteFile_J</servlet-name>
+        <url-pattern>/deleteFile_J</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

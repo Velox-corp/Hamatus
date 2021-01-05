@@ -41,7 +41,7 @@ import javax.servlet.http.Part;
  */
 
 @MultipartConfig(maxFileSize = 16177215)
-public class uploadFile extends HttpServlet {
+public class uploadFile_J extends HttpServlet {
     
     /**
      * Crea el directorio o verifica que exita el mismo
@@ -164,7 +164,8 @@ public class uploadFile extends HttpServlet {
                     pass = folio;
                 }
                 
-                int Equipo_ID_Equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                int Equipo_ID_Equipo = Integer.parseInt(String.valueOf(
+                        request.getParameter("id_e").charAt(0)));
                 int id_D_DOcumento   = 1;//no entiendo bien esto
                 int id_usuario_p     = usuario.getIDUsuarioE();
                 String ruta          = "/archivos/"+Equipo_ID_Equipo+"/";

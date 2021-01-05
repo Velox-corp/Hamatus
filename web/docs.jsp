@@ -10,7 +10,7 @@
 <%@page import="java.io.File"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,7 +48,7 @@
             response.sendRedirect("error.jsp");
         }
         int IDequipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
-        if (usuario.getiD_cat_priv() == 5) {
+        if (usuario.getiD_cat_priv() == 3) {
             //Bueno bueno aqui vamos basicamente la idea es que vea todos 
             //los archivos de todos los equipos
             ArrayList<Equipo> equipos = Equipo.obtenerEquipos(usuario.getiD_Division());
@@ -80,12 +80,13 @@
                                         mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
                                     %>
                                     <li>
-                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file_j.getName()%>" 
+                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>
+                                           &fileName=<%=file_j.getName()%>" 
                                            target="_top" data-toggle="tooltip" 
                                            title="Descargar" id="<%=file_j.getAbsolutePath()%>"
                                            ><%=list_j[i]%></a>
                                            <a target="_top" data-toggle="tooltip" title="Eliminar" 
-                                              onclick="deleteFile(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>')">
+                                              onclick="deleteFile_J(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>', <%= eq.getIDEquipo() %>)">
                                                <i class="fas fa-trash-alt text-danger"></i>
                                            </a>
                                               <a target="_top" data-toggle="tooltip" 
@@ -122,7 +123,7 @@
                     </ul>
                 </nav>
                 <div class="card">
-                    <form class="card-body form-group" action="uploadFile" method="POST" enctype="multipart/form-data">
+                    <form class="card-body form-group" action="uploadFile_J" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="file" class="form-label">Insertar archivo</label>
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
@@ -147,6 +148,17 @@
                         <select class="form-control" name="tipo_archivo">
                             <option>Digital</option>
                             <option>Escaneado</option>
+                        </select>
+                        <label for="id_e">Elija el equipo al que quiere subir el archivo</label>
+                        <select class="form-control" name="id_e">
+                            <%
+                                ArrayList<Equipo> listaequipos = Equipo.obtenerEquipos(usuario.getiD_Division());
+                                for (Equipo eqq: listaequipos) {
+                                %>
+                                <option><%= eqq.getIDEquipo() %>.<%= eqq.getNombre() %></option>
+                                <%
+                                }
+                            %>
                         </select>
                         <br>
                         <div class="justify-content-center">
@@ -196,16 +208,16 @@
                                                    ><%=list[i]%></a>
                                                    <a target="_top" data-toggle="tooltip" title="Eliminar" 
                                                       onclick="deleteFile(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>')">
-                                                       <i class="fas fa-trash-alt text-danger"></i>
+                                                       <i class="fas fa-trash-alt text-dark"></i>
                                                    </a>
                                                       <a target="_top" data-toggle="tooltip" 
                                                          title="Modificar" 
                                                          href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>">
-                                                       <i class="fas fa-edit text-primary"></i>
+                                                       <i class="fas fa-edit text-dark"></i>
                                                    </a>
                                                    <a target="_top" data-toggle="tooltip" title="Compartir" 
                                                       onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
-                                                       <i class="fas fa-share text-primary"></i>
+                                                       <i class="fas fa-share text-dark"></i>
                                                    </a>
                                             </li>
                                       <%}
@@ -293,7 +305,7 @@
             <hr class="my-4">
         </div>     
     </div>
-    <% }else if(usuario.getiD_cat_priv() == 3 && IDequipo == 0){%>
+    <% }  else if(usuario.getiD_cat_priv() == 5 && IDequipo == 0){%>
     <div class="container">
         <div class="jumbotron">
             <h1 class="display-4">No tienes acceso a la herramienta de documentos</h1>
@@ -301,7 +313,7 @@
                 a la herramienta de documentos al no poseer un equipo</p>
             <hr class="my-4">
         </div>     
-    </div>
+    </div> %>
     <%}else {%>
     <div class="container">
         <div class="jumbotron">

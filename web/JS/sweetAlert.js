@@ -14,6 +14,15 @@ function confirmation(){
     });
 }
 
+function too_w(){
+    var titulo = decode_utf8("Su archivo pesa más de 15Mb");
+    Swal.fire({
+        title: titulo,
+        text:'Contacte al administrador',
+        icon:'error'
+    });
+}
+
 function confirmation_del(){
     Swal.fire({
         position: 'top-end',
@@ -34,17 +43,20 @@ function error(){
 }
 
 function wrong_pass(){
+    var titulo = decode_utf8("Contraseña incorrecta");
+    var text = decode_utf8('Ingrese otra vez la contraseña');
     Swal.fire({
-        title: "Contraseña incorrecta",
-        text:'Ingrese otra vez la contraseña',
+        title: titulo,
+        text:text,
         icon:'error'
     });
 }
 
 function true_pass(pass){
+    var text = decode_utf8('La contraseña es: ');
     Swal.fire({
         title: "Documento correctamente guardado",
-        text:"La contraseña es: " + pass ,
+        text:text + pass ,
         icon:'success'
     });
 }
@@ -76,18 +88,39 @@ function copy_link(id){
 }
 
 function deleteFile(id_m, fileName){
+    var titulo = decode_utf8('¿Estas seguro de que quieres borrar el archivo?');
+    var text = decode_utf8('La contraseña es: ');
     Swal.fire({
-        title: 'Estas seguro de que quieres borrar el archivo?',
-        text: "Recuerda que no podras recuperarla",
+        title: titulo,
+        text: "Recuerda que no podras recuperarlo",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#343a40',
         confirmButtonText: 'Si por favor',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
           window.location = "deleteFile?id_M="+id_m+"&fileName="+fileName;
+        }
+    });
+}
+
+function deleteFile_J(id_m, fileName, id_e){
+    var titulo = decode_utf8('¿Estas seguro de que quieres borrar el archivo?');
+    var text = decode_utf8('La contraseña es: ');
+    Swal.fire({
+        title: titulo,
+        text: "Recuerda que no podras recuperarlo",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#343a40',
+        confirmButtonText: 'Si por favor',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+          window.location = "deleteFile_J?id_M="+id_m+"&fileName="+fileName+"&id_e="+id_e;
         }
     });
 }
@@ -113,6 +146,9 @@ window.onload = function(){
         var pass = getParameterByName('pass');
         true_pass(pass);
     }
+    else if(getParameterByName('flag') == 'too_w'){
+        too_w();
+    }
 }
 
 /**
@@ -124,4 +160,12 @@ function getParameterByName(name) {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
     results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function encode_utf8(s) {
+  return unescape(encodeURIComponent(s));
+}
+
+function decode_utf8(s) {
+  return decodeURIComponent(escape(s));
 }
