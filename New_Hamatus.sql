@@ -280,10 +280,10 @@ DROP TABLE IF EXISTS `tablon` ;
 
 CREATE TABLE IF NOT EXISTS `tablon` (
   `ID_Tablon` INT(11) NOT NULL AUTO_INCREMENT,
-  `Titulo_Anuncio` TINYTEXT NOT NULL,
-  `Contenido` MEDIUMTEXT NOT NULL,
+  `Titulo_Anuncio` VARBINARY(128) NOT NULL,
+  `Contenido` VARBINARY(1024) NOT NULL,
   `Id_division` INT(11) NOT NULL,
-  `fecha_publicacion` DATETIME NOT NULL,
+  `fecha_publicacion` VARBINARY(128) NOT NULL,
   PRIMARY KEY (`ID_Tablon`),
   CONSTRAINT `fk_tablon_division`
     FOREIGN KEY (`Id_division`)
@@ -334,7 +334,7 @@ BEGIN
     where 
 		(division.ID_Jerarquia = 1 and division.ID_Empresa = idE) or
         (division.ID_Jerarquia = 2 and division.ID_Empresa = idE and division.ID_Division = idDiv)
-	order by fecha_publicacion DESC;
+	order by aes_decrypt(tablon.fecha_publicacion, "gurmnhorgvmeigdv") DESC;
 END$$
 
 DELIMITER ;

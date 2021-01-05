@@ -139,7 +139,7 @@
                             <input type="password" class="form-control" id="pwd" name='pwd'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
-                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
+                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" minlength="10" maxlength="30">
                         </div>
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
@@ -148,7 +148,7 @@
                             <input type="password" class="form-control" id="Npwd" name='Npwd'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
-                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
+                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" minlength="10" maxlength="30">
                         </div>
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
@@ -157,7 +157,7 @@
                             <input type="password" class="form-control" id="Npwd2" name='Npwd2'
                                    onchange="return validarPass(this)"
                                    ondrag="return validarPass(this)"
-                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
+                                   ondrop="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false"  minlength="10" maxlength="30">
                         </div>
                         <button type="submit" class="btn btn-dark">
                             Actualizar información
@@ -165,10 +165,6 @@
                     </form>
                 </div>
                 <div class="col-md-2">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
                 </div>
             </div>
         </div>

@@ -285,7 +285,7 @@ public class Division implements Serializable{
         try{
             con = Conexion.obtenerConexion();
             query = "SELECT ID_Division from Division where ID_Empresa = ? AND ID_Jerarquia = 1";
-            ps = con.prepareStatement(q);
+            ps = con.prepareStatement(query);
             ps.setInt(1, idEmpresa);
             rs = ps.executeQuery();
             if(rs.next()){

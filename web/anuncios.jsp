@@ -82,7 +82,7 @@
                                 <% }
                                 } %>
                         </table>
-                        <% if(liderDiv.getiD_Division() == divPart || liderDiv.getiD_Division() == divGen) {  %>
+                        <% if((liderDiv.getiD_Division() == divPart) || (divPart == 0 && liderDiv.getiD_cat_priv() == 3) || (liderDiv.getiD_Division() == divGen) || (divGen == 0 && (liderDiv.getiD_cat_priv() == 2 || liderDiv.getiD_cat_priv() == 1 )) ) {  %>
                             <a href="tablon.jsp" id="btnAdd"><i class="far fa-plus-square" arial-hidden="true">Agregar Nuevo</i></a>
                         <% } 
                          }catch (Exception e) {

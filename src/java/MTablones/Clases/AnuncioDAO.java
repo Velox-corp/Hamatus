@@ -6,6 +6,7 @@
 package MTablones.Clases;
 
 import ClasesSoporte.Conexion;
+import MSeguridad.Clases.AES;
 import MTablones.Clases.Anuncio;
 import java.sql.*;
 import java.util.ArrayList;
@@ -36,7 +37,16 @@ public class AnuncioDAO {
                 anuncios.add(p);
             }
         } catch (Exception e) {
-
+            e.getMessage();
+            e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return anuncios;
     }
@@ -75,9 +85,9 @@ public class AnuncioDAO {
             while (rs.next()) {
                 Anuncio p = new Anuncio();
                 p.setId(rs.getInt("ID_Tablon"));
-                p.setTitulo(rs.getString("Titulo_Anuncio"));
-                p.setDescripcion(rs.getString("Contenido"));
-                p.setFecha(rs.getString("fecha_publicacion"));
+                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio")));
+                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido")));
+                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion")));
                 p.setVectorTipoTablon(rs.getString(1));
                 p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
@@ -103,6 +113,15 @@ public class AnuncioDAO {
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -112,13 +131,22 @@ public class AnuncioDAO {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
             
-            ps.setString(1, anuncio.getTitulo());
-            ps.setString(2, anuncio.getDescripcion());
-            ps.setString(3, anuncio.getFecha());
+            ps.setBytes(1, AES.cifrar(anuncio.getTitulo()));
+            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion()));
+            ps.setBytes(3, AES.cifrar(anuncio.getFecha()));
             ps.setInt(4,anuncio.getIdDivision());
             ps.executeUpdate();
             
         } catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+        }finally{
+            try {
+                con.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -129,12 +157,13 @@ public class AnuncioDAO {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
             
-            ps.setString(1, anuncio.getTitulo());
-            ps.setString(2, anuncio.getDescripcion());
-            ps.setString(3, anuncio.getFecha());
+            ps.setBytes(1, AES.cifrar(anuncio.getTitulo()));
+            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion()));
+            ps.setBytes(3, AES.cifrar(anuncio.getFecha()));
             ps.executeUpdate();
         } catch (Exception e) {
-            
+            e.getMessage();
+            e.printStackTrace();
         }
         
     }

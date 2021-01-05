@@ -33,5 +33,6 @@ function alterarPuestos(){
             break;
     }
     selectJer.style.display = 'block';
+    return false;
 }
 
