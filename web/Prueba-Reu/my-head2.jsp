@@ -1,7 +1,7 @@
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
-<link rel="stylesheet" type="text/css" href="CSS/estilos.css">
+<link rel="stylesheet" type="text/css" href="css/estilos.css">
 <script src="JS/Validaciones.js"></script>
 <%
     HttpSession sesionUser = request.getSession();

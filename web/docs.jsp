@@ -188,27 +188,27 @@
                                         //Definimos primero a ddoc
                                         ddoc.ConsultarD_Doc(IDequipo, file.getName());
                                         mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
-                        %>
-                                <li>
-                                    <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>" 
-                                       target="_top" data-toggle="tooltip" 
-                                       title="Descargar" id="<%=file.getAbsolutePath()%>"
-                                       ><%=list[i]%></a>
-                                       <a target="_top" data-toggle="tooltip" title="Eliminar" 
-                                          onclick="deleteFile(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>')">
-                                           <i class="fas fa-trash-alt text-danger"></i>
-                                       </a>
-                                          <a target="_top" data-toggle="tooltip" 
-                                             title="Modificar" 
-                                             href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>">
-                                           <i class="fas fa-edit text-primary"></i>
-                                       </a>
-                                       <a target="_top" data-toggle="tooltip" title="Compartir" 
-                                          onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
-                                           <i class="fas fa-share text-primary"></i>
-                                       </a>
-                                </li>
-                                <%
+                                        if (ddoc.getId_tipo_acceso() != 1) {%>
+                                            <li>
+                                                <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>" 
+                                                   target="_top" data-toggle="tooltip" 
+                                                   title="Descargar" id="<%=file.getAbsolutePath()%>"
+                                                   ><%=list[i]%></a>
+                                                   <a target="_top" data-toggle="tooltip" title="Eliminar" 
+                                                      onclick="deleteFile(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>')">
+                                                       <i class="fas fa-trash-alt text-danger"></i>
+                                                   </a>
+                                                      <a target="_top" data-toggle="tooltip" 
+                                                         title="Modificar" 
+                                                         href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>">
+                                                       <i class="fas fa-edit text-primary"></i>
+                                                   </a>
+                                                   <a target="_top" data-toggle="tooltip" title="Compartir" 
+                                                      onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
+                                                       <i class="fas fa-share text-primary"></i>
+                                                   </a>
+                                            </li>
+                                      <%}
                                     }
                                 }
                             }else{
@@ -240,8 +240,8 @@
                             <label for="file" class="form-label">Insertar archivo</label>
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
                         </div>
-                        <label for="pass"><br>Agrege una contraseña al archivo</label>
-                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
+                        <label for="pass"><br>Agrege una contraseña al archivo (si no inserta ninguna el mismo sistema le proporcionara una)</label>
+                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" minlength="10" maxlength="30">
                         <label for="id_tipo_acceso"><br>Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%
