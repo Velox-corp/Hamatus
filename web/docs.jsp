@@ -80,23 +80,22 @@
                                         mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
                                     %>
                                     <li>
-                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>
-                                           &fileName=<%=file_j.getName()%>" 
+                                        <a href="downloadFile?e=<%= eq.getIDEquipo() %>&fileName=<%=file_j.getName()%>" 
                                            target="_top" data-toggle="tooltip" 
                                            title="Descargar" id="<%=file_j.getAbsolutePath()%>"
                                            ><%=list_j[i]%></a>
                                            <a target="_top" data-toggle="tooltip" title="Eliminar" 
                                               onclick="deleteFile_J(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>', <%= eq.getIDEquipo() %>)">
-                                               <i class="fas fa-trash-alt text-danger"></i>
+                                               <i class="fas fa-trash-alt text-dark"></i>
                                            </a>
                                               <a target="_top" data-toggle="tooltip" 
                                                  title="Modificar" 
-                                                 href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>">
-                                               <i class="fas fa-edit text-primary"></i>
+                                                 href="mod_docs_J.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>&e=<%= ddoc.getEquipo_ID_Equipo() %>">
+                                               <i class="fas fa-edit text-dark"></i>
                                            </a>
                                            <a target="_top" data-toggle="tooltip" title="Compartir" 
                                               onclick="copy_link('Access.jsp?fileName=<%=file_j.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
-                                               <i class="fas fa-share text-primary"></i>
+                                               <i class="fas fa-share text-dark"></i>
                                            </a>
                                     </li>
                                     <%
@@ -118,7 +117,7 @@
                 <nav>
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="#">Subir</a>
+                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1">Subir</a>
                         </li>
                     </ul>
                 </nav>
@@ -162,10 +161,10 @@
                         </select>
                         <br>
                         <div class="justify-content-center">
-                            <button type="" class="btn btn-primary">
+                            <button type="" class="btn btn-dark">
                                 Subir Archivo
                             </button>
-                            <a href="docs.jsp" class="btn btn-danger">Cancelar</a>
+                            <a href="docs.jsp" class="btn btn-dark">Cancelar</a>
                         </div>
                     </form>
                 </div> 
@@ -242,7 +241,7 @@
                 <nav>
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="#" style="color: #F3F3F3; background-color: #2291C1">Subir</a>
+                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1">Subir</a>
                         </li>
                     </ul>
                 </nav>

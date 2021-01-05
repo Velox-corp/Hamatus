@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +35,7 @@ import javax.servlet.http.Part;
  * probable que sea como sobre escribir el archivo
  */
 @MultipartConfig(maxFileSize = 16177215)
-public class updateFile extends HttpServlet {
+public class updateFile_J extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -85,7 +87,7 @@ public class updateFile extends HttpServlet {
                 }
                 if (filePart.getSize() != 0) {
                     //Listado de datos preparados para entrar en la BD
-                    int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                    int ID_equipo = Integer.parseInt(request.getParameter("id_e"));
                     D_Documento ddoc = new D_Documento();
                     ddoc.ConsultarD_Doc(ID_equipo, nombre);
                     if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ddoc.getID_Documento())){
@@ -110,7 +112,7 @@ public class updateFile extends HttpServlet {
                     }
                 }else{
                     //Listado de datos preparados para entrar en la BD
-                    int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                    int ID_equipo = Integer.parseInt(request.getParameter("id_e"));
                     D_Documento ddoc = D_Documento.ConsultarD_Doc_sget(ID_equipo, nombre);
                     if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ddoc.getID_Documento())){
                         response.sendRedirect("docs.jsp?flag=true");
@@ -126,11 +128,13 @@ public class updateFile extends HttpServlet {
                 System.out.println("Error al hacer update de un doc");
                 System.out.println(e.getMessage());
                 e.printStackTrace();
+                response.sendRedirect("error.jsp");
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
+            response.sendRedirect("error.jsp");
         }
     }
 

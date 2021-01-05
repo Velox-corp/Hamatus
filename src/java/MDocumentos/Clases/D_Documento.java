@@ -175,7 +175,7 @@ public class D_Documento implements Serializable {
     }
     
     public static D_Documento ConsultarD_Doc_sget(int ID_equipo, String fileName){
-        D_Documento ddoc = null;
+        D_Documento ddoc = new D_Documento();
         //CallableStatement cs = null;
         try {
             Connection con = Conexion.obtenerConexion();
@@ -338,7 +338,8 @@ public class D_Documento implements Serializable {
             ps.setBytes(2, AES.cifrar(pass));
             ps.setInt(3, id_tipo_acceso);
             ps.setInt(4, ID_Documento);
-            if(ps.executeUpdate()==1) correcto = true;
+            ps.execute();
+            correcto = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

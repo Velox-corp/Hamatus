@@ -100,6 +100,10 @@
         <servlet-name>deleteFile_J</servlet-name>
         <servlet-class>MDocumentos.Servlets.deleteFile_J</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateFile_J</servlet-name>
+        <servlet-class>MDocumentos.Servlets.updateFile_J</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -199,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>deleteFile_J</servlet-name>
         <url-pattern>/deleteFile_J</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateFile_J</servlet-name>
+        <url-pattern>/updateFile_J</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
