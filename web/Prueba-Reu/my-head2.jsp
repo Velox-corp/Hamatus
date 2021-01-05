@@ -81,7 +81,7 @@
                 case 1: %>
                     <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
                         <ul style="background-color: #303031">
-                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=ListarTipo&tipo_div=<%=divT%>">Anuncios</a></li>
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                             <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
@@ -102,7 +102,7 @@
                 case 2: %>
                     <nav id="menu_gral" class="col-md-12 nav center-block justify-content-center" style="height: 3.6rem">
                         <ul style="background-color: #303031">
-                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=ListarTipo&tipo_div=<%=divT%>">Anuncios</a></li>
+                            <li><a class="nav-item nav-link btn1" href ="controlA?accion=home">Anuncios</a></li>
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                             <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>

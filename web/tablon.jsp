@@ -32,16 +32,7 @@
             <div class="col-md-1">
             </div>
             <div class="col-md-6">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#">Tab 1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Tab 2</a>
-                        </li>
-                    </ul>
-                </nav>
+                
                 <div class="card">
                     <h5 class="card-header">
                         Anuncio
@@ -66,21 +57,9 @@
 
                     </div>
                 </div>
-                <br>
 
             </div>
-            <div class="col-md-4 folio">
-                <div class="card">
-                    <h5 class="card-header">
-                        Folio
-                    </h5>
-                    <div class="card-body">
-                        <input type="text"class="form-control" placeholder="texto">
-                        <br>    
-                        <button class="btn btn-primary form-control">Buscar</button>
-                    </div>
-                </div>
-            </div>
+            
             <br>
             <jsp:include page="Prueba-Reu/my-footer.jsp" />
         </div>

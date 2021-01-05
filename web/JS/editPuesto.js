@@ -15,6 +15,11 @@ function alterarPuestos(){
             selectJer.options[1] = directivo;
             selectJer.options[2] = null;
             break;
+        case "DirecciÃ³n general":
+            let directivo =new Option("Directivo","2");
+            selectJer.options[1] = directivo;
+            selectJer.options[2] = null;
+            break;
         case "0":
             selectJer.options[1] = null;
             selectJer.options[2] = null;

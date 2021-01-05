@@ -116,7 +116,7 @@
                                     </select>
                                     <br>
                                     <select class="form-select" id="jerarquia" name="jerarquia">
-                                        
+                                        <option value="cero">Seleccione una jerarquia</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">

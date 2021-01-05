@@ -31,7 +31,7 @@ public class eliminarAnuncio extends HttpServlet {
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
         
-        anuncios = adao.listar();
+        //anuncios = adao.listar();
         
         switch(accion){
             case "Eliminar" :

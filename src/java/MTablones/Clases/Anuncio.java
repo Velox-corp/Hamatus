@@ -12,6 +12,7 @@ public class Anuncio {
     private String titulo;
     private String descripcion;
     private String fecha;
+    private String vectorTipoTablon;
     private int idDivision;
     static Connection con;
     static PreparedStatement ps;
@@ -208,6 +209,15 @@ public class Anuncio {
 
     public void setIdDivision(int idDivision) {
         this.idDivision = idDivision;
+    }
+
+    public String getVectorTipoTablon() {
+        return vectorTipoTablon;
+    }
+
+    public void setVectorTipoTablon(String vectorTipoTablon) {
+        
+        this.vectorTipoTablon = vectorTipoTablon;
     }
     
     

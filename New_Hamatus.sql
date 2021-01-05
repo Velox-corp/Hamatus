@@ -327,8 +327,8 @@ CREATE PROCEDURE `obtenerAnuncios` (idE int, idDiv int)
 BEGIN
 	select 
 	case 
-		when division.ID_Jerarquia = 1 and division.ID_Empresa = idE then "generales"
-        when division.ID_Jerarquia = 2 and division.ID_Empresa = idE  and division.ID_Division = idDiv then "particulares"
+		when division.ID_Jerarquia = 1 and division.ID_Empresa = idE then "general"
+        when division.ID_Jerarquia = 2 and division.ID_Empresa = idE  and division.ID_Division = idDiv then "particular"
 	end, tablon.*
     from tablon join division on tablon.Id_division = division.ID_Division
     where 

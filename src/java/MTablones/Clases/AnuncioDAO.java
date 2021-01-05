@@ -10,6 +10,8 @@ import MTablones.Clases.Anuncio;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AnuncioDAO {
     Connection con;
@@ -60,29 +62,42 @@ public class AnuncioDAO {
         return anuncios;
     }
 
-    public List listar() {
+    public List listar(int idE, int idDiv) {
         List<Anuncio> anuncios = new ArrayList();
-        String sql = "Select * from tablon ORDER BY fecha_publicacion DESC";
+        String sql = "{call obtenerAnuncios(?, ?)}";
+        CallableStatement cs = null;
         try {
             con = Conexion.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+            cs = con.prepareCall(sql);
+            cs.setInt(1, idE);
+            cs.setInt(2, idDiv);
+            rs = cs.executeQuery();
             while (rs.next()) {
                 Anuncio p = new Anuncio();
-                p.setId(rs.getInt(1));
-                p.setTitulo(rs.getString(2));
-                p.setDescripcion(rs.getString(3));
-                p.setFecha(rs.getString(5));
+                p.setId(rs.getInt("ID_Tablon"));
+                p.setTitulo(rs.getString("Titulo_Anuncio"));
+                p.setDescripcion(rs.getString("Contenido"));
+                p.setFecha(rs.getString("fecha_publicacion"));
+                p.setVectorTipoTablon(rs.getString(1));
+                p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
             }
         } catch (Exception e) {
             System.out.println(e);
+        }finally{
+            try {
+                con.close();
+                cs.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return anuncios;
     }
     
     public void delete(int id) {
-        String sql = "delete from tablon where ID_Tablon=" + id;
+        String sql = "delete from tablon where ID_Tablon = " + id;
         try {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
