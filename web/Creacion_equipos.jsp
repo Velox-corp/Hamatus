@@ -62,6 +62,7 @@
                     </div>
             </div>
             <%
+            if(empleados.size() > 0){ 
                 for (int i = 0; i < empleados.size(); i++) {
                     UsuarioEmpleado emp = empleados.get(i);
                     int mod = (i+1)%3;
@@ -118,7 +119,15 @@
                 if(empleados.size() % 3 != 0){
                     %>
                     </div>
-                    <%} %>
+                    <%}
+            } else {%>
+            <div class='row'>
+                <div class='col-md-3'></div>
+                <div class="col-md-6 card text-white bg-danger text-center ">
+                    <h2 class='card-body text-white '><strong>No hay empleados Disponibles a asignar</strong></h2>
+                </div>
+            </div>
+            <% } %>
                     <br>
                     <div class='row align-items-center'>
                     <div class='col-md-10'>

@@ -56,13 +56,14 @@ public class iniciarSesion extends HttpServlet {
             }else{
                 redirect = "inicio_sesion.jsp";
             }
-            
+            response.sendRedirect(redirect);
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
         }finally{
-            response.sendRedirect(redirect);
+            
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
