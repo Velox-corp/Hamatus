@@ -58,7 +58,7 @@
                 </div>
 		<div class="col-md-2">
                     <%if(obtencionAdecuada){ %>
-                        <img class="rounded img-fluid" src="cargaRegistro?id=<%=idE%>" alt='Logo <%=nombre_empresa%>'>
+                        <img class="mx-auto d-block icono" src="cargaRegistro?id=<%=idE%>" alt='Logo <%=nombre_empresa%>'>
                     <%}%>
 		</div>
 		<div class="col-md-4">

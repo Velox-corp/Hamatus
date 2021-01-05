@@ -106,6 +106,7 @@
                                         <% } %>
                                     </select>
                                     <br>
+                                    <br>
                                     <select class="form-select" id="jerarquia" name="jerarquia">
                                         <option value="cero">Seleccione una jerarquia</option>
                                     </select>
@@ -115,7 +116,7 @@
                                         <button type="submit" class="btn btn-dark">
                                                 Guardar empleado
                                         </button>
-                                        <button type="reset" class="btn btn-default">
+                                        <button type="reset" class="btn btn-danger">
                                                 Borrar campos
                                         </button>
                                     </div>
