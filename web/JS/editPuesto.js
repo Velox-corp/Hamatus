@@ -8,9 +8,18 @@ function alterarPuestos(){
     let selectDiv = document.getElementById("newDiv");
     let index = selectDiv.selectedIndex;
     let opcion = selectDiv.options[index].value;
-    console.log(opcion);
     switch(opcion){
+        case "Direccion general":
+            let directivo =new Option("Directivo","2");
+            selectJer.options[1] = directivo;
+            selectJer.options[2] = null;
+            break;
         case "Dirección general":
+            let directivo =new Option("Directivo","2");
+            selectJer.options[1] = directivo;
+            selectJer.options[2] = null;
+            break;
+        case "DirecciÃ³n general":
             let directivo =new Option("Directivo","2");
             selectJer.options[1] = directivo;
             selectJer.options[2] = null;

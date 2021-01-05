@@ -71,9 +71,7 @@
                           <label for="pwd">Contraseña:</label>
                           <input type="password" class="form-control" id="pwd" name="pwd" oncopy="return false" onpaste="return false" placeholder="Contraseña" ondrag="return false"  ondrop="return false">
                         </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox"> Recordar mi información</label><br><br>
-                        </div>
+                        <br>
                         <button type="submit" class="btn btn-dark">Iniciar Sesión</button>
                       </form>
                   </div>

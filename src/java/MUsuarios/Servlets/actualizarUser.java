@@ -85,10 +85,10 @@ public class actualizarUser extends HttpServlet {
                 try{
                     if(!cambioPass) {
                         System.out.println("Contraseña igual");
-                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, oldPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
+                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), nombreUser, appat, apmat, f_n, correo, oldPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
                     }else{
                         System.out.println("new Contraseña");
-                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), correo, appat, apmat, f_n, correo, newPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
+                        updateEmpleado = new UsuarioEmpleado(oldUser.getIDUsuarioE(), nombreUser, appat, apmat, f_n, correo, newPass, oldUser.getiD_Division(), oldUser.getiD_cat_priv(), null);
                     }
                     if(UsuarioEmpleado.modEmpleado(updateEmpleado)){
                         sesion.setAttribute("usuario", updateEmpleado);

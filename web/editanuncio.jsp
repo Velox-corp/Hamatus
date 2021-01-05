@@ -20,7 +20,9 @@
     </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
+        <h2 class="text-center">Modificación de anuncios</h2>
         <div class="row margin-top-1rem">
+            <div class="col-md-1"></div>
             <div class="col-md-6">
                 <div class="input-group mb-3">
                     <%
@@ -47,9 +49,6 @@
                                 <label for="descripcion">Descripcion</label>
                                 <input type="text" value="${p.getDescripcion()}" class="form-control" id="mod_descripcion" name="mod_descripcion" required="required">
                             </div>
-                            <div class="form-group">
-                                <input type="date" class="form-control" id="fechaa">
-                            </div>
                             <button type="submit" name="enviar" class="btn btn-primary">Guardar<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
 
                         </c:forEach> 
@@ -63,5 +62,6 @@
                 </div>
             </div>
         </div>
+        <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>

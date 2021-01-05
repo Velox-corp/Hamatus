@@ -280,10 +280,10 @@ DROP TABLE IF EXISTS `tablon` ;
 
 CREATE TABLE IF NOT EXISTS `tablon` (
   `ID_Tablon` INT(11) NOT NULL AUTO_INCREMENT,
-  `Titulo_Anuncio` TINYTEXT NOT NULL,
-  `Contenido` MEDIUMTEXT NOT NULL,
+  `Titulo_Anuncio` VARBINARY(128) NOT NULL,
+  `Contenido` VARBINARY(1024) NOT NULL,
   `Id_division` INT(11) NOT NULL,
-  `fecha_publicacion` DATETIME NOT NULL,
+  `fecha_publicacion` VARBINARY(128) NOT NULL,
   PRIMARY KEY (`ID_Tablon`),
   CONSTRAINT `fk_tablon_division`
     FOREIGN KEY (`Id_division`)
@@ -309,7 +309,7 @@ CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre VARBINARY(128), appat VARBI
 f_n VARBINARY(128), correo VARBINARY(128), pass VARBINARY(128), foto Blob, idE int)   
 BEGIN
 	insert into division (Nombre_A, id_jerarquia, id_empresa)
-    values (aes_encrypt("Dirección general","gurmnhorgvmeigdv") , 1, idE);
+    values (aes_encrypt("Direccion general","gurmnhorgvmeigdv") , 1, idE);
 	INSERT INTO `Usuario_Empleado` (`Usuario_Empleado`.Nombre, `Usuario_Empleado`.appat, `Usuario_Empleado`.apmat, `Usuario_Empleado`.Fecha_nacimiento, `Usuario_Empleado`.Correo, `Usuario_Empleado`.pass, `Usuario_Empleado`.ID_Division, `Usuario_Empleado`.id_cat_privilegios, `Usuario_Empleado`.foto)
     values (nombre, appat, apmat, f_n, correo, pass, (select `division`.ID_Division from division where ID_empresa = idE limit 1), 1, foto);
 END$$
@@ -327,14 +327,14 @@ CREATE PROCEDURE `obtenerAnuncios` (idE int, idDiv int)
 BEGIN
 	select 
 	case 
-		when division.ID_Jerarquia = 1 and division.ID_Empresa = idE then "generales"
-        when division.ID_Jerarquia = 2 and division.ID_Empresa = idE  and division.ID_Division = idDiv then "particulares"
+		when division.ID_Jerarquia = 1 and division.ID_Empresa = idE then "general"
+        when division.ID_Jerarquia = 2 and division.ID_Empresa = idE  and division.ID_Division = idDiv then "particular"
 	end, tablon.*
     from tablon join division on tablon.Id_division = division.ID_Division
     where 
 		(division.ID_Jerarquia = 1 and division.ID_Empresa = idE) or
         (division.ID_Jerarquia = 2 and division.ID_Empresa = idE and division.ID_Division = idDiv)
-	order by fecha_publicacion DESC;
+	order by aes_decrypt(tablon.fecha_publicacion, "gurmnhorgvmeigdv") DESC;
 END$$
 
 DELIMITER ;

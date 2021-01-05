@@ -5,16 +5,21 @@ function alterarPuestos(){
     let selectJer = document.getElementById("jerarquia");
     let selectDiv = document.getElementById("division");
     let index = selectDiv.selectedIndex;
-    let opcion = selectDiv.options[index].value;
-    console.log(opcion == "Dirección general");
-    switch(opcion){
-        case "Dirección general":
-            let directivo =new Option("Directivo","2");
+    if(index === 1){
+        let directivo =new Option("Directivo","2");
             selectJer.options[0] = directivo;
             selectJer.options[1] = null;
-            break;
+            return false;
+    }
+    let opcion = selectDiv.options[index].value;
+    switch(opcion){
         case "cero":
             selectJer.options[0] = null;
+            selectJer.options[1] = null;
+            break;
+        case "Direccion General":
+            let directivo =new Option("Directivo","2");
+            selectJer.options[0] = directivo;
             selectJer.options[1] = null;
             break;
         default:
@@ -25,5 +30,6 @@ function alterarPuestos(){
             break;
     }
     selectJer.style.display = 'block';
+    return false;
 }
 

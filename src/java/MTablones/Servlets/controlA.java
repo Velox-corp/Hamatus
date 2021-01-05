@@ -9,6 +9,8 @@ import ClasesSoporte.Fecha;
 import MDistribucion.Clases.Equipo;
 import MTablones.Clases.Anuncio;
 import MTablones.Clases.AnuncioDAO;
+import MUsuarios.clases.Empresa;
+import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,31 +38,31 @@ public class controlA extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession sesion = request.getSession();
+        UsuarioEmpleado user = (UsuarioEmpleado) sesion.getAttribute("usuario");
+        Empresa emp = (Empresa) sesion.getAttribute("empresa");
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
 
-        anuncios = adao.listar();  
-        
-        
-
+        anuncios = adao.listar(emp.getIDEmpresa(), user.getiD_Division());  
+ 
         switch (accion) {
             case "Delete":
                 int idanuncio = Integer.parseInt(request.getParameter("ida"));
                 int id_div = Integer.parseInt(request.getParameter("id_div"));
                 adao.delete(idanuncio);
-                request.getRequestDispatcher("controlA?accion=ListarTipo&tipo_div="+id_div).forward(request, response);
+                request.getRequestDispatcher("controlA?accion=home").forward(request, response);
                 break;
             case "Update":
-                int divEdit = Integer.parseInt(request.getParameter("idmod"));
+                int divEdit = Integer.parseInt(request.getParameter("id_div"));
                 int idmod = Integer.parseInt(request.getParameter("idmod"));
                 String mod_titulo = request.getParameter("mod_titulo");
                 String mod_descripcion = request.getParameter("mod_descripcion");
                 
-                Anuncio modanuncio= new Anuncio(mod_titulo,mod_descripcion,Fecha.FechaBD(),1);
+                Anuncio modanuncio= new Anuncio(mod_titulo,mod_descripcion,Fecha.FechaBD(),divEdit);
                 adao.actualizar(idmod,modanuncio);
                 
-                request.getRequestDispatcher("controlA?accion=ListarTipo&tipo_div="+divEdit).forward(request, response);
+                request.getRequestDispatcher("controlA?accion=home").forward(request, response);
                 break;
             case "ListarID":
                 int idanuncioupdate = Integer.parseInt(request.getParameter("ida"));
@@ -72,11 +75,11 @@ public class controlA extends HttpServlet {
                 String descripciona = request.getParameter("descripciona");
                 //String fechaa = request.getParameter("fechaa");
                 int div_anuncio=Integer.parseInt(request.getParameter("iddivision"));
-                Anuncio anuncio= new Anuncio(tituloa,descripciona,Fecha.FechaBD(),div_anuncio);
+                Anuncio anuncio= new Anuncio(tituloa,descripciona,Fecha.hora(),div_anuncio);
                 adao.agregar(anuncio);
 
                 //request.getRequestDispatcher("controlA?accion=home").forward(request, response);
-                request.getRequestDispatcher("controlA?accion=ListarTipo&tipo_div="+div_anuncio).forward(request, response);
+                request.getRequestDispatcher("controlA?accion=home").forward(request, response);
                 
                 break;
             case "ListarTipo":

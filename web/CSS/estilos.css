@@ -52,6 +52,7 @@ body {
 
 .icono{
     max-width: 8rem;
+    max-height: 4rem;
 }
 .header{
     background-color: #181818;

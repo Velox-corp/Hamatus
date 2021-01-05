@@ -96,15 +96,6 @@
                                 <input type="password" class="form-control" id="pwd2" name="pwd2" 
                                        onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                             </div>
-                            <div class="form-group">
-                                    <label for="Img">
-                                            Imagen
-                                    </label>
-                                    <input type="file" class="form-control-file" id="Img">
-                                    <!--<p class="help-block">
-                                            Example block-level help text here.
-                                    </p>-->
-                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <select class="form-select" name="division" id="division" onchange="return alterarPuestos()">
@@ -115,8 +106,9 @@
                                         <% } %>
                                     </select>
                                     <br>
+                                    <br>
                                     <select class="form-select" id="jerarquia" name="jerarquia">
-                                        
+                                        <option value="cero">Seleccione una jerarquia</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -124,7 +116,7 @@
                                         <button type="submit" class="btn btn-dark">
                                                 Guardar empleado
                                         </button>
-                                        <button type="reset" class="btn btn-default">
+                                        <button type="reset" class="btn btn-danger">
                                                 Borrar campos
                                         </button>
                                     </div>
@@ -135,7 +127,7 @@
 		<div class="col-md-2">
 		</div>
 	</div>
-                                    <script src='JS/manejoDivYJer.js'></script>
+        <script src='JS/manejoDivYJer.js'></script>
   </body>
   <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

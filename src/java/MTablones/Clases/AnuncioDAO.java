@@ -6,10 +6,13 @@
 package MTablones.Clases;
 
 import ClasesSoporte.Conexion;
+import MSeguridad.Clases.AES;
 import MTablones.Clases.Anuncio;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AnuncioDAO {
     Connection con;
@@ -34,7 +37,16 @@ public class AnuncioDAO {
                 anuncios.add(p);
             }
         } catch (Exception e) {
-
+            e.getMessage();
+            e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return anuncios;
     }
@@ -60,34 +72,56 @@ public class AnuncioDAO {
         return anuncios;
     }
 
-    public List listar() {
+    public List listar(int idE, int idDiv) {
         List<Anuncio> anuncios = new ArrayList();
-        String sql = "Select * from tablon ORDER BY fecha_publicacion DESC";
+        String sql = "{call obtenerAnuncios(?, ?)}";
+        CallableStatement cs = null;
         try {
             con = Conexion.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+            cs = con.prepareCall(sql);
+            cs.setInt(1, idE);
+            cs.setInt(2, idDiv);
+            rs = cs.executeQuery();
             while (rs.next()) {
                 Anuncio p = new Anuncio();
-                p.setId(rs.getInt(1));
-                p.setTitulo(rs.getString(2));
-                p.setDescripcion(rs.getString(3));
-                p.setFecha(rs.getString(5));
+                p.setId(rs.getInt("ID_Tablon"));
+                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio")));
+                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido")));
+                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion")));
+                p.setVectorTipoTablon(rs.getString(1));
+                p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
             }
         } catch (Exception e) {
             System.out.println(e);
+        }finally{
+            try {
+                con.close();
+                cs.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return anuncios;
     }
     
     public void delete(int id) {
-        String sql = "delete from tablon where ID_Tablon=" + id;
+        String sql = "delete from tablon where ID_Tablon = " + id;
         try {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -97,13 +131,22 @@ public class AnuncioDAO {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
             
-            ps.setString(1, anuncio.getTitulo());
-            ps.setString(2, anuncio.getDescripcion());
-            ps.setString(3, anuncio.getFecha());
+            ps.setBytes(1, AES.cifrar(anuncio.getTitulo()));
+            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion()));
+            ps.setBytes(3, AES.cifrar(anuncio.getFecha()));
             ps.setInt(4,anuncio.getIdDivision());
             ps.executeUpdate();
             
         } catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+        }finally{
+            try {
+                con.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -114,12 +157,13 @@ public class AnuncioDAO {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
             
-            ps.setString(1, anuncio.getTitulo());
-            ps.setString(2, anuncio.getDescripcion());
-            ps.setString(3, anuncio.getFecha());
+            ps.setBytes(1, AES.cifrar(anuncio.getTitulo()));
+            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion()));
+            ps.setBytes(3, AES.cifrar(anuncio.getFecha()));
             ps.executeUpdate();
         } catch (Exception e) {
-            
+            e.getMessage();
+            e.printStackTrace();
         }
         
     }
