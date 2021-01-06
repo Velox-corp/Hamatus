@@ -70,6 +70,22 @@ public class uploadFile extends HttpServlet {
         return f;
     }
     
+    /**Un metodo de emergencia por si todo llega a salir mal*/
+    private void crearFolderA(HttpServletRequest request) {
+        //Creacion del directorio y del achivo
+        try {
+            String sCarpAct = request.getServletContext().getRealPath("/");
+            //String sCarpAct = ServletContext.getRealPath("/");
+            System.out.println(sCarpAct);
+            File dir = new File(sCarpAct +"/archivos");//Primero creamos el directorio
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
     /**
      * Es un metodo un poco mas robusto y para un folder en especifico
      */
@@ -186,6 +202,7 @@ public class uploadFile extends HttpServlet {
                             InputStream filecontent = null;
                             final PrintWriter writer = response.getWriter();
                             try {
+                                crearFolderA(request);
                                 crearFolder(String.valueOf(Equipo_ID_Equipo), request);
                                 outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
                                         +Equipo_ID_Equipo+"/")+ File.separator + nombre));
@@ -236,4 +253,5 @@ public class uploadFile extends HttpServlet {
         }
             
     }   
+
 }

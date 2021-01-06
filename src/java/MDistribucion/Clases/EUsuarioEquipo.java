@@ -44,7 +44,7 @@ public class EUsuarioEquipo implements Serializable {
     private int iDUsuarioEmpleado;
     @JoinColumn(name = "ID_Equipo", referencedColumnName = "ID_Equipo")
     @ManyToOne(optional = false)
-    private int idEquipo;
+    private Integer idEquipo;
     
     private static Connection con;
     private static String q = "";

@@ -47,6 +47,18 @@
             obtencionAdecuada = false;
             response.sendRedirect("error.jsp");
         }
+        try {
+            String sCarpAct = request.getServletContext().getRealPath("/");
+            //String sCarpAct = ServletContext.getRealPath("/");
+            System.out.println(sCarpAct);
+            File dir = new File(sCarpAct +"/archivos");//Primero creamos el directorio
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
         int IDequipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
         if (usuario.getiD_cat_priv() == 3) {
             //Bueno bueno aqui vamos basicamente la idea es que vea todos 
@@ -55,9 +67,9 @@
             
     %>
     <div class="row margin-top-1rem">
-        <% for(Equipo eq: equipos){%> 
         <div class="col-md-4 folio">
             <ul>
+                <% for(Equipo eq: equipos){%> 
                 <li>Archivos del equipo: <%= eq.getNombre() %>
                     <ul>
                         <%String ruta_j = request.getServletContext().getRealPath("/archivos/"
@@ -111,6 +123,7 @@
                         <%}%>
                     </ul>
                 </li>
+                <%}%>
             </ul>
         </div>
         <div class="col-md-7">
@@ -173,7 +186,6 @@
         <div class="col-md-1">
         </div>
     </div>
-        <%}%>
     </div>
     <%}else if (IDequipo != 0) {%>
     <div class="row margin-top-1rem">
