@@ -7,13 +7,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema yL10l8yMbC
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `yL10l8yMbC` ;
+DROP SCHEMA IF EXISTS `heroku_9ad0f74b62bb348` ;
 
 -- -----------------------------------------------------
 -- Schema yL10l8yMbC
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `yL10l8yMbC` DEFAULT CHARACTER SET utf8 ;
-USE `yL10l8yMbC` ;
+CREATE SCHEMA IF NOT EXISTS `heroku_9ad0f74b62bb348` DEFAULT CHARACTER SET utf8 ;
+USE `heroku_9ad0f74b62bb348` ;
 
 -- -----------------------------------------------------
 -- Table `bn0u7lmchdieamnqsf74`.`cat_tipo_acceso`
@@ -295,17 +295,17 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `fk_tablon_division_idx` ON `tablon` (`Id_division` ASC);
 
-USE `yL10l8yMbC` ;
+USE `heroku_9ad0f74b62bb348` ;
 
 -- -----------------------------------------------------
 -- procedure ingresarAdmin
 -- -----------------------------------------------------
 
-DROP procedure IF EXISTS `yL10l8yMbC`.`ingresarAdmin`;
+DROP procedure IF EXISTS `ingresarAdmin`;
 
 DELIMITER $$
-USE `yL10l8yMbC`$$
-CREATE PROCEDURE `yL10l8yMbC`.`ingresarAdmin`(nombre VARBINARY(128), appat VARBINARY(128), apmat VARBINARY(128),
+USE `heroku_9ad0f74b62bb348`$$
+CREATE PROCEDURE `ingresarAdmin`(nombre VARBINARY(128), appat VARBINARY(128), apmat VARBINARY(128),
 f_n VARBINARY(128), correo VARBINARY(128), pass VARBINARY(128), foto Blob, idE int)   
 BEGIN
 	insert into division (Nombre_A, id_jerarquia, id_empresa)
@@ -320,7 +320,7 @@ DELIMITER ;
 -- procedure ingresarUsuario
 -- -----------------------------------------------------
 
-DROP procedure IF EXISTS `yL10l8yMbC`.`obtenerAnuncios`;
+DROP procedure IF EXISTS `obtenerAnuncios`;
 
 DELIMITER $$
 CREATE PROCEDURE `obtenerAnuncios` (idE int, idDiv int)
@@ -338,7 +338,7 @@ BEGIN
 END$$
 
 DELIMITER ;
-use yL10l8yMbC;
+use `heroku_9ad0f74b62bb348`;
 insert into cat_tipo_acceso values (1, "jefe de equipo"), (2, "Empleados generales");
 insert into privilegios_jerarquia_u values (1, "Administrador"), (2, "Directivo"), (3, "Jefe de área"), (4, "Empleado general");
 insert into Cat_jerarquia values (1, "División Padre"), (2, "Departamento subordinado");

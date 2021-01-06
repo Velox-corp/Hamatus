@@ -124,7 +124,7 @@
                 <div class="card">
                     <form class="card-body form-group" action="uploadFile_J" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="file" class="form-label">Insertar archivo</label>
+                            <label for="file" class="form-label">Insertar archivo <small>(El tamaño del archivo no debe superar los 15 MB)</small></label>
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
                         </div>
                         <label for="pass">Agrege una contraseña al archivo</label>
@@ -304,7 +304,7 @@
             <hr class="my-4">
         </div>     
     </div>
-    <% }  else if(usuario.getiD_cat_priv() == 5 && IDequipo == 0){%>
+    <% }  else if(usuario.getiD_cat_priv() == 3 && IDequipo == 0){%>
     <div class="container">
         <div class="jumbotron">
             <h1 class="display-4">No tienes acceso a la herramienta de documentos</h1>

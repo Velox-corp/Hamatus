@@ -62,7 +62,7 @@
                     <img align="right" src="img/iniciar-sesion.png">
                   </div>
                   <div class="col-sm-6">
-                    <form action="iniciarSesion" name="formulario" onsubmit="return validoIS(this)">
+                      <form action="iniciarSesion" name="formulario" method="POST" onsubmit="return validoIS(this)">
                         <div class="form-group">
                           <label for="email">Dirección de correo electrónico:</label>
                           <input type="email" class="form-control" id="email" name="email" oncopy="return false" onpaste="return false" placeholder="Email" autocomplete="off" ondrag="return false"  ondrop="return false">
