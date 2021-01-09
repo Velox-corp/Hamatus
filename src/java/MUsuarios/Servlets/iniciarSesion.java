@@ -52,7 +52,22 @@ public class iniciarSesion extends HttpServlet {
                 sesionEmpresa.setAttribute("usuario", usu);
                 Empresa emp = Empresa.buscarEmpresa(usu.getiD_Division());
                 sesionEmpresa.setAttribute("empresa", emp);
-                redirect = "controlA?accion=home";
+                switch(usu.getiD_cat_priv()){
+                    case 1:
+                        redirect = "verUsuarios.jsp"; //posiblemente cambia a estádisticas.
+                        break;
+                    case 2:
+                        redirect = "controlA?accion=home";
+                        break;
+                    case 3:
+                        redirect = "controlA?accion=home";
+                        break;
+                    case 4:
+                        redirect = "controlA?accion=home";
+                        break;
+                    default:
+                        redirect = "error.jsp";
+                }
             }else{
                 redirect = "inicio_sesion.jsp";
             }

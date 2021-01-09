@@ -30,10 +30,11 @@ public class AnuncioDAO {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                p.setId(rs.getInt(1));
-                p.setTitulo(rs.getString(2));
-                p.setDescripcion(rs.getString(3));
-                p.setFecha(rs.getString(5));
+                p.setId(rs.getInt("ID_Tablon"));
+                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio")));
+                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido")));
+                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion")));
+                p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
             }
         } catch (Exception e) {
@@ -60,10 +61,11 @@ public class AnuncioDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Anuncio p = new Anuncio();
-                p.setId(rs.getInt(1));
-                p.setTitulo(rs.getString(2));
-                p.setDescripcion(rs.getString(3));
-                p.setFecha(rs.getString(5));
+                p.setId(rs.getInt("ID_Tablon"));
+                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio")));
+                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido")));
+                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion")));
+                p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
             }
         } catch (Exception e) {

@@ -61,6 +61,7 @@ public class addEmpleadosEquipo extends HttpServlet {
                 ServletContext contexto = getServletContext();
                 contexto.setAttribute("id", id_equipo);
             }catch(Exception e){
+                e.getMessage();
                 e.printStackTrace();
                 proceso_nice = false;
             }
