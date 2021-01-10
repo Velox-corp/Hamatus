@@ -52,6 +52,7 @@ public class iniciarSesion extends HttpServlet {
                 sesionEmpresa.setAttribute("usuario", usu);
                 Empresa emp = Empresa.buscarEmpresa(usu.getiD_Division());
                 sesionEmpresa.setAttribute("empresa", emp);
+                
                 switch(usu.getiD_cat_priv()){
                     case 1:
                         redirect = "verUsuarios.jsp"; //posiblemente cambia a estádisticas.

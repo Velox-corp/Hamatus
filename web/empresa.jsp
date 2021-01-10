@@ -32,7 +32,7 @@
                         <div class='col-md-2'>
                         </div>
                         <div class='col-md-8'>
-                            <center><h1><br><%=emp.getNombre()%></h1></center>
+                            <center><h1><%=emp.getNombre()%></h1></center>
                         </div>
                     </div>
                     <div class='row'>

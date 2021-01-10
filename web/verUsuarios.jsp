@@ -57,9 +57,9 @@
         </div>
         <br>
         <div class="row margin-top-1rem">
-		<div class="col-md-2">
+		<div class="col-md-1">
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-10">
                 <table class="table table-hover table-responsive  text-center align-items-center">
                     <thead>
                         <tr class="ti">

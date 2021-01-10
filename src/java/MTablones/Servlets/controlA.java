@@ -59,7 +59,7 @@ public class controlA extends HttpServlet {
                 String mod_titulo = request.getParameter("mod_titulo");
                 String mod_descripcion = request.getParameter("mod_descripcion");
                 
-                Anuncio modanuncio= new Anuncio(mod_titulo,mod_descripcion,Fecha.FechaBD(),divEdit);
+                Anuncio modanuncio= new Anuncio(mod_titulo,mod_descripcion,Fecha.hora(),divEdit);
                 adao.actualizar(idmod,modanuncio);
                 
                 request.getRequestDispatcher("controlA?accion=home").forward(request, response);

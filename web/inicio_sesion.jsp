@@ -1,6 +1,26 @@
-<%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true" %>
+<% 
+    boolean haySesion = false;
+    String redirect = "";
+    try{
+        HttpSession sesion = request.getSession();
+    
+        if( ( (UsuarioEmpleado) sesion.getAttribute("usuario") ) != null ){
+            haySesion = true;
+            redirect = "empresa.jsp";
+        }
+    }catch(Exception e){
+        e.printStackTrace();
+        redirect = "error.jsp";
+        haySesion = true;
+    }
+     if(haySesion){
+         response.sendRedirect(redirect);
+     }   
+%>
 <!DOCTYPE html>
-<html>
+<html lang='es'>
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
