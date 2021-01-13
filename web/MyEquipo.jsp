@@ -13,17 +13,25 @@
     UsuarioEmpleado user;
     Equipo equipo = null;
     boolean procesoCorrecto = true;
+    String redirect = "";
     try{
         sesion = request.getSession();
         user = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        equipo = Equipo.obtenerEquipo(EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE()));
+        if(user == null ){
+            System.out.println("No hay sesión");
+            procesoCorrecto = false;
+            redirect = "inicio_sesion.jsp";
+        }else{
+            equipo = Equipo.obtenerEquipo(EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE()));
+        }
     }catch(Exception e){
         e.getMessage();
         e.printStackTrace();
         procesoCorrecto = false;
+        redirect = "error.jsp";
     }
     if(!procesoCorrecto){
-        response.sendRedirect("error.jsp");
+        response.sendRedirect(redirect);
     }
 %>
 <!DOCTYPE html>

@@ -11,29 +11,40 @@
     boolean obtencionAdecuada = true;
     int indexCat = 1;
     int divT=0;
+    boolean hayLogo = false;
+    String redir = "";
     try{
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
         Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
-        username = usuario.getNombre();
-        nombre_empresa = emp.getNombre();
-        idE = emp.getIDEmpresa();
-        indexCat = usuario.getiD_cat_priv();
-        divT=usuario.getiD_Division();
-        //obtencionAdecuada = true; 
+        if(usuario == null || emp == null){
+            System.out.println("No hay sesión");
+            obtencionAdecuada = false;
+            redir = "inicio_sesion.jsp";
+        }else{
+            username = usuario.getNombre();
+            nombre_empresa = emp.getNombre();
+            idE = emp.getIDEmpresa();
+            hayLogo = (emp.getLogo() != null);
+            indexCat = usuario.getiD_cat_priv();
+            divT=usuario.getiD_Division();
+            obtencionAdecuada = true; 
+        }
     }catch(NullPointerException ex){
         System.out.println("Algun error raro de null");
         System.out.println(ex.getMessage());
         ex.printStackTrace();
         obtencionAdecuada = false;
-        response.sendRedirect("/error.jsp");
+        redir = "error.jsp";
     }catch(Exception e){
         System.out.println("Algun error raro");
         System.out.println(e.getMessage());
         e.printStackTrace();
         obtencionAdecuada = false;
-        response.sendRedirect("/error.jsp");
+        redir = "error.jsp";
     }
-    
+    if(!obtencionAdecuada){
+        response.sendRedirect(redir);
+    }
 %>
 <header class="container-fluid">
 	<div class="row header align-items-center">
@@ -57,7 +68,7 @@
                         <% }%>
                 </div>
 		<div class="col-md-2">
-                    <%if(obtencionAdecuada){ %>
+                    <%if(obtencionAdecuada &&  hayLogo){ %>
                         <img class="mx-auto d-block icono" src="cargaRegistro?id=<%=idE%>" alt='Logo <%=nombre_empresa%>'>
                     <%}%>
 		</div>
@@ -90,10 +101,10 @@
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
-                            <li><a class="nav-item nav-link btn1">Usuarios</a>
+                            <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
-                                    <li><a href="Administrador_new.jsp" class='sub' >Agregar Usuarios</a></li>
-                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Usuarios</a></li>
+                                    <li><a href="Administrador_new.jsp" class='sub' >Agregar Empleados</a></li>
+                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -111,9 +122,9 @@
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
-                            <li><a class="nav-item nav-link btn1">Usuarios</a>
+                            <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
-                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Usuarios</a></li>
+                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -126,14 +137,14 @@
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                             <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
-                                    <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
+                                    <li><a href="verEquipos.jsp" class="sub">Ver Equipos</a></li>
                                     <li><a href="Creacion_equipos.jsp" class="sub">Crear Equipo</a></li>
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
-                            <li><a class="nav-item nav-link btn1">Usuarios</a>
+                            <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
-                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Usuarios</a></li>
+                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
                         </ul>

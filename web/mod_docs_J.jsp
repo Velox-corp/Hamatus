@@ -9,10 +9,10 @@
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Hashtable"%>
 <%@page import="MDocumentos.Clases.D_Documento"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -23,25 +23,35 @@
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
     <%
     HttpSession sesionUser = request.getSession();
-    boolean obtencionAdecuada = false;
+    boolean obtencionAdecuada = true;
+    String redirect = "";
     UsuarioEmpleado usuario = null;
     Empresa emp = null;
     try{
         usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
         emp = (Empresa) sesionUser.getAttribute("empresa");
+        if(usuario == null || emp == null){
+            obtencionAdecuada = false;
+            redirect = "inicio_sesion.jsp";
+        }
+        
     }catch(NullPointerException ex){
         System.out.println("Algun error raro de null");
         System.out.println(ex.getMessage());
         ex.printStackTrace();
         obtencionAdecuada = false;
-        response.sendRedirect("error.jsp");
+        redirect = "error.jsp";
     }catch(Exception e){
         System.out.println("Algun error raro");
         System.out.println(e.getMessage());
         e.printStackTrace();
         obtencionAdecuada = false;
-        response.sendRedirect("error.jsp");
-    }%>
+        redirect = "error.jsp";
+    }
+    if(!obtencionAdecuada){
+                response.sendRedirect(redirect);
+            }
+    %>
         <div class="container-fliud cubridor d-flex justify-content-center align-items-center">
           <div class="col-md-3">
           </div>

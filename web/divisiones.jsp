@@ -3,18 +3,28 @@
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesion = request.getSession();
     boolean obtencionAdecuada = false;
+    String redirect = "";
     ArrayList<Division> divisiones = new ArrayList<Division>();
     try {
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        obtencionAdecuada = true;
-        divisiones = Division.obtenerDivisiones( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
+        if(usuario == null ){
+            System.out.println("No hay sesión");
+            obtencionAdecuada = false;
+            redirect = "inicio_sesion.jsp";
+        }else{
+            obtencionAdecuada = true;
+            divisiones = Division.obtenerDivisiones( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
+        }
     } catch (NullPointerException e) {
         obtencionAdecuada = false;
+        redirect = "error.jsp";
+    }
+    if(!obtencionAdecuada){
+        response.sendRedirect(redirect);
     }
 %>
 <!DOCTYPE html>
@@ -58,10 +68,12 @@
                                         <span class="input-group-text">Nombre:</span>
                                     </div>
                                     <input class="h4 form-control" value='<%=division.getNombre()%>' readonly='readonly'/>
+                                    <% if(division.getId_Jerarquia() != 1){ %>
                                     <div class="input-group-append">
                                         <a href="javascript:funcion()">
                                             <a class="btn btn-secondary btn-large" href="eliminarDivision?id=<%=division.getId_Division()%>" onclick="return confirmation()">ELIMINAR</a>
                                     </div>
+                                    <% } %>
                                 </div>                                
                         <%   }
                      %>

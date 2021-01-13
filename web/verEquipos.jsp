@@ -13,7 +13,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 
 <%
-    boolean desempeño_adecuado = true;
+    boolean obtencionAdecuada = true;
+    String redirect = "";
     boolean sonTotales = false;
     boolean hayEquipos = true;
     HttpSession sesion;
@@ -24,48 +25,55 @@
         //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
         sesion = request.getSession();
         liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        switch(liderDiv.getiD_cat_priv()){
-            case 1:
-                equipos = Equipo.obtenerAllEquipos( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
-                sonTotales = true;
-                break;
-            case 2:
-                equipos = Equipo.obtenerAllEquipos(((Empresa)sesion.getAttribute("empresa")).getIDEmpresa());
-                sonTotales = true;
-                break;
-            case 3:
-                equipos = Equipo.obtenerEquipos(liderDiv.getiD_Division());
-                sonTotales = false;
-                break;
-            case 4:
-                desempeño_adecuado = false;
-                break;
-        }
-        
-        if(equipos == null || equipos.size() == 0){
-            hayEquipos = false;
+        if(liderDiv == null){
+            obtencionAdecuada = false;
+            redirect = "inicio_sesion.jsp";
         }else{
-            hayEquipos = true;
-            totalesEquipos = new int[equipos.size()];
-            for (int i = 0; i < equipos.size(); i++) {
-                Equipo equip = equipos.get(i);
-                totalesEquipos[i] = EUsuarioEquipo.getTotalEmpleadosEquipo(equip.getIDEquipo());
-                if(totalesEquipos[i] == -1){
-                    desempeño_adecuado = false;
+            switch(liderDiv.getiD_cat_priv()){
+                case 1:
+                    equipos = Equipo.obtenerAllEquipos( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
+                    sonTotales = true;
                     break;
+                case 2:
+                    equipos = Equipo.obtenerAllEquipos(((Empresa)sesion.getAttribute("empresa")).getIDEmpresa());
+                    sonTotales = true;
+                    break;
+                case 3:
+                    equipos = Equipo.obtenerEquipos(liderDiv.getiD_Division());
+                    sonTotales = false;
+                    break;
+                case 4:
+                    obtencionAdecuada = false;
+                    redirect = "error.jsp";
+                    break;
+            }
+        
+            if(equipos == null || equipos.size() == 0){
+                hayEquipos = false;
+            }else{
+                hayEquipos = true;
+                totalesEquipos = new int[equipos.size()];
+                for (int i = 0; i < equipos.size(); i++) {
+                    Equipo equip = equipos.get(i);
+                    totalesEquipos[i] = EUsuarioEquipo.getTotalEmpleadosEquipo(equip.getIDEquipo());
+                    if(totalesEquipos[i] == -1){
+                        obtencionAdecuada = false;
+                        redirect = "error.jsp";
+                        break;
+                    }
                 }
             }
         }
-        
     }catch(Exception e){
-        desempeño_adecuado = false;
+        obtencionAdecuada = false;
+        redirect = "error.jsp";
         hayEquipos = false;
         e.getMessage();
         e.printStackTrace();
     }
 
-    if(!desempeño_adecuado){
-        response.sendRedirect("error.jsp");
+    if(!obtencionAdecuada){
+        response.sendRedirect(redirect);
     }
 %>
     
@@ -181,9 +189,10 @@
                 }  // for 
                 if(equipos.size() % 3 != 0){ %>
                 </div>
-            <% }    
-            } // if
-            else{
+            <% } %>
+            <br>
+            <a class='btn btn-primary ' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+            <% }else{
             if(liderDiv.getiD_cat_priv() == 3){ %>
             
                 <div class='row d-flex justify-content-center'>
@@ -192,7 +201,7 @@
 
                         <div class='card-body'>
                             <article class='card-text'>
-                                No se tienen equipos registrados en esta división
+                                No se tienen equipos registrados en esta división.
                             </article>
                         </div>
                         <div class='card-footer'>
@@ -209,7 +218,7 @@
 
                         <div class='card-body'>
                             <article class='card-text'>
-                                No se tienen equipos registrados en ninguna división
+                                No se tienen equipos registrados en ninguna división.
                             </article>
                         </div>
                     </div>

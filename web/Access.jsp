@@ -29,25 +29,35 @@
     <jsp:include page="Prueba-Reu/my-head2.jsp" />
     <%
     HttpSession sesionUser = request.getSession();
-    boolean obtencionAdecuada = false;
+    boolean obtencionAdecuada = true;
     UsuarioEmpleado usuario = null;
     Empresa emp = null;
+    String redirect = "";
     try{
         usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
         emp = (Empresa) sesionUser.getAttribute("empresa");
+        if(usuario == null || emp == null){
+            System.out.println("No hay sesión");
+            obtencionAdecuada = false;
+            redirect = "inicio_sesion.jsp";
+        }
     }catch(NullPointerException ex){
         System.out.println("Algun error raro de null");
         System.out.println(ex.getMessage());
         ex.printStackTrace();
         obtencionAdecuada = false;
-        response.sendRedirect("error.jsp");
+        redirect = "error.jsp";
     }catch(Exception e){
         System.out.println("Algun error raro");
         System.out.println(e.getMessage());
         e.printStackTrace();
         obtencionAdecuada = false;
-        response.sendRedirect("error.jsp");
-    }%>
+        redirect = "error.jsp";
+    }
+    if(!obtencionAdecuada){
+        response.sendRedirect(redirect);
+    }
+    %>
         <div class="container-fliud cubridor d-flex justify-content-center align-items-center">
           <div class="col-md-3">
           </div>

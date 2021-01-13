@@ -13,7 +13,7 @@
     }catch(Exception e){
         e.printStackTrace();
         redirect = "error.jsp";
-        haySesion = true;
+        haySesion = false;
     }
      if(haySesion){
          response.sendRedirect(redirect);

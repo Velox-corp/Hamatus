@@ -30,7 +30,10 @@
                 </article>
                 <br>
                 
-                <center><a class='btn btn-outline-danger' href='index.jsp'>Volver al index</a></center>
+                <center>
+                    <a class='btn btn-danger' href='index.jsp'>Volver al index</a>
+                    <a class='btn btn-danger' href="controlA?action=home" >Volver al tablón de anuncios</a>
+                </center>
             </div>
         </main>
         <div

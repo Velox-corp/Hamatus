@@ -1,10 +1,9 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="ClasesSoporte.Conexion"%>
 <%@page import="java.sql.*"%>
-<%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html" session = "true" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,20 +11,35 @@
 
         <title>Tablon</title>
 
-        <meta name="description" content="Source code generated using layoutit.com">
-        <meta name="author" content="LayoutIt!">
-
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
                                     <%
             HttpSession sesion;
             UsuarioEmpleado liderDiv;
-
-                 sesion = request.getSession();
-                 liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-                 int iddivision=liderDiv.getiD_Division();
-
+            boolean obtencionAdecuada = true;
+            String redirect = "";
+            int iddivision;
+            try{
+                sesion = request.getSession();
+                liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
+                if(liderDiv == null){
+                    obtencionAdecuada = false;
+                    redirect = "inicio_sesion.jsp";
+                }else{
+                   iddivision =liderDiv.getiD_Division();
+                }
+            }catch (Exception e) {
+                e.getMessage();
+                e.printStackTrace();
+                response.sendRedirect("error.jsp");
+                obtencionAdecuada = false;
+                redirect = "error.jsp";
+            }
+            if(!obtencionAdecuada){
+                response.sendRedirect(redirect);
+            }
+                    
         %>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
         <div class="row margin-top-1rem">

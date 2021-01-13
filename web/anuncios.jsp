@@ -3,7 +3,7 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="ClasesSoporte.Conexion"%>
 <%@page import="java.sql.*"%>
-<%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 
 <!DOCTYPE html>
 <html lang='es'>
@@ -19,6 +19,8 @@
             HttpSession sesion;
             UsuarioEmpleado liderDiv = null;
             int div  = 0;
+            boolean obtencionAdecuada = true;
+            String redirect = "";
             ArrayList<Anuncio> anuncios = new ArrayList<Anuncio>();
         %>
         <main class="container">
@@ -28,13 +30,22 @@
                             try {
                                 sesion = request.getSession();
                                 liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-                                div= liderDiv.getiD_Division();
-                                anuncios = (ArrayList<Anuncio>)request.getAttribute("anuncios");
-                            
-                            }catch (Exception e) {
-                                    e.getMessage();
-                                    e.printStackTrace();
+                                if(liderDiv == null){
+                                    obtencionAdecuada = false;
+                                    redirect = "inicio_sesion.jsp";
+                                }else{
+                                    div= liderDiv.getiD_Division();
+                                    anuncios = (ArrayList<Anuncio>)request.getAttribute("anuncios");
                                 }
+                            }catch (Exception e) {
+                                e.getMessage();
+                                e.printStackTrace();
+                                obtencionAdecuada = false;
+                                redirect = "error.jsp";
+                            }
+                            if(!obtencionAdecuada){
+                                response.sendRedirect(redirect);
+                            }
                         %>
                         
                             <% for (int i = 0; i < anuncios.size(); i++) {

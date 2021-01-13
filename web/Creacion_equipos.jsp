@@ -8,22 +8,32 @@
     HttpSession sesion;
     ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
     UsuarioEmpleado liderDiv = null;
+    String redirect = "";
     try{
         //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
         sesion = request.getSession();
         liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        if(liderDiv.getiD_cat_priv() != 3){ //esta función solo debería ejecutarla un lider de división
+        if(liderDiv == null ){
+            System.out.println("No hay sesión");
             desempeño_adecuado = false;
+            redirect = "inicio_sesion.jsp";
         }else{
-            empleados = UsuarioEmpleado.obtenerUsuariosEquipo(0, liderDiv.getiD_Division()); //RECORDATORIO PARA EL FUTURO, debe traer aparte a los que no tienen equipo
+            if(liderDiv.getiD_cat_priv() != 3){ //esta función solo debería ejecutarla un lider de división
+                desempeño_adecuado = false;
+                redirect = "error.jsp";
+            }else{
+                empleados = UsuarioEmpleado.obtenerUsuariosEquipo(0, liderDiv.getiD_Division()); //RECORDATORIO PARA EL FUTURO, debe traer aparte a los que no tienen equipo
+                desempeño_adecuado = true;
+            }
         }
-        
     }catch(Exception e){
         desempeño_adecuado = false;
+        e.printStackTrace();
+        redirect = "error.jsp";
     }
 
     if(!desempeño_adecuado){
-        response.sendRedirect("error.jsp");
+        response.sendRedirect(redirect);
     }
 %>
     

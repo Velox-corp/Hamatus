@@ -9,24 +9,33 @@
     Empresa emp;
     Anuncio anuncio = null;
     int ideAnuncio = 0;
-    boolean allgood = true;
+    boolean obtencionAdecuada = true;
+    String redirect = "";
     try{
         sesion = request.getSession();
         user = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        if(user.getiD_cat_priv() > 3){ // si es mayor a 3 es un empleado común
-            allgood  = false;
-        }
-        ideAnuncio = Integer.parseInt(request.getParameter("id"));
-        if(ideAnuncio != 0){
-            anuncio = Anuncio.buscar(ideAnuncio);
-        }
         emp = (Empresa) sesion.getAttribute("empresa");
+        if(user == null || emp == null){
+            System.out.println("No hay sesión");
+            obtencionAdecuada = false;
+            redirect = "inicio_sesion.jsp";
+        }else{
+            if(user.getiD_cat_priv() > 3){ // si es mayor a 3 es un empleado común
+                obtencionAdecuada = false;
+                redirect = "error.jsp";
+            }
+            ideAnuncio = Integer.parseInt(request.getParameter("id"));
+            if(ideAnuncio != 0){
+                anuncio = Anuncio.buscar(ideAnuncio);
+            }
+        }
     }catch(Exception ex){
-        allgood = false;
+        obtencionAdecuada = false;
         ex.getMessage();
+        redirect = "error.jsp";
         ex.printStackTrace();
     }
-    if(!allgood) response.sendRedirect("error.jsp");
+    if(!obtencionAdecuada) response.sendRedirect(redirect);
 %>
 <!DOCTYPE html>
 <html lang='es'>

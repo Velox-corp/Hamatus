@@ -17,9 +17,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Documentos</title>
-
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
     
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
   </head>
@@ -34,6 +31,11 @@
         try{
             usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
             emp = (Empresa) sesionUser.getAttribute("empresa");
+            if(usuario == null || emp == null){
+                    System.out.println("No hay sesión");
+                    obtencionAdecuada = false;
+                    response.sendRedirect("inicio_sesion.jsp");
+                }
         }catch(NullPointerException ex){
             System.out.println("Algun error raro de null");
             System.out.println(ex.getMessage());

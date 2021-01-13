@@ -9,35 +9,43 @@
 <%
     HttpSession sesion;
     UsuarioEmpleado user = null;
-    boolean todoBien = true;
+    boolean obtencionAdecuada = true;
+    String redirect = "";
     ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
     try{
         sesion = request.getSession();
         user = (UsuarioEmpleado) sesion.getAttribute("usuario");
         Empresa emp = (Empresa) sesion.getAttribute("empresa");
-        switch(user.getiD_cat_priv()){ //dentro del catalogo ya sería un empleado proletario
-            case 1:
-                empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa());
-                break;
-            case 2:
-                empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa());
-                break;
-            case 3:
-                empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa(),user.getiD_Division());
-                break;
-            case 4:
-                todoBien = false;
-                break;
-            default:
-                break;
+        if(user == null || emp == null){
+            obtencionAdecuada = false;
+            redirect = "inicio_sesion.jsp";
+        }else{
+            switch(user.getiD_cat_priv()){ //dentro del catalogo ya sería un empleado proletario
+                case 1:
+                    empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa());
+                    break;
+                case 2:
+                    empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa());
+                    break;
+                case 3:
+                    empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa(),user.getiD_Division());
+                    break;
+                case 4:
+                    obtencionAdecuada = false;
+                    redirect = "error.jsp";
+                    break;
+                default:
+                    break;
+            }
         }
     }catch(Exception e){
         e.getMessage();
         e.printStackTrace();
-        todoBien = false;
+        obtencionAdecuada = false;
+        redirect = "error.jsp";
     }
-    if(!todoBien){
-        response.sendRedirect("error.jsp");
+    if(!obtencionAdecuada){
+        response.sendRedirect(redirect);
     }
 %>
     

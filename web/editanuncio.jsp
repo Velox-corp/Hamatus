@@ -4,7 +4,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="java.sql.*"%>
-<%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
+<%@page language="java" pageEncoding="UTF-8" session="true" contentType="text/html"%>
 
 <html lang="es">
     <head>
@@ -26,12 +26,30 @@
                     <%
                     HttpSession sesion;
                     UsuarioEmpleado liderDiv;
+                    boolean obtencionAdecuada = true;
+                    String redirect = "";
+                    int divEdit = 0;
+                    ArrayList<Anuncio>anuncios = new ArrayList<Anuncio>();
                     try{
                         sesion = request.getSession();
                         liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
-                        int divEdit = liderDiv.getiD_Division();
-                        ArrayList<Anuncio>anuncios = new ArrayList<Anuncio>();
-                        anuncios = (ArrayList<Anuncio>)request.getAttribute("anuncios");
+                        if(liderDiv == null){
+                            obtencionAdecuada = false;
+                            redirect = "inicio_sesion.jsp";
+                        }else{
+                            divEdit = liderDiv.getiD_Division();
+                            anuncios = (ArrayList<Anuncio>)request.getAttribute("anuncios");
+                            obtencionAdecuada = true;
+                        }
+                    }catch (Exception e) {
+                        e.getMessage();
+                        e.printStackTrace();
+                        redirect = "error.jsp";
+                        obtencionAdecuada = false;
+                    }
+                    if(!obtencionAdecuada){
+                        response.sendRedirect(redirect);
+                    }
                     %>
                     <script src='JS/interaccionBotones.js'></script>
                     <form action="controlA?accion=Update"  class='card' method="post">
@@ -63,13 +81,7 @@
                         </div>
                         <% } %> 
                     </form> 
-                    <%
-                        }catch (Exception e) {
-                        e.getMessage();
-                        e.printStackTrace();
-                        response.sendRedirect("error.jsp");
-                    }
-                    %>
+                    
             </div>
         </div>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />

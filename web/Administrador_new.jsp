@@ -9,25 +9,32 @@
     Empresa emp;
     ArrayList <Division> divisiones = new ArrayList<Division>();
     boolean procesocorrecto;
+    String redirect = "";
     try{
         sesionAdmin = request.getSession();
         admin = (UsuarioEmpleado)sesionAdmin.getAttribute("usuario");
-        
-        if (admin.getiD_cat_priv() == 1){
-            procesocorrecto = true;
-            emp = (Empresa)sesionAdmin.getAttribute("empresa");
-            divisiones = Division.obtenerDivisiones(emp.getIDEmpresa());
-        }else{
+        if(admin == null){
+            System.out.println("No hay sesión");
             procesocorrecto = false;
-            //divisiones = Divison.getDivisiones();
+            redirect = "inicio_sesion.jsp";
+        }else{
+            if (admin.getiD_cat_priv() == 1){
+                procesocorrecto = true;
+                emp = (Empresa)sesionAdmin.getAttribute("empresa");
+                divisiones = Division.obtenerDivisiones(emp.getIDEmpresa());
+            }else{
+                procesocorrecto = false;
+                //divisiones = Divison.getDivisiones();
+            }
         }
     }catch(Exception e){
         e.getMessage();
         e.printStackTrace();
         procesocorrecto = false;
+            redirect = "error.jsp";
     }
     if(!procesocorrecto){
-        response.sendRedirect("error.jsp");
+        response.sendRedirect(redirect);
     }
 %>
 <!DOCTYPE html>

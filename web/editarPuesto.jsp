@@ -17,25 +17,33 @@
     HttpSession sesion;
     ArrayList<Division> divisiones = new ArrayList<Division>();
     boolean todoBien = true;
+    String redirect = "";
     try{
         sesion = request.getSession();
         admin = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        if (admin.getiD_cat_priv() > 2){ //dentro del catalogo ya sería un empleado proletario
+        if(admin == null){
             todoBien = false;
+            redirect = "inicio_sesion.jsp";
         }else{
-            idEmpleado = Integer.parseInt(request.getParameter("id"));
-            empleado = UsuarioEmpleado.getPuestoEmpleadoById(idEmpleado);
-            Empresa emp = (Empresa)sesion.getAttribute("empresa");
-            divisiones = Division.obtenerDivisiones(emp.getIDEmpresa());
-            //tocaría meter un traductor de ides en la parte de la división
+            if (admin.getiD_cat_priv() > 2){ //dentro del catalogo ya sería un empleado proletario
+                todoBien = false;
+                redirect = "error.jsp";
+            }else{
+                idEmpleado = Integer.parseInt(request.getParameter("id"));
+                empleado = UsuarioEmpleado.getPuestoEmpleadoById(idEmpleado);
+                Empresa emp = (Empresa)sesion.getAttribute("empresa");
+                divisiones = Division.obtenerDivisiones(emp.getIDEmpresa());
+                //tocaría meter un traductor de ides en la parte de la división
+            }
         }
     }catch(Exception e){
         e.getMessage();
         e.printStackTrace();
         todoBien = false;
+        redirect = "error.jsp";
     }
     if(!todoBien){
-        response.sendRedirect("error.jsp");
+        response.sendRedirect(redirect);
     }
     
 %>

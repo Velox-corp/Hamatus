@@ -8,17 +8,29 @@
     String apmat = "";
     String correo = "";
     String fecha_nac = "";
+    String redirect = "";
     try {
         UsuarioEmpleado usuario = (UsuarioEmpleado) sesion.getAttribute("usuario");
-        nombre = usuario.getNombre();
-        appat = usuario.getAppat();
-        apmat = usuario.getApmat();
-        correo = usuario.getCorreo();
-        fecha_nac = usuario.getFechaNacimiento();
-        //NOTA, el id no lo vamos a meter, se va obtener por parte de la sesión para ocultarlo
-        obtencionAdecuada = true;
+        if(usuario == null ){
+            System.out.println("No hay sesión");
+            obtencionAdecuada = false;
+            redirect = "inicio_sesion.jsp";
+        }else{
+            nombre = usuario.getNombre();
+            appat = usuario.getAppat();
+            apmat = usuario.getApmat();
+            correo = usuario.getCorreo();
+            fecha_nac = usuario.getFechaNacimiento();
+            //NOTA, el id no lo vamos a meter, se va obtener por parte de la sesión para ocultarlo
+            obtencionAdecuada = true;
+        }
     } catch (NullPointerException e) {
         obtencionAdecuada = false;
+        e.printStackTrace();
+        redirect = "error.jsp";
+    }
+    if(!obtencionAdecuada){
+        response.sendRedirect(redirect);
     }
 %>
 
@@ -30,10 +42,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>CRUD | TU</title>
-
-        <meta name="description" content="Source code generated using layoutit.com">
-        <meta name="author" content="LayoutIt!">
-
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
@@ -48,7 +56,10 @@
                         <img alt="Bootstrap Image Preview" src="img/grupo.png" class="rounded-circle">
                     </div>
                     <form role="form" method="POST" action='actualizarUser'>
+                        <!-- Esto no se ha implementado
                         <div class="row form-group justify-content-center">
+                            
+                             
                             <label for="InputFile" class="margen">
                                 Imagen
                             </label>
@@ -56,7 +67,7 @@
                             <p class="help-block">
                                 Inserte imagen del empleado
                             </p>
-                        </div>
+                        </div> -->
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Nombre:</span>
