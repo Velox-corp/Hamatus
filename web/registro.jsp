@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <label for="f_n">Fecha de nacimiento:</label>
                         <input type="date" class="form-control" id="f_n" name="f_n"
-                               onchange="return validarDate(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
+                               onchange="return validarDate(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" min="1930-01-01" max="2004-01-13">
                       </div>
                     <div class="form-group">
                       <label for="email">Dirección de correo electrónico (correo de la empresa):</label>
