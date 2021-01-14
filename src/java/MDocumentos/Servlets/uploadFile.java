@@ -22,6 +22,8 @@ import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -189,60 +191,73 @@ public class uploadFile extends HttpServlet {
                         .getFileName().toString(); //Basicamente nos trae el nombre del archivo
                 //Listado de datos preparados para entrar en la BD
                 M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
-                if (mdoc.registrarM_Documentos()) {
-                    System.out.println("Todo correcto hasta el moemnto..");
-                    System.out.println("Entrando en fase 2");
-                    D_Documento ddoc = new D_Documento(nombre, ruta, pass,
-                            id_tipo_acceso,folio, Equipo_ID_Equipo, 
-                            mdoc.getIdM_Documento());
-                    if (!D_Documento.ConsultarD_Doc_B(Equipo_ID_Equipo , nombre)) {
-                        if (ddoc.registrarDoc()) {
-                            System.out.println("Todo Correcto uwu");
-                            OutputStream outs = null;
-                            InputStream filecontent = null;
-                            final PrintWriter writer = response.getWriter();
-                            try {
-                                crearFolderA(request);
-                                crearFolder(String.valueOf(Equipo_ID_Equipo), request);
-                                outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
-                                        +Equipo_ID_Equipo+"/")+ File.separator + nombre));
-                                filecontent = filePart.getInputStream();
+                
+                Pattern pattern = Pattern.compile("([a-zA-Z0-9])"
+                        + "+(.doc|.docx|.pdf|.pptx|.png|.jpg|.gif|.csv|"
+                        + ".xlsx|.pptm|.ppt|.xps|.potx|.potm|.pot|.thmx|.ppsx|"
+                        + ".ppsm|.pps|.ppam|.xml|.mp4|.wmv|.tif|.bmp|.rtf|.htm|"
+                        + ".html|.css|.tiff|.psd|.svg|.eps|.mp3|.txt)$", Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(nombre);
+                boolean matchFound = matcher.find();
+                if(matchFound) {
+                    if (mdoc.registrarM_Documentos()) {
+                        System.out.println("Todo correcto hasta el moemnto..");
+                        System.out.println("Entrando en fase 2");
+                        D_Documento ddoc = new D_Documento(nombre, ruta, pass,
+                                id_tipo_acceso,folio, Equipo_ID_Equipo, 
+                                mdoc.getIdM_Documento());
+                        if (!D_Documento.ConsultarD_Doc_B(Equipo_ID_Equipo , nombre)) {
+                            if (ddoc.registrarDoc()) {
+                                System.out.println("Todo Correcto uwu");
+                                OutputStream outs = null;
+                                InputStream filecontent = null;
+                                final PrintWriter writer = response.getWriter();
+                                try {
+                                    crearFolderA(request);
+                                    crearFolder(String.valueOf(Equipo_ID_Equipo), request);
+                                    outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
+                                            +Equipo_ID_Equipo+"/")+ File.separator + nombre));
+                                    filecontent = filePart.getInputStream();
 
-                                int read = 0;
-                                final byte[] bytes = new byte[1024];
+                                    int read = 0;
+                                    final byte[] bytes = new byte[1024];
 
-                                while ((read = filecontent.read(bytes)) != -1) {
-                                    outs.write(bytes, 0, read);
+                                    while ((read = filecontent.read(bytes)) != -1) {
+                                        outs.write(bytes, 0, read);
+                                    }
+
+                                    if (pass.equals(folio)) {
+                                        response.sendRedirect("docs.jsp?flag=true_pass&pass="+pass);
+                                    }else{
+                                        response.sendRedirect("docs.jsp?flag=true");
+                                    }
+
+                                } catch (FileNotFoundException fne) {
+                                    System.out.println("Algo de que no encontro el archivo"
+                                            + " o el folder");
+                                    System.out.println(fne.getMessage());
+                                } finally {
+                                    System.out.println("Aver aver aver que demonios esta pasando");
+                                    outs.close();
+                                    filecontent.close();
+                                    writer.close();
                                 }
-                                
-                                if (pass.equals(folio)) {
-                                    response.sendRedirect("docs.jsp?flag=true_pass&pass="+pass);
-                                }else{
-                                    response.sendRedirect("docs.jsp?flag=true");
-                                }
-
-                            } catch (FileNotFoundException fne) {
-                                System.out.println("Algo de que no encontro el archivo"
-                                        + " o el folder");
-                                System.out.println(fne.getMessage());
-                            } finally {
-                                System.out.println("Aver aver aver que demonios esta pasando");
-                                outs.close();
-                                filecontent.close();
-                                writer.close();
+                            }else{
+                                System.out.println("Todo mal en ddoc unu");
+                                response.sendRedirect("docs.jsp?flag=false");
                             }
                         }else{
-                            System.out.println("Todo mal en ddoc unu");
-                            response.sendRedirect("docs.jsp?flag=false");
+                            System.out.println("Hijole ya existe este doc uwu");
+                            response.sendRedirect("docs.jsp?flag=exist");
                         }
                     }else{
-                        System.out.println("Hijole ya existe este doc uwu");
-                        response.sendRedirect("docs.jsp?flag=exist");
+                        System.out.println("Ya valio esto unu, posible error al "
+                                + "registrar la master del doc");
+                        response.sendRedirect("docs.jsp?flag=false");
                     }
-                }else{
-                    System.out.println("Ya valio esto unu, posible error al "
-                            + "registrar la master del doc");
-                    response.sendRedirect("docs.jsp?flag=false");
+                } else {
+                    System.out.println("Un archivo con nomenclatura incorrecta");
+                    response.sendRedirect("docs.jsp?flag=file_sec");
                 }
             }
         }catch(Exception e){
