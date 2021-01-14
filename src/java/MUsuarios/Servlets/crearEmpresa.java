@@ -55,16 +55,15 @@ public class crearEmpresa extends HttpServlet {
             String f_n = request.getParameter("f_n");
             String pass = request.getParameter("pwd");
             String pass2 = request.getParameter("pwd2");
+            
             //Validaciones  registro del empleado
-            
-            
             //elementos empesa
             String nombreEmp = request.getParameter("nameEmpresa");
             String descripcion = request.getParameter("description");
             String razon_social = request.getParameter("razonSocial");
             Part logo = request.getPart("logo");
             //validar campos de datos por parte del controlador
-            boolean[] bufferValidaciones = new boolean[9];
+            boolean[] bufferValidaciones = new boolean[10];
             bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
             bufferValidaciones[1] = Validaciones.esString(appat, false, false);
             bufferValidaciones[2] = Validaciones.esString(apmat, false, false);
@@ -74,14 +73,20 @@ public class crearEmpresa extends HttpServlet {
             bufferValidaciones[6] = Validaciones.esString(nombreEmp, true, true);
             bufferValidaciones[7] = Validaciones.esString(descripcion, true, true);
             bufferValidaciones[8] = Validaciones.esString(razon_social, true, true);
+            bufferValidaciones[9] = (request.getParameter("tYc").equals("true"));
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
-                    redirect = "error.jsp";
-                    System.out.println("Mal validado");
+                    redirect = "registro.jsp";
+                    if(i != 9){
+                        System.out.println("Mal validado");
+                    }else{
+                        System.out.println("No aceto los terminos y condiciones");
+                    }
                     break;
                 }
             }
+            
             if(proceso_correcto){
                 Empresa emp = null;
                 UsuarioEmpleado admin = null;

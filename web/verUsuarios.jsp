@@ -94,10 +94,12 @@
                                 <td><%=Division.traducirID(empleado.getiD_Division())%></td>
                                 <td><%=CatPuestos.traducirID(empleado.getiD_cat_priv())%></td>
                                 <td class='btn-group-vertical'>
-                                    <% if ((empleado.getiD_cat_priv() > 1 && user.getiD_cat_priv() == 1) || (empleado.getiD_cat_priv() > 2 && user.getiD_cat_priv() == 2) || (empleado.getiD_cat_priv() > 3 && user.getiD_cat_priv() == 3)){ %>
+                                    <% if ((empleado.getiD_cat_priv() > 1 && user.getiD_cat_priv() == 1) || (empleado.getiD_cat_priv() > 2 && user.getiD_cat_priv() == 2) ){ %>
                                     <a href='editarPuesto.jsp?id=<%=empleado.getIDUsuarioE()%>'>Cambiar puesto</a>
                                     <a href="borrarEmpleado?id=<%=empleado.getIDUsuarioE()%>" class="active text-danger">Eliminar</a>
-                                    <%}else{ %>
+                                    <%}else if (empleado.getiD_cat_priv() > 3 && user.getiD_cat_priv() == 3){ %>
+                                        <a href="borrarEmpleado?id=<%=empleado.getIDUsuarioE()%>" class="active text-danger">Eliminar</a>
+                                    <% } else { %>
                                     Ninguna
                                     <% } %>
                                 </td>

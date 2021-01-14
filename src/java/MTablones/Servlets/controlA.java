@@ -6,6 +6,7 @@
 package MTablones.Servlets;
 
 import ClasesSoporte.Fecha;
+import ClasesSoporte.Validaciones;
 import MDistribucion.Clases.Equipo;
 import MTablones.Clases.Anuncio;
 import MTablones.Clases.AnuncioDAO;
@@ -48,17 +49,26 @@ public class controlA extends HttpServlet {
  
         switch (accion) {
             case "Delete":
-                int idanuncio = Integer.parseInt(request.getParameter("ida"));
-                int id_div = Integer.parseInt(request.getParameter("id_div"));
-                adao.delete(idanuncio);
-                request.getRequestDispatcher("controlA?accion=home").forward(request, response);
+                try{
+                    int idanuncio = Integer.parseInt(request.getParameter("ida"));
+                    int id_div = Integer.parseInt(request.getParameter("id_div"));
+                    adao.delete(idanuncio);
+                    request.getRequestDispatcher("controlA?accion=home").forward(request, response);
+                }catch(Exception e){
+                    e.printStackTrace();
+                    response.sendRedirect("error.jsp");
+                    break;
+                }
                 break;
             case "Update":
                 int divEdit = Integer.parseInt(request.getParameter("id_div"));
                 int idmod = Integer.parseInt(request.getParameter("idmod"));
                 String mod_titulo = request.getParameter("mod_titulo");
                 String mod_descripcion = request.getParameter("mod_descripcion");
-                
+                if (! Validaciones.esString(mod_titulo, true, true) || ! Validaciones.esString(mod_descripcion, true, true)){
+                    response.sendRedirect("editanuncio.jsp");
+                    break;
+                }
                 Anuncio modanuncio= new Anuncio(mod_titulo,mod_descripcion,Fecha.hora(),divEdit);
                 adao.actualizar(idmod,modanuncio);
                 
@@ -73,6 +83,10 @@ public class controlA extends HttpServlet {
             case "Agregar":
                 String tituloa = request.getParameter("tituloa");
                 String descripciona = request.getParameter("descripciona");
+                if (! Validaciones.esString(tituloa, true, true) || ! Validaciones.esString(descripciona, true, true)){
+                    response.sendRedirect("tablon.jsp");
+                    break;
+                }
                 //String fechaa = request.getParameter("fechaa");
                 int div_anuncio=Integer.parseInt(request.getParameter("iddivision"));
                 Anuncio anuncio= new Anuncio(tituloa,descripciona,Fecha.hora(),div_anuncio);

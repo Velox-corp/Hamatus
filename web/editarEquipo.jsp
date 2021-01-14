@@ -200,7 +200,7 @@
                                             <%=emp.getAppat()%> <%=emp.getApmat()%> <%=emp.getNombre()%>
                                     </h5>
                                     <div class="card-body">
-                                         <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
+                                        <label for="empleado_<%=(i+1)%>">Incluir en el equipo:</label>
                                         <input type="checkbox" id='empleado_<%=(i+1)%>' value='true' name='empleado_<%=(i+1)%>'>
                                         <input type='hidden' name='idE_<%=(i+1)%>' id='idE_<%=(i+1)%>' value='<%=emp.getIDUsuarioE()%>'>
                                     </div>
