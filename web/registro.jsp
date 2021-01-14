@@ -97,7 +97,7 @@
                       </div>
                     <div class="form-group">
                         <input type="checkbox" id='tYc' value='true' name='tYc' required="required">
-                        <label for="tYc">Acepto los <a href="Terminos_Condiciones.pdf">Terminos y condiciones</a></label>
+                        <label for="tYc">Acepto los <a href="Terminos_Condiciones.pdf" target="_blank">Terminos y condiciones</a></label>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>

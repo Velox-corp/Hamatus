@@ -24,7 +24,7 @@
     <div class="thumb-content"><a href="nosotros.jsp">Sobre nosotros</a></div>	
     </li>
     <li>
-    <div class="thumb-content"><a href="Terminos_Condiciones.pdf">Terminos y condiciones</a></div>	
+    <div class="thumb-content"><a href="Terminos_Condiciones.pdf" target="_blank">Terminos y condiciones</a></div>	
     </li>
 </ul>
 </div>
