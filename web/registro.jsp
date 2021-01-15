@@ -105,7 +105,7 @@
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-8">
                           <button id="submit" name="submit" class="btn btn-dark" value="1">Registrar</button>
-                          <button class="btn btn-danger" type="reset" >Limpiar furmulario</button>
+                          <button class="btn btn-danger" type="reset" >Limpiar formulario</button>
                         </div>
                       </div>
                   </form>
