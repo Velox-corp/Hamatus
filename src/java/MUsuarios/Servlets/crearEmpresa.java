@@ -11,7 +11,10 @@ import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.sql.Blob;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.MultipartConfig;
@@ -62,6 +65,8 @@ public class crearEmpresa extends HttpServlet {
             String descripcion = request.getParameter("description");
             String razon_social = request.getParameter("razonSocial");
             Part logo = request.getPart("logo");
+            String logo_name = Paths.get(logo.getSubmittedFileName())
+                    .getFileName().toString(); //Basicamente nos trae el nombre del logo
             //validar campos de datos por parte del controlador
             boolean[] bufferValidaciones = new boolean[10];
             bufferValidaciones[0] = Validaciones.esString(nombreUser, true, false);
@@ -73,7 +78,12 @@ public class crearEmpresa extends HttpServlet {
             bufferValidaciones[6] = Validaciones.esString(nombreEmp, true, true);
             bufferValidaciones[7] = Validaciones.esString(descripcion, true, true);
             bufferValidaciones[8] = Validaciones.esString(razon_social, true, true);
-            bufferValidaciones[9] = (request.getParameter("tYc").equals("true"));
+            String tyc = request.getParameter("tYc");
+            if (tyc != null) {
+                bufferValidaciones[9] = tyc.equals("true");
+            }else{
+                bufferValidaciones[9] = false;
+            }
             for (int i = 0; i < bufferValidaciones.length; i++) {
                 if(!bufferValidaciones[i]){
                     proceso_correcto = false;
@@ -81,9 +91,19 @@ public class crearEmpresa extends HttpServlet {
                     if(i != 9){
                         System.out.println("Mal validado");
                     }else{
-                        System.out.println("No aceto los terminos y condiciones");
+                        System.out.println("No acepto los terminos y condiciones");
                     }
                     break;
+                }
+            }
+            
+            if (logo.getSize() != 0) {
+                Pattern pattern = Pattern.compile("([a-zA-Z0-9])"
+                            + "+(.png|.jpg|.gif)$", Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(logo_name);
+                boolean matchFound = matcher.find();
+                if (!matchFound) {
+                    proceso_correcto = false;
                 }
             }
             

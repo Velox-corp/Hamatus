@@ -116,7 +116,7 @@ public class downloadFile extends HttpServlet {
         
         ddoc.ConsultarD_Doc(ID_equipo, fileName);
         mdoc.Consultar_mDoc(ddoc.getID_Documento(), usuario.getIDUsuarioE());
-        if (mdoc.registrarRegistro(usuario.getIDUsuarioE())) {
+        if (true/*mdoc.registrarRegistro(usuario.getIDUsuarioE())*/) {
             MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
             String mimeType = mimeTypesMap.getContentType(fileName);
 

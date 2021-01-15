@@ -19,7 +19,7 @@
             UsuarioEmpleado liderDiv;
             boolean obtencionAdecuada = true;
             String redirect = "";
-            int iddivision;
+            int iddivision = 0;
             try{
                 sesion = request.getSession();
                 liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");

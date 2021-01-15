@@ -87,7 +87,7 @@
                     </div>
                     <div class="form-group">
                         <label for="logo">Logo (Opcional): </label>
-                        <input type="file"  accept="images/*" aclass="form-control-file" id="logo" name="logo">
+                        <input type="file"  accept="image/gif,image/jpeg,image/jpg,image/png" aclass="form-control-file" id="logo" name="logo">
                     </div>
                      <div class="form-group">
                         <label for="razonSocial">Razón Social:</label>
