@@ -39,8 +39,8 @@ public class agregarEmpleado extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             HttpSession sesion;
-            String redirect = "";
-            boolean proceso_correcto = false;
+            String redirect;
+            boolean proceso_correcto = true;
             //elementos user admin empresa
             String nombreUser = request.getParameter("nameUser");
             String correo = request.getParameter("email");
@@ -52,7 +52,7 @@ public class agregarEmpleado extends HttpServlet {
             int jerarquia = Integer.parseInt(request.getParameter("jerarquia"));
             String division = request.getParameter("division");
             System.out.println("division: "+division);
-            if(division == "Seleccione la división a la que pertenece"){
+            if(division.equals("Seleccione la división a la que pertenece")){
                 proceso_correcto = false;
             }
             boolean[] bufferValidaciones = new boolean[6];
@@ -70,7 +70,6 @@ public class agregarEmpleado extends HttpServlet {
                     break;
                 }
             }
-            proceso_correcto = true;
             if(proceso_correcto){
                 try{
                     sesion = request.getSession();
@@ -79,18 +78,21 @@ public class agregarEmpleado extends HttpServlet {
                     Division divInsert = new Division(division);
                     UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, Division.IDDivision(divInsert, emp.getIDEmpresa()), jerarquia, null);
                     proceso_correcto = (UsuarioEmpleado.ingresarEmpleado(newEmpleado));
+                    if(proceso_correcto){
+                        redirect = "verUsuarios.jsp";
+                    }else{
+                        redirect = "error.jsp";
+                    }
                 }catch(Exception e){
                     e.getMessage();
                     e.printStackTrace();
+                    proceso_correcto = false;
+                    redirect= "error.jsp";
                 }
             }else{
-                
+                redirect = "Administrador_new.jsp";
             }
-            if(proceso_correcto){
-                redirect = "verUsuarios.jsp";
-            }else{
-                redirect= "error.jsp";
-            }
+            
             response.sendRedirect(redirect);
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");

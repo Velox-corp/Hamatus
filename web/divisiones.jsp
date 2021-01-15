@@ -6,7 +6,7 @@
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
 <%
     HttpSession sesion = request.getSession();
-    boolean obtencionAdecuada = false;
+    boolean obtencionAdecuada = true;
     String redirect = "";
     ArrayList<Division> divisiones = new ArrayList<Division>();
     try {

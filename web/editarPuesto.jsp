@@ -63,55 +63,58 @@
                 <h3>Detalle de empleado de <strong><%=empleado.getAppat()%> <%=empleado.getApmat()%> <%=empleado.getNombre()%>.</strong></h3>
             </div>
         </div> <br>
-        <form class='' method="POST" role='form' action='cambioDePuesto'>
-            <input type="hidden" value="<%=empleado.getIDUsuarioE()%>" name='ideUserCambio'>
-            <div class='row'>
-                <div class='col-md-6 align-items-center'>
-                    <p>División actual: <input type='text' id='oldPuesto' value='<%=Division.traducirID(empleado.getiD_Division())%>' readonly='readonly'></p>
-                    <button onclick="return habilitarCampo('newDiv')" class='btn btn-info'>
-                        Hacer cambio de división
-                    </button><br>
-                    <select id='newDiv' name='newDiv' readonly='readonly' onchange='return alterarPuestos()' disabled>
-                        <option  value='0' selected>Seleccione la división a donde hacer la transferencía</option>
-                                        <% for (int i = 0; i < divisiones.size(); i++) {
-                                            Division div = divisiones.get(i); %>
-                                            <option value="<%=div.getNombre()%>"> <%=div.getNombre()%></option>
-                                        <% } %>
-                    </select>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-2"></div>
+            <form class='col-md-8' method="POST" role='form' action='cambioDePuesto'>
+                <input type="hidden" value="<%=empleado.getIDUsuarioE()%>" name='ideUserCambio'>
+                <div class='row'>
+                    <div class='col-md-6 align-items-center'>
+                        <p>División actual: <input type='text' id='oldPuesto' value='<%=Division.traducirID(empleado.getiD_Division())%>' readonly='readonly'></p>
+                        <button onclick="return habilitarCampo('newDiv')" class='btn btn-info'>
+                            Hacer cambio de división
+                        </button><br>
+                        <select id='newDiv' name='newDiv' readonly='readonly' onchange='return alterarPuestos()' disabled>
+                            <option  value='0' selected>Seleccione la división a donde hacer la transferencía</option>
+                                            <% for (int i = 0; i < divisiones.size(); i++) {
+                                                Division div = divisiones.get(i); %>
+                                                <option value="<%=div.getNombre()%>"> <%=div.getNombre()%></option>
+                                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-md-6 align-items-center">
+                        <p>Privilegios actulales: <input type='text' id='oldPriv' value='<%=CatPuestos.traducirID(empleado.getiD_cat_priv())%>' readonly='readonly'></p>
+                        <button onclick="return habilitarCampo('newPriv')" class='btn btn-info'>
+                            Hacer cambio de privilegios
+                        </button>
+                        <select id='newPriv' name='newPriv' readonly='readonly' disabled>
+                            <option value='0' selected>Seleccione el nuevo tipo de rango</option>
+                            <%switch(empleado.getiD_cat_priv()){
+                                case 2: %>
+                                    <option value='2'>Directivo</option>
+                                    <% break;
+                                case 3: %>
+                                    <option value='3'>Jefe de área</option>
+                                    <option value='4'>Empleado general</option>
+                                    <% break;
+                                case 4: %>
+                                    <option value='3'>Jefe de área</option>
+                                    <option value='4'>Empleado general</option>
+                                <%  break;
+                            }%>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-6 align-items-center">
-                    <p>Privilegios actulales: <input type='text' id='oldPriv' value='<%=CatPuestos.traducirID(empleado.getiD_cat_priv())%>' readonly='readonly'></p>
-                    <button onclick="return habilitarCampo('newPriv')" class='btn btn-info'>
-                        Hacer cambio de privilegios
-                    </button>
-                    <select id='newPriv' name='newPriv' readonly='readonly' disabled>
-                        <option value='0' selected>Seleccione el nuevo tipo de rango</option>
-                        <%switch(empleado.getiD_cat_priv()){
-                            case 2: %>
-                                <option value='2'>Directivo</option>
-                                <% break;
-                            case 3: %>
-                                <option value='3'>Jefe de área</option>
-                                <option value='4'>Empleado general</option>
-                                <% break;
-                            case 4: %>
-                                <option value='3'>Jefe de área</option>
-                                <option value='4'>Empleado general</option>
-                            <%  break;
-                        }%>
-                    </select>
+                        <br>
+                <div class='row align-items-center'>
+                    <div class='col-md-12'>
+                        <button class='btn btn-success text-center' type="submit">
+                            Guardar cambios
+                        </button>
+                    </div>
                 </div>
-            </div>
-                    <br>
-            <div class='row align-items-center'>
-                <div class='col-md-12'>
-                    <button class='btn btn-success text-center' type="submit">
-                        Guardar cambios
-                    </button>
-                </div>
-            </div>
-        </form>
-                    <script src='JS/editPuesto.js'></script>
+            </form>
+        </div>
+        <script src='JS/editPuesto.js'></script>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>

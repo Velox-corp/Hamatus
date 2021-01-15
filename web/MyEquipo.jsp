@@ -59,8 +59,7 @@
                     <a class="btn btn-dark" href="docs.jsp">Trabaje con su equipo Aquí</a>
                 </div>
             </div>
-            <div class="col-md-3"></div>
-        </div><br><br><br><br>
+        </div><br><br>
     </body>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

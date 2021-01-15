@@ -1,6 +1,15 @@
-<%@page language="java" pageEncoding="UTF-8" contentType="text/html"%>
+<%@page import="MUsuarios.clases.UsuarioEmpleado"%>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true"%>
+<% 
+    HttpSession sesion;
+    sesion = request.getSession();
+    UsuarioEmpleado userverif = (UsuarioEmpleado) sesion.getAttribute("usuario");
+    if(userverif != null){
+        response.sendRedirect("empresa.jsp");
+    }
+%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>

@@ -23,6 +23,15 @@ function too_w(){
     });
 }
 
+function file_sec(){
+    var titulo = decode_utf8("Lamentablemente no se permiten archivos con esa nomenclatura");
+    Swal.fire({
+        title: titulo,
+        text:'Por motivos de seguridad tampoco se aceptan archivos .sql .java .py .js .rar y .zip',
+        icon:'error'
+    });
+}
+
 function confirmation_del(){
     Swal.fire({
         position: 'top-end',
@@ -43,8 +52,8 @@ function error(){
 }
 
 function wrong_pass(){
-    var titulo = decode_utf8("Contraseña incorrecta");
-    var text = decode_utf8('Ingrese otra vez la contraseña');
+    var titulo = decode_utf8(encode_utf8("Contraseña incorrecta"));
+    var text = decode_utf8(encode_utf8('Ingrese otra vez la contraseña'));
     Swal.fire({
         title: titulo,
         text:text,
@@ -148,6 +157,9 @@ window.onload = function(){
     }
     else if(getParameterByName('flag') == 'too_w'){
         too_w();
+    }
+    else if(getParameterByName('flag') == 'file_sec'){
+        file_sec();
     }
 }
 
