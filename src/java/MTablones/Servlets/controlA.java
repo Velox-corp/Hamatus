@@ -90,6 +90,7 @@ public class controlA extends HttpServlet {
                 
                 break;
             default:
+                //String flag=request.getParameter("flag");
                 request.setAttribute("anuncios", anuncios);
                 request.getRequestDispatcher("anuncios.jsp").forward(request, response);
         }
