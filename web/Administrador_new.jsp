@@ -60,17 +60,21 @@
             <div class="col-md-2">
             </div>
             <div class="col-md-8">
-                <center><h1>Ingrese un nuevo empleado en el sistema</h1></center>   
+                <center><h1>Ingrese un nuevo empleado en el sistema</h1></center>
+                <br>
                     <%
                         if (divisiones.size() <= 1) {
 
                     %>
-                <div class="alert alert-info">
-                    <strong>Aviso!</strong> Favor de agregar divisiones antes de agregar usuarios.
+                <div class="alert alert-warning" role="alert">
+                    <strong class="alert-heading h3">¡Aviso!</strong> 
+                    <p>Favor de agregar divisiones antes de agregar usuarios.<br><br>
+                    <a href="divisiones.jsp" class="active">
+                        Agregar divisiones.
+                    </a>
+                    </p>
                 </div>
-                <a href="divisiones.jsp" class="btn btn-dark">
-                    Agregar divisiones
-                </a>
+                
                 <% //request.getRequestDispatcher("controlA?accion=home").forward(request, response);
                 } else {
                 %>
@@ -147,8 +151,6 @@
                 <%
                     }
                 %>
-            </div>
-            <div class="col-md-2">
             </div>
         </div>
         <script src='JS/manejoDivYJer.js'></script>

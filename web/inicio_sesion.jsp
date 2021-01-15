@@ -2,10 +2,16 @@
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session="true" %>
 <% 
     boolean haySesion = false;
+    int reintento = 0;
     String redirect = "";
     try{
         HttpSession sesion = request.getSession();
-    
+        try{
+            reintento = Integer.parseInt((String)request.getAttribute("reintento"));
+        }catch(Exception e){
+            reintento = 0;
+            
+        }
         if( ( (UsuarioEmpleado) sesion.getAttribute("usuario") ) != null ){
             haySesion = true;
             redirect = "empresa.jsp";
@@ -82,6 +88,13 @@
                     <img align="right" src="img/iniciar-sesion.png">
                   </div>
                   <div class="col-sm-6">
+                      <% if(reintento == 1){ %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Correo electronico y/o contraseña incorrectos.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div><% } %>
                       <form action="iniciarSesion" name="formulario" method="POST" onsubmit="return validoIS(this)">
                         <div class="form-group">
                           <label for="email">Dirección de correo electrónico:</label>

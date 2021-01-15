@@ -10,6 +10,7 @@ import MUsuarios.clases.UsuarioEmpleado;
 import static MUsuarios.clases.UsuarioEmpleado.ConsultarEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,7 @@ public class iniciarSesion extends HttpServlet {
             String correo = request.getParameter("email");
             String pass = request.getParameter("pwd");
             UsuarioEmpleado usu = new UsuarioEmpleado();
-            
+            int reintento;
             //Ejecutar busqueda
             usu = ConsultarEmpleado(correo, pass);
             //Iniciamos sesion
@@ -52,7 +53,7 @@ public class iniciarSesion extends HttpServlet {
                 sesionEmpresa.setAttribute("usuario", usu);
                 Empresa emp = Empresa.buscarEmpresa(usu.getiD_Division());
                 sesionEmpresa.setAttribute("empresa", emp);
-                
+                reintento = 0;
                 switch(usu.getiD_cat_priv()){
                     case 1:
                         redirect = "verUsuarios.jsp"; //posiblemente cambia a estádisticas.
@@ -70,8 +71,11 @@ public class iniciarSesion extends HttpServlet {
                         redirect = "error.jsp";
                 }
             }else{
+                reintento = 1;
                 redirect = "inicio_sesion.jsp";
             }
+            ServletContext contexto = getServletContext();
+            contexto.setAttribute("reintento", reintento);
             response.sendRedirect(redirect);
         }catch(Exception e){
             System.out.println(e.getMessage());
