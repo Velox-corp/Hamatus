@@ -192,6 +192,88 @@ public class Empresa implements Serializable{
         return null;
     }
     
+    /**
+     * Método para eidtar la información de una empresa a excepción del logo
+     * @param emp: el objeto empresa con los datos nuevos a meter
+     * @return true si se realizó el opdate correctamente
+     */
+    public static boolean editEmpresa(Empresa emp){
+        boolean procesoCorrecto = false;
+        try{
+            con = Conexion.obtenerConexion();
+            query = "UPDATE empresa SET nombre = ?, descripcion = ?, razon_social = ? where id_empresa = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, emp.getNombre());
+            ps.setString(2, emp.getDescripcion());
+            ps.setString(3, emp.getRazónsocial());
+            ps.setInt(4, emp.getIDEmpresa());
+            procesoCorrecto = ( ps.executeUpdate() == 1 );
+        } catch (Exception ex) {
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            procesoCorrecto = false;
+        }finally{
+            try {
+                con.close();
+                query = "";
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return procesoCorrecto;
+    }
+    
+    public static boolean editLogo(Part newLogo, int idEmp){
+        boolean procesoCorrecto = false;
+        try{
+            con = Conexion.obtenerConexion();
+            query = "UPDATE empresa SET  where id_empresa = ?";
+            ps = con.prepareStatement(query);
+            ps.setBlob(1, newLogo.getInputStream());
+            ps.setInt(2, idEmp);
+            procesoCorrecto = ( ps.executeUpdate() == 1 );
+        } catch (Exception ex) {
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            procesoCorrecto = false;
+        }finally{
+            try {
+                con.close();
+                query = "";
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return procesoCorrecto;
+    }
+    
+    /**
+     * Método para borrar una empresa
+     * @param idEmp: el ide de la empresa a borrar
+     * @return true si se realizó el delete con éxito
+     */
+    public static boolean deleteEmpresa(int idEmp){
+        boolean procesoCorrecto = false;
+        try{
+         con = Conexion.obtenerConexion();
+         query = "DELETE FROM empresa where ID_Empresa = ?";
+         ps = con.prepareStatement(query);
+         ps.setInt(1, idEmp);
+         procesoCorrecto = ( ps.executeUpdate() == 1 );
+        } catch (Exception ex) {
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            procesoCorrecto = false;
+        }finally{
+            try {
+                con.close();
+                query = "";
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return procesoCorrecto;
+    }
     
     public Integer getIDEmpresa() {
         return iDEmpresa;

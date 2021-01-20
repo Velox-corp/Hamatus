@@ -72,8 +72,9 @@
 
             </div>
             
-            <br>
-            <jsp:include page="Prueba-Reu/my-footer.jsp" />
         </div>
+        <br>
+       <jsp:include page="Prueba-Reu/my-footer.jsp" />
+        
     </body>
 </html>
