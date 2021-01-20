@@ -201,7 +201,7 @@ public class Empresa implements Serializable{
         boolean procesoCorrecto = false;
         try{
             con = Conexion.obtenerConexion();
-            query = "UPDATE empresa SET nombre = ?, descripcion = ?, razon_social = ? where id_empresa = ?";
+            query = "UPDATE empresa SET Nombre = ?, Descripcion = ?, Razon_social = ? where id_empresa = ?";
             ps = con.prepareStatement(query);
             ps.setString(1, emp.getNombre());
             ps.setString(2, emp.getDescripcion());
@@ -227,7 +227,7 @@ public class Empresa implements Serializable{
         boolean procesoCorrecto = false;
         try{
             con = Conexion.obtenerConexion();
-            query = "UPDATE empresa SET  where id_empresa = ?";
+            query = "UPDATE empresa SET logo = ? where ID_Empresa = ?";
             ps = con.prepareStatement(query);
             ps.setBlob(1, newLogo.getInputStream());
             ps.setInt(2, idEmp);
