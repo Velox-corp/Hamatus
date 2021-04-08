@@ -56,7 +56,7 @@
                         Usted pertenece al equipo: <strong><%=equipo.getNombre()%></strong>
                     </div>
                     <br>
-                    <a class="btn btn-dark" href="docs.jsp">Trabaje con su equipo Aquí</a>
+                    <a class="btn btn-dark" href="listaDeEmpleados.jsp">Ver integrantes del equipo</a>
                 </div>
             </div>
         </div><br><br>

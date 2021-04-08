@@ -21,11 +21,15 @@
         <%
             HttpSession sesion;
             UsuarioEmpleado user = null;
+            int equipo = 0;
             ArrayList<UsuarioEmpleado> usuarios = new ArrayList<UsuarioEmpleado>();
             try{
                 sesion = request.getSession();
                 user = (UsuarioEmpleado)sesion.getAttribute("usuario");
-                int equipo = EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE());
+                if(user.getiD_cat_priv()== 2){
+                    equipo = Integer.parseInt(request.getParameter("id"));
+                }
+                equipo = EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE());
                 usuarios =  UsuarioEmpleado.obtenerUsuariosEquipo(equipo, user.getiD_Division());
                 
             }catch(Exception e){

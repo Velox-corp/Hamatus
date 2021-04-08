@@ -24,7 +24,7 @@
             int id_user = 0;
             try{
                 sesion = request.getSession();
-                id_user = request.getParameter(id);
+                id_user = Integer.parseInt(request.getParameter("id"));
                 user = UsuarioEmpleado.getPuestoEmpleadoById(id_user);
             }catch(Exception e){
                 
