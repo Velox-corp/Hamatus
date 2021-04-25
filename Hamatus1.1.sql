@@ -28,9 +28,13 @@ CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`cat_jerarquia` (
   `detalle` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_jerarquia`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
 
+LOCK TABLES `cat_jerarquia` WRITE;
+/*!40000 ALTER TABLE `cat_jerarquia` DISABLE KEYS */;
+INSERT INTO `cat_jerarquia` (`id_jerarquia`, `detalle`) VALUES (1,'División Padre'),(2,'Departamento subordinado');
+/*!40000 ALTER TABLE `cat_jerarquia` ENABLE KEYS */;
+UNLOCK TABLES;
 
 -- -----------------------------------------------------
 -- Table `heroku_9ad0f74b62bb348`.`cat_tipo_acceso`
@@ -44,6 +48,11 @@ CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`cat_tipo_acceso` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+LOCK TABLES `cat_tipo_acceso` WRITE;
+/*!40000 ALTER TABLE `cat_tipo_acceso` DISABLE KEYS */;
+INSERT INTO `cat_tipo_acceso` (`idC_tipo_acceso`, `nombre_tipo_acceso`) VALUES (1,'jefe de equipo'),(2,'Empleados generales');
+/*!40000 ALTER TABLE `cat_tipo_acceso` ENABLE KEYS */;
+UNLOCK TABLES;
 
 -- -----------------------------------------------------
 -- Table `heroku_9ad0f74b62bb348`.`empresa`
@@ -100,8 +109,13 @@ CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`privilegios_jerarquia_u` (
   `tit_permiso` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idprivilegio`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8;
+
+LOCK TABLES `privilegios_jerarquia_u` WRITE;
+/*!40000 ALTER TABLE `privilegios_jerarquia_u` DISABLE KEYS */;
+INSERT INTO `privilegios_jerarquia_u` (`idprivilegio`, `tit_permiso`) VALUES (1,'Administrador'),(2,'Directivo'),(3,'Jefe de Área'),(4,'Empleado general');
+/*!40000 ALTER TABLE `privilegios_jerarquia_u` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 -- -----------------------------------------------------
@@ -192,6 +206,11 @@ CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`cat_clasificacion_doc` (
   PRIMARY KEY (`idcat_clasificacion_doc`))
 ENGINE = InnoDB;
 
+LOCK TABLES `cat_clasificacion_doc` WRITE;
+/*!40000 ALTER TABLE `cat_clasificacion_doc` DISABLE KEYS */;
+INSERT INTO `cat_clasificacion_doc` (`idcat_clasificacion_doc`, `clasificacion`) VALUES (1,'Regular'),(2,'Favorito'),(3, 'Basura');
+/*!40000 ALTER TABLE `cat_clasificacion_doc` ENABLE KEYS */;
+UNLOCK TABLES;
 
 -- -----------------------------------------------------
 -- Table `heroku_9ad0f74b62bb348`.`d_documento`
@@ -335,8 +354,8 @@ CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`Flujo de trabajo` (
   `titulo_flujo` VARBINARY(128) NOT NULL,
   `descripcion_flujo` VARBINARY(256) NOT NULL,
   `id_equipo` INT NOT NULL,
-  `fecha_limite` DATE NOT NULL,
-  `hora_limite` TIME NOT NULL,
+  `fecha_limite` VARBINARY(128) NOT NULL,
+  `hora_limite` VARBINARY(128) NOT NULL,
   PRIMARY KEY (`idFlujo de trabajo`),
   CONSTRAINT `fk_flujo_equipo`
     FOREIGN KEY (`id_equipo`)
@@ -355,10 +374,15 @@ DROP TABLE IF EXISTS `heroku_9ad0f74b62bb348`.`catalogo_tipo_sala` ;
 
 CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`catalogo_tipo_sala` (
   `idtipo_sala` INT NOT NULL AUTO_INCREMENT,
-  `descripción` TINYTEXT NOT NULL,
+  `descripcion` TINYTEXT NOT NULL,
   PRIMARY KEY (`idtipo_sala`))
 ENGINE = InnoDB;
 
+LOCK TABLES `catalogo_tipo_sala` WRITE;
+/*!40000 ALTER TABLE `catalogo_tipo_sala` DISABLE KEYS */;
+INSERT INTO `catalogo_tipo_sala` (`idtipo_sala`, `descripcion`) VALUES (1,'Privada'),(2,'Grupal');
+/*!40000 ALTER TABLE `catalogo_tipo_sala` ENABLE KEYS */;
+UNLOCK TABLES;
 
 -- -----------------------------------------------------
 -- Table `heroku_9ad0f74b62bb348`.`Sala_chat`
@@ -472,7 +496,7 @@ DROP procedure IF EXISTS `heroku_9ad0f74b62bb348`.`ingresarAdmin`;
 
 DELIMITER $$
 USE `heroku_9ad0f74b62bb348`$$
-CREATE DEFINER=`Armando`@`%` PROCEDURE `ingresarAdmin`(nombre VARBINARY(128), appat VARBINARY(128), apmat VARBINARY(128),
+CREATE PROCEDURE `ingresarAdmin`(nombre VARBINARY(128), appat VARBINARY(128), apmat VARBINARY(128),
 f_n VARBINARY(128), correo VARBINARY(128), pass VARBINARY(128), foto Blob, idE int)
 BEGIN
 	insert into division (Nombre_A, id_jerarquia, id_empresa)
@@ -492,7 +516,7 @@ DROP procedure IF EXISTS `heroku_9ad0f74b62bb348`.`obtenerAnuncios`;
 
 DELIMITER $$
 USE `heroku_9ad0f74b62bb348`$$
-CREATE DEFINER=`Armando`@`%` PROCEDURE `obtenerAnuncios`(idE int, idDiv int)
+CREATE PROCEDURE `obtenerAnuncios`(idE int, idDiv int)
 BEGIN
 	select 
 	case 
