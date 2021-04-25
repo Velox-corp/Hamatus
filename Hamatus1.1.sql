@@ -5,9 +5,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema hamatus
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema heroku_9ad0f74b62bb348
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `heroku_9ad0f74b62bb348` ;
@@ -347,16 +344,17 @@ CREATE INDEX `fk_tablon_division_idx` ON `heroku_9ad0f74b62bb348`.`tablon` (`Id_
 -- -----------------------------------------------------
 -- Table `heroku_9ad0f74b62bb348`.`Flujo de trabajo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heroku_9ad0f74b62bb348`.`Flujo de trabajo` ;
+DROP TABLE IF EXISTS `heroku_9ad0f74b62bb348`.`Flujo_de_trabajo` ;
 
-CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`Flujo de trabajo` (
-  `idFlujo de trabajo` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`Flujo_de_trabajo` (
+  `idFlujo_de_trabajo` INT NOT NULL AUTO_INCREMENT,
   `titulo_flujo` VARBINARY(128) NOT NULL,
   `descripcion_flujo` VARBINARY(256) NOT NULL,
   `id_equipo` INT NOT NULL,
   `fecha_limite` VARBINARY(128) NOT NULL,
   `hora_limite` VARBINARY(128) NOT NULL,
-  PRIMARY KEY (`idFlujo de trabajo`),
+  `entregado` TINYINT NOT NULL,
+  PRIMARY KEY (`idFlujo_de_trabajo`),
   CONSTRAINT `fk_flujo_equipo`
     FOREIGN KEY (`id_equipo`)
     REFERENCES `heroku_9ad0f74b62bb348`.`equipo` (`ID_Equipo`)
@@ -364,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`Flujo de trabajo` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_flujo_equipo_idx` ON `heroku_9ad0f74b62bb348`.`Flujo de trabajo` (`id_equipo` ASC);
+CREATE INDEX `fk_flujo_equipo_idx` ON `heroku_9ad0f74b62bb348`.`Flujo_de_trabajo` (`id_equipo` ASC);
 
 
 -- -----------------------------------------------------
@@ -438,13 +436,13 @@ CREATE INDEX `fk_mensaje_sala_idx` ON `heroku_9ad0f74b62bb348`.`Mensaje` (`id_sa
 DROP TABLE IF EXISTS `heroku_9ad0f74b62bb348`.`E_flujo_documento` ;
 
 CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`E_flujo_documento` (
-  `idE_flujo_documento` INT NOT NULL,
+  `idE_flujo_documento` INT NOT NULL AUTO_INCREMENT,
   `id_flujo` INT NOT NULL,
   `id_d_doc` INT NOT NULL,
   PRIMARY KEY (`idE_flujo_documento`),
   CONSTRAINT `fk_efdd_f`
     FOREIGN KEY (`id_flujo`)
-    REFERENCES `heroku_9ad0f74b62bb348`.`Flujo de trabajo` (`idFlujo de trabajo`)
+    REFERENCES `heroku_9ad0f74b62bb348`.`Flujo_de_trabajo` (`idFlujo_de_trabajo`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_efdd_dd`
