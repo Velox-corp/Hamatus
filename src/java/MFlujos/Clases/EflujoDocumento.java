@@ -61,6 +61,15 @@ public class EflujoDocumento {
             ps.setInt(1, efd.getIdf());
             ps.setInt(2, efd.getIdfd());
             procesoCorrecto = ps.executeUpdate() == 1;
+            if(procesoCorrecto){
+                ps.close();
+                q = "UPDATE flujo_de_trabajo SET entregado = 1 WHERE idFlujo_de_trabajo = "
+                        + "(SELECT idE_flujo_documento FROM E_flujo_documento WHERE id_flujo = ? AND id_doc = ?)";
+                ps = con.prepareStatement(q);
+                ps.setInt(1, efd.getIdf());
+                ps.setInt(2, efd.getIdfd());
+                procesoCorrecto = ps.executeUpdate() == 1;
+            }
         }catch (SQLException ex) {
             Logger.getLogger(EflujoDocumento.class.getName()).log(Level.SEVERE, null, ex);
             procesoCorrecto = false;
