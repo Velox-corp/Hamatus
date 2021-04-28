@@ -98,6 +98,7 @@
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
+                                    <li><a href="ver"></a></li>
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>

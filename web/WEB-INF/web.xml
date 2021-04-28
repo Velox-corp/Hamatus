@@ -108,6 +108,10 @@
         <servlet-name>deleteEmpresa</servlet-name>
         <servlet-class>MUsuarios.Servlets.deleteEmpresa</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>eliminarFlujo</servlet-name>
+        <servlet-class>MFlujos.Servlets.eliminarFlujo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -215,6 +219,10 @@
     <servlet-mapping>
         <servlet-name>deleteEmpresa</servlet-name>
         <url-pattern>/deleteEmpresa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eliminarFlujo</servlet-name>
+        <url-pattern>/eliminarFlujo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

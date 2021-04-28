@@ -194,7 +194,7 @@ public class FlujoDeTrabajo implements Serializable {
      * @param idEquipo el ide del equipo en concreto
      * @return una lista de todos los flujos de trabajo asignados a el equipo
      */
-    public static ArrayList<FlujoDeTrabajo> consultarFlujos(int idEquipo){
+    public static ArrayList<FlujoDeTrabajo> consultarFlujosEmpleado(int idEquipo){
         ArrayList<FlujoDeTrabajo> flujos = new ArrayList<FlujoDeTrabajo>();
         try{
             con = Conexion.obtenerConexion();
@@ -226,6 +226,47 @@ public class FlujoDeTrabajo implements Serializable {
         }
         return flujos;
     }
+    
+    /**
+     * Obetener los flujos de trabajo asignados a todos los equipos de un lider de división
+     * @param idDiv el ide de la división
+     * @return una lista de todos los flujos de trabajo asignados a el equipo
+     */
+    public static ArrayList<FlujoDeTrabajo> consultarFlujosLiderDiv(int idDiv){
+        ArrayList<FlujoDeTrabajo> flujos = new ArrayList<FlujoDeTrabajo>();
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT Flujo_de_trabajo.* FROM Flujo_de_trabajo \n" +
+                "WHERE Flujo_de_trabajo.id_equipo \n" +
+                "IN (SELECT equipo.ID_equipo FROM equipo WHERE id_division = ?)";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, idDiv);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                FlujoDeTrabajo fdte = new FlujoDeTrabajo(rs.getInt("idFlujo_de_trabajo"), 
+                        AES.descifrar(rs.getBytes("titulo_flujo")), 
+                        AES.descifrar(rs.getBytes("descripcion_flujo")), 
+                        rs.getInt("id_equipo"), 
+                        AES.descifrar(rs.getBytes("fecha_limite")), 
+                        AES.descifrar(rs.getBytes("hora_limite")), 
+                        rs.getInt("entregado")==1);
+                flujos.add(fdte);
+            }
+            
+        }catch (Exception ex) {
+            Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                q = "";
+            } catch (SQLException ex) {
+                Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flujos;
+    }
+    
     
     /**
      * Método para editar los dátos de un flujo
