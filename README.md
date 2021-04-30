@@ -8,7 +8,8 @@ En esta primera versión se va a implementar:
   - Implementación del módulo de gestión de documentos
   - Implementación de medidas de seguridad web
 
-#Hamatus 1.1
+
+# Hamatus 1.1
 Después de ciertas mejoras, se puede decir que Hamatus sigue siendo lo mismo que fue antes, siendo está versión la  aparte de permitir comunicaciones a través de un chat y la implementación de flujos de trabajo
 Esta es una versión ligeramente mejorada de la anterior, donde los añadidos son:
   - Implemetación del módulo de chat de Usuarios
