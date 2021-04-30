@@ -112,6 +112,14 @@
         <servlet-name>eliminarFlujo</servlet-name>
         <servlet-class>MFlujos.Servlets.eliminarFlujo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>crearFlujo</servlet-name>
+        <servlet-class>MFlujos.Servlets.crearFlujo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editarFlujo</servlet-name>
+        <servlet-class>MFlujos.Servlets.editarFlujo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -223,6 +231,14 @@
     <servlet-mapping>
         <servlet-name>eliminarFlujo</servlet-name>
         <url-pattern>/eliminarFlujo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>crearFlujo</servlet-name>
+        <url-pattern>/crearFlujo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editarFlujo</servlet-name>
+        <url-pattern>/editarFlujo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -98,7 +98,7 @@
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
-                                    <li><a href="ver"></a></li>
+                                    <li><a href="verFlujosTrabajo.jsp">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
@@ -120,6 +120,7 @@
                                 <ul>
                                     <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
                                     <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
+                                    <li><a href="verFlujosTrabajo.jsp">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
@@ -140,6 +141,7 @@
                                 <ul>
                                     <li><a href="verEquipos.jsp" class="sub">Ver Equipos</a></li>
                                     <li><a href="Creacion_equipos.jsp" class="sub">Crear Equipo</a></li>
+                                    <li><a href="verFlujosTrabajo.jsp">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
@@ -159,6 +161,7 @@
                             <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
                                     <li><a href="MyEquipo.jsp" class="sub">Mi Equipo</a></li>
+                                    <li><a href="verFlujosTrabajo.jsp">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
                             <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
