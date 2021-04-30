@@ -62,7 +62,7 @@
                             </div>  
                             <div class="form-group mb-2">
                                 <label for="equipo">Equipo asignado</label>
-                                <select id="equipo">
+                                <select id="equipo" name='equipo'>
                                     <option value='0'>Seleccione un equipo de trabajo</option>
                                     <% for (int i = 0; i < equipos.size(); i++) { 
                                     Equipo eq = equipos.get(i); %>

@@ -40,10 +40,11 @@ public class crearFlujo extends HttpServlet {
             boolean procesoCorrecto = false;
             String redirect;
             try{
-                String titulo = request.getParameter("titulo");
-                String contenido = request.getParameter("contenido");
+                String titulo = request.getParameter("titulof");
+                String contenido = request.getParameter("descripcionf");
                 String fecha = request.getParameter("fecha_l");
                 String hora = request.getParameter("hora_l");
+                System.out.println(request.getParameter("equipo"));
                 int idEquipo = Integer.parseInt(request.getParameter("equipo"));
                 if(idEquipo != 0){
                     FlujoDeTrabajo flujo = new FlujoDeTrabajo(titulo, contenido, idEquipo, fecha, hora);

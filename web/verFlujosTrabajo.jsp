@@ -14,7 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html">
         <meta charset="utf-8">
-        <title>Titulo JSP</title>
+        <title>Flujos de Trabajo</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
@@ -72,8 +72,8 @@
                         if( empleado.getiD_cat_priv() == 3 ) { 
                         %>
                             <div class="col-md-1">
-                                <a href="editarFlujo.jsp&idf=<%=f.getIdFlujodetrabajo()%>" id="btnDelete"><i class="fa fa-trash" arial-hidden="true"></i></a>
-                                <a href="eliminarFlujo&idf=<%=f.getIdFlujodetrabajo()%>" id="btnEdit" class="ml-1"><i class="fa fa-pen" arial-hidden="true"></i></a>
+                                <a href="editarFlujo.jsp?idf=<%=f.getIdFlujodetrabajo()%>" id="btnEdit"><i class="fa fa-pen" arial-hidden="true"></i></a>
+                                <a href="eliminarFlujo?idf=<%=f.getIdFlujodetrabajo()%>" id="btnDelete" class="ml-1"><i class="fa fa-trash" arial-hidden="true"></i></a>
                             </div>
                         <% } %>
                     </div>
@@ -82,7 +82,7 @@
 
                     </div>
                     <div class="card-footer align-items-center">
-                        <a class="btn btn-dark text-center" href="subirEvidencia.jsp">Subir evidencía</a>
+                        <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
                     </div>
                 </div>
                 <br>
@@ -91,7 +91,7 @@
                 <%
                     if(empleado.getiD_cat_priv() == 3 ) { 
                 %>
-                <a href="nuevoFlujo.jsp">Publicar un nuevo flujo de trabajo</a>
+                <a  class="btn btn-primary" href="nuevoFlujo.jsp">Publicar un nuevo flujo de trabajo</a>
                 <% } %>
         </main>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />

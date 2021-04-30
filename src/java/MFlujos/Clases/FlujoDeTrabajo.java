@@ -128,7 +128,7 @@ public class FlujoDeTrabajo implements Serializable {
         boolean procesoCorrecto;
         try{
             con = Conexion.obtenerConexion();
-            q = "INSRET INTO flujo_de_trabajo (titulo_flujo, descripcion_flujo, id_equipo, fecha_limite, hora_limite, entregado) values (?, ?, ?, ?, ?, 0) ";
+            q = "INSERT INTO flujo_de_trabajo (titulo_flujo, descripcion_flujo, id_equipo, fecha_limite, hora_limite, entregado) values (?, ?, ?, ?, ?, 0) ";
             ps = con.prepareStatement(q);
             ps.setBytes(1, AES.cifrar(fdt.getTituloFlujo()));
             ps.setBytes(2, AES.cifrar(fdt.getDescripcionFlujo()));
@@ -198,7 +198,7 @@ public class FlujoDeTrabajo implements Serializable {
         ArrayList<FlujoDeTrabajo> flujos = new ArrayList<FlujoDeTrabajo>();
         try{
             con = Conexion.obtenerConexion();
-            q = "SELECT * FROM Flujo_de_trabajo where idEquipo = ?";
+            q = "SELECT * FROM Flujo_de_trabajo where id_Equipo = ?";
             ps = con.prepareStatement(q);
             ps.setInt(1, idEquipo);
             rs =ps.executeQuery();
@@ -278,13 +278,13 @@ public class FlujoDeTrabajo implements Serializable {
         boolean procesoCorrecto;
         try{
             con = Conexion.obtenerConexion();
-            q = "UPDATE FROM Flujo_de_trabajo set titulo_flujo = ?, descripcion_flujo = ?, fecha_limite = ?, hora_limite = ? WHERE idFlujo_de_trabajo = ?";
+            q = "UPDATE Flujo_de_trabajo SET titulo_flujo = ?, descripcion_flujo = ?, fecha_limite = ?, hora_limite = ? WHERE idFlujo_de_trabajo = ?";
             ps = con.prepareStatement(q);
             ps.setBytes(1, AES.cifrar(fdt.getTituloFlujo()));
             ps.setBytes(2, AES.cifrar(fdt.getDescripcionFlujo()));
             ps.setBytes(3, AES.cifrar(fdt.getFechaLimite()));
             ps.setBytes(4, AES.cifrar(fdt.getHoraLimite()));
-            ps.setInt(5, fdt.getIdFlujodetrabajo());
+            ps.setInt(5, idFlujo);
             procesoCorrecto = (ps.executeUpdate() == 1);
         }catch (Exception ex) {
             Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);

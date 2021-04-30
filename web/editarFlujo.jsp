@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html">
         <meta charset="utf-8">
-        <title>Titulo JSP</title>
+        <title>Edicion flujo de trabajo</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
@@ -24,7 +24,7 @@
             int id = 0;
             FlujoDeTrabajo f = null;
             try{
-                id = Integer.parseInt(request.getParameter("id"));
+                id = Integer.parseInt(request.getParameter("idf"));
                 f = FlujoDeTrabajo.consultaFlujo(id);
             }catch(Exception e){
                 
@@ -44,28 +44,31 @@
                         Edición de datos del flujo
                     </h5>
                     <div class="card-body">
-                            <div class="input-group">
+                            <div class="input-group mb-2">
                                 <div class='input-group-prepend'>
                                     <label class='input-group-text' for="mod_titulo">Titulo</label>
                                 </div>
                                 <input type="text" value="<%=f.getTituloFlujo()%>" readonly="readonly" class="form-control" id="mod_titulo" name="mod_titulo" required="required">
                                 <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_titulo')">Editar</button>
                             </div>
-                            <div class="input-group">
+                                <br>
+                            <div class="input-group mb-2">
                                 <div class='input-group-prepend'>
                                     <label class='input-group-text' for="mod_des">Descripción</label>
                                 </div>
-                                <textarea type="text" value="<%=f.getDescripcionFlujo()%>" readonly="readonly" class="form-control" id="mod_des" name="mod_des" required="required"></textarea>
+                                <textarea type="text" readonly="readonly" class="form-control" id="mod_des" name="mod_des" required="required"><%=f.getDescripcionFlujo()%></textarea>
                                 <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_des')">Editar</button>
                             </div>
-                            <div class="input-group">
+                            <br>
+                            <div class="input-group mb-2">
                                 <div class='input-group-prepend'>
                                     <label class='input-group-text' for="mod_fecha">Fecha Limite</label>
                                 </div>
                                 <input type="date" value="<%=f.getTituloFlujo()%>" readonly="readonly" class="form-control" id="mod_fecha" name="mod_fecha" required="required">
                                 <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_fecha')">Editar</button>
                             </div>
-                            <div class="input-group">
+                                <br>
+                            <div class="input-group mb-2">
                                 <div class='input-group-prepend'>
                                     <label class='input-group-text' for="mod_hora">Hora Limite</label>
                                 </div>
