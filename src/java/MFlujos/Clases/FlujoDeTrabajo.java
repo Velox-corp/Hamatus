@@ -198,11 +198,13 @@ public class FlujoDeTrabajo implements Serializable {
         ArrayList<FlujoDeTrabajo> flujos = new ArrayList<FlujoDeTrabajo>();
         try{
             con = Conexion.obtenerConexion();
-            q = "SELECT * FROM Flujo_de_trabajo where id_Equipo = ?";
+            q = "SELECT * FROM Flujo_de_trabajo where id_Equipo = ? " +
+                "ORDER BY aes_decrypt(fecha_limite, 'gurmnhorgvmeigdv'), " +
+                "aes_decrypt(hora_limite, 'gurmnhorgvmeigdv')";
             ps = con.prepareStatement(q);
             ps.setInt(1, idEquipo);
             rs =ps.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 FlujoDeTrabajo fdte = new FlujoDeTrabajo(rs.getInt("idFlujo_de_trabajo"), 
                         AES.descifrar(rs.getBytes("titulo_flujo")), 
                         AES.descifrar(rs.getBytes("descripcion_flujo")), 
@@ -238,11 +240,13 @@ public class FlujoDeTrabajo implements Serializable {
             con = Conexion.obtenerConexion();
             q = "SELECT Flujo_de_trabajo.* FROM Flujo_de_trabajo \n" +
                 "WHERE Flujo_de_trabajo.id_equipo \n" +
-                "IN (SELECT equipo.ID_equipo FROM equipo WHERE id_division = ?)";
+                "IN (SELECT equipo.ID_equipo FROM equipo WHERE id_division = ?) "
+                    + "ORDER BY aes_decrypt(fecha_limite, 'gurmnhorgvmeigdv'),"
+                    + "aes_decrypt(hora_limite, 'gurmnhorgvmeigdv')";
             ps = con.prepareStatement(q);
             ps.setInt(1, idDiv);
             rs = ps.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 FlujoDeTrabajo fdte = new FlujoDeTrabajo(rs.getInt("idFlujo_de_trabajo"), 
                         AES.descifrar(rs.getBytes("titulo_flujo")), 
                         AES.descifrar(rs.getBytes("descripcion_flujo")), 

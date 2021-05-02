@@ -40,7 +40,7 @@ public class editarFlujo extends HttpServlet {
                 String titulo = request.getParameter("mod_titulo");
                 String des = request.getParameter("mod_des");
                 String hora = request.getParameter("mod_hora");
-                String fecha = request.getParameter("mod_hora");
+                String fecha = request.getParameter("mod_fecha");
                 int id = Integer.parseInt(request.getParameter("idF"));
 
                 FlujoDeTrabajo flujo = new FlujoDeTrabajo(titulo, des, 0, fecha, hora);

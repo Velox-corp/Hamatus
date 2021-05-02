@@ -60,13 +60,13 @@
             <% for (int i = 0; i < flujos.size(); i++) {
                 FlujoDeTrabajo f = flujos.get(i);
                 %>
-                <div class="card  container-fluid">
+                <div class="card container-fluid">
                     <div class="card-header text-white bg-dark row h4 " >  
                         <div class="col-md-6 text-left">
                             <%=f.getTituloFlujo()%>
                         </div>
                         <div class="col-md-5 text-right">
-                            Tiempo limite: <%=f.getFechaLimite()%>:<%=f.getHoraLimite()%>
+                            Tiempo limite: <%=f.getFechaLimite()%> | <%=f.getHoraLimite()%>
                         </div>
                         <%
                         if( empleado.getiD_cat_priv() == 3 ) { 
@@ -79,11 +79,24 @@
                     </div>
                     <div class="card-body">
                             <%=f.getDescripcionFlujo()%>
-
+                            <br>
+                            <% if( f.isEntregado() ){ %>
+                            Estado: <strong class="text-success">ENTREGADO</strong>
+                            <% } else { %>
+                            Estado: <strong class="text-danger">NO ENTREGADO</strong>
+                            <% } %>
                     </div>
-                    <div class="card-footer align-items-center">
-                        <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
-                    </div>
+                    
+                        <% if(empleado.getiD_cat_priv() == 3 && f.isEntregado()){ %>
+                            <div class="card-footer  text-center">
+                                <a class="btn btn-dark text-center" href="#">Descargar Documento</a>
+                            </div>
+                        <% } else if(empleado.getiD_cat_priv() == 4 && !f.isEntregado()) { %>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
+                            </div>
+                        <% }%>
+                    
                 </div>
                 <br>
                 <% } %>
