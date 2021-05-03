@@ -31,9 +31,9 @@ public class AnuncioDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 p.setId(rs.getInt("ID_Tablon"));
-                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio")));
-                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido")));
-                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion")));
+                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio"),5));
+                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido"),5));
+                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion"),5));
                 p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
             }
@@ -62,9 +62,9 @@ public class AnuncioDAO {
             while (rs.next()) {
                 Anuncio p = new Anuncio();
                 p.setId(rs.getInt("ID_Tablon"));
-                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio")));
-                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido")));
-                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion")));
+                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio"),5));
+                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido"),5));
+                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion"),5));
                 p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
             }
@@ -87,9 +87,9 @@ public class AnuncioDAO {
             while (rs.next()) {
                 Anuncio p = new Anuncio();
                 p.setId(rs.getInt("ID_Tablon"));
-                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio")));
-                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido")));
-                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion")));
+                p.setTitulo(AES.descifrar(rs.getBytes("Titulo_Anuncio"),5));
+                p.setDescripcion(AES.descifrar(rs.getBytes("Contenido"),5));
+                p.setFecha(AES.descifrar(rs.getBytes("fecha_publicacion"),5));
                 p.setVectorTipoTablon(rs.getString(1));
                 p.setIdDivision(rs.getInt("Id_division"));
                 anuncios.add(p);
@@ -133,9 +133,9 @@ public class AnuncioDAO {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
             
-            ps.setBytes(1, AES.cifrar(anuncio.getTitulo()));
-            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion()));
-            ps.setBytes(3, AES.cifrar(anuncio.getFecha()));
+            ps.setBytes(1, AES.cifrar(anuncio.getTitulo(),5));
+            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion(),5));
+            ps.setBytes(3, AES.cifrar(anuncio.getFecha(),5));
             ps.setInt(4,anuncio.getIdDivision());
             ps.executeUpdate();
             
@@ -159,9 +159,9 @@ public class AnuncioDAO {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(sql);
             
-            ps.setBytes(1, AES.cifrar(anuncio.getTitulo()));
-            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion()));
-            ps.setBytes(3, AES.cifrar(anuncio.getFecha()));
+            ps.setBytes(1, AES.cifrar(anuncio.getTitulo(),5));
+            ps.setBytes(2, AES.cifrar(anuncio.getDescripcion(),5));
+            ps.setBytes(3, AES.cifrar(anuncio.getFecha(),5));
             ps.executeUpdate();
         } catch (Exception e) {
             e.getMessage();

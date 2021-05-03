@@ -116,7 +116,7 @@ public class Division implements Serializable{
             //System.out.println("------------------------");
             //System.out.println(div.getNombre() + "" + idj + "" + id_emp);
             ps = con.prepareStatement(Division.query);
-            ps.setBytes(1, AES.cifrar(div.getNombre()));
+            ps.setBytes(1, AES.cifrar(div.getNombre(),1));
             ps.setInt(2, idj);
             ps.setInt(3, id_emp);
             
@@ -154,7 +154,10 @@ public class Division implements Serializable{
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();
             while(rs.next()){
-                Division div = new Division(rs.getInt("ID_Division"),AES.descifrar(rs.getBytes("Nombre_A")),rs.getInt("ID_Jerarquia"),rs.getInt("ID_Empresa"));
+                Division div = new Division(rs.getInt("ID_Division"),
+                        AES.descifrar(rs.getBytes("Nombre_A"),1),
+                        rs.getInt("ID_Jerarquia"),
+                        rs.getInt("ID_Empresa"));
                 divisiones.add(div);
             }
         } catch (SQLException ex) {
@@ -208,7 +211,7 @@ public class Division implements Serializable{
             Division.con = Conexion.obtenerConexion();
             Division.query = ("SELECT ID_Division FROM division WHERE Nombre_A = ? AND ID_Empresa = ?");
             ps = con.prepareStatement(Division.query);
-            ps.setBytes(1, AES.cifrar(div.getNombre()));
+            ps.setBytes(1, AES.cifrar(div.getNombre(),1));
             ps.setInt(2, id_emp);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -248,7 +251,7 @@ public class Division implements Serializable{
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();
             if(rs.next()){
-                nombreD = AES.descifrar(rs.getBytes("Nombre_A"));
+                nombreD = AES.descifrar(rs.getBytes("Nombre_A"),1);
                 
             }else{
                 nombreD="";

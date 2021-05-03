@@ -525,7 +525,7 @@ BEGIN
     where 
 		(division.ID_Jerarquia = 1 and division.ID_Empresa = idE) or
         (division.ID_Jerarquia = 2 and division.ID_Empresa = idE and division.ID_Division = idDiv)
-	order by aes_decrypt(tablon.fecha_publicacion, "gurmnhorgvmeigdv") DESC;
+	order by aes_decrypt(tablon.fecha_publicacion, "sjcnmfoeuahkckdi") DESC;
 END$$
 
 DELIMITER ;

@@ -107,10 +107,10 @@ public class Empresa implements Serializable{
             Empresa.con = Conexion.obtenerConexion();
             Empresa.query = ("INSERT INTO empresa (Nombre, Descripcion, Logo, Razon_social) VALUES (?, ?, ?, ?)");
             ps = con.prepareStatement(query);
-            ps.setBytes(1, AES.cifrar(emp.getNombre()));
-            ps.setBytes(2, AES.cifrar(emp.getDescripcion()));
+            ps.setBytes(1, AES.cifrar(emp.getNombre(),0));
+            ps.setBytes(2, AES.cifrar(emp.getDescripcion(),0));
             ps.setBlob(3, emp.getLogo());
-            ps.setBytes(4, AES.cifrar(emp.getRazónsocial()));
+            ps.setBytes(4, AES.cifrar(emp.getRazónsocial(),0));
             
            if(ps.executeUpdate()==1) procesoCorrecto = true;
            else procesoCorrecto = false;
@@ -137,19 +137,19 @@ public class Empresa implements Serializable{
         try{
             con = Conexion.obtenerConexion();
             query = ("SELECT * FROM empresa WHERE ID_Empresa="
-                    + "(SELECT ID_Empresa FROM division WHERE ID_Division=?)");
+                    + "(SELECT ID_Empresa FROM division WHERE ID_Division= ?)");
             ps = con.prepareStatement(query);
             ps.setInt(1, iD_Division);
             rs = ps.executeQuery();
             if (rs.next()) {
                 emp = new Empresa();
-                emp.setDescripcion(AES.descifrar(rs.getBytes("Descripcion")));
+                emp.setDescripcion(AES.descifrar(rs.getBytes("Descripcion"),0));
                 emp.setIDEmpresa(rs.getInt("ID_Empresa"));
                 //emp.setLogo() este no se va a añadir
-                emp.setNombre(AES.descifrar(rs.getBytes("Nombre")));
-                emp.setRazónsocial(AES.descifrar(rs.getBytes("Razon_social")));
+                emp.setNombre(AES.descifrar(rs.getBytes("Nombre"),0));
+                emp.setRazónsocial(AES.descifrar(rs.getBytes("Razon_social"),0));
             }else{
-                System.out.println("Canfle no encontro nada");
+                System.out.println("Chanfle, no encontro nada");
             }
         }catch(Exception e){
             System.out.println("Error: "+e.getCause());
@@ -203,9 +203,9 @@ public class Empresa implements Serializable{
             con = Conexion.obtenerConexion();
             query = "UPDATE empresa SET Nombre = ?, Descripcion = ?, Razon_social = ? where id_empresa = ?";
             ps = con.prepareStatement(query);
-            ps.setString(1, emp.getNombre());
-            ps.setString(2, emp.getDescripcion());
-            ps.setString(3, emp.getRazónsocial());
+            ps.setBytes(1, AES.cifrar(emp.getNombre(),0));
+            ps.setBytes(2, AES.cifrar(emp.getDescripcion(),0));
+            ps.setBytes(3, AES.cifrar(emp.getRazónsocial(),0));
             ps.setInt(4, emp.getIDEmpresa());
             procesoCorrecto = ( ps.executeUpdate() == 1 );
         } catch (Exception ex) {

@@ -130,11 +130,11 @@ public class FlujoDeTrabajo implements Serializable {
             con = Conexion.obtenerConexion();
             q = "INSERT INTO flujo_de_trabajo (titulo_flujo, descripcion_flujo, id_equipo, fecha_limite, hora_limite, entregado) values (?, ?, ?, ?, ?, 0) ";
             ps = con.prepareStatement(q);
-            ps.setBytes(1, AES.cifrar(fdt.getTituloFlujo()));
-            ps.setBytes(2, AES.cifrar(fdt.getDescripcionFlujo()));
+            ps.setBytes(1, AES.cifrar(fdt.getTituloFlujo(),6));
+            ps.setBytes(2, AES.cifrar(fdt.getDescripcionFlujo(),6));
             ps.setInt(3, fdt.getIdEquipo());
-            ps.setBytes(4, AES.cifrar(fdt.getFechaLimite()));
-            ps.setBytes(5, AES.cifrar(fdt.getHoraLimite()));
+            ps.setBytes(4, AES.cifrar(fdt.getFechaLimite(),6));
+            ps.setBytes(5, AES.cifrar(fdt.getHoraLimite(),6));
             procesoCorrecto = (ps.executeUpdate() == 1);
         } catch (Exception ex) {
             Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);
@@ -166,11 +166,11 @@ public class FlujoDeTrabajo implements Serializable {
             rs =ps.executeQuery();
             if(rs.next()){
                 fdtc = new FlujoDeTrabajo(rs.getInt("idFlujo_de_trabajo"), 
-                        AES.descifrar(rs.getBytes("titulo_flujo")), 
-                        AES.descifrar(rs.getBytes("descripcion_flujo")), 
+                        AES.descifrar(rs.getBytes("titulo_flujo"),6), 
+                        AES.descifrar(rs.getBytes("descripcion_flujo"),6), 
                         rs.getInt("id_equipo"), 
-                        AES.descifrar(rs.getBytes("fecha_limite")), 
-                        AES.descifrar(rs.getBytes("hora_limite")), 
+                        AES.descifrar(rs.getBytes("fecha_limite"),6), 
+                        AES.descifrar(rs.getBytes("hora_limite"),6), 
                         rs.getInt("entregado")==1);
             }
         }catch (Exception ex) {
@@ -199,18 +199,18 @@ public class FlujoDeTrabajo implements Serializable {
         try{
             con = Conexion.obtenerConexion();
             q = "SELECT * FROM Flujo_de_trabajo where id_Equipo = ? " +
-                "ORDER BY aes_decrypt(fecha_limite, 'gurmnhorgvmeigdv'), " +
-                "aes_decrypt(hora_limite, 'gurmnhorgvmeigdv')";
+                "ORDER BY aes_decrypt(fecha_limite, 'mugzapkchhskmdvj'), " +
+                "aes_decrypt(hora_limite, 'mugzapkchhskmdvj')";
             ps = con.prepareStatement(q);
             ps.setInt(1, idEquipo);
             rs =ps.executeQuery();
             while(rs.next()){
                 FlujoDeTrabajo fdte = new FlujoDeTrabajo(rs.getInt("idFlujo_de_trabajo"), 
-                        AES.descifrar(rs.getBytes("titulo_flujo")), 
-                        AES.descifrar(rs.getBytes("descripcion_flujo")), 
+                        AES.descifrar(rs.getBytes("titulo_flujo"),6), 
+                        AES.descifrar(rs.getBytes("descripcion_flujo"),6), 
                         rs.getInt("id_equipo"), 
-                        AES.descifrar(rs.getBytes("fecha_limite")), 
-                        AES.descifrar(rs.getBytes("hora_limite")), 
+                        AES.descifrar(rs.getBytes("fecha_limite"),6), 
+                        AES.descifrar(rs.getBytes("hora_limite"),6), 
                         rs.getInt("entregado")==1);
                 flujos.add(fdte);
             }
@@ -241,18 +241,18 @@ public class FlujoDeTrabajo implements Serializable {
             q = "SELECT Flujo_de_trabajo.* FROM Flujo_de_trabajo \n" +
                 "WHERE Flujo_de_trabajo.id_equipo \n" +
                 "IN (SELECT equipo.ID_equipo FROM equipo WHERE id_division = ?) "
-                    + "ORDER BY aes_decrypt(fecha_limite, 'gurmnhorgvmeigdv'),"
-                    + "aes_decrypt(hora_limite, 'gurmnhorgvmeigdv')";
+                    + "ORDER BY aes_decrypt(fecha_limite, 'mugzapkchhskmdvj'),"
+                    + "aes_decrypt(hora_limite, 'mugzapkchhskmdvj')";
             ps = con.prepareStatement(q);
             ps.setInt(1, idDiv);
             rs = ps.executeQuery();
             while(rs.next()){
                 FlujoDeTrabajo fdte = new FlujoDeTrabajo(rs.getInt("idFlujo_de_trabajo"), 
-                        AES.descifrar(rs.getBytes("titulo_flujo")), 
-                        AES.descifrar(rs.getBytes("descripcion_flujo")), 
+                        AES.descifrar(rs.getBytes("titulo_flujo"),6), 
+                        AES.descifrar(rs.getBytes("descripcion_flujo"),6), 
                         rs.getInt("id_equipo"), 
-                        AES.descifrar(rs.getBytes("fecha_limite")), 
-                        AES.descifrar(rs.getBytes("hora_limite")), 
+                        AES.descifrar(rs.getBytes("fecha_limite"),6), 
+                        AES.descifrar(rs.getBytes("hora_limite"),6), 
                         rs.getInt("entregado")==1);
                 flujos.add(fdte);
             }
@@ -284,10 +284,10 @@ public class FlujoDeTrabajo implements Serializable {
             con = Conexion.obtenerConexion();
             q = "UPDATE Flujo_de_trabajo SET titulo_flujo = ?, descripcion_flujo = ?, fecha_limite = ?, hora_limite = ? WHERE idFlujo_de_trabajo = ?";
             ps = con.prepareStatement(q);
-            ps.setBytes(1, AES.cifrar(fdt.getTituloFlujo()));
-            ps.setBytes(2, AES.cifrar(fdt.getDescripcionFlujo()));
-            ps.setBytes(3, AES.cifrar(fdt.getFechaLimite()));
-            ps.setBytes(4, AES.cifrar(fdt.getHoraLimite()));
+            ps.setBytes(1, AES.cifrar(fdt.getTituloFlujo(),6));
+            ps.setBytes(2, AES.cifrar(fdt.getDescripcionFlujo(),6));
+            ps.setBytes(3, AES.cifrar(fdt.getFechaLimite(),6));
+            ps.setBytes(4, AES.cifrar(fdt.getHoraLimite(),6));
             ps.setInt(5, idFlujo);
             procesoCorrecto = (ps.executeUpdate() == 1);
         }catch (Exception ex) {
