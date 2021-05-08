@@ -83,14 +83,24 @@
                                 <h3>Opciones del Administrador de la empresa</h3><br>
 
                                 <div class='row'>
-                                    <div class='col-md-4'>
+                                    <div class='col-md-3'>
                                         <a href='divisiones.jsp' class='btn btn-dark btn-large'>
                                             Construir distribución de la empresa
                                         </a>
                                     </div>
-                                    <div class='col-md-4'>
+                                    <div class='col-md-3'>
                                         <a href='Administrador_new.jsp' class='btn btn-secondary btn-large'>
                                             Crear cuentas de usuarios
+                                        </a>
+                                    </div>
+                                    <div class='col-md-3'>
+                                        <a href='Actualizar_Empresa.jsp' class='btn btn-info btn-large'>
+                                            Editar información de la empresa
+                                        </a>
+                                    </div>
+                                    <div class='col-md-3'>
+                                        <a href='deleteEmpresa' class='btn btn-danger btn-large'>
+                                            <strong>Borrar empresa</strong>
                                         </a>
                                     </div>
                                 </div>

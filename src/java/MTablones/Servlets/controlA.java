@@ -51,7 +51,6 @@ public class controlA extends HttpServlet {
             case "Delete":
                 try{
                     int idanuncio = Integer.parseInt(request.getParameter("ida"));
-                    int id_div = Integer.parseInt(request.getParameter("id_div"));
                     adao.delete(idanuncio);
                     request.getRequestDispatcher("controlA?accion=home").forward(request, response);
                 }catch(Exception e){

@@ -101,16 +101,22 @@ public class Division implements Serializable{
         this.id_Empresa = id_emp;
     }
     
+    /**
+     * Metodo para crear una división
+     * @param div El objeto división para registrar a la base de datos
+     * @param id_emp El ide de la empresa a la que pertenece la división
+     * @return true si el procedimiento fue correcto
+     */
     public static boolean crearDivision(Division div, int id_emp){
         boolean procesoCorrecto = true;
         int idj = 2;
         try{
             Division.con = Conexion.obtenerConexion();
             Division.query = ("INSERT INTO division (Nombre_A, ID_Jerarquia, ID_Empresa) values(?,?,?)");
-            System.out.println("------------------------");
-            System.out.println(div.getNombre() + "" + idj + "" + id_emp);
+            //System.out.println("------------------------");
+            //System.out.println(div.getNombre() + "" + idj + "" + id_emp);
             ps = con.prepareStatement(Division.query);
-            ps.setBytes(1, AES.cifrar(div.getNombre()));
+            ps.setBytes(1, AES.cifrar(div.getNombre(),1));
             ps.setInt(2, idj);
             ps.setInt(3, id_emp);
             
@@ -134,6 +140,11 @@ public class Division implements Serializable{
         return procesoCorrecto;
     }
     
+    /**
+     * Método que devielve todas las divisiones pretenecientes a una empresa
+     * @param id_emp el die de la empresa a buscar
+     * @return todas las divisiones correspondientes a la empresa
+     */
     public static ArrayList<Division> obtenerDivisiones(int id_emp){
         ArrayList<Division> divisiones = new ArrayList<Division>();
         try{
@@ -143,7 +154,10 @@ public class Division implements Serializable{
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();
             while(rs.next()){
-                Division div = new Division(rs.getInt("ID_Division"),AES.descifrar(rs.getBytes("Nombre_A")),rs.getInt("ID_Jerarquia"),rs.getInt("ID_Empresa"));
+                Division div = new Division(rs.getInt("ID_Division"),
+                        AES.descifrar(rs.getBytes("Nombre_A"),1),
+                        rs.getInt("ID_Jerarquia"),
+                        rs.getInt("ID_Empresa"));
                 divisiones.add(div);
             }
         } catch (SQLException ex) {
@@ -197,7 +211,7 @@ public class Division implements Serializable{
             Division.con = Conexion.obtenerConexion();
             Division.query = ("SELECT ID_Division FROM division WHERE Nombre_A = ? AND ID_Empresa = ?");
             ps = con.prepareStatement(Division.query);
-            ps.setBytes(1, AES.cifrar(div.getNombre()));
+            ps.setBytes(1, AES.cifrar(div.getNombre(),1));
             ps.setInt(2, id_emp);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -223,6 +237,11 @@ public class Division implements Serializable{
         return idDiv;
     }
     
+    /**
+     * Método que itraudce el número de división a su nombre respectivo
+     * @param id_emp El ide a traducir
+     * @return el nombre de la división
+     */
     public static String traducirID(int id_emp){
         String nombreD = "";
         try{
@@ -232,7 +251,7 @@ public class Division implements Serializable{
             ps.setInt(1, id_emp);
             rs = ps.executeQuery();
             if(rs.next()){
-                nombreD = AES.descifrar(rs.getBytes("Nombre_A"));
+                nombreD = AES.descifrar(rs.getBytes("Nombre_A"),1);
                 
             }else{
                 nombreD="";

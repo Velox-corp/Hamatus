@@ -53,6 +53,7 @@ public class iniciarSesion extends HttpServlet {
                 sesionEmpresa.setAttribute("usuario", usu);
                 Empresa emp = Empresa.buscarEmpresa(usu.getiD_Division());
                 sesionEmpresa.setAttribute("empresa", emp);
+                sesionEmpresa.setMaxInactiveInterval(1000 * 3600);
                 reintento = 0;
                 switch(usu.getiD_cat_priv()){
                     case 1:
@@ -76,6 +77,7 @@ public class iniciarSesion extends HttpServlet {
             }
             ServletContext contexto = getServletContext();
             contexto.setAttribute("reintento", reintento);
+            
             response.sendRedirect(redirect);
         }catch(Exception e){
             System.out.println(e.getMessage());

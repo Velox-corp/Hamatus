@@ -22,7 +22,6 @@
         <h2 class="text-center">Modificación de anuncios</h2>
         <div class="row margin-top-1rem d-block align-items-center">
             <div class='col-md-3'></div>
-            <div class="col-md-6">
                     <%
                     HttpSession sesion;
                     UsuarioEmpleado liderDiv;
@@ -52,7 +51,7 @@
                     }
                     %>
                     <script src='JS/interaccionBotones.js'></script>
-                    <form action="controlA?accion=Update"  class='card' method="post">
+                    <form action="controlA?accion=Update"  class='card col-md-6' method="post">
 
                         <% for (int i = 0; i < anuncios.size(); i++) {
                                 Anuncio p = anuncios.get(i);
@@ -76,13 +75,12 @@
                             <textarea type="text" readonly="readonly" class="form-control" id="mod_descripcion" name="mod_descripcion" required="required"><%=p.getDescripcion()%></textarea>
                             <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_descripcion')">Editar</button>
                         </div>
-                        <div class='card-footer'>
-                            <button type="submit" name="enviar" class="btn btn-primary">Guardar<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                        <div class='card-footer align-items-center'>
+                            <button type="submit" name="enviar" class="btn btn-primary">Guardar cambios<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                         </div>
                         <% } %> 
                     </form> 
-                    
-            </div>
+                   
         </div>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>

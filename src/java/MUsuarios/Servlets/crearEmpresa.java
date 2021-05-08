@@ -119,6 +119,10 @@ public class crearEmpresa extends HttpServlet {
                         if(emp.getIDEmpresa() != -1){
                             proceso_correcto = UsuarioEmpleado.ingresarAdmin(admin, emp.getIDEmpresa());
                             admin.setiD_Division(Division.getDivGen(emp.getIDEmpresa()));
+                            HttpSession sesionEmpresa = request.getSession(true);
+                            sesionEmpresa.setAttribute("empresa", emp);
+                            sesionEmpresa.setAttribute("usuario", admin);
+                            sesionEmpresa.setMaxInactiveInterval(1000 * 3600);
                         }else{
                             proceso_correcto = false;
                         }
@@ -139,10 +143,6 @@ public class crearEmpresa extends HttpServlet {
                     System.out.println("No se guardo en la bd");
                     redirect = "error.jsp";
                 }
-                HttpSession sesionEmpresa = request.getSession(true);
-                sesionEmpresa.setAttribute("empresa", emp);
-                System.out.println(sesionEmpresa.getAttribute("empresa"));
-                sesionEmpresa.setAttribute("usuario", admin);
                 
             }
             

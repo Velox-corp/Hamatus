@@ -171,8 +171,8 @@ public class M_Documento implements Serializable {
             String hora = c1.get(Calendar.HOUR) + ":" + c1.get(Calendar.MINUTE) 
                     + ":" + c1.get(Calendar.SECOND);
             ps = con.prepareCall(query);
-            ps.setBytes(1, AES.cifrar(fecha));
-            ps.setBytes(2, AES.cifrar(hora));
+            ps.setBytes(1, AES.cifrar(fecha,8));
+            ps.setBytes(2, AES.cifrar(hora,8));
             ps.setInt(4, this.getIdM_Documento());
             ps.setInt(3, id_persona);
             if(ps.executeUpdate()==1) right = true;

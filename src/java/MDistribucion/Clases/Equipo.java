@@ -99,7 +99,7 @@ public class Equipo implements Serializable {
             con = Conexion.obtenerConexion();
             q = "INSERT INTO Equipo (nombre, ID_Division) values(?,?)";
             ps = con.prepareStatement(q);
-            ps.setBytes(1,AES.cifrar(equipoInsert.getNombre()));
+            ps.setBytes(1,AES.cifrar(equipoInsert.getNombre(),3));
             ps.setInt(2, equipoInsert.getIDDivision());
             if(ps.executeUpdate() == 1){
                 proceso_correcto = true;
@@ -168,7 +168,7 @@ public class Equipo implements Serializable {
             rs = ps.executeQuery();
             while(rs.next()){
                 Equipo equipo = new Equipo(rs.getInt("ID_Equipo"),
-                        AES.descifrar(rs.getBytes("Nombre")), 
+                        AES.descifrar(rs.getBytes("Nombre"),3), 
                 rs.getInt("ID_DIvision"));
                 equipos.add(equipo);
             }
@@ -199,7 +199,7 @@ public class Equipo implements Serializable {
             rs = ps.executeQuery();
             while(rs.next()){
                 Equipo equipo = new Equipo(rs.getInt("ID_Equipo"),
-                        AES.descifrar(rs.getBytes("Nombre")), 
+                        AES.descifrar(rs.getBytes("Nombre"),3), 
                 rs.getInt("ID_Division"));
                 equipos.add(equipo);
             }
@@ -235,7 +235,7 @@ public class Equipo implements Serializable {
             rs = ps.executeQuery();
             if(rs.next()){
                     equipoBuscado = new Equipo(rs.getInt("ID_Equipo"),
-                            AES.descifrar(rs.getBytes("Nombre")),  
+                            AES.descifrar(rs.getBytes("Nombre"),3),  
                     rs.getInt("ID_Division"));
                 }
         } catch (SQLException ex) {

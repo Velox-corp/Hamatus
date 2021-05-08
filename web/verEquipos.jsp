@@ -112,6 +112,10 @@
                                         <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
                                         <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
                                         <br>
+                                        <a class="btn btn-dark" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            Ver integrantes del equipo
+                                        </a>
+                                            <br>
                                     <% if(!sonTotales){ %>
                                             <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
                                                 Editar equipo
@@ -139,6 +143,10 @@
                                         <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
                                         <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
                                         <br>
+                                        <a class="btn btn-dark" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            Ver integrantes del equipo
+                                        </a>
+                                            <br>
                                         <% if(!sonTotales){ %>
                                             <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
                                                 Editar equipo
@@ -167,6 +175,10 @@
                                         <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
                                         <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
                                         <br>
+                                        <a class="btn btn-dark" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            Ver integrantes del equipo
+                                        </a>
+                                            <br>
                                         <% if(!sonTotales){ %>
                                             <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
                                                 Editar equipo
