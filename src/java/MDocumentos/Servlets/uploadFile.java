@@ -189,8 +189,13 @@ public class uploadFile extends HttpServlet {
                 Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
                 String nombre        = Paths.get(filePart.getSubmittedFileName())
                         .getFileName().toString(); //Basicamente nos trae el nombre del archivo
+                Integer es_evidencia_flujo = Integer.getInteger(
+                        request.getParameter("es_evidencia_flujo"));
+                Integer id_cat_clasif_doc = Integer.getInteger(
+                        request.getParameter("id_cat_clasif_doc"));
                 //Listado de datos preparados para entrar en la BD
                 M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
+                
                 
                 Pattern pattern = Pattern.compile("([a-zA-Z0-9])"
                         + "+(.doc|.docx|.pdf|.pptx|.png|.jpg|.gif|.csv|"
@@ -205,7 +210,7 @@ public class uploadFile extends HttpServlet {
                         System.out.println("Entrando en fase 2");
                         D_Documento ddoc = new D_Documento(nombre, ruta, pass,
                                 id_tipo_acceso,folio, Equipo_ID_Equipo, 
-                                mdoc.getIdM_Documento());
+                                mdoc.getIdM_Documento(), es_evidencia_flujo, id_cat_clasif_doc);
                         if (!D_Documento.ConsultarD_Doc_B(Equipo_ID_Equipo , nombre)) {
                             if (ddoc.registrarDoc()) {
                                 System.out.println("Todo Correcto uwu");

@@ -152,7 +152,7 @@ public class AnuncioDAO {
         }
     }
     
-        public void actualizar(int id, Anuncio anuncio) {
+    public void actualizar(int id, Anuncio anuncio) {
         String sql = "update tablon set Titulo_Anuncio=?, Contenido=?, fecha_publicacion=? where ID_Tablon="+id;
         
         try {

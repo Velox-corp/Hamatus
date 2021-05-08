@@ -1,0 +1,55 @@
+body{
+    overflow-x: hidden;    
+}
+
+.img-limit{
+    max-width: 6.5rem;
+}
+
+.linked {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.card-h:hover{
+    background-color: #f8f9fa;
+}
+
+.people{
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+.chat-head{
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 93vh;
+}
+
+.align-text-end{
+    text-align: end;
+}
+
+/*Vamos a ver si funciona un scroll personalizado*/
+.chat-head::-webkit-scrollbar{
+    width: 0.6rem;
+}
+
+.chat-head::-webkit-scrollbar-thumb{
+    background-color: #e2e3e5;
+    border-radius: 1rem;
+}
+
+.people::-webkit-scrollbar{
+    width: 0.6rem;
+}
+
+.people::-webkit-scrollbar-thumb{
+    background-color: #e2e3e5;
+    border-radius: 1rem;
+}
