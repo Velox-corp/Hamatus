@@ -84,15 +84,15 @@ public class D_Documento implements Serializable {
             ResultSet res = ps.executeQuery();
             while(res.next()){
                 this.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
-                this.setFecha(AES.descifrar(res.getBytes("fecha_subida")));
-                this.setFolio(AES.descifrar(res.getBytes("Folio")));
-                this.setHora(AES.descifrar(res.getBytes("hora_subida")));
+                this.setFecha(AES.descifrar(res.getBytes("fecha_subida"), 4));
+                this.setFolio(AES.descifrar(res.getBytes("Folio"), 4));
+                this.setHora(AES.descifrar(res.getBytes("hora_subida"), 4));
                 this.setID_Documento(res.getInt("ID_Documento"));
                 this.setId_MDocumento(res.getInt("Id_MDocumento"));
                 this.setId_tipo_acceso(res.getInt("Id_tipo_acceso"));
-                this.setNombre(AES.descifrar(res.getBytes("Nombre")));
-                this.setPass(AES.descifrar(res.getBytes("Password")));
-                this.setRuta(AES.descifrar(res.getBytes("Ruta")));
+                this.setNombre(AES.descifrar(res.getBytes("Nombre"), 4));
+                this.setPass(AES.descifrar(res.getBytes("Password"), 4));
+                this.setRuta(AES.descifrar(res.getBytes("Ruta"), 4));
                 this.setEs_evidencia_flujo(res.getInt("es_evidencia_flujo"));
                 this.setId_cat_clasif_doc(res.getInt("id_cat_clasif_doc"));
             }
@@ -115,20 +115,20 @@ public class D_Documento implements Serializable {
             this.query = ("SELECT * FROM d_Documento WHERE equipo_id_equipo=? AND nombre=?");
             ps = con.prepareCall(query);
             ps.setInt(1, ID_e);
-            ps.setBytes(2, AES.cifrar(fileName));
+            ps.setBytes(2, AES.cifrar(fileName, 4));
             ResultSet res = ps.executeQuery();
             while(res.next()){
                 System.out.println("Documento encontrado");
                 this.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
-                this.setFecha(AES.descifrar(res.getBytes("fecha_subida")));
-                this.setFolio(AES.descifrar(res.getBytes("Folio")));
-                this.setHora(AES.descifrar(res.getBytes("hora_subida")));
+                this.setFecha(AES.descifrar(res.getBytes("fecha_subida"), 4));
+                this.setFolio(AES.descifrar(res.getBytes("Folio"), 4));
+                this.setHora(AES.descifrar(res.getBytes("hora_subida"), 4));
                 this.setID_Documento(res.getInt("ID_Documento"));
                 this.setId_MDocumento(res.getInt("Id_MDocumento"));
                 this.setId_tipo_acceso(res.getInt("Id_tipo_acceso"));
-                this.setNombre(AES.descifrar(res.getBytes("Nombre")));
-                this.setPass(AES.descifrar(res.getBytes("Password")));
-                this.setRuta(AES.descifrar(res.getBytes("Ruta")));
+                this.setNombre(AES.descifrar(res.getBytes("Nombre"), 4));
+                this.setPass(AES.descifrar(res.getBytes("Password"), 4));
+                this.setRuta(AES.descifrar(res.getBytes("Ruta"), 4));
                 this.setEs_evidencia_flujo(res.getInt("es_evidencia_flujo"));
                 this.setId_cat_clasif_doc(res.getInt("id_cat_clasif_doc"));
             }
@@ -160,7 +160,7 @@ public class D_Documento implements Serializable {
             String query = ("SELECT * FROM d_Documento WHERE equipo_id_equipo=? AND nombre=?");
             ps = con.prepareCall(query);
             ps.setInt(1, ID_equipo);
-            ps.setBytes(2, AES.cifrar(fileName));
+            ps.setBytes(2, AES.cifrar(fileName, 4));
             ResultSet res = ps.executeQuery();
             if (res.next()) {
                 correcto=true;
@@ -189,19 +189,19 @@ public class D_Documento implements Serializable {
             String query = ("SELECT * FROM d_Documento WHERE equipo_id_equipo=? AND nombre=?");
             ps = con.prepareCall(query);
             ps.setInt(1, ID_equipo);
-            ps.setBytes(2, AES.cifrar(fileName));
+            ps.setBytes(2, AES.cifrar(fileName, 4));
             ResultSet res = ps.executeQuery();
             if (res.next()) {
-                ddoc.setFecha(AES.descifrar(res.getBytes("fecha_subida")));
+                ddoc.setFecha(AES.descifrar(res.getBytes("fecha_subida"), 4));
                 ddoc.setEquipo_ID_Equipo(res.getInt("Equipo_ID_Equipo"));
-                ddoc.setFolio(AES.descifrar(res.getBytes("Folio")));
-                ddoc.setHora(AES.descifrar(res.getBytes("hora_subida")));
+                ddoc.setFolio(AES.descifrar(res.getBytes("Folio"), 4));
+                ddoc.setHora(AES.descifrar(res.getBytes("hora_subida"), 4));
                 ddoc.setID_Documento(res.getInt("ID_Documento"));
                 ddoc.setId_MDocumento(res.getInt("Id_MDocumento"));
                 ddoc.setId_tipo_acceso(res.getInt("Id_tipo_acceso"));
-                ddoc.setNombre(AES.descifrar(res.getBytes("Nombre")));
-                ddoc.setPass(AES.descifrar(res.getBytes("Password")));
-                ddoc.setRuta(AES.descifrar(res.getBytes("Ruta")));
+                ddoc.setNombre(AES.descifrar(res.getBytes("Nombre"), 4));
+                ddoc.setPass(AES.descifrar(res.getBytes("Password"), 4));
+                ddoc.setRuta(AES.descifrar(res.getBytes("Ruta"), 4));
                 ddoc.setEs_evidencia_flujo(res.getInt("es_evidencia_flujo"));
                 ddoc.setId_cat_clasif_doc(res.getInt("id_cat_clasif_doc"));
             }
@@ -262,17 +262,17 @@ public class D_Documento implements Serializable {
                     + " id_cat_clasif_doc) " 
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps = con.prepareCall(query);
-            ps.setBytes(1, AES.cifrar(this.ruta));
-            ps.setBytes(2, AES.cifrar(this.nombre));
-            ps.setBytes(3, AES.cifrar(this.pass));
-            ps.setBytes(4, AES.cifrar(this.folio));
+            ps.setBytes(1, AES.cifrar(this.ruta, 4));
+            ps.setBytes(2, AES.cifrar(this.nombre, 4));
+            ps.setBytes(3, AES.cifrar(this.pass, 4));
+            ps.setBytes(4, AES.cifrar(this.folio, 4));
             ps.setInt(5, this.id_tipo_acceso);
             String fecha = c.get(Calendar.DATE) + "-" + c.get(Calendar.MONTH) +
                     "-" + c.get(Calendar.YEAR);
-            ps.setBytes(6, AES.cifrar(fecha));
+            ps.setBytes(6, AES.cifrar(fecha, 4));
             String hora = c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + 
                     ":" + c.get(Calendar.SECOND);
-            ps.setBytes(7, AES.cifrar(hora));
+            ps.setBytes(7, AES.cifrar(hora, 4));
             ps.setInt(8, this.id_MDocumento); 
             ps.setInt(9, this.Equipo_ID_Equipo);
             ps.setInt(10, this.es_evidencia_flujo);
@@ -353,8 +353,8 @@ public class D_Documento implements Serializable {
             this.query = ("UPDATE d_Documento SET Nombre=?, Password=?,"
                     + " id_tipo_acceso=?, es_evidencia_flujo=?, id_cat_clasif_doc=? WHERE ID_Documento=?");
             ps = con.prepareCall(query);
-            ps.setBytes(1, AES.cifrar(nombre));
-            ps.setBytes(2, AES.cifrar(pass));
+            ps.setBytes(1, AES.cifrar(nombre, 4));
+            ps.setBytes(2, AES.cifrar(pass, 4));
             ps.setInt(3, id_tipo_acceso);
             ps.setInt(4, ID_Documento);
             ps.setInt(5, es_evidencia_flujo);
