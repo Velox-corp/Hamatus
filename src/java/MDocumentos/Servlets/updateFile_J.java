@@ -76,6 +76,10 @@ public class updateFile_J extends HttpServlet {
                 }
                 String pass   = request.getParameter("pass");
                 String nombre = request.getParameter("nombre");
+                Integer es_evidencia_flujo = Integer.getInteger(
+                        request.getParameter("es_evidencia_flujo"));
+                Integer id_cat_clasif_doc = Integer.getInteger(
+                        request.getParameter("id_cat_clasif_doc"));
 
                 int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
                         .getParameter("id_tipo_acceso").charAt(0)));  
@@ -90,7 +94,9 @@ public class updateFile_J extends HttpServlet {
                     int ID_equipo = Integer.parseInt(request.getParameter("id_e"));
                     D_Documento ddoc = new D_Documento();
                     ddoc.ConsultarD_Doc(ID_equipo, nombre);
-                    if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ddoc.getID_Documento())){
+                    if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso,
+                            ddoc.getID_Documento(), es_evidencia_flujo, 
+                            id_cat_clasif_doc)){
                         System.out.println("Ok ahora la parte del archivo");
                         OutputStream outs = null;
                         InputStream filecontent = null;
@@ -114,7 +120,9 @@ public class updateFile_J extends HttpServlet {
                     //Listado de datos preparados para entrar en la BD
                     int ID_equipo = Integer.parseInt(request.getParameter("id_e"));
                     D_Documento ddoc = D_Documento.ConsultarD_Doc_sget(ID_equipo, nombre);
-                    if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, ddoc.getID_Documento())){
+                    if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, 
+                            ddoc.getID_Documento(), es_evidencia_flujo, 
+                            id_cat_clasif_doc)){
                         response.sendRedirect("docs.jsp?flag=true");
                     }else{
                         response.sendRedirect("docs.jsp?flag=false");
