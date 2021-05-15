@@ -3,6 +3,7 @@
     Fecha y hora de creación: : 29/04/2021, 11:27:31 PM
     Author     : Armando Jarillo
 --%>
+<%@page import="MFlujos.Clases.FlujoDeTrabajo"%>
 <%@page import="MDocumentos.Clases.D_Documento"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Hashtable"%>
@@ -24,6 +25,7 @@
             boolean obtencionAdecuada = false;
             UsuarioEmpleado usuario = null;
             Empresa emp = null;
+            FlujoDeTrabajo flujo = FlujoDeTrabajo.consultaFlujo(Integer.parseInt(request.getParameter("idf")));
             try{
                 usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
                 emp = (Empresa) sesionUser.getAttribute("empresa");
@@ -45,40 +47,27 @@
         </div>
         <div class="row container align-items-center">
             <div class="card col-md-10">
-                    <form class="card-body form-group" action="uploadEvidence" method="POST" enctype="multipart/form-data">
+                <div class='card-header text-center'>
+                    Adjunte el archivo aquí
+                </div>
+                    <form class="card-body form-group" action="subirEvidencia" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="formfile" class="form-label">Insertar archivo <small>(El tamaño del archivo no debe superar los 15 MB)</small></label>
-                            <input class="form-control-file" type="file" id="formFile" name="file" required>
+                            <label for="file" class="form-label">Insertar evidencía <small>(El tamaño del archivo no debe superar los 15 MB)</small></label>
+                            <input class="form-control-file" type="file" id="file" name="file" required>
                         </div>
-                        <label for="pass">Agrege una contraseña al archivo</label>
-                        <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
-                        <!--
-                        <label for="id_tipo_acceso">Elija tipo acceso</label>
-                        <select class="form-control" name="id_tipo_acceso">
-                            <%--
-                                Hashtable<Integer, String> list = D_Documento.consultarCat_Tipo_Acceso();
-                                Set<Integer> keys = list.keySet();
-                                for (Integer key:keys) {
-                                    System.out.println(key);
-                                %>
-                                <option><%= key %>.<%= list.get(key) %></option>
-                                <%
-                                }
-                            --%> 
-                            -->
-                        </select>
-                        <input name="dictionary" value="<%= list %>" hidden="true">
-                        <label for="tipo_archivo">Elija tipo de archivo</label>
-                        <select class="form-control" name="tipo_archivo">
-                            <option>Digital</option>
-                            <option>Escaneado</option>
-                        </select>
-                        <br>
+                        <div class="mb-3">
+                            <label for="tipo_archivo">Elija tipo de archivo</label>
+                            <select class="form-control" name="tipo_archivo">
+                                <option>Digital</option>
+                                <option>Escaneado</option>
+                            </select>
+                            <input type='hidden' name='idf' value='<%=flujo.getIdFlujodetrabajo()%>'>
+                        </div>
                         <div class="justify-content-center">
-                            <button type="" class="btn btn-dark">
+                            <button type="submit" class="btn btn-dark">
                                 Subir Archivo
                             </button>
-                            <a href="docs.jsp" class="btn btn-dark">Cancelar</a>
+                            <button  type='reset' class="btn btn-dark">Cancelar</button>
                         </div>
                     </form>
                 </div>

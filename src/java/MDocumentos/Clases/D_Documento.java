@@ -156,7 +156,7 @@ public class D_Documento implements Serializable {
         boolean correcto = false;
         //CallableStatement cs = null;
         try {
-            Connection con = Conexion.obtenerConexion();
+            con = Conexion.obtenerConexion();
             String query = ("SELECT * FROM d_Documento WHERE equipo_id_equipo=? AND nombre=?");
             ps = con.prepareCall(query);
             ps.setInt(1, ID_equipo);
