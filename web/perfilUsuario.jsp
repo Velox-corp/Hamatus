@@ -1,8 +1,3 @@
-<%-- 
-    Documento   : perfilUsuario
-    Fecha y hora de creación: : 7/04/2021, 04:09:18 PM
-    Author     : Armando Jarillo
---%>
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MUsuarios.clases.Empresa"%>
