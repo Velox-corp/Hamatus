@@ -340,7 +340,7 @@ public class UsuarioEmpleado implements Serializable {
         UsuarioEmpleado userPuestos = null;
         try{
             con = Conexion.obtenerConexion();
-            q = "SELECT ID_Division, id_cat_privilegios, nombre, appat, apmat FROM usuario_empleado WHERE ID_Usuario_E = ?";
+            q = "SELECT ID_Division, id_cat_privilegios, nombre, appat, apmat, Fecha_Nacimiento, Correo FROM usuario_empleado WHERE ID_Usuario_E = ?";
             ps = con.prepareStatement(q);
             ps.setInt(1, ideUser);
             rs = ps.executeQuery();
@@ -350,6 +350,8 @@ public class UsuarioEmpleado implements Serializable {
                 userPuestos.setNombre(AES.descifrar(rs.getBytes("nombre"),2));
                 userPuestos.setAppat(AES.descifrar(rs.getBytes("appat"),2));
                 userPuestos.setApmat(AES.descifrar(rs.getBytes("apmat"),2));
+                userPuestos.setFechaNacimiento(AES.descifrar(rs.getBytes("Fecha_Nacimiento"),2));
+                userPuestos.setCorreo(AES.descifrar(rs.getBytes("Correo"),2));
                 userPuestos.setiD_Division(rs.getInt("ID_Division"));
                 userPuestos.setiD_cat_priv(rs.getInt("id_cat_privilegios"));
             }
