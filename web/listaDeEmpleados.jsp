@@ -48,7 +48,7 @@
                     <span class='card-title'><%=userx.getAppat()%> <%=user.getApmat()%> <%=user.getNombre()%> </span>
                 </div>
                 <div class="card-body align-items-center">
-                    <a href="perfilUsuario?id=<%=userx.getIDUsuarioE()%>">Ver perfíl de usuario</a>
+                    <a href='perfilUsuario.jsp?id=<%=userx.getIDUsuarioE()%>'>Ver perfíl de usuario</a>
                     <br><br>
                     <a>Enviar mensaje</a>
                 </div>

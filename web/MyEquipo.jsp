@@ -1,8 +1,3 @@
-<%-- 
-    Documento   : MyEquipo
-    Fecha y hora de creación: : 3/01/2021, 06:31:59 PM
-    Author     : Armando Jarillo
---%>
 
 <%@page import="MDistribucion.Clases.EUsuarioEquipo"%>
 <%@page import="MDistribucion.Clases.Equipo"%>

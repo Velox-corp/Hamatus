@@ -8,7 +8,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html">
         <meta charset="utf-8">
-        <title>Titulo JSP</title>
+        <title>Perfil De Usuario</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
