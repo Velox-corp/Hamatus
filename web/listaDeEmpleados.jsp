@@ -1,12 +1,9 @@
-<%-- 
-    Documento   : listaDeEmpleados
-    Fecha y hora de creación: : 7/04/2021, 05:16:34 PM
-    Author     : Armando Jarillo
---%>
+
 <%@page import="MDistribucion.Clases.EUsuarioEquipo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MUsuarios.clases.Empresa"%>
+<%@page import="MDistribucion.Clases.Equipo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 <!DOCTYPE html>
 <html lang='es'>
@@ -21,6 +18,7 @@
         <%
             HttpSession sesion;
             UsuarioEmpleado user = null;
+            Equipo equipos = null;
             int equipo = 0;
             ArrayList<UsuarioEmpleado> usuarios = new ArrayList<UsuarioEmpleado>();
             try{
@@ -31,13 +29,18 @@
                 }
                 equipo = EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE());
                 usuarios =  UsuarioEmpleado.obtenerUsuariosEquipo(equipo, user.getiD_Division());
+                equipos = Equipo.obtenerEquipo(EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE()));
                 
             }catch(Exception e){
                 e.printStackTrace();
             }
         %>
+        <div class='row'>
+            <div class='col-md-12'>
+                <center><h1>Listado de empleados de <%=equipos.getNombre()%></h1></center>    
+            </div>
+        </div>
         <main class="container">
-            <h3>Listado de empleados</h3>
             <br>
             <%
                 for (int idx = 0; idx < usuarios.size(); idx++) {
