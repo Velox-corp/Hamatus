@@ -9,6 +9,7 @@ package MFlujos.Clases;
 import ClasesSoporte.Conexion;
 import MSeguridad.Clases.AES;
 import java.io.Serializable;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -334,6 +335,69 @@ public class FlujoDeTrabajo implements Serializable {
         return procesoCorrecto;
         
     }
+    
+    /**
+     * Insertar la relación en la bd
+     * @param idM el id de la maestra del documento
+     * @param idF el id del flujo de trabajo
+     * @return true si el procedimiento fue correcto
+     */
+    public static boolean insertarEFD(int idM, int idF){
+        boolean procesoCorrecto;
+        CallableStatement cs = null;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "{call subida_evidencia(?,?)}";
+            cs = con.prepareCall(q);
+            cs.setInt(1, idM);
+            cs.setInt(2, idF);
+            procesoCorrecto = cs.executeUpdate() == 1;
+            
+        }catch (SQLException ex) {
+            Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+            procesoCorrecto = false;
+        }finally{
+            try {
+                con.close();
+                cs.close();
+                q = "";
+            } catch (SQLException ex) {
+                Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return procesoCorrecto;
+    }
+    
+    
+    public static String obtenerNameEvidencia(Integer idFlujodetrabajo) {
+        String name = "";
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT nombre FROM d_Documento WHERE ID_Documento IN"
+                    + "(SELECT id_d_doc FROM e_flujo_documento WHERE id_flujo = ?) LIMIT 1";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, idFlujodetrabajo);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                name = AES.descifrar(rs.getBytes("nombre"), 4);
+                System.out.println("Nombre: "+name);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+            name = "";
+        }finally{
+            try {
+                con.close();
+                q = "";
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(FlujoDeTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return name;
+    }
+    
     
     public Integer getIdFlujodetrabajo() {
         return idFlujodetrabajo;

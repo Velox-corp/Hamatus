@@ -120,6 +120,14 @@
         <servlet-name>editarFlujo</servlet-name>
         <servlet-class>MFlujos.Servlets.editarFlujo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>subirEvidencia</servlet-name>
+        <servlet-class>MFlujos.Servlets.subirEvidencia</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>descargaEvidencia</servlet-name>
+        <servlet-class>MFlujos.Servlets.descargaEvidencia</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -239,6 +247,14 @@
     <servlet-mapping>
         <servlet-name>editarFlujo</servlet-name>
         <url-pattern>/editarFlujo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>subirEvidencia</servlet-name>
+        <url-pattern>/subirEvidencia</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>descargaEvidencia</servlet-name>
+        <url-pattern>/descargaEvidencia</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
