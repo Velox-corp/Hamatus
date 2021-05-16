@@ -39,22 +39,30 @@
     </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-        
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 card text-white align-items-center" style="background-color: #6c757d">
-                <div class="card-header">
-                    <h2 class="card-title" style="color: white">Mi equipo</h2>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        Usted pertenece al equipo: <strong><%=equipo.getNombre()%></strong>
-                    </div>
-                    <br>
-                    <a class="btn btn-dark" href="listaDeEmpleados.jsp">Ver integrantes del equipo</a>
+        <br>
+        <main class="container">
+            <div class="cubridor2 d-flex justify-content-center align-items-center">
+                <div>
+                    <center>
+                        <div class="container-fliud cubridor2 d-flex justify-content-center align-items-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <H1>Mi equipo</H1>
+                                    <hr>
+                                    <label><br>Usted pertenece al equipo: <strong><%=equipo.getNombre()%></strong></label>
+                                    <br><br>
+                                    <a class="btn btn-dark" href="listaDeEmpleados.jsp">Ver integrantes del equipo</a>
+                                    <br><br>
+                                    <a class="btn btn-dark" href="listaDeEmpleados.jsp">Trabajar con el equipo</a>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </center>
                 </div>
             </div>
-        </div><br><br>
+        </main>
+        <br>
     </body>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

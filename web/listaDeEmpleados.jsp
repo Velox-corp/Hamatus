@@ -61,6 +61,6 @@
             %>
             
         </main>
-        <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>
