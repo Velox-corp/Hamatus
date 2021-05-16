@@ -223,11 +223,11 @@
                                                       onclick="deleteFile(<%= ddoc.getId_MDocumento() %>, '<%= ddoc.getNombre() %>')">
                                                        <i class="fas fa-trash-alt text-dark"></i>
                                                    </a>
-                                                      <a target="_top" data-toggle="tooltip" 
+                                                    <a target="_top" data-toggle="tooltip" 
                                                          title="Modificar" 
                                                          href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>">
                                                        <i class="fas fa-edit text-dark"></i>
-                                                   </a>
+                                                    </a>
                                                    <a target="_top" data-toggle="tooltip" title="Compartir" 
                                                       onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
                                                        <i class="fas fa-share text-dark"></i>
