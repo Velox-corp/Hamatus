@@ -49,16 +49,17 @@
             <div class="col-md-1"></div>
             <div class="col-md-3 folio">
                 <!--Aqui adentro vendran los botones de favoritos y documentos-->
-                <div>
-                    <center>
-                    <a>Ver archivos</a>
-                    </center>
-                </div>
-                <div>
-                    <center>
-                    <a>Favoritos<i class="far fa-star"></i></a>
-                    </center>
-                </div>
+                <!--Caray porque no me salen como los botones de arriba UnU ni modo-->
+                <nav>
+                    <ul class="div-like-btn">
+                        <li class="list-item-style-none">
+                            <a href="#">VER ARCHIVOS</a>
+                        </li>
+                        <li class="list-item-style-none">
+                            <a href="#">VER FAVORITOS</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <div class="col-md-7">
                 <!--Tabla visualizadora de archivos-->
