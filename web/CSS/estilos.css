@@ -507,6 +507,16 @@ img.per{
 .container_5 {
     border-radius: 15px;
     background-color: #E6E6E6;
-    padding: 1rem;
-    margin-left: 5vw;
+}
+
+.cubridor3{
+    min-height: 12vh;
+}
+
+.container_6{
+    margin-right: 2rem;
+}
+
+.td2 {
+    padding: 0.5vh;
 }

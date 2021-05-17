@@ -36,7 +36,7 @@
                 e.printStackTrace();
             }
         %>
-        <div class='row'>
+        <div><br>
             <div class='col-md-12'>
                 <center><h1>Listado de empleados de <%=equipos.getNombre()%></h1></center>    
             </div>
@@ -47,31 +47,36 @@
                 for (int idx = 0; idx < usuarios.size(); idx++) {
                         UsuarioEmpleado userx = usuarios.get(idx);
             %>
-            <div class="sec">
-                <article>
-                    <div class="container_4">
-                        <%=userx.getAppat()%> <%=user.getApmat()%> <%=user.getNombre()%> | <%=CatPuestos.traducirID(user.getiD_cat_priv())%>
-                        <hr>
-                    <div>
-                        <table>
-                            <tr>
-                                <td>
-                                    <a class="btn btn-dark" href='perfilUsuario.jsp?id=<%=userx.getIDUsuarioE()%>'>Ver perfíl de usuario</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-dark">Enviar mensaje</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    </div>
-                </article>
-            </div>
-            <br>
+            <div class="cubridor3 d-flex justify-content-center align-items-center">
+                <div class="container_6">
+                    <img alt="Bootstrap Image Preview" src="img/grupo.png" class="rounded-circle">
+                </div>
+                <div>
+                    <center>
+                        <div class="container-fliud cubridor3 d-flex justify-content-center align-items-center">
+                            <div class="card container_5">
+                                <div class="card-body">
+                                    <%=userx.getAppat()%> <%=user.getApmat()%> <%=user.getNombre()%> | <%=CatPuestos.traducirID(user.getiD_cat_priv())%>
+                                    <hr>
+                                    <table>
+                                        <tr>
+                                            <td class="td2">
+                                                <a class="btn btn-dark" href='perfilUsuario.jsp?id=<%=userx.getIDUsuarioE()%>'>Ver perfíl de usuario</a>
+                                            </td>
+                                            <td class="td2">
+                                                <a class="btn btn-dark">Enviar mensaje</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div><br>
             <% }
-            %>
-            
+            %>  
         </main>
-    </body>
+    </body><br>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>
