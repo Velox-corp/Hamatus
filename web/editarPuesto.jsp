@@ -1,8 +1,3 @@
-<%-- 
-    Document   : editarPuesto
-    Created on : 28/12/2020, 11:22:06 PM
-    Author     : maste
---%>
 
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.CatPuestos"%>

@@ -34,7 +34,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>Mi equipo</title>
+        <title>Mi Equipo</title>
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>

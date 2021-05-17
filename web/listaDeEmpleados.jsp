@@ -4,13 +4,14 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MDistribucion.Clases.Equipo"%>
+<%@page import="MUsuarios.clases.CatPuestos"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 <!DOCTYPE html>
 <html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html">
         <meta charset="utf-8">
-        <title>Titulo JSP</title>
+        <title>Lista De Empleados</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
     <body>
@@ -40,22 +41,32 @@
                 <center><h1>Listado de empleados de <%=equipos.getNombre()%></h1></center>    
             </div>
         </div>
+        <br>
         <main class="container">
-            <br>
             <%
                 for (int idx = 0; idx < usuarios.size(); idx++) {
                         UsuarioEmpleado userx = usuarios.get(idx);
             %>
-            <div class="row  bg-primary">
-                <div class='card-header align-items-center'>
-                    <span class='card-title'><%=userx.getAppat()%> <%=user.getApmat()%> <%=user.getNombre()%> </span>
-                </div>
-                <div class="card-body align-items-center">
-                    <a href='perfilUsuario.jsp?id=<%=userx.getIDUsuarioE()%>'>Ver perfíl de usuario</a>
-                    <br><br>
-                    <a>Enviar mensaje</a>
-                </div>
-            </div
+            <div class="sec">
+                <article>
+                    <div class="container_4">
+                        <%=userx.getAppat()%> <%=user.getApmat()%> <%=user.getNombre()%> | <%=CatPuestos.traducirID(user.getiD_cat_priv())%>
+                        <hr>
+                    <div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-dark" href='perfilUsuario.jsp?id=<%=userx.getIDUsuarioE()%>'>Ver perfíl de usuario</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-dark">Enviar mensaje</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    </div>
+                </article>
+            </div>
             <br>
             <% }
             %>

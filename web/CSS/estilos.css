@@ -502,3 +502,11 @@ img.per{
     height: 100%;
     z-index: 10;
 }
+
+/*Lista de empleados*/
+.container_5 {
+    border-radius: 15px;
+    background-color: #E6E6E6;
+    padding: 1rem;
+    margin-left: 5vw;
+}
