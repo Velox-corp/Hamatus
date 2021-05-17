@@ -47,7 +47,7 @@ public class actualizarEmpresa extends HttpServlet {
             if(proceso_correcto){
                 Empresa updateEmpresa;
                 try{
-                    updateEmpresa = new Empresa(oldE.getIDEmpresa(), nombreE, descripcion, razon, null);
+                    updateEmpresa = new Empresa(nombreE, descripcion, razon, null);
                     
                     if(Empresa.editEmpresa(updateEmpresa)){
                         sesion.setAttribute("empresa", updateEmpresa);
