@@ -514,9 +514,21 @@ img.per{
 }
 
 .container_6{
-    margin-right: 2rem;
+    margin-right: 4rem;
 }
 
 .td2 {
     padding: 0.5vh;
+}
+
+.td3 {
+    padding: 10rem;
+}
+
+.td4 {
+    margin-top: 2rem;
+}
+
+.tn {
+    color: black;
 }
