@@ -274,6 +274,14 @@ public class Empresa implements Serializable{
         }
         return procesoCorrecto;
     }
+
+    public Empresa(Integer idEmpresa, String nombreE, String des, String raz, Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Empresa(String nombreE, String descripcion, String razon, Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public Integer getIDEmpresa() {
         return iDEmpresa;
