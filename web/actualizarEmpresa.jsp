@@ -53,9 +53,13 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-8">
-                    <div class="container-fluid row justify-content-center">
-                        <img alt="Bootstrap Image Preview" src="img/grupo.png" class="rounded-circle">
-                    </div><br>
+                    <% if(hayLogo){ %>
+                    <form role="form" method="POST" action='actualizarLogo'>
+                        <div class='container-fluid row justify-content-center'>
+                            <img class="rounded-circle" src="cargaRegistro?id=<%=emp.getIDEmpresa()%>" alt='Logo <%=emp.getNombre()%>'>
+                        </div><br>
+                    </form>
+                    <% } %>
                     <form role="form" method="POST" action='actualizarEmpresa'>
                         <div class="input-group mb-3">		 
                             <div class="input-group-prepend">

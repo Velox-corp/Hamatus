@@ -132,6 +132,10 @@
         <servlet-name>actualizarEmpresa</servlet-name>
         <servlet-class>MUsuarios.Servlets.actualizarEmpresa</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>actualizarLogo</servlet-name>
+        <servlet-class>MUsuarios.Servlets.actualizarLogo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -263,6 +267,10 @@
     <servlet-mapping>
         <servlet-name>actualizarEmpresa</servlet-name>
         <url-pattern>/actualizarEmpresa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>actualizarLogo</servlet-name>
+        <url-pattern>/actualizarLogo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
