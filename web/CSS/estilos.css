@@ -532,3 +532,9 @@ img.per{
 .tn {
     color: black;
 }
+
+.fo {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
