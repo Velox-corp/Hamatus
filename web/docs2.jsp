@@ -221,8 +221,156 @@
                         <%
                             }
                                 }
+                                    }else{
+                                    %>
+                                    <tr>
+                                        <td>
+                                        <center>No hay documentos guardados o
+                                            carpetas creadas, por favor guardar
+                                            un documento o crear una carpeta</center>
+                                        </td>
+                                    </tr>
+                                    <%
                                     }
-                                        }else{
+                                } else {                                
+                                %>
+                                <tr>
+                                    <td>
+                                    <center>No hay documentos guardados o
+                                        carpetas creadas, por favor guardar
+                                        un documento o crear una carpeta</center>
+                                    </td>
+                                </tr>
+                                <%   
+                                }
+                            }
+                            } else if( IDequipo != 0 ){//Este if es de los usuario comunenes
+                                String ruta = request.getServletContext().getRealPath("/archivos/"
+                                +String.valueOf(IDequipo)+"/"+(query != null ? query : ""));
+                                if (ruta != null) {//Existe un folder        
+                                    java.io.File file;
+                                    java.io.File dir = new java.io.File(ruta);
+                                    String[] list = dir.list();
+                                    System.out.println(list.length);
+                                    if (list.length > 0) { //EL directorio tiene archivos
+                                        //Lista de lo que debe de entrar
+                                        for (int i=0; i < list.length; i++) {
+                                            //Iteraciones de los archivos de la carpeta
+                                            file = new java.io.File(ruta_j +"/"+ list[i]);
+                                            if (file.isFile()) {
+                                                M_Documento mdoc = new M_Documento();
+                                                D_Documento ddoc = new D_Documento();
+                                                
+                                                ddoc.ConsultarD_Doc(IDequipo, file.getName());
+                                                mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
+                                                if(ddoc.getId_tipo_acceso() != 1){%>
+                                                    <tr>
+                                                    <!--Nombre del archivo-->
+                                                    <td>
+                                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE() %>&fileName=<%=file.getName()%>" 
+                                                           target="_top" data-toggle="tooltip" 
+                                                           title="Descargar" id="<%=file.getAbsolutePath()%>"
+                                                           ><%= list[0] %></a>
+                                                    </td>
+                                                    <!--modificar-->
+                                                    <td>
+                                                        <center>
+                                                        <a target="_top" data-toggle="tooltip" 
+                                                            title="Modificar" 
+                                                            href="mod_docs_J.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>&e=<%= ddoc.getEquipo_ID_Equipo() %>">
+                                                        <i class="fas fa-edit text-dark"></i>
+                                                        </a>
+                                                        </center>
+                                                    </td>
+                                                    <!--Compartir-->
+                                                    <td>
+                                                        <center>
+                                                        <a target="_top" data-toggle="tooltip" title="Compartir" 
+                                                            onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
+                                                            <i class="fas fa-share text-dark"></i>
+                                                        </a>
+                                                        </center>
+                                                    </td>
+                                                    <!--Favoritos-->
+                                                    <td>
+                                                        <center>
+                                                            <a target="_top" data-toggle="tooltip" 
+                                                                 title="Añadir a favoritos" 
+                                                                 href="fav?f=<%= ddoc.getId() %>">
+                                                               <i class="far fa-star" style='color:#ffc107'></i>
+                                                            </a>
+                                                        </center>
+                                                    </td>
+                                                    <!--Boton borrar-->
+                                                    <td>
+                                                        <center>
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input">
+                                                        </div>
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                                <%
+                                                    }else if(file.isDirectory()){
+                                                %>
+                                                <tr>
+                                                    <!--Nombre del folder-->
+                                                    <td><a target="_top" data-toggle="tooltip" 
+                                                            title="Ver folder" 
+                                                            href="docs2.jsp?q=<%= ruta_j + "/" + file.getName() %>">
+                                                            <i class="far fa-folder text-dark"></i>
+                                                            <%= file.getName() %>
+                                                        </a>
+                                                    </td>
+                                                    <!--modificar nombre carpeta-->
+                                                    <td>
+                                                        <center>
+                                                        <a target="_top" data-toggle="tooltip" 
+                                                             title="Modificar nombre de la carpeta" 
+                                                             href="#" onclick="changefolderName(<%= file.getName() %>)">
+                                                           <i class="fas fa-edit text-dark"></i>
+                                                        </a>
+                                                        </center>
+                                                    </td>
+                                                    <!--Compartir?-->
+                                                    <td>
+                                                        <center>
+                                                            <a>...</a>
+                                                        </center>
+                                                    </td>
+                                                    <!--Favoritos?-->
+                                                    <td>
+                                                        <center>
+                                                            <a>...</a>
+                                                        </center>
+                                                    </td>
+                                                    <!--Boton borrar?-->
+                                                    <td>
+                                                        <center>
+                                                            <a target="_top" data-toggle="tooltip" title="Eliminar carpeta" 
+                                                               href="#" onclick="borrarCarpeta(<%= file.getName() %>)">
+                                                            <i class="fas fa-trash-alt text-dark"></i>
+                                                            </a>
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                                <%}
+                                            }
+                                        }
+                                    }else{
+                                        //No hay archivos
+                                        %>
+                                        <tr>
+                                            <td>
+                                            <center>No hay documentos guardados o
+                                                carpetas creadas, por favor guardar
+                                                un documento o crear una carpeta</center>
+                                            </td>
+                                        </tr>
+                                        <%
+                                    }
+                                }else{
+                                    //No hay folder
                                     %>
                                     <tr>
                                         <td>
@@ -233,7 +381,7 @@
                                     </tr>
                                     <%
                                 }
-                            }       
+                            }
                         %>
                     </tbody>
                  </table>
