@@ -381,6 +381,46 @@
                                     </tr>
                                     <%
                                 }
+                            }else if(usuario.getiD_cat_priv() == 1 && IDequipo == 0){
+                                %>
+                                <tr>
+                                    <td>
+                                    <center>No tiene acceso a la funcion de los 
+                                        documentos si necesita acceder a alguno por favor
+                                    solicitar un link de acceso</center>
+                                    </td>
+                                </tr>
+                                <%
+                            }else if(usuario.getiD_cat_priv() == 2 && IDequipo == 0){
+                                %>
+                                <tr>
+                                    <td>
+                                    <center>No tiene acceso a la funcion de los 
+                                        documentos si necesita acceder a alguno por favor
+                                    solicitar un link de acceso</center>
+                                    </td>
+                                </tr>
+                                <%
+                            }else if(usuario.getiD_cat_priv() == 3 && IDequipo == 0){
+                                %>
+                                <tr>
+                                    <td>
+                                    <center>No tiene acceso a la funcion de los 
+                                        documentos si necesita acceder a alguno por favor
+                                    solicitar un link de acceso</center>
+                                    </td>
+                                </tr>
+                                <%
+                            }else {
+                                %>
+                                <tr>
+                                    <td>
+                                    <center>No tiene acceso a la funcion de los 
+                                        documentos si necesita acceder a alguno por favor
+                                    solicitar un link de acceso</center>
+                                    </td>
+                                </tr>
+                                <%
                             }
                         %>
                     </tbody>
