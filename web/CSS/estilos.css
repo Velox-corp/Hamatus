@@ -174,6 +174,10 @@ a {
     min-height: 70vh;
 }
 
+.cubridor2{
+    min-height: 50vh;
+}
+
 img.per{
     max-width: 15rem;
 }
@@ -497,4 +501,40 @@ img.per{
     width: 100%;
     height: 100%;
     z-index: 10;
+}
+
+/*Lista de empleados*/
+.container_5 {
+    border-radius: 15px;
+    background-color: #E6E6E6;
+}
+
+.cubridor3{
+    min-height: 12vh;
+}
+
+.container_6{
+    margin-right: 4rem;
+}
+
+.td2 {
+    padding: 0.5vh;
+}
+
+.td3 {
+    padding: 10rem;
+}
+
+.td4 {
+    margin-top: 2rem;
+}
+
+.tn {
+    color: black;
+}
+
+.fo {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : empresa
-    Created on : 1/12/2020, 12:06:52 AM
-    Author     : maste
---%>
 
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="java.io.OutputStream"%>
@@ -63,7 +58,7 @@
                     <div class='row'>
                         <div  class='col-md-8' style="margin-left: 2rem">
                             <h3>Razón Social:</h3>
-                            <h3 style="color: #181818"><i><%=emp.getRazónsocial()%></i></h3>
+                            <h3 style="color: #181818"><i><%=emp.getRazónsocial()%></i></h3><hr>
                             <h3>Descripción:</h3>
                             <p>
                                 <%=emp.getDescripcion()%>
@@ -80,7 +75,7 @@
                         case 1:
                     %>
                             <div style="margin-left: 2rem">
-                                <h3>Opciones del Administrador de la empresa</h3><br>
+                                <h3>Opciones del administrador de la empresa</h3><br>
 
                                 <div class='row'>
                                     <div class='col-md-3'>
@@ -94,7 +89,7 @@
                                         </a>
                                     </div>
                                     <div class='col-md-3'>
-                                        <a href='Actualizar_Empresa.jsp' class='btn btn-info btn-large'>
+                                        <a href='actualizarEmpresa.jsp' class='btn btn-secondary btn-large'>
                                             Editar información de la empresa
                                         </a>
                                     </div>
@@ -104,7 +99,7 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div> 
+                            </div><br><br>
                     <%      break;  
                         case 2: %>
                             <div style="margin-left: 2rem">
@@ -112,7 +107,7 @@
 
                                 <div class='row'>
                                     <div class='col-md-4'>
-                                        <a href='divisiones.jsp' class='btn btn-dark btn-large'>
+                                        <a href='divisiones.jsp' class='btn-dark btn-large'>
                                             Construir distribución de la empresa
                                         </a>
                                     </div>

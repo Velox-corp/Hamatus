@@ -82,5 +82,7 @@
                         <% } %> 
         </main>
     </body>
-    <jsp:include page="Prueba-Reu/my-footer.jsp" />
+    <div class="fo">
+        <jsp:include page="Prueba-Reu/my-footer.jsp" />
+    </div>
 </html>

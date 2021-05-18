@@ -54,7 +54,7 @@
                 <div class="col-md-8">
                     <div class="container-fluid row justify-content-center">
                         <img alt="Bootstrap Image Preview" src="img/grupo.png" class="rounded-circle">
-                    </div>
+                    </div><br>
                     <form role="form" method="POST" action='actualizarUser'>
                         <!-- Esto no se ha implementado
                         <div class="row form-group justify-content-center">
