@@ -134,6 +134,26 @@ function deleteFile_J(id_m, fileName, id_e){
     });
 }
 
+function changefolderName(OldName){
+    var titulo = decode_utf8('Ponga el nuevo nombre a la carpeta');
+    const { value: newName } = await Swal.fire({
+        title: titulo,
+        input: 'text',
+        inputLabel: 'Nombre de la carpeta',
+        inputPlaceholder: 'Nuevo nombre',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#343a40',
+        confirmButtonText: 'Si por favor',
+        inputValidator: (value) => {
+            if (!value) {
+              return 'Necesitas escribir un nombre'
+            }
+        }
+    });
+    window.location = "changeFName?newName="+newName+"&oldName="+OldName;
+}
 
 window.onload = function(){
     if (getParameterByName('flag') == 'true') {

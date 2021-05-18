@@ -160,7 +160,7 @@
                                 <center>
                                     <a target="_top" data-toggle="tooltip" 
                                          title="Añadir a favoritos" 
-                                         href="fav?f=id&act=fav">
+                                         href="fav?f=<%= ddoc.getId() %>">
                                        <i class="far fa-star" style='color:#ffc107'></i>
                                     </a>
                                 </center>
@@ -174,20 +174,24 @@
                                 </center>
                             </td>
                         </tr>
+                        <%
+                            }else if(file_j.isDirectory()){
+                        %>
                         <tr>
                             <!--Nombre del folder-->
                             <td><a target="_top" data-toggle="tooltip" 
                                     title="Ver folder" 
-                                    href="docs2.jsp?q=nose">
+                                    href="docs2.jsp?q=<%= ruta_j + "/" + file_j.getName() %>">
                                     <i class="far fa-folder text-dark"></i>
-                                    Nombre folder
+                                    <%= file_j.getName() %>
                                 </a>
                             </td>
+                            <!--modificar nombre carpeta-->
                             <td>
                                 <center>
                                 <a target="_top" data-toggle="tooltip" 
-                                     title="Modificar" 
-                                     href="mod_docs.jsp?pass=pass&nombre=name">
+                                     title="Modificar nombre de la carpeta" 
+                                     href="#" onclick="changefolderName(<%= file_j.getName() %>)">
                                    <i class="fas fa-edit text-dark"></i>
                                 </a>
                                 </center>
@@ -195,31 +199,42 @@
                             <!--Compartir?-->
                             <td>
                                 <center>
-                                <a target="_top" data-toggle="tooltip" title="Compartir" 
-                                  onclick="copy_link('Access.jsp?fileName=filename&e=IDequipo')">
-                                   <i class="fas fa-share text-dark"></i>
-                                </a>
+                                    <a>...</a>
                                 </center>
                             </td>
                             <!--Favoritos?-->
                             <td>
                                 <center>
-                                    <a target="_top" data-toggle="tooltip" 
-                                         title="Añadir a favoritos" 
-                                         href="favoritos?f=id">
-                                       <i class="far fa-star" style='color:#ffc107'></i>
-                                    </a>
+                                    <a>...</a>
                                 </center>
                             </td>
                             <!--Boton borrar?-->
                             <td>
                                 <center>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input">
-                                </div>
+                                    <a target="_top" data-toggle="tooltip" title="Eliminar carpeta" 
+                                       href="#" onclick="borrarCarpeta(<%= file_j.getName() %>)">
+                                    <i class="fas fa-trash-alt text-dark"></i>
+                                    </a>
                                 </center>
                             </td>
                         </tr>
+                        <%
+                            }
+                                }
+                                    }
+                                        }else{
+                                    %>
+                                    <tr>
+                                        <td>
+                                        <center>No hay documentos guardados o
+                                            carpetas creadas, por favor guardar
+                                            un documento o crear una carpeta</center>
+                                        </td>
+                                    </tr>
+                                    <%
+                                }
+                            }       
+                        %>
                     </tbody>
                  </table>
             </div>

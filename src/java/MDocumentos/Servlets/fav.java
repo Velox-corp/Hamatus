@@ -57,7 +57,7 @@ public class fav extends HttpServlet {
         }
         try {
             cat_clasif_doc cat = new cat_clasif_doc();
-            int id = Integer.parseInt(request.getParameter("id"));
+            int id = Integer.parseInt(request.getParameter("fav"));
             int action = cat.query_doc_state(id);
             corect = cat.classify_docs(id, action==2?1:2);
             if (corect) {
