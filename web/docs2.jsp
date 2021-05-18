@@ -4,6 +4,11 @@
     Author     : taspi
 --%>
 
+<%@page import="MDistribucion.Clases.Equipo"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="MDocumentos.Clases.D_Documento"%>
+<%@page import="MDocumentos.Clases.M_Documento"%>
+<%@page import="java.io.File"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -44,6 +49,23 @@
             obtencionAdecuada = false;
             response.sendRedirect("error.jsp");
         }
+        //Esta es la query de la ubucación de los archivos
+        String query = "";
+        int IDequipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+        try {
+            String sCarpAct = request.getServletContext().getRealPath("/");
+            System.out.println(sCarpAct);
+            File dir = new File(sCarpAct +"/archivos");
+            if (!dir.exists()) {//Verificamos que exista el directorio
+                dir.mkdirs();
+            }
+            query = request.getParameter("q") + "/";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        String ruta_j = request.getServletContext().getRealPath("/archivos/"
+                            +String.valueOf(IDequipo)+"/"+(query != null ? query : ""));
         %>
         <div class="row margin-top-1rem">
             <div class="col-md-1"></div>
@@ -82,15 +104,45 @@
                       </tr>
                     </thead>
                     <tbody>
+                        <!--Empieza la diversion UwU-->
+                        <%
+                        if (usuario.getiD_cat_priv() == 3) {
+                            //Bueno bueno aqui vamos basicamente la idea es que vea todos 
+                            //los archivos de todos los equipos
+                            ArrayList<Equipo> equipos = Equipo.obtenerEquipos(usuario.getiD_Division());
+                            
+                            for(Equipo eq: equipos){
+                                if (ruta_j != null) {        
+                                    java.io.File file_j;
+                                    java.io.File dir_j = new java.io.File(ruta_j);
+                                    String[] list_j = dir_j.list();
+                                    System.out.println(list_j.length);
+                                    if (list_j.length > 0) {
+                                        //Lista de lo que debe de entrar
+                                        for (int i=0; i < list_j.length; i++) {
+                                            file_j = new java.io.File(ruta_j +"/"+ list_j[i]);
+                                            if (file_j.isFile()) {
+                                                M_Documento mdoc = new M_Documento();
+                                                D_Documento ddoc = new D_Documento();
+                                                //Definimos primero a ddoc
+                                                ddoc.ConsultarD_Doc(eq.getIDEquipo(), file_j.getName());
+                                                mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
+                        %>
                         <tr>
                             <!--Nombre del archivo-->
-                            <td>Archivo.txt</td>
+                            <td>
+                                <a href="downloadFile?e=<%= eq.getIDEquipo() %>&fileName=<%=file_j.getName()%>" 
+                                   target="_top" data-toggle="tooltip" 
+                                   title="Descargar" id="<%=file_j.getAbsolutePath()%>"
+                                   ><%=list_j[i]%></a>
+                            </td>
+                            <!--modificar-->
                             <td>
                                 <center>
                                 <a target="_top" data-toggle="tooltip" 
-                                     title="Modificar" 
-                                     href="mod_docs.jsp?pass=pass&nombre=name">
-                                   <i class="fas fa-edit text-dark"></i>
+                                    title="Modificar" 
+                                    href="mod_docs_J.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>&e=<%= ddoc.getEquipo_ID_Equipo() %>">
+                                <i class="fas fa-edit text-dark"></i>
                                 </a>
                                 </center>
                             </td>
@@ -98,8 +150,8 @@
                             <td>
                                 <center>
                                 <a target="_top" data-toggle="tooltip" title="Compartir" 
-                                  onclick="copy_link('Access.jsp?fileName=filename&e=IDequipo')">
-                                   <i class="fas fa-share text-dark"></i>
+                                    onclick="copy_link('Access.jsp?fileName=<%=file_j.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
+                                    <i class="fas fa-share text-dark"></i>
                                 </a>
                                 </center>
                             </td>
@@ -108,7 +160,7 @@
                                 <center>
                                     <a target="_top" data-toggle="tooltip" 
                                          title="Añadir a favoritos" 
-                                         href="favoritos?f=id">
+                                         href="fav?f=id&act=fav">
                                        <i class="far fa-star" style='color:#ffc107'></i>
                                     </a>
                                 </center>
