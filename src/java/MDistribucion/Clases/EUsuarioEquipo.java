@@ -50,6 +50,7 @@ public class EUsuarioEquipo implements Serializable {
     private static String q = "";
     private static PreparedStatement ps;
     private static ResultSet rs;
+    private static CallableStatement cs;
 
     public EUsuarioEquipo() {
     }
@@ -82,17 +83,48 @@ public class EUsuarioEquipo implements Serializable {
     /**
      * Método para ingresar a la bd la relación entre los empleados y el equipo, este método solo ingresa a una persona, por lo que debe de implementarse dentro de un for
      * @param relUserEquip El objeto EUsuarioEquipo con la relación entre tablas;
+     * @param idS id die de la sala a la que le corresponde el equipo
      * @return true si amarra
      */
-    public static boolean ingresarEmpleadoEquipo(EUsuarioEquipo relUserEquip){
+    public static boolean ingresarEmpleadoEquipo(EUsuarioEquipo relUserEquip, int idS){
         boolean proceso_correcto = true;
-        System.out.println("Un saludo");
         try{
            con = Conexion.obtenerConexion();
-           q = "INSERT INTO e_usuario_equipo (ID_Usuario_Empleado, ID_Equipo) values (?,?)";
-           ps = con.prepareStatement(q);
-           ps.setInt(1, relUserEquip.getIDUsuarioEmpleado());
-           ps.setInt(2, relUserEquip.getIdEquipo());
+           q = "{call addEmpleadoEquipo(?,?,?)}";
+           cs = con.prepareCall(q);
+           cs.setInt(1, relUserEquip.getIDUsuarioEmpleado());
+           cs.setInt(2, relUserEquip.getIdEquipo());
+           cs.setInt(3, idS);
+           if(1 == cs.executeUpdate()){
+               proceso_correcto = true;
+           }else{
+               System.out.println("No jaló");
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(EUsuarioEquipo.class.getName()).log(Level.SEVERE, null, ex);
+            proceso_correcto = false;
+        }finally{
+            try {
+                con.close();
+                cs.close();
+                q= "";
+            } catch (SQLException ex) {
+                Logger.getLogger(EUsuarioEquipo.class.getName()).log(Level.SEVERE, null, ex);
+                proceso_correcto = false;
+            }
+        }
+        return proceso_correcto;
+    }
+    
+    
+    public static boolean ingresarLiderEquipo(int idLD, int idS) {
+        boolean proceso_correcto = true;
+        try{
+           con = Conexion.obtenerConexion();
+           q = "INSERT INTO e_usuario_sala (id_usuario, id_sala) values (?,?);";
+           ps = con.prepareCall(q);
+           ps.setInt(1, idLD);
+           ps.setInt(2, idS);
            if(1 == ps.executeUpdate()){
                proceso_correcto = true;
            }else{
@@ -113,6 +145,7 @@ public class EUsuarioEquipo implements Serializable {
         }
         return proceso_correcto;
     }
+    
     
     /**
      * Método para obtener el total de empleados dentor de un registro, util para la vista general de equipos, reporta -1 si no encuentra el equipo
@@ -154,10 +187,10 @@ public class EUsuarioEquipo implements Serializable {
         boolean proceso_adecuado = true;
         try{
             con = Conexion.obtenerConexion();
-            q = "DELETE FROM e_usuario_equipo WHERE ID_Usuario_Empleado = ?";
-            ps = con.prepareStatement(q);
-            ps.setInt(1, id_empleado);
-            if(ps.executeUpdate() == 1){
+            q = "{call removeEmpleadoEquipo(?)}";
+            cs = con.prepareCall(q);
+            cs.setInt(1, id_empleado);
+            if(cs.executeUpdate() == 1){
                 proceso_adecuado = true;
             }
         } catch (SQLException ex) {
@@ -167,7 +200,7 @@ public class EUsuarioEquipo implements Serializable {
             try {
                 con.close();
                 q = "";
-                ps.close();
+                cs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -206,6 +239,7 @@ public class EUsuarioEquipo implements Serializable {
         }
         return idEquipo;
     }
+    
     
     public Integer getIDUsuarioEquipo() {
         return iDUsuarioEquipo;

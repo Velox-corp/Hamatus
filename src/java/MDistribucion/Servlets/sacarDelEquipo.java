@@ -6,6 +6,7 @@
 package MDistribucion.Servlets;
 
 import MDistribucion.Clases.EUsuarioEquipo;
+import MDistribucion.Clases.Equipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletContext;
@@ -41,7 +42,6 @@ public class sacarDelEquipo extends HttpServlet {
             try{
                 id_usuario = Integer.parseInt(request.getParameter("id"));
                 id_equipo = Integer.parseInt(request.getParameter("idE"));
-                
                 ServletContext contexto = getServletContext();
                 contexto.setAttribute("id", id_equipo);
                 

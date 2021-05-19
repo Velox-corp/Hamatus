@@ -11,6 +11,7 @@ import MDistribucion.Clases.Equipo;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,22 +47,41 @@ public class crearEquipoTrabajo extends HttpServlet {
                     Equipo new_equipo = new Equipo(nombre_Equipo, id_div);
                     procesoAdecuado = Equipo.crearEquipo(new_equipo);
                     if(procesoAdecuado){
-                        new_equipo.setIDEquipo(Equipo.obtenerIDNuevoEquipo());
-                        System.out.println(new_equipo.getIDEquipo());
+                        int ides[] = Equipo.obtenerIDNuevoEquipo();
                         //obtener los checkbox
                         for (int i = 0; i < maxUsers; i++) {
                             try{
                                 if(request.getParameter("empleado_"+(i+1)).equals("true")){
                                     int idE = Integer.parseInt(request.getParameter("idE_"+(i+1)));
-                                    EUsuarioEquipo newRelacion = new EUsuarioEquipo(idE, new_equipo.getIDEquipo());
-                                    if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion)){
+                                    EUsuarioEquipo newRelacion = new EUsuarioEquipo(idE, ides[0]);
+                                    if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion, ides[1])){
                                         System.out.println("No se pudo ingresar la relación");
                                         procesoAdecuado=false;
                                         break;
                                     }else{
+                                        System.out.println("New empleado");
                                     }
                                 }
                             }catch(NullPointerException e){
+                                e.printStackTrace();
+                            }
+                        }
+                        // ahora, hay que ingresar a los lideres de división a la sala del chat
+                        ArrayList idesLiderDiv = new ArrayList();
+                        idesLiderDiv = UsuarioEmpleado.getIdLiderDiv(ides[0]);
+                        for (int i = 0; i < idesLiderDiv.size(); i++) {
+                            try{
+                                int idLD = (int)idesLiderDiv.get(i);
+                                if(!EUsuarioEquipo.ingresarLiderEquipo(idLD, ides[1])){
+                                    System.out.println("No se pudo ingresar la relación");
+                                    procesoAdecuado=false;
+                                    break;
+                                }else{
+                                    System.out.println("New empleado");
+
+                                }
+                            }catch(NullPointerException e){
+                                e.printStackTrace();
                             }
                         }
                     }else{

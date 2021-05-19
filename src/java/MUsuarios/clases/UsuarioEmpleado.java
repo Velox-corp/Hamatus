@@ -610,7 +610,7 @@ public class UsuarioEmpleado implements Serializable {
      */
     public static int consultarID_Equipo(int ID_Usuario){
         int numero = 0;
-                try{
+        try{
             con = Conexion.obtenerConexion();
             q = "SELECT ID_Equipo FROM e_usuario_equipo WHERE ID_Usuario_Empleado=? limit 1";
             ps= con.prepareStatement(q);
@@ -633,6 +633,34 @@ public class UsuarioEmpleado implements Serializable {
         }
         return numero;
     }
+    
+    public static ArrayList getIdLiderDiv(int ide) {
+        ArrayList ides = new ArrayList();
+        try{
+            con = Conexion.obtenerConexion();
+            q = "SELECT ID_Usuario_E FROM usuario_empleado JOIN equipo ON usuario_empleado.ID_Division = equipo.ID_Division WHERE usuario_empleado.id_cat_privilegios = 3 AND equipo.ID_Equipo = ? ";
+            ps= con.prepareStatement(q);
+            ps.setInt(1, ide);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("ID_Usuario_E");
+                ides.add(id);
+            }
+        }catch(SQLException | NullPointerException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try {
+                con. close();
+                q = "";
+                rs.close();
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ides;
+    }
+    
     
     public Integer getIDUsuarioE() {
         return iDUsuarioE;

@@ -36,10 +36,12 @@ public class eliminarEquipo extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             boolean proceso_nice = true;
             int id_e_qepd;
+            int idSala;
             String redirect;
             try{
                 id_e_qepd = Integer.parseInt(request.getParameter("id"));
-                proceso_nice = Equipo.eliminarEquipo(id_e_qepd);
+                idSala = Equipo.getIdSala(id_e_qepd);
+                proceso_nice = Equipo.eliminarEquipo(id_e_qepd,idSala);
             }catch(Exception e){
                 e.printStackTrace();
                 proceso_nice = false;
