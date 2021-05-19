@@ -129,6 +129,10 @@
         <servlet-class>MFlujos.Servlets.descargaEvidencia</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>fav</servlet-name>
+        <servlet-class>MDocumentos.Servlets.fav</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>actualizarEmpresa</servlet-name>
         <servlet-class>MUsuarios.Servlets.actualizarEmpresa</servlet-class>
     </servlet>
@@ -263,6 +267,10 @@
     <servlet-mapping>
         <servlet-name>descargaEvidencia</servlet-name>
         <url-pattern>/descargaEvidencia</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>fav</servlet-name>
+        <url-pattern>/fav</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>actualizarEmpresa</servlet-name>
