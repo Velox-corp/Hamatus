@@ -369,7 +369,7 @@
                                                     <td>
                                                         <center>
                                                             <a target="_top" data-toggle="tooltip" title="Eliminar carpeta" 
-                                                               href="#" onclick="borrarCarpeta(<%= file.getName() %>)">
+                                                               href="" onclick="deleteFolder('<%= file.getName() %>')">
                                                             <i class="fas fa-trash-alt text-dark"></i>
                                                             </a>
                                                         </center>

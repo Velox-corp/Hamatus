@@ -150,10 +150,30 @@ async function createFol(){
           }
         }
     });
-    const q = getParameterByName('q');
-    window.location = `makeDir?newDir=${newName}&q=${q}`;
+    if (newName!=undefined) {
+        const q = getParameterByName('q');
+        window.location = `makeDir?newDir=${newName}&q=${q}`;
+    }
 }
 
+function deleteFolder(fileName){
+    var titulo = decode_utf8('¿Estas seguro de que quieres borrar la carpeta?');
+    Swal.fire({
+        title: titulo,
+        text: "Recuerda que no podras recuperarlo ni los archivos guardados en ella",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#343a40',
+        confirmButtonText: 'Si por favor',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const q = getParameterByName('q');
+            window.location = `deleteDir?name=${fileName}&q="${q}`;
+        }
+    });
+}
 
 
 window.onload = function(){
