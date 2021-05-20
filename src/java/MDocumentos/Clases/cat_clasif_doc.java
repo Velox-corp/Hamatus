@@ -43,12 +43,14 @@ public class cat_clasif_doc {
             ps.setInt(1, idcat_class);
             ps.setInt(2, ID_doc);
             result = ps.execute();
+            result = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }finally{
             try {
                this.con.close();
+               this.ps.close();
             } catch (Exception e) {
                System.out.println("Mmmm... why?");
                 System.out.println(e.getMessage());
@@ -67,7 +69,10 @@ public class cat_clasif_doc {
         int state = 1;
         try {
             this.con = Conexion.obtenerConexion();
-            this.query = "";
+            /**Hoy el dia 19/05/2021 Tenorio Aspiros Luis Fernando se gano el premio
+             al mas idiota del año por no poner el query para ejecutar la busqueda
+             MUY BIEN TENORIO!*/
+            this.query = "SELECT id_cat_clasif_doc FROM d_documento WHERE ID_Documento=?";
             ps = con.prepareCall(query);
             ps.setInt(1, ID_doc);
             ResultSet res = ps.executeQuery();

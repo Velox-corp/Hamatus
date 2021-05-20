@@ -22,7 +22,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Subirdocumentos</title>
+    <title>Subir documentos</title>
     
     <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
   </head>
@@ -84,7 +84,7 @@
                     </ul>
                 </nav>
                 <div class="card">
-                    <form class="card-body form-group" action="uploadFile_J" method="POST" enctype="multipart/form-data">
+                    <form class="card-body form-group" action="uploadFile" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="file" class="form-label">Insertar archivo <small>(El tamaño del archivo no debe superar los 15 MB)</small></label>
                             <input class="form-control-file" type="file" id="formFile" name="file" required>
@@ -120,6 +120,11 @@
                                 <%
                                 }
                             %>
+                        </select>
+                        <label for="id_cat_clasif_doc">Seleccione si quiere que este archivo sea favorito</label>
+                        <select class="form-control" name="id_cat_clasif_doc">
+                            <option>Normal</option>
+                            <option>Favorito</option>
                         </select>
                         <br>
                         <div class="justify-content-center">

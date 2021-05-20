@@ -172,10 +172,9 @@ public class uploadFile_J extends HttpServlet {
                 Part filePart        = request.getPart("file"); // Es el archivo y es la unica menra de traerlo
                 String nombre        = Paths.get(filePart.getSubmittedFileName())
                         .getFileName().toString(); //Basicamente nos trae el nombre del archivo
-                Integer es_evidencia_flujo = Integer.getInteger(
-                        request.getParameter("es_evidencia_flujo"));
-                Integer id_cat_clasif_doc = Integer.getInteger(
-                        request.getParameter("id_cat_clasif_doc"));
+                Integer es_evidencia_flujo = 1;
+                Integer id_cat_clasif_doc = 
+                        (request.getParameter("id_cat_clasif_doc").equals("Normal"))?1:2;
                 //Listado de datos preparados para entrar en la BD
                 M_Documento mdoc = new M_Documento(id_D_DOcumento, id_usuario_p);
                 if (mdoc.registrarM_Documentos()) {
@@ -205,9 +204,9 @@ public class uploadFile_J extends HttpServlet {
                                 }
                                 
                                 if (pass.equals(folio)) {
-                                    response.sendRedirect("docs.jsp?flag=true_pass&pass="+pass);
+                                    response.sendRedirect("docs2.jsp?flag=true_pass&pass="+pass);
                                 }else{
-                                    response.sendRedirect("docs.jsp?flag=true");
+                                    response.sendRedirect("docs2.jsp?flag=true");
                                 }
 
                             } catch (FileNotFoundException fne) {
@@ -222,23 +221,23 @@ public class uploadFile_J extends HttpServlet {
                             }
                         }else{
                             System.out.println("Todo mal en ddoc unu");
-                            response.sendRedirect("docs.jsp?flag=false");
+                            response.sendRedirect("docs2.jsp?flag=false");
                         }
                     }else{
                         System.out.println("Hijole ya existe este doc uwu");
-                        response.sendRedirect("docs.jsp?flag=exist");
+                        response.sendRedirect("docs2.jsp?flag=exist");
                     }
                 }else{
                     System.out.println("Ya valio esto unu, posible error al "
                             + "registrar la master del doc");
-                    response.sendRedirect("docs.jsp?flag=false");
+                    response.sendRedirect("docs2.jsp?flag=false");
                 }
             }
         }catch(Exception e){
             System.out.println("El bug es dibido a:" + e.getMessage());
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
-            response.sendRedirect("docs.jsp?flag=too_w");
+            response.sendRedirect("docs2.jsp?flag=too_w");
         }
             
     }   

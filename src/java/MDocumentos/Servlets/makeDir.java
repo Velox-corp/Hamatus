@@ -5,11 +5,9 @@
  */
 package MDocumentos.Servlets;
 
-import MDocumentos.Clases.D_Documento;
-import MDocumentos.Clases.M_Documento;
-import MDocumentos.Clases.cat_clasif_doc;
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -21,8 +19,10 @@ import javax.servlet.http.HttpSession;
 /**
  *
  * @author taspi
+ * Ñam ñam ñam ñam este servlet sirve para crear carpetas dentro de un 
+ * determinado url
  */
-public class fav extends HttpServlet {
+public class makeDir extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,21 +56,22 @@ public class fav extends HttpServlet {
             response.sendRedirect("error.jsp");
         }
         try {
-            cat_clasif_doc cat = new cat_clasif_doc();
-            int id = Integer.parseInt(request.getParameter("f"));
-            int action = cat.query_doc_state(id);
-            corect = cat.classify_docs(id, action==2?1:2);
-            if (corect) {
-                System.out.println("Todo exelete todo correcto UwU");
+            int id = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+            String ruta = request.getParameter("q");
+            String newDir = request.getParameter("newDir");
+            String sCarpAct = request.getServletContext().getRealPath("/")
+                    +"/archivos/"+id+"/"+ruta+"/"+newDir;
+            System.out.println(sCarpAct);
+            File dir = new File(sCarpAct);
+            if (!dir.exists()) {//Verificamos que exista el directorio
+                dir.mkdirs();
                 response.sendRedirect("docs2.jsp");
-            }else{
-                System.out.println("Mmmm tendre que ver ese dichoso error");
-                response.sendRedirect("error.jsp");
+            }else{//Vaya entonces ya existe el directorio
+                response.sendRedirect("docs2.jsp");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
         }
     }
 
