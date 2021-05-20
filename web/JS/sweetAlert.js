@@ -134,6 +134,26 @@ function deleteFile_J(id_m, fileName, id_e){
     });
 }
 
+async function createFol(){
+    const { value: newName } = await Swal.fire({
+        title: 'Escribe el nombre del folder',
+        input: 'text',
+        inputLabel: 'Escribe el nombre',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#343a40',
+        confirmButtonText: 'Ok',
+        cancelButtonText: 'Cancelar',
+        inputValidator: (value) => {
+          if (!value) {
+            return 'Necesitas escribir algo!'
+          }
+        }
+    });
+    const q = getParameterByName('q');
+    window.location = `makeDir?newDir=${newName}&q=${q}`;
+}
+
 
 window.onload = function(){
     if (getParameterByName('flag') == 'true') {

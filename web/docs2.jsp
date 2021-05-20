@@ -82,7 +82,7 @@
                       Ver archivos
                       <i class="fas fa-folder-open text-white"></i>
                   </a>
-                    <a type="button" class="btn btn-dark" href="makeDir?q=<%= query %>">
+                    <a type="button" class="btn btn-dark" onclick="createFol()">
                       Crear nueva carpeta
                       <i class="fas fa-folder-plus text-white"></i>
                   </a>
@@ -276,7 +276,7 @@
                                                         <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>" 
                                                            target="_top" data-toggle="tooltip" 
                                                            title="Descargar" id="<%=file.getAbsolutePath()%>"
-                                                           ><%= list[0] %></a>
+                                                           ><%= list[i] %></a>
                                                     </td>
                                                     <!--modificar-->
                                                     <td>
@@ -331,13 +331,14 @@
                                                     </td>
                                                 </tr>
                                                 <%
-                                                    }else if(file.isDirectory()){
+                                                    }
+                                                }else if(file.isDirectory()){
                                                 %>
                                                 <tr>
                                                     <!--Nombre del folder-->
                                                     <td><a target="_top" data-toggle="tooltip" 
                                                             title="Ver folder" 
-                                                            href="docs2.jsp?q=<%= ruta_j + "/" + file.getName() %>">
+                                                            href="docs2.jsp?q=<%= "/" + file.getName() %>">
                                                             <i class="far fa-folder text-dark"></i>
                                                             <%= file.getName() %>
                                                         </a>
@@ -374,7 +375,7 @@
                                                         </center>
                                                     </td>
                                                 </tr>
-                                                <%}
+                                                <%
                                             }
                                         }
                                     }else{
@@ -452,9 +453,9 @@
     </body>
     <script src="./JS/enable_tooltip.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!--<script src="./JS/sweetAlert0.js"></script>
+    <script src="./JS/sweetAlert.js"></script><!--
     Carajo tendre que pasarlas para aqui abajo TwT-->
-    <script>
+    <!--<script>
         function confirmation(){
             Swal.fire({
                 position: 'top-end',
@@ -649,5 +650,5 @@
         function decode_utf8(s) {
           return decodeURIComponent(escape(s));
         }
-    </script>
+    </script>-->
 </html>
