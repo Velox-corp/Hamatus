@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author taspi
  */
-public class deleteDir extends HttpServlet {
+public class modFol extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,13 +52,22 @@ public class deleteDir extends HttpServlet {
                 try {
                     String q = request.getParameter("q");
                     String nombre = request.getParameter("name");
+                    String newNombre = request.getParameter("newname");
                     String ruta = request.getServletContext().getRealPath("/archivos/" 
                             +String.valueOf(IDequipo)+"/"+(q != null ? q : ""));
-                    File file = new File(ruta+"/"+nombre);
-                    if(crud.deletePersonalFolder(file)){
-                        response.sendRedirect("docs2.jsp?q="+q);
+                    File oldfile = new File(ruta+"/"+nombre);
+                    File newFile = new File(ruta+"/"+newNombre);
+                    if(!nombre.equals(newNombre)){
+                        if (oldfile.renameTo(newFile)) {
+                            System.out.println("archivo renombrado");
+                            response.sendRedirect("docs2.jsp?q="+q+"&flag=true_dir");
+                        } else {
+                            System.out.println("error");
+                            response.sendRedirect("docs2.jsp?flag=false");
+                        }
                     }else{
-                        response.sendRedirect("docs2.jsp?flag=false&q="+q);
+                        System.out.println("error");
+                        response.sendRedirect("docs2.jsp?flag=sm_dir");
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

@@ -14,6 +14,16 @@ function confirmation(){
     });
 }
 
+function confirmation_dir(){
+    Swal.fire({
+        position: 'top-end',
+        title: "Folder correctamente guardado",
+        icon:'success',
+        showConfirmButton: false,
+        timer: 1500
+    });
+}
+
 function too_w(){
     var titulo = decode_utf8("Su archivo pesa más de 15Mb");
     Swal.fire({
@@ -156,6 +166,28 @@ async function createFol(){
     }
 }
 
+async function renameFol(oldName){
+    const { value: newName } = await Swal.fire({
+        title: 'Escribe el nuevo nombre del folder',
+        input: 'text',
+        inputLabel: 'Escribe el nombre',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#343a40',
+        confirmButtonText: 'Ok',
+        cancelButtonText: 'Cancelar',
+        inputValidator: (value) => {
+          if (!value) {
+            return 'Necesitas escribir algo!'
+          }
+        }
+    });
+    if (newName!=undefined) {
+        const q = getParameterByName('q');
+        window.location = `modFol?newname=${newName}&q=${q}&name=${oldName}`;
+    }
+}
+
 function deleteFolder(fileName){
     var titulo = decode_utf8('¿Estas seguro de que quieres borrar la carpeta?');
     Swal.fire({
@@ -202,7 +234,16 @@ window.onload = function(){
     else if(getParameterByName('flag') == 'file_sec'){
         file_sec();
     }
+    else if(getParameterByName('flag') == 'true_dir'){
+        confirmation_dir();
+    }
     else if(getParameterByName('flag') == 'exist_dir'){
+        Swal.fire({
+            title:"El nombre del folder ya esta ocupado",
+            icon:'warning'
+        });
+    }
+    else if(getParameterByName('flag') == 'sm_dir'){
         Swal.fire({
             title:"El nombre del folder ya esta ocupado",
             icon:'warning'

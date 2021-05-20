@@ -101,7 +101,7 @@
                                     <li><a href="verFlujosTrabajo.jsp" class="sub">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
-                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
                             <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
                                     <li><a href="Administrador_new.jsp" class='sub' >Agregar Empleados</a></li>
@@ -123,7 +123,7 @@
                                     <li><a href="verFlujosTrabajo.jsp" class="sub">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
-                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
                             <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
@@ -144,7 +144,7 @@
                                     <li><a href="verFlujosTrabajo.jsp" class="sub">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
-                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
                             <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
@@ -164,7 +164,7 @@
                                     <li><a href="verFlujosTrabajo.jsp" class="sub">Ver Flujos de trabajo</a></li>
                                 </ul>
                             </li>
-                            <li><a href="docs.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
                         </ul>
                     </nav>
                     <% break;

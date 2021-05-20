@@ -348,7 +348,7 @@
                                                         <center>
                                                         <a target="_top" data-toggle="tooltip" 
                                                              title="Modificar nombre de la carpeta" 
-                                                             href="#" onclick="changefolderName(<%= file.getName() %>)">
+                                                             href="#" onclick="renameFol('<%= file.getName() %>')">
                                                            <i class="fas fa-edit text-dark"></i>
                                                         </a>
                                                         </center>
@@ -369,7 +369,7 @@
                                                     <td>
                                                         <center>
                                                             <a target="_top" data-toggle="tooltip" title="Eliminar carpeta" 
-                                                               href="" onclick="deleteFolder('<%= file.getName() %>')">
+                                                               href="deleteDir?name=<%= file.getName() %>&q="<%=query%> >
                                                             <i class="fas fa-trash-alt text-dark"></i>
                                                             </a>
                                                         </center>
