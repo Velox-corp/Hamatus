@@ -155,6 +155,7 @@ async function createFol(){
 }
 
 
+
 window.onload = function(){
     if (getParameterByName('flag') == 'true') {
         confirmation();
@@ -180,6 +181,12 @@ window.onload = function(){
     }
     else if(getParameterByName('flag') == 'file_sec'){
         file_sec();
+    }
+    else if(getParameterByName('flag') == 'exist_dir'){
+        Swal.fire({
+            title:"El nombre del folder ya esta ocupado",
+            icon:'warning'
+        });
     }
 }
 

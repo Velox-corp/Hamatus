@@ -2,6 +2,7 @@
 body {
     font-family: 'Graphik',sans-serif;
     background-color: #F3F3F3;
+    overflow-x: hidden;
 }
 
 .nav {

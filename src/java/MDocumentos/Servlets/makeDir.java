@@ -67,7 +67,7 @@ public class makeDir extends HttpServlet {
                 dir.mkdirs();
                 response.sendRedirect("docs2.jsp");
             }else{//Vaya entonces ya existe el directorio
-                response.sendRedirect("docs2.jsp");
+                response.sendRedirect("docs2.jsp?flag=exist_dir");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
