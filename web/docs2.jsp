@@ -464,7 +464,8 @@
                 timer: 1500
             });
         }
-                function too_w(){
+        
+        function too_w(){
             var titulo = decode_utf8("Su archivo pesa más de 15Mb");
             Swal.fire({
                 title: titulo,
@@ -583,7 +584,24 @@
                 }
             });
         }
-
+        
+        async function createFol(){
+            const { value: newName } = await Swal.fire({
+                title: 'Escribe el nombre del folder',
+                input: 'text',
+                inputLabel: 'Escribe el nombre',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#343a40',
+                confirmButtonText: 'Ok',
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                  if (!value) {
+                    return 'Necesitas escribir algo!'
+                  }
+                }
+            });
+        }
 
         window.onload = function(){
             if (getParameterByName('flag') == 'true') {
