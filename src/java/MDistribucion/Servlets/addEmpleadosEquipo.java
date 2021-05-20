@@ -6,6 +6,7 @@
 package MDistribucion.Servlets;
 
 import MDistribucion.Clases.EUsuarioEquipo;
+import MDistribucion.Clases.Equipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletContext;
@@ -35,29 +36,35 @@ public class addEmpleadosEquipo extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            boolean proceso_nice = true;
+            boolean proceso_nice = false;
             String redirect = "";
             int id_equipo;
             int maxUsers;
+            int idSala;
             try{
                 id_equipo = Integer.parseInt(request.getParameter("idEquipo"));
-                maxUsers = Integer.parseInt(request.getParameter("maxUsers"));
-                for (int i = 0; i < maxUsers; i++) {
-                    try{
-                        if(request.getParameter("empleado_"+(i+1)).equals("true")){
-                            int idE = Integer.parseInt(request.getParameter("idE_"+(i+1)));
-                            EUsuarioEquipo newRelacion = new EUsuarioEquipo(idE, id_equipo);
-                            if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion)){
-                                System.out.println("No se pudo ingresar la relación");
-                                proceso_nice=false;
-                                
-                                break;
-                            }else{
+                idSala = Equipo.getIdSala(id_equipo);
+                if(idSala != -1){
+                    proceso_nice = true;
+                    maxUsers = Integer.parseInt(request.getParameter("maxUsers"));
+                    for (int i = 0; i < maxUsers; i++) {
+                        try{
+                            if(request.getParameter("empleado_"+(i+1)).equals("true")){
+                                int idE = Integer.parseInt(request.getParameter("idE_"+(i+1)));
+                                EUsuarioEquipo newRelacion = new EUsuarioEquipo(idE, id_equipo);
+                                if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion,-1)){
+                                    System.out.println("No se pudo ingresar la relación");
+                                    proceso_nice=false;
+
+                                    break;
+                                }else{
+                                }
                             }
+                        }catch(NullPointerException e){
                         }
-                    }catch(NullPointerException e){
                     }
                 }
+                
                 ServletContext contexto = getServletContext();
                 contexto.setAttribute("id", id_equipo);
             }catch(Exception e){

@@ -58,7 +58,7 @@ public class Equipo implements Serializable {
     private static  String q;
     private static PreparedStatement ps;
     private static ResultSet rs;
-    
+    private static CallableStatement cs;
     
     public Equipo() {
     }
@@ -97,11 +97,11 @@ public class Equipo implements Serializable {
         boolean proceso_correcto = true;
         try{
             con = Conexion.obtenerConexion();
-            q = "INSERT INTO Equipo (nombre, ID_Division) values(?,?)";
-            ps = con.prepareStatement(q);
-            ps.setBytes(1,AES.cifrar(equipoInsert.getNombre(),3));
-            ps.setInt(2, equipoInsert.getIDDivision());
-            if(ps.executeUpdate() == 1){
+            q = "{call crearEquipo(?,?)}";
+            cs = con.prepareCall(q);
+            cs.setBytes(1,AES.cifrar(equipoInsert.getNombre(),3));
+            cs.setInt(2, equipoInsert.getIDDivision());
+            if(cs.executeUpdate() == 1){
                 proceso_correcto = true;
             }else{
                 proceso_correcto = false;
@@ -114,7 +114,7 @@ public class Equipo implements Serializable {
             try {
                 con.close();
                 q = "";
-                ps.close();
+                cs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -124,22 +124,24 @@ public class Equipo implements Serializable {
     
      /**
      * Método para obtener el ide del ultimo equipo registrado, ya que este es auto_increment.
+     * Y como parte del modulo del chat, incluye el ultimo id de la sala registrada para poder hacer registros de los usuarios a la sala
      * Si ocurre algún error va retornar -1.
-     * @return id ide del equipo recien ingresado;
+     * @return id 
      */
-    public static int obtenerIDNuevoEquipo() {
-        int id_nueva = -1;
+    public static int[] obtenerIDNuevoEquipo() {
+        int ides[] = new int[2];
         try{
             con = Conexion.obtenerConexion();
-            q = "SELECT MAX(ID_Equipo) AS new_id FROM Equipo";
+            q = "SELECT MAX(id_equipo) as idE, MAX(idSala_chat) as idSC  from sala_chat, equipo";
             ps = con.prepareStatement(q);
             rs = ps.executeQuery();
             if(rs.next()){
-                id_nueva = rs.getInt("new_id");
+                ides[0] = rs.getInt("idE");
+                ides[1] = rs.getInt("idSC");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+            return new int[] {-1,-1};
         }finally{
             try {
                 con.close();
@@ -150,7 +152,7 @@ public class Equipo implements Serializable {
                 Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return id_nueva;
+        return ides;
     }
     
     /**
@@ -254,14 +256,15 @@ public class Equipo implements Serializable {
         return equipoBuscado;
     }
     
-    public static boolean eliminarEquipo(int id_equipo){
+    public static boolean eliminarEquipo(int id_equipo, int idSala){
         boolean proceso_adecuado = true;
         try{
             con = Conexion.obtenerConexion();
-            q = "DELETE FROM Equipo WHERE ID_Equipo = ? limit 1";
-            ps = con.prepareStatement(q);
-            ps.setInt(1,id_equipo);
-            if(ps.executeUpdate() == 1){
+            q = "{call deleteEquipo(?,?)}";
+            cs = con.prepareCall(q);
+            cs.setInt(1,id_equipo);
+            cs.setInt(2,idSala);
+            if(cs.executeUpdate() == 1){
                 proceso_adecuado = true;
             }
         } catch (SQLException ex) {
@@ -271,13 +274,42 @@ public class Equipo implements Serializable {
             try {
                 con.close();
                 q= "";
-                ps.close();
+                cs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return proceso_adecuado;
     }
+    
+    public static int getIdSala(int idEquipo){
+        int ids = -1;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "select sala_chat.idSala_chat from sala_chat join e_usuario_sala on idSala_chat = id_sala " +
+                "where id_usuario in (select ID_Usuario_Empleado from e_usuario_equipo where ID_Equipo = ?);";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, idEquipo);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                ids = rs.getInt("idSala_chat");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                q="";
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ids;
+    }
+    
     
     public Integer getIDEquipo() {
         return iDEquipo;

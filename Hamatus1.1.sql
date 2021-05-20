@@ -530,6 +530,43 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE `crearEquipo` (nombre varbinary(128), idD int)
+BEGIN
+	INSERT INTO Equipo (nombre, ID_Division) values(nombre,idD);
+    INSERT INTO sala_chat (id_tipo_sala) values (2);
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `addEmpleadoEquipo` (idU int, idE int, idS int)
+BEGIN
+	INSERT INTO e_usuario_equipo (ID_Usuario_Empleado, ID_Equipo) values (idU,idE);
+    INSERT INTO e_usuario_sala (id_usuario, id_sala) values (idU,idS);
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `removeEmpleadoEquipo` (idUE int)
+BEGIN
+	DELETE FROM e_usuario_equipo WHERE ID_Usuario_Empleado = idUE;
+    DELETE FROM e_usuario_sala where id_usuario = idUE AND
+    id_sala IN (select id_sala from sala_chat where id_tipo_sala = 2);
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `deleteEquipo` (idE int, idS int)
+BEGIN
+	DELETE FROM equipo where ID_Equipo = idE;
+    DELETE FROM sala_chat where idSala_chat =idS;
+END$$
+
+DELIMITER ;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
