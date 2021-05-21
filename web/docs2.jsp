@@ -89,6 +89,16 @@
                 </div>
             </div>
             <div class="col-md-7">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1" href="uploadfile.jsp">Subir archivos</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1" href="docs2.jsp">Ver archivos</a>
+                        </li>
+                    </ul>
+                </nav>
                 <!--Tabla visualizadora de archivos-->
                 <table class="table">
                     <thead>

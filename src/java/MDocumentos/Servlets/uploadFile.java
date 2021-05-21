@@ -182,6 +182,7 @@ public class uploadFile extends HttpServlet {
                     pass = folio;
                 }
                 
+                String q = request.getParameter("q");
                 int Equipo_ID_Equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
                 int id_D_DOcumento   = 1;//no entiendo bien esto
                 int id_usuario_p     = usuario.getIDUsuarioE();
@@ -219,7 +220,7 @@ public class uploadFile extends HttpServlet {
                                     crearFolderA(request);
                                     crearFolder(String.valueOf(Equipo_ID_Equipo), request);
                                     outs = new FileOutputStream(new File(request.getRealPath("/archivos/"
-                                            +Equipo_ID_Equipo+"/")+ File.separator + nombre));
+                                            +Equipo_ID_Equipo+"/") + (q!=null?q:"") + "/" + nombre));
                                     filecontent = filePart.getInputStream();
 
                                     int read = 0;
