@@ -94,6 +94,7 @@
                                 <td><%=Division.traducirID(empleado.getiD_Division())%></td>
                                 <td><%=CatPuestos.traducirID(empleado.getiD_cat_priv())%></td>
                                 <td class='btn-group-vertical'>
+                                    <a htef="#">Enviar mensaje</a>
                                     <% if ((empleado.getiD_cat_priv() > 1 && user.getiD_cat_priv() == 1) || (empleado.getiD_cat_priv() > 2 && user.getiD_cat_priv() == 2) ){ %>
                                     <a href='editarPuesto.jsp?id=<%=empleado.getIDUsuarioE()%>'>Cambiar puesto</a>
                                     <a href="borrarEmpleado?id=<%=empleado.getIDUsuarioE()%>" class="active text-danger">Eliminar</a>

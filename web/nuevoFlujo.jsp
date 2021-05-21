@@ -46,15 +46,25 @@
                     <div class="card-body">
                             <div class="form-group mb-2">
                                 <label for="titulof">Titulo</label>
-                                <input type="text" class="form-control" id="titulof" name="titulof" placeholder="Titulo" required="required">
+                                <input type="text" class="form-control" id="titulof" name="titulof" placeholder="Titulo" required="required"
+                                    onchange="return validarString(this, true, false)"
+                                    ondrag="return validarString(this, true, false)"
+                                    ondrop="return validarString(this, true, false)" 
+                                       >
                             </div>
                             <div class="form-group mb-2">
                                 <label for="descripcionf">Descripcion</label>
-                                <textarea type="text" class="form-control" id="descripcionf" name="descripcionf" placeholder="Descripción del flujo" required="required"></textarea>
+                                <textarea type="text" class="form-control" id="descripcionf" name="descripcionf" placeholder="Descripción del flujo" required="required"
+                                        onchange="return validarStringLong(this)"
+                                        ondrag="return validarStringLong(this)"
+                                        ondrop="return validarStringLong(this)"
+                                        onkeypress="return validarStringLong(this)"
+                                        maxlength="200"></textarea>
+                                <span id="contador">0/200</span>
                             </div>
                             <div class="form-group mb-2">
                                 <label for="fechal">Fecha limite</label>
-                                <input type="date" class="form-control" id="fecha_l" name="fecha_l" required="required">
+                                <input type="date" class="form-control" id="fecha_l" name="fecha_l" required="required" onchange="return validarDate(this)">
                             </div>
                             <div class="form-group mb-2">
                                 <label for="hora_l">Hora limite</label>

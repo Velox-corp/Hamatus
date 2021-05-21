@@ -57,11 +57,22 @@
                             <input type="hidden" id="iddivision" name="iddivision" value="<%=iddivision%>"> 
                             <div class="form-group mb-2">
                                 <label for="nombre">Titulo</label>
-                                <input type="text" class="form-control" id="tituloa" name="tituloa" placeholder="Titulo" required="required">
+                                <input type="text" class="form-control" id="tituloa" name="tituloa" 
+                                       placeholder="Titulo" required="required"
+                                       onchange="return validarString(this, true, false)"
+                                    ondrag="return validarString(this, true, false)"
+                                    ondrop="return validarString(this, true, false)" >
                             </div>
                             <div class="form-group mb-2">
                                 <label for="descripcion">Descripcion</label>
-                                <textarea type="text" class="form-control" id="descripciona" name="descripciona" placeholder="Anuncio" required="required"></textarea>
+                                <textarea type="text" class="form-control" id="descripciona" name="descripciona" 
+                                          placeholder="Anuncio" required="required"
+                                          onchange="return validarStringLong(this)"
+                                        ondrag="return validarStringLong(this)"
+                                        ondrop="return validarStringLong(this)" 
+                                        onkeypress="return validarStringLong(this)"
+                                        maxlength="200"></textarea>
+                                <span id="contador">0/200</span>
                             </div>
                             <br>
                             <button type="submit" name="enviar" class="btn btn-primary">Guardar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>

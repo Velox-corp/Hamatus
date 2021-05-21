@@ -3,6 +3,7 @@
     Fecha y hora de creación: : 27/04/2021, 10:59:10 PM
     Author     : Armando Jarillo
 --%>
+<%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="MDistribucion.Clases.EUsuarioEquipo"%>
 <%@page import="MFlujos.Clases.FlujoDeTrabajo"%>
@@ -26,17 +27,22 @@
             ArrayList<FlujoDeTrabajo> flujos = new ArrayList<FlujoDeTrabajo>();
             boolean isAll = false;
             ArrayList<Division> divisiones = new ArrayList<Division>();
+            ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+            int idEmp;
             try{
                 sesion = request.getSession();
                 empleado = (UsuarioEmpleado)sesion.getAttribute("usuario");
+                idEmp = ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa(); 
                 switch(empleado.getiD_cat_priv()){
                     case 1:
                         isAll = true;
-                        divisiones = Division.obtenerDivisiones( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
+                        
+                        divisiones = Division.obtenerDivisiones(idEmp) ;
                         for (int i = 0; i < divisiones.size(); i++) {
                             Division div = divisiones.get(i);
                                 flujos.addAll(FlujoDeTrabajo.consultarFlujosLiderDiv(div.getId_Division()));
                             }
+                        equipos = Equipo.obtenerAllEquipos(idEmp);
                         break;
                     case 2:
                         isAll = true;
@@ -45,10 +51,12 @@
                             Division div = divisiones.get(i);
                                 flujos.addAll(FlujoDeTrabajo.consultarFlujosLiderDiv(div.getId_Division()));
                             }
+                        equipos = Equipo.obtenerAllEquipos(idEmp);
                         break;
                     case 3:
                         isAll = false;
                         flujos = FlujoDeTrabajo.consultarFlujosLiderDiv(empleado.getiD_Division());
+                        equipos = Equipo.obtenerAllEquipos(idEmp);
                         break;
                     case 4: 
                         isAll = false;
@@ -73,114 +81,125 @@
         <br>
         <main class='container'>
             
-            <% 
-                if(isAll){
+         <% if(isAll){
                 for (int j = 0; j < divisiones.size(); j++) {
                     Division d = divisiones.get(j);
+                    for (int k = 0; k < equipos.size(); k++) {
+                        Equipo e = equipos.get(k);
+                        for (int i = 0; i < flujos.size(); i++) {
+                        FlujoDeTrabajo f = flujos.get(i);
+                        if(e.getIDDivision() == d.getId_Division() && f.getIdEquipo() == e.getIDEquipo()){
+                        %>
+                            <div class="card container-fluid">
+                                <div class="card-header text-white bg-dark h4 " >
+                                    <div class='row text-center'>
+                                        <span clas='col-md-12'><%=d.getNombre()%>: <%=e.getNombre()%></span>
+                                    </div>
+                                    <div class='row'>
+                                        <div class="col-md-6 text-left">
+                                            <%=f.getTituloFlujo()%>
+                                        </div>
+                                        <div class="col-md-5 text-right">
+                                            Tiempo limite: <%=f.getFechaLimite()%> | <%=f.getHoraLimite()%>
+                                        </div>
+                                        <%
+                                        if( empleado.getiD_cat_priv() == 3 ) { 
+                                        %>
+                                            <div class="col-md-1 text-right">
+                                                <a href="editarFlujo.jsp?idf=<%=f.getIdFlujodetrabajo()%>" id="btnEdit"><i class="fa fa-pen" arial-hidden="true"></i></a>
+                                                <a href="eliminarFlujo?idf=<%=f.getIdFlujodetrabajo()%>" id="btnDelete" class="ml-1"><i class="fa fa-trash" arial-hidden="true"></i></a>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                        <%=f.getDescripcionFlujo()%>
+                                        <br>
+                                        <% if( f.isEntregado() ){ %>
+                                        Estado: <strong class="text-success">ENTREGADO</strong>
+                                        <% } else { %>
+                                        Estado: <strong class="text-danger">NO ENTREGADO</strong>
+                                        <% } %>
+                                </div>
+
+                                    <% if(empleado.getiD_cat_priv() == 3 && f.isEntregado()){ %>
+                                        <div class="card-footer  text-center">
+                                            <a class="btn btn-dark text-center" href="descargaEvidencia?idF=<%=f.getIdFlujodetrabajo()%>"
+                                               target="_top" data-toggle="tooltip" >Descargar Documento</a>
+                                        </div>
+                                    <% } else if(empleado.getiD_cat_priv() == 4 && !f.isEntregado()) { %>
+                                        <div class="card-footer text-center">
+                                            <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
+                                        </div>
+                                    <% }%>
+
+                            </div>
+                            <br>
+                    <%      } 
+                        }
+                    } 
+                }
+            }else{ /*Lo mismo pero sin la parte de arriba */ 
+                for (int j = 0; j < equipos.size(); j++) {
+                    Equipo e = equipos.get(j);
                     for (int i = 0; i < flujos.size(); i++) {
                     FlujoDeTrabajo f = flujos.get(i);
-                    %>
-                <div class="card container-fluid">
-                    <div class="card-header text-white bg-dark h4 " >
-                        <div class='row text-center'>
-                            <span clas='col-md-12'><%=d.getNombre()%></span>
-                        </div>
-                        <div class='row'>
-                            <div class="col-md-6 text-left">
-                                <%=f.getTituloFlujo()%>
-                            </div>
-                            <div class="col-md-5 text-right">
-                                Tiempo limite: <%=f.getFechaLimite()%> | <%=f.getHoraLimite()%>
-                            </div>
-                            <%
-                            if( empleado.getiD_cat_priv() == 3 ) { 
-                            %>
-                                <div class="col-md-1 text-right">
-                                    <a href="editarFlujo.jsp?idf=<%=f.getIdFlujodetrabajo()%>" id="btnEdit"><i class="fa fa-pen" arial-hidden="true"></i></a>
-                                    <a href="eliminarFlujo?idf=<%=f.getIdFlujodetrabajo()%>" id="btnDelete" class="ml-1"><i class="fa fa-trash" arial-hidden="true"></i></a>
+                    if(e.getIDEquipo() == f.getIdEquipo()){ %>
+                        <div class="card container-fluid">
+                            <div class="card-header text-white bg-dark h4 " >
+                                <div class='row text-center'>
+                                    <span clas='col-md-12'><%=e.getNombre()%></span>
                                 </div>
-                            <% } %>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                            <%=f.getDescripcionFlujo()%>
-                            <br>
-                            <% if( f.isEntregado() ){ %>
-                            Estado: <strong class="text-success">ENTREGADO</strong>
-                            <% } else { %>
-                            Estado: <strong class="text-danger">NO ENTREGADO</strong>
-                            <% } %>
-                    </div>
-                    
-                        <% if(empleado.getiD_cat_priv() == 3 && f.isEntregado()){ %>
-                            <div class="card-footer  text-center">
-                                <a class="btn btn-dark text-center" href="descargaEvidencia?idF=<%=f.getIdFlujodetrabajo()%>"
-                                   target="_top" data-toggle="tooltip" >Descargar Documento</a>
-                            </div>
-                        <% } else if(empleado.getiD_cat_priv() == 4 && !f.isEntregado()) { %>
-                            <div class="card-footer text-center">
-                                <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
-                            </div>
-                        <% }%>
-                    
-                </div>
-                <br>
-                <%  } 
-                   }
-                } else { /*Lo mismo pero sin la parte de arriba */ 
-                    for (int i = 0; i < flujos.size(); i++) {
-                    FlujoDeTrabajo f = flujos.get(i);
-                    %>
-                <div class="card container-fluid">
-                    <div class="card-header text-white bg-dark h4 " >
-                        <div class='row'>
-                            <div class="col-md-6 text-left">
-                                <%=f.getTituloFlujo()%>
-                            </div>
-                            <div class="col-md-5 text-right">
-                                Tiempo limite: <%=f.getFechaLimite()%> | <%=f.getHoraLimite()%>
-                            </div>
-                            <%
-                            if( empleado.getiD_cat_priv() == 3 ) { 
-                            %>
-                                <div class="col-md-1">
-                                    <a href="editarFlujo.jsp?idf=<%=f.getIdFlujodetrabajo()%>" id="btnEdit"><i class="fa fa-pen" arial-hidden="true"></i></a>
-                                    <a href="eliminarFlujo?idf=<%=f.getIdFlujodetrabajo()%>" id="btnDelete" class="ml-1"><i class="fa fa-trash" arial-hidden="true"></i></a>
+                                <div class='row'>
+                                    <div class="col-md-6 text-left">
+                                        <%=f.getTituloFlujo()%>
+                                    </div>
+                                    <div class="col-md-5 text-right">
+                                        Tiempo limite: <%=f.getFechaLimite()%> | <%=f.getHoraLimite()%>
+                                    </div>
+                                    <%
+                                    if( empleado.getiD_cat_priv() == 3 ) { 
+                                    %>
+                                        <div class="col-md-1">
+                                            <a href="editarFlujo.jsp?idf=<%=f.getIdFlujodetrabajo()%>" id="btnEdit"><i class="fa fa-pen" arial-hidden="true"></i></a>
+                                            <a href="eliminarFlujo?idf=<%=f.getIdFlujodetrabajo()%>" id="btnDelete" class="ml-1"><i class="fa fa-trash" arial-hidden="true"></i></a>
+                                        </div>
+                                    <% } %>
                                 </div>
-                            <% } %>
+
+                            </div>
+                            <div class="card-body">
+                                    <%=f.getDescripcionFlujo()%>
+                                    <br>
+                                    <% if( f.isEntregado() ){ %>
+                                    Estado: <strong class="text-success">ENTREGADO</strong>
+                                    <% } else { %>
+                                    Estado: <strong class="text-danger">NO ENTREGADO</strong>
+                                    <% } %>
+                            </div>
+
+                                <% if(empleado.getiD_cat_priv() == 3 && f.isEntregado()){ %>
+                                    <div class="card-footer  text-center">
+                                        <a class="btn btn-dark text-center" href="descargaEvidencia?idF=<%=f.getIdFlujodetrabajo()%>"
+                                           target="_top" data-toggle="tooltip" >Descargar Documento</a>
+                                    </div>
+                                <% } else if(empleado.getiD_cat_priv() == 4 && !f.isEntregado()) { %>
+                                    <div class="card-footer text-center">
+                                        <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
+                                    </div>
+                                <% }%>
+
                         </div>
-                        
-                    </div>
-                    <div class="card-body">
-                            <%=f.getDescripcionFlujo()%>
-                            <br>
-                            <% if( f.isEntregado() ){ %>
-                            Estado: <strong class="text-success">ENTREGADO</strong>
-                            <% } else { %>
-                            Estado: <strong class="text-danger">NO ENTREGADO</strong>
-                            <% } %>
-                    </div>
-                    
-                        <% if(empleado.getiD_cat_priv() == 3 && f.isEntregado()){ %>
-                            <div class="card-footer  text-center">
-                                <a class="btn btn-dark text-center" href="descargaEvidencia?idF=<%=f.getIdFlujodetrabajo()%>"
-                                   target="_top" data-toggle="tooltip" >Descargar Documento</a>
-                            </div>
-                        <% } else if(empleado.getiD_cat_priv() == 4 && !f.isEntregado()) { %>
-                            <div class="card-footer text-center">
-                                <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
-                            </div>
-                        <% }%>
-                    
-                </div>
-                <br>
-                <%  } %>  
-                <br>
-                <%
-                    if(empleado.getiD_cat_priv() == 3 ) { 
-                %>
-                <a  class="btn btn-primary" href="nuevoFlujo.jsp">Publicar un nuevo flujo de trabajo</a>
-                <% } 
+                        <br>
+                        <%  } %>  
+                        <br>
+                        <%}
+                        }
+                            if(empleado.getiD_cat_priv() == 3 ) { 
+                        %>
+                        <a  class="btn btn-primary" href="nuevoFlujo.jsp">Publicar un nuevo flujo de trabajo</a>
+                        <% 
+                    }
                 }%>
         </main>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />

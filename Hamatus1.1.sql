@@ -389,7 +389,7 @@ DROP TABLE IF EXISTS `heroku_9ad0f74b62bb348`.`Sala_chat` ;
 
 CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`Sala_chat` (
   `idSala_chat` INT NOT NULL AUTO_INCREMENT,
-  `id_tipo sala` INT NOT NULL,
+  `id_tipo_sala` INT NOT NULL,
   PRIMARY KEY (`idSala_chat`),
   CONSTRAINT `fk_sala_cat_ts`
     FOREIGN KEY (`id_tipo sala`)
@@ -531,10 +531,23 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+USE `heroku_9ad0f74b62bb348`$$
+CREATE PROCEDURE `subida_evidencia`(idM_doc int, idF int)
+BEGIN
+	INSERT INTO e_flujo_documento (id_flujo, id_d_doc) values (idF, 
+    (select  d_documento.ID_Documento from d_documento where id_MDocumento = idM_doc));
+    
+    update flujo_de_trabajo set entregado = 1 where idFlujo_de_trabajo = idF;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
 CREATE PROCEDURE `crearEquipo` (nombre varbinary(128), idD int)
 BEGIN
-	INSERT INTO Equipo (nombre, ID_Division) values(nombre,idD);
-    INSERT INTO sala_chat (id_tipo_sala) values (2);
+	INSERT INTO Equipo (equipo.nombre, equipo.ID_Division) values(nombre,idD);
+    INSERT INTO sala_chat (sala_chat.id_tipo_sala) values (2);
 END$$
 
 DELIMITER ;
