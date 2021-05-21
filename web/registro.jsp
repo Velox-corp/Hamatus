@@ -83,9 +83,14 @@
                         <div class="form-group">
                             <label for="description">Descripción:</label>
                             <textarea class="form-control" id="description" name="description" rows="3" 
-                                      onchange="return validarString(this, true, true)"
-                                   ondrag="return validarString(this, true, true)"
-                                   ondrop="return validarString(this, true, true)" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" placeholder="Empresa desarrolladora de servicios web"></textarea>
+                                      onchange="return validarStringLong(this)"
+                                        ondrag="return validarStringLong(this)"
+                                        ondrop="return validarStringLong(this)" 
+                                        onkeypress="return validarStringLong(this)"
+                                        maxlength="200" 
+                                        autocomplete="off" ondrag="return false"  
+                                        required="required" placeholder="Empresa desarrolladora de servicios web"></textarea>
+                            <span id="contador">0/200</span>
                         </div>
                         <div class="form-group">
                             <label for="logo">Logo (Opcional): </label>
