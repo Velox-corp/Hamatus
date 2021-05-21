@@ -40,7 +40,7 @@
 <!DOCTYPE html>
 <html lang='es'>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Elaboración de anuncios -</title>
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
     </head>
@@ -97,13 +97,18 @@
                             <div class='input-group-prepend'>
                                 <span class='input-group-text'><strong>Titulo:</strong></span>
                             </div>
-                            <input name="titulo" class='form-control'/>
+                            <input name="titulo" class='form-control' placeholder="contenido"/>
                         </div>
                         <div class="card-body input-group">
                             <div class='input-group-prepend'>
                                 <span class='input-group-text'>Contenido:</span>
                             </div>
-                            <textarea name='contenido' class='form-control'></textarea>
+                            <textarea name='contenido' class='form-control' placeholder="Contenido del anuncio"
+                                      onchange="return validarStringLong(this)"
+                                        ondrag="return validarStringLong(this)"
+                                        ondrop="return validarStringLong(this)" 
+                                        onkeypress="return validarStringLong(this)"required="required"></textarea>
+                            <span id="contador">0/200</span>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-dark">Ingresar Anuncio</button>

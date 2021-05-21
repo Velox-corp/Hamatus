@@ -203,8 +203,11 @@
                 </div>
             <% } %>
             <br>
-            <a class='btn btn-primary ' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
-            <% }else{
+            <%if(liderDiv.getiD_cat_priv() == 3){ %>
+                <a class='btn btn-primary ' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+                
+            <%  }
+             }else{
             if(liderDiv.getiD_cat_priv() == 3){ %>
             
                 <div class='row d-flex justify-content-center'>

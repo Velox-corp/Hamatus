@@ -25,12 +25,10 @@
             try{
                 sesion = request.getSession();
                 user = (UsuarioEmpleado)sesion.getAttribute("usuario");
-                if(user.getiD_cat_priv()== 2){
-                    equipo = Integer.parseInt(request.getParameter("id"));
-                }
-                equipo = EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE());
+                equipo = Integer.parseInt(request.getParameter("id"));
+                 
                 usuarios =  UsuarioEmpleado.obtenerUsuariosEquipo(equipo, user.getiD_Division());
-                equipos = Equipo.obtenerEquipo(EUsuarioEquipo.buscarEquipo(user.getIDUsuarioE()));
+                equipos = Equipo.obtenerEquipo(equipo);
                 
             }catch(Exception e){
                 e.printStackTrace();
@@ -44,6 +42,7 @@
         <br>
         <main class="container">
             <%
+                if(!usuarios.isEmpty()){
                 for (int idx = 0; idx < usuarios.size(); idx++) {
                         UsuarioEmpleado userx = usuarios.get(idx);
             %>
@@ -56,7 +55,7 @@
                         <div class="container-fliud cubridor3 d-flex justify-content-center align-items-center">
                             <div class="card container_5">
                                 <div class="card-body">
-                                    <%=userx.getAppat()%> <%=user.getApmat()%> <%=user.getNombre()%> | <%=CatPuestos.traducirID(user.getiD_cat_priv())%>
+                                    <%=userx.getAppat()%> <%=userx.getApmat()%> <%=userx.getNombre()%> | <%=CatPuestos.traducirID(userx.getiD_cat_priv())%>
                                     <hr>
                                     <table>
                                         <tr>
@@ -75,7 +74,12 @@
                 </div>
             </div><br>
             <% }
+            }else{
             %>  
+            <div> <!--mentale diseño por mi-->
+                No hay usuarios en este equipo
+            </div>
+            <% }%>
         </main>
     </body><br>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />

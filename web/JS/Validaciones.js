@@ -38,6 +38,28 @@ function validarString(htmlElement, boolEspacios, boolPuntuaciones){
     return good;
 }
 
+/**
+ * Metodo para validar string largos, por lo general sera de los <textarea></textarea> existentes
+ * @param {type} htmlElement el textarea a revisar
+ * @returns {Boolean} true si el ingreso es valido
+ */
+function validarStringLong(htmlElement){
+    let string= htmlElement.value;
+    let actuallong= string.length;
+    let max = htmlElement.maxlength;
+    let good = false;
+    console.log(max);
+    let patronFull = /[A-Za-z0-9áéíóúüâäàêëèïîìôöòûùã\s\.\,\:\;]/;
+    good =  patronFull.test(string);
+    if(!good){
+        alert("Ingreso inadecuado");
+        htmlElement.focus();
+    }
+    let contador = document.getElementById("contador");
+    contador.innerHTML = actuallong+ "/"+max;
+    return good;
+   
+}
 
 /**
  * Metodo para validar el input de un correo

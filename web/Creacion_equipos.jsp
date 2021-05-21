@@ -144,8 +144,7 @@
                         <button class='btn btn-dark btn-large' type="submit">Crear equipo de trabajo</button>
                     </div>
                 </div>
-        </form>
-        </div>
+            </form>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>

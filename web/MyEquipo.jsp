@@ -51,9 +51,9 @@
                                     <hr>
                                     <label><br>Usted pertenece al equipo: <strong><%=equipo.getNombre()%></strong></label>
                                     <br><br>
-                                    <a class="btn btn-dark" href="listaDeEmpleados.jsp">Ver integrantes del equipo</a>
+                                    <a class="btn btn-dark" href="listaDeEmpleados.jsp?id=<%=equipo.getIDEquipo()%>">Ver integrantes del equipo</a>
                                     <br><br>
-                                    <a class="btn btn-dark" href="listaDeEmpleados.jsp">Trabajar con el equipo</a>
+                                    <a class="btn btn-dark" href="docs.jsp">Trabajar con el equipo</a>
                                     <br><br>
                                 </div>
                             </div>
