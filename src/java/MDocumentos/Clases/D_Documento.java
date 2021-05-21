@@ -6,6 +6,7 @@
 package MDocumentos.Clases;
 
 import ClasesSoporte.Conexion;
+import ClasesSoporte.Fecha;
 import MSeguridad.Clases.AES;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -267,9 +268,8 @@ public class D_Documento implements Serializable {
             ps.setBytes(3, AES.cifrar(this.pass, 4));
             ps.setBytes(4, AES.cifrar(this.folio, 4));
             ps.setInt(5, this.id_tipo_acceso);
-            String fecha = c.get(Calendar.DATE) + "-" + c.get(Calendar.MONTH) +
-                    "-" + c.get(Calendar.YEAR);
-            ps.setBytes(6, AES.cifrar(fecha, 4));
+            String fechaS = Fecha.FechaBD();
+            ps.setBytes(6, AES.cifrar(fechaS, 4));
             String hora = c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + 
                     ":" + c.get(Calendar.SECOND);
             ps.setBytes(7, AES.cifrar(hora, 4));
