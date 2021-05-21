@@ -76,10 +76,10 @@
                 <nav>
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1">Subir</a>
+                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1" href="uploadfile.jsp">Subir archivos</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1">Ver archivos</a>
+                            <a class="page-link" style="color: #F3F3F3; background-color: #2291C1" href="docs2.jsp">Ver archivos</a>
                         </li>
                     </ul>
                 </nav>
@@ -91,6 +91,8 @@
                         </div>
                         <label for="pass">Agrege una contraseña al archivo</label>
                         <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
+                        <label for="pass">Agrege una ruta al archivo (de no insertar la ruta solo se guardara en la carpeta principal)</label>
+                        <input class="form-control" name="q" type="text" placeholder="Inserte ruta" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" minlength="2" maxlength="40">
                         <label for="id_tipo_acceso">Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%

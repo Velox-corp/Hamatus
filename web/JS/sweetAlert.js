@@ -207,6 +207,19 @@ function deleteFolder(fileName){
     });
 }
 
+function delDocuments(){
+    const list = document.getElementsByTagName('input');
+    if (list.length > 0) {
+        for(item of list){
+            
+        }
+    }else{
+        Swal.fire({
+            title:"No hay archivos para eliminar",
+            icon:'warning'
+        });
+    }
+}
 
 window.onload = function(){
     if (getParameterByName('flag') == 'true') {
@@ -250,6 +263,7 @@ window.onload = function(){
         });
     }
 }
+
 
 /**
  * @param String name
