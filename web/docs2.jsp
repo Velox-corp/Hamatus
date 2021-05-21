@@ -113,6 +113,7 @@
                                      data-toggle="tooltip" data-placement="top"
                                      title="Si deseas borrar un archivo tienes que 
                                      seleccionar almenos una casilla"
+                                     onclick="delDocuments()"
                                      >Borrar</button>
                             </center>
                         </th>
@@ -293,7 +294,7 @@
                                                         <center>
                                                         <a target="_top" data-toggle="tooltip" 
                                                             title="Modificar" 
-                                                            href="mod_docs_J.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>&e=<%= ddoc.getEquipo_ID_Equipo() %>">
+                                                            href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>&e=<%= ddoc.getEquipo_ID_Equipo() %>">
                                                         <i class="fas fa-edit text-dark"></i>
                                                         </a>
                                                         </center>
@@ -335,7 +336,8 @@
                                                     <td>
                                                         <center>
                                                         <div class="form-check">
-                                                            <input type="checkbox" class="form-check-input" id="<%= ddoc.getId() %>" name="del-file">
+                                                            <input type="checkbox" class="form-check-input" id="<%= ddoc.getId_MDocumento() %>"
+                                                                   name="del-file">
                                                         </div>
                                                         </center>
                                                     </td>

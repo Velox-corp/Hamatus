@@ -45,7 +45,7 @@ function file_sec(){
 function confirmation_del(){
     Swal.fire({
         position: 'top-end',
-        title: "Documento correctamente borrado",
+        title: "Documentos correctamente borrado",
         icon:'success',
         showConfirmButton: false,
         timer: 1500
@@ -210,8 +210,22 @@ function deleteFolder(fileName){
 function delDocuments(){
     const list = document.getElementsByTagName('input');
     if (list.length > 0) {
+        var cont = 0;
+        var list2 = [];
         for(item of list){
-            
+            if (item.checked) {
+                list2.push(item.id);
+                cont++;
+            }
+        }
+        if (cont>0) {
+            var q = getParameterByName('q');
+            window.location = `deleteDocuments?li=${list2}&q=${q}`;
+        }else{
+            Swal.fire({
+                title:"No has seleccionado ningun archivo",
+                icon:'warning'
+            });
         }
     }else{
         Swal.fire({

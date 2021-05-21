@@ -152,6 +152,10 @@
         <servlet-name>modFol</servlet-name>
         <servlet-class>MDocumentos.Servlets.modFol</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteDocuments</servlet-name>
+        <servlet-class>MDocumentos.Servlets.deleteDocuments</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -303,6 +307,10 @@
     <servlet-mapping>
         <servlet-name>modFol</servlet-name>
         <url-pattern>/modFol</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteDocuments</servlet-name>
+        <url-pattern>/deleteDocuments</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
