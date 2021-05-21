@@ -1,5 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
-<link rel="stylesheet" type="text/css" href="css/estilos.css">
+<%@page contentType="text/html" pageEncoding="utf-8" session="true"%>
 <script src="JS/Validaciones.js"></script>
 <header class="container-fluid cabecera">
     <div class="row header align-items-center">

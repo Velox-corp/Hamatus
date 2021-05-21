@@ -84,8 +84,6 @@
                             <label for="description">Descripción:</label>
                             <textarea class="form-control" id="description" name="description" rows="3" 
                                       onchange="return validarStringLong(this)"
-                                        ondrag="return validarStringLong(this)"
-                                        ondrop="return validarStringLong(this)" 
                                         onkeypress="return validarStringLong(this)"
                                         maxlength="200" 
                                         autocomplete="off" ondrag="return false"  
