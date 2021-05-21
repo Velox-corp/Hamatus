@@ -30,7 +30,7 @@ public class CRUD_Folders {
     /**
      * Este metodo crea el directorio archivos en caso de que no exista
      */
-    private void crearFolderA(HttpServletRequest request) {
+    public void crearFolderA(HttpServletRequest request) {
         //Creacion del directorio y del achivo
         try {
             String sCarpAct = request.getServletContext().getRealPath("/");
@@ -48,7 +48,7 @@ public class CRUD_Folders {
      * Este es un metodo que crea un folder en la carpeta /archivos/ y luego le
      * con el atributo dirc le agregara 
      */
-    private void crearFolder(String dirc, HttpServletRequest request){
+    public void crearFolder(String dirc, HttpServletRequest request){
         //Creacion del directorio y del achivo
         try {
             String sCarpAct = request.getRealPath("/archivos/");
@@ -67,7 +67,7 @@ public class CRUD_Folders {
     /**
      * Este metodo tiene una funcionalidad en especifico
      */
-    private void crearPersonalFolder(String name, String dirc,
+    public void crearPersonalFolder(String name, String dirc,
             HttpServletRequest request){
         try {
             String sCarpAct = request.getRealPath("/archivos/");
@@ -82,12 +82,14 @@ public class CRUD_Folders {
         }
     }
     
-    /**Para borrar el folder con todo y contenidos o vacio*/
-    private void deletePersonalFolder(String name, String dirc,
+    /**Para borrar el folder con todo y contenidos o vaci
+     * @param dirc es donde esta localizado el folder incluido el propio folder
+     * @param request
+     */
+    public void deletePersonalFolder(String dirc,
             HttpServletRequest request){
         try {
-            String directory = request.getRealPath("/archivos/") + dirc + "/" +
-                    name;
+            String directory = request.getRealPath("/archivos/") + dirc;
             File f = new File(directory);
             if(f.isDirectory()){           
                 if(f.list().length == 0)
@@ -116,7 +118,8 @@ public class CRUD_Folders {
     /**
      * Para borrar un folder con contenido o solo pero con el argumento File
      */
-    private void deletePersonalFolder(File file){
+    public boolean deletePersonalFolder(File file){
+        boolean c = true;
         try {
             if(file.isDirectory()){           
                 if(file.list().length == 0)
@@ -138,7 +141,9 @@ public class CRUD_Folders {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+            c = false;
         }
+        return c;
     }
     
     /**

@@ -140,6 +140,18 @@
         <servlet-name>actualizarLogo</servlet-name>
         <servlet-class>MUsuarios.Servlets.actualizarLogo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>makeDir</servlet-name>
+        <servlet-class>MDocumentos.Servlets.makeDir</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteDir</servlet-name>
+        <servlet-class>MDocumentos.Servlets.deleteDir</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>modFol</servlet-name>
+        <servlet-class>MDocumentos.Servlets.modFol</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -279,6 +291,18 @@
     <servlet-mapping>
         <servlet-name>actualizarLogo</servlet-name>
         <url-pattern>/actualizarLogo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>makeDir</servlet-name>
+        <url-pattern>/makeDir</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteDir</servlet-name>
+        <url-pattern>/deleteDir</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modFol</servlet-name>
+        <url-pattern>/modFol</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

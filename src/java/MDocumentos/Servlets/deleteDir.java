@@ -5,11 +5,9 @@
  */
 package MDocumentos.Servlets;
 
-import MDocumentos.Clases.D_Documento;
-import MDocumentos.Clases.M_Documento;
-import MDocumentos.Clases.cat_clasif_doc;
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -22,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author taspi
  */
-public class fav extends HttpServlet {
+public class deleteDir extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,42 +34,38 @@ public class fav extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sesionUser = request.getSession();
-        boolean corect = false;
-        UsuarioEmpleado usuario = null;
-        Empresa emp = null;
-        try{
-            usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
-            emp = (Empresa) sesionUser.getAttribute("empresa");
-        }catch(NullPointerException ex){
-            System.out.println("Algun error raro de null");
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            corect = false;
-            response.sendRedirect("error.jsp");
-        }catch(Exception e){
-            System.out.println("Algun error raro");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            corect = false;
-            response.sendRedirect("error.jsp");
-        }
-        try {
-            cat_clasif_doc cat = new cat_clasif_doc();
-            int id = Integer.parseInt(request.getParameter("f"));
-            int action = cat.query_doc_state(id);
-            corect = cat.classify_docs(id, action==2?1:2);
-            if (corect) {
-                System.out.println("Todo exelete todo correcto UwU");
-                response.sendRedirect("docs2.jsp");
-            }else{
-                System.out.println("Mmmm tendre que ver ese dichoso error");
-                response.sendRedirect("error.jsp");
+            boolean obtencionAdecuada = false;
+            UsuarioEmpleado usuario = null;
+            Empresa emp = null;
+            try{
+                usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+                emp = (Empresa) sesionUser.getAttribute("empresa");
+                obtencionAdecuada = true; 
+            }catch(NullPointerException ex){
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                obtencionAdecuada = false;
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            response.sendRedirect("error.jsp");
-        }
+            if (obtencionAdecuada) {
+                int IDequipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
+                CRUD_Folders crud = new CRUD_Folders();
+                try {
+                    String q = request.getParameter("q");
+                    String nombre = request.getParameter("name");
+                    String ruta = request.getServletContext().getRealPath("/archivos/" 
+                            +String.valueOf(IDequipo)+"/"+(q != null ? q : ""));
+                    File file = new File(ruta+"/"+nombre);
+                    if(crud.deletePersonalFolder(file)){
+                        response.sendRedirect("docs2.jsp?q="+q);
+                    }else{
+                        response.sendRedirect("docs2.jsp?flag=false&q="+q);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                    response.sendRedirect("eror.jsp");
+                }
+            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -4,6 +4,7 @@
     Author     : taspi
 --%>
 
+<%@page import="MDocumentos.Clases.cat_clasif_doc"%>
 <%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MDocumentos.Clases.D_Documento"%>
@@ -59,7 +60,7 @@
             if (!dir.exists()) {//Verificamos que exista el directorio
                 dir.mkdirs();
             }
-            query = request.getParameter("q") + "/";
+            query = (request.getParameter("q").equals(null)?"":request.getParameter("q")) + "/";
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -72,16 +73,20 @@
             <div class="col-md-3 folio">
                 <!--Aqui adentro vendran los botones de favoritos y documentos-->
                 <!--Caray porque no me salen como los botones de arriba UnU ni modo-->
-                <nav>
-                    <ul class="div-like-btn">
-                        <li class="list-item-style-none">
-                            <a href="#">VER ARCHIVOS</a>
-                        </li>
-                        <li class="list-item-style-none">
-                            <a href="#">VER FAVORITOS</a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="btn-group-vertical">
+                  <a type="button" class="btn btn-dark">
+                      Ver favoritos
+                      <i class="fas fa-star text-white"></i>
+                  </a>
+                  <a type="button" class="btn btn-dark">
+                      Ver archivos
+                      <i class="fas fa-folder-open text-white"></i>
+                  </a>
+                    <a type="button" class="btn btn-dark" onclick="createFol()">
+                      Crear nueva carpeta
+                      <i class="fas fa-folder-plus text-white"></i>
+                  </a>
+                </div>
             </div>
             <div class="col-md-7">
                 <!--Tabla visualizadora de archivos-->
@@ -256,21 +261,22 @@
                                         //Lista de lo que debe de entrar
                                         for (int i=0; i < list.length; i++) {
                                             //Iteraciones de los archivos de la carpeta
-                                            file = new java.io.File(ruta_j +"/"+ list[i]);
+                                            file = new java.io.File(ruta +"/"+ list[i]);
                                             if (file.isFile()) {
                                                 M_Documento mdoc = new M_Documento();
                                                 D_Documento ddoc = new D_Documento();
                                                 
                                                 ddoc.ConsultarD_Doc(IDequipo, file.getName());
                                                 mdoc.Consultar_mDoc(ddoc.getId_MDocumento(), ddoc.getID_Documento());
+                                                cat_clasif_doc cat = new cat_clasif_doc();
                                                 if(ddoc.getId_tipo_acceso() != 1){%>
                                                     <tr>
                                                     <!--Nombre del archivo-->
                                                     <td>
-                                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE() %>&fileName=<%=file.getName()%>" 
+                                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>" 
                                                            target="_top" data-toggle="tooltip" 
                                                            title="Descargar" id="<%=file.getAbsolutePath()%>"
-                                                           ><%= list[0] %></a>
+                                                           ><%= list[i] %></a>
                                                     </td>
                                                     <!--modificar-->
                                                     <td>
@@ -294,11 +300,25 @@
                                                     <!--Favoritos-->
                                                     <td>
                                                         <center>
-                                                            <a target="_top" data-toggle="tooltip" 
-                                                                 title="Añadir a favoritos" 
-                                                                 href="fav?f=<%= ddoc.getId() %>">
-                                                               <i class="far fa-star" style='color:#ffc107'></i>
-                                                            </a>
+                                                            <%
+                                                                if(cat.query_doc_state(ddoc.getID_Documento())==1){
+                                                                    %>
+                                                                    <a target="_top" data-toggle="tooltip" 
+                                                                         title="Añadir a favoritos" 
+                                                                         href="fav?f=<%= ddoc.getId() %>">
+                                                                       <i class="far fa-star" style='color:#ffc107'></i>
+                                                                    </a>
+                                                                    <%
+                                                                }else{
+                                                                    %>
+                                                                    <a target="_top" data-toggle="tooltip" 
+                                                                         title="Quitar a favoritos" 
+                                                                         href="fav?f=<%= ddoc.getId() %>">
+                                                                       <i class="fas fa-star" style='color:#ffc107'></i>
+                                                                    </a>
+                                                                    <%
+                                                                }
+                                                            %>
                                                         </center>
                                                     </td>
                                                     <!--Boton borrar-->
@@ -311,13 +331,14 @@
                                                     </td>
                                                 </tr>
                                                 <%
-                                                    }else if(file.isDirectory()){
+                                                    }
+                                                }else if(file.isDirectory()){
                                                 %>
                                                 <tr>
                                                     <!--Nombre del folder-->
                                                     <td><a target="_top" data-toggle="tooltip" 
                                                             title="Ver folder" 
-                                                            href="docs2.jsp?q=<%= ruta_j + "/" + file.getName() %>">
+                                                            href="docs2.jsp?q=<%= "/" + file.getName() %>">
                                                             <i class="far fa-folder text-dark"></i>
                                                             <%= file.getName() %>
                                                         </a>
@@ -327,7 +348,7 @@
                                                         <center>
                                                         <a target="_top" data-toggle="tooltip" 
                                                              title="Modificar nombre de la carpeta" 
-                                                             href="#" onclick="changefolderName(<%= file.getName() %>)">
+                                                             href="#" onclick="renameFol('<%= file.getName() %>')">
                                                            <i class="fas fa-edit text-dark"></i>
                                                         </a>
                                                         </center>
@@ -348,13 +369,13 @@
                                                     <td>
                                                         <center>
                                                             <a target="_top" data-toggle="tooltip" title="Eliminar carpeta" 
-                                                               href="#" onclick="borrarCarpeta(<%= file.getName() %>)">
+                                                               href="deleteDir?name=<%= file.getName() %>&q="<%=query%> >
                                                             <i class="fas fa-trash-alt text-dark"></i>
                                                             </a>
                                                         </center>
                                                     </td>
                                                 </tr>
-                                                <%}
+                                                <%
                                             }
                                         }
                                     }else{
@@ -362,9 +383,9 @@
                                         %>
                                         <tr>
                                             <td>
-                                            <center>No hay documentos guardados o
+                                            No hay documentos guardados o
                                                 carpetas creadas, por favor guardar
-                                                un documento o crear una carpeta</center>
+                                                un documento o crear una carpeta
                                             </td>
                                         </tr>
                                         <%
@@ -372,11 +393,11 @@
                                 }else{
                                     //No hay folder
                                     %>
-                                    <tr>
+                                    <tr rowspan="5">
                                         <td>
-                                        <center>No hay documentos guardados o
+                                        No hay folder del equipo o
                                             carpetas creadas, por favor guardar
-                                            un documento o crear una carpeta</center>
+                                            un documento o crear una carpeta
                                         </td>
                                     </tr>
                                     <%
@@ -432,5 +453,202 @@
     </body>
     <script src="./JS/enable_tooltip.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="./JS/sweetAlert.js"></script>
+    <script src="./JS/sweetAlert.js"></script><!--
+    Carajo tendre que pasarlas para aqui abajo TwT-->
+    <!--<script>
+        function confirmation(){
+            Swal.fire({
+                position: 'top-end',
+                title: "Documento correctamente guardado",
+                icon:'success',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        
+        function too_w(){
+            var titulo = decode_utf8("Su archivo pesa más de 15Mb");
+            Swal.fire({
+                title: titulo,
+                text:'Contacte al administrador',
+                icon:'error'
+            });
+        }
+
+        function file_sec(){
+            var titulo = decode_utf8("Lamentablemente no se permiten archivos con esa nomenclatura");
+            Swal.fire({
+                title: titulo,
+                text:'Por motivos de seguridad tampoco se aceptan archivos .sql .java .py .js .rar y .zip',
+                icon:'error'
+            });
+        }
+
+        function confirmation_del(){
+            Swal.fire({
+                position: 'top-end',
+                title: "Documento correctamente borrado",
+                icon:'success',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+
+        function error(){
+            Swal.fire({
+
+                title: "Hubo un error",
+                text:'Contacte al administrador',
+                icon:'error'
+            });
+        }
+
+        function wrong_pass(){
+            var titulo = decode_utf8(encode_utf8("Contraseña incorrecta"));
+            var text = decode_utf8(encode_utf8('Ingrese otra vez la contraseña'));
+            Swal.fire({
+                title: titulo,
+                text:text,
+                icon:'error'
+            });
+        }
+
+        function true_pass(pass){
+            var text = decode_utf8('La contraseña es: ');
+            Swal.fire({
+                title: "Documento correctamente guardado",
+                text:text + pass ,
+                icon:'success'
+            });
+        }
+
+        function copy_link(id){
+            const text = window.location.host + "/Hamatus/" + id;
+            console.log(text);
+            navigator.clipboard.writeText(text).then(function() {
+            /* clipboard successfully set */
+                Swal.fire({
+                    text:'Comparta el link para poder mostrar este archivo a otros colaboradores de la empresa',
+                    position: 'top-end',
+                    icon:'success',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }, function() {
+              /* clipboard write failed */
+              Swal.fire({
+                    text:'A sucedido un error contacte al administrador',
+                    position: 'top-end',
+                    icon:'error',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            });
+        }
+
+        function deleteFile(id_m, fileName){
+            var titulo = decode_utf8('¿Estas seguro de que quieres borrar el archivo?');
+            var text = decode_utf8('La contraseña es: ');
+            Swal.fire({
+                title: titulo,
+                text: "Recuerda que no podras recuperarlo",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#343a40',
+                confirmButtonText: 'Si por favor',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location = "deleteFile?id_M="+id_m+"&fileName="+fileName;
+                }
+            });
+        }
+
+        function deleteFile_J(id_m, fileName, id_e){
+            var titulo = decode_utf8('¿Estas seguro de que quieres borrar el archivo?');
+            var text = decode_utf8('La contraseña es: ');
+            Swal.fire({
+                title: titulo,
+                text: "Recuerda que no podras recuperarlo",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#343a40',
+                confirmButtonText: 'Si por favor',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location = "deleteFile_J?id_M="+id_m+"&fileName="+fileName+"&id_e="+id_e;
+                }
+            });
+        }
+        
+        async function createFol(){
+            const { value: newName } = await Swal.fire({
+                title: 'Escribe el nombre del folder',
+                input: 'text',
+                inputLabel: 'Escribe el nombre',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#343a40',
+                confirmButtonText: 'Ok',
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                  if (!value) {
+                    return 'Necesitas escribir algo!'
+                  }
+                }
+            });
+        }
+
+        window.onload = function(){
+            if (getParameterByName('flag') == 'true') {
+                confirmation();
+            }else if(getParameterByName('flag') == 'false'){
+                error();
+            }else if(getParameterByName('flag_del') == 'false'){
+                error();
+            }else if(getParameterByName('flag_del') == 'true'){
+                confirmation_del();
+            }else if(getParameterByName('flag') == 'exist'){
+                Swal.fire({
+                    title:"Lo sentimos, el archivo ya existe",
+                    icon:'warning'
+                });
+            }else if(getParameterByName('flag') == 'wrong_pass'){
+                wrong_pass();
+            }else if(getParameterByName('flag') == 'true_pass'){
+                var pass = getParameterByName('pass');
+                true_pass(pass);
+            }
+            else if(getParameterByName('flag') == 'too_w'){
+                too_w();
+            }
+            else if(getParameterByName('flag') == 'file_sec'){
+                file_sec();
+            }
+        }
+
+        /**
+         * @param String name
+         * @return String
+         */
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function encode_utf8(s) {
+          return unescape(encodeURIComponent(s));
+        }
+
+        function decode_utf8(s) {
+          return decodeURIComponent(escape(s));
+        }
+    </script>-->
 </html>
