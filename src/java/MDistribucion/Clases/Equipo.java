@@ -310,6 +310,36 @@ public class Equipo implements Serializable {
         return ids;
     }
     
+    /**
+     * Metodo para cambiar el nombre de un equipo
+     * @param newName el nuevo nombre del equipo
+     * @return true si se ejecuta el cambio con exito
+     */
+    public static boolean editName(String newName, int idE) {
+        boolean proceso_adecuado = true;
+        try{
+            con = Conexion.obtenerConexion();
+            q = "UPDATE equipo SET Nombre = ? WHERE ID_Equipo = ?";
+            ps = con.prepareStatement(q);
+            ps.setBytes(1,AES.cifrar(newName, 3));
+            ps.setInt(2, idE);
+            if(ps.executeUpdate() == 1){
+                proceso_adecuado = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            proceso_adecuado = false;
+        }finally{
+            try {
+                con.close();
+                q= "";
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return proceso_adecuado;
+    }
     
     public Integer getIDEquipo() {
         return iDEquipo;

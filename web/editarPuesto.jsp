@@ -65,10 +65,10 @@
                 <div class='row'>
                     <div class='col-md-6 align-items-center'>
                         <p>División actual: <input type='text' id='oldPuesto' value='<%=Division.traducirID(empleado.getiD_Division())%>' readonly='readonly'></p>
-                        <button onclick="return habilitarCampo('newDiv')" class='btn btn-info'>
+                        <button onclick="return habilitarCampo('newDiv')" class='btn btn-info' type="button">
                             Hacer cambio de división
                         </button><br>
-                        <select id='newDiv' name='newDiv' readonly='readonly' onchange='return alterarPuestos()' disabled>
+                        <select id='newDiv' name='newDiv' readonly='readonly'onchange='return alterarPuestos()' disabled>
                             <option  value='0' selected>Seleccione la división a donde hacer la transferencía</option>
                                             <% for (int i = 0; i < divisiones.size(); i++) {
                                                 Division div = divisiones.get(i); %>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-md-6 align-items-center">
                         <p>Privilegios actulales: <input type='text' id='oldPriv' value='<%=CatPuestos.traducirID(empleado.getiD_cat_priv())%>' readonly='readonly'></p>
-                        <button onclick="return habilitarCampo('newPriv')" class='btn btn-info'>
+                        <button onclick="return habilitarCampo('newPriv')" class='btn btn-info' type="button">
                             Hacer cambio de privilegios
                         </button>
                         <select id='newPriv' name='newPriv' readonly='readonly' disabled>

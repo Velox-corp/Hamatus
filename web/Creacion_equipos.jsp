@@ -60,7 +60,12 @@
                         <label for=nombreEquipo">
                             Nombre del equipo:
                         </label>
-                        <input class="h4 form-control" type="text" id='nombreEquipo' name='nombreEquipo' oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
+                        <input class="h4 form-control" type="text" id='nombreEquipo' name='nombreEquipo' 
+                               oncopy="return false" onpaste="return false" 
+                               autocomplete="off" ondrag="return false"  ondrop="return false" 
+                               required="required" maxlength="30"
+                               onchange="return validarString(this, true, false)"
+                               >
                     </div>
                     <div class="col-md-6 form-group">
                         <label for='división'>

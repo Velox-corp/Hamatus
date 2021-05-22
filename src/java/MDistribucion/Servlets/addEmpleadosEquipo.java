@@ -52,7 +52,7 @@ public class addEmpleadosEquipo extends HttpServlet {
                             if(request.getParameter("empleado_"+(i+1)).equals("true")){
                                 int idE = Integer.parseInt(request.getParameter("idE_"+(i+1)));
                                 EUsuarioEquipo newRelacion = new EUsuarioEquipo(idE, id_equipo);
-                                if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion,-1)){
+                                if(!EUsuarioEquipo.ingresarEmpleadoEquipo(newRelacion,idSala)){
                                     System.out.println("No se pudo ingresar la relación");
                                     proceso_nice=false;
 

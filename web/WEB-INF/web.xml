@@ -156,6 +156,10 @@
         <servlet-name>deleteDocuments</servlet-name>
         <servlet-class>MDocumentos.Servlets.deleteDocuments</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>edtiNombreEquipo</servlet-name>
+        <servlet-class>MDistribucion.Servlets.editNombreEquipo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -311,6 +315,10 @@
     <servlet-mapping>
         <servlet-name>deleteDocuments</servlet-name>
         <url-pattern>/deleteDocuments</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>edtiNombreEquipo</servlet-name>
+        <url-pattern>/edtiNombreEquipo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

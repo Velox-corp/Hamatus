@@ -223,6 +223,8 @@ public class EUsuarioEquipo implements Serializable {
             rs = ps.executeQuery();
             if(rs.next()){
                 idEquipo = rs.getInt("ID_Equipo");
+            }else{
+                idEquipo = -1;
             }
         } catch (SQLException ex) {
             Logger.getLogger(Equipo.class.getName()).log(Level.SEVERE, null, ex);
