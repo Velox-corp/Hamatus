@@ -36,6 +36,7 @@
                                 }else{
                                     div= liderDiv.getiD_Division();
                                     anuncios = (ArrayList<Anuncio>)request.getAttribute("anuncios");
+                                    System.out.println("Anuncios: "+anuncios.size());
                                 }
                             }catch (Exception e) {
                                 e.getMessage();
@@ -47,8 +48,21 @@
                                 response.sendRedirect(redirect);
                             }
                         %>
-                        
-                            <% for (int i = 0; i < anuncios.size(); i++) {
+                  
+                            <% if(anuncios.isEmpty()){ %>
+                                <div class='row  justify-content-center'>
+                                    <div class='col-md-6 card align-items-center text-white' style="background-color: #2291C1">
+                                        <h5 class='card-header text-capitalize'>¡No Hay Anuncios publicados!</h5>
+
+                                        <div class='card-body'>
+                                            <article class='card-text'>
+                                                Cuando se comparta ifnromación por medio de anuncios, estos apareceran en esta sección
+                                            </article>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } else{
+                             for (int i = 0; i < anuncios.size(); i++) {
                                 Anuncio ad = anuncios.get(i);
                                 %>
                                 <div class="card  container-fluid">
@@ -77,12 +91,15 @@
                                 </div>
                                 <br>
                                  <% } %>
+                                 
                         <% if( liderDiv.getiD_cat_priv() <= 3 ) {  %>
-                            <a href="tablon.jsp" id="btnAdd"><i class="far fa-plus-square" arial-hidden="true">Agregar Nuevo</i></a>
-                        <% } %> 
+                            <a href="tablon.jsp"  class="btn btn-primary">Agregar Nuevo</a>
+                        <% }
+                        }%> 
         </main>
-    </body>
-    <div class="fo">
+        
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
-    </div>
+        
+    </body>
+    
 </html>

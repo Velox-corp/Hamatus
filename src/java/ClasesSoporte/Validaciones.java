@@ -120,6 +120,16 @@ public class Validaciones {
     }
     
     /**
+     * Método para validar una string de campos largos
+     * @param stringLong la cadena a evaluar
+     * @return El booleano que comprueba que sea verdadero
+     */
+    public static boolean esStringLong(String stringLong){
+        Pattern patronStringLong = Pattern.compile("[A-Za-z0-9áéíóúüâäàêëèïîìôöòûùã\\s\\.\\,\\:\\;]");
+        return patronStringLong.matcher(stringLong).find();
+    }
+    
+    /**
      * Validación de una fecha por el controlador
      * @param fecha la fecha a comparar en formato de cadena
      * @return El boleano que comprueba que sea una fecha valida
@@ -162,5 +172,11 @@ public class Validaciones {
     public static boolean esPassword(String pass){
         Pattern patronPass = Pattern.compile("[A-Za-z0-9]{8,20}");
         return patronPass.matcher(pass).find();
+    }
+
+    public static boolean esHora(String hora) {
+        Pattern patronHora = Pattern.compile("^([01]?[0-9]|2[0-3]):[0-5][0-9]$");
+        return patronHora.matcher(hora).find();
+        
     }
 }

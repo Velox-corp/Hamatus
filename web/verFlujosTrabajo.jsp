@@ -78,9 +78,23 @@
                 <h2 class="align-items-center text-center">Flujos de trabajo</h2>  
             </div>
         </div>
-        <br>
         <main class='container'>
             
+        <% if(flujos.isEmpty()){ %>
+            <div class='row  justify-content-center'>
+                <div class='col-md-6 card align-items-center text-white' style="background-color: #2291C1">
+                    <h5 class='card-header text-capitalize'>¡No Hay Flujos de trabajo subidos!</h5>
+
+                    <div class='card-body'>
+                        <article class='card-text'>
+                            No se tienen flujos de trabajo subidos
+                        </article>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+            
+        
          <% if(isAll){
                 for (int j = 0; j < divisiones.size(); j++) {
                     Division d = divisiones.get(j);

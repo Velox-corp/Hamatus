@@ -82,7 +82,7 @@ public class controlA extends HttpServlet {
             case "Agregar":
                 String tituloa = request.getParameter("tituloa");
                 String descripciona = request.getParameter("descripciona");
-                if (! Validaciones.esString(tituloa, true, true) || ! Validaciones.esString(descripciona, true, true)){
+                if (! Validaciones.esString(tituloa, true, true) || ! Validaciones.esStringLong(descripciona)){
                     response.sendRedirect("tablon.jsp");
                     break;
                 }

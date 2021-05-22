@@ -108,24 +108,22 @@
                                     <h5 class="card-header">
                                             <%=eq.getNombre()%>
                                     </h5>
-                                    <div class="card-body">
-                                        <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
+                                    <div class="card-body text-center ">
+                                        Total de empleados: <strong><%=totalesEquipos[i]%></strong>
                                         <br>
-                                        <a class="btn btn-dark" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
+                                        <a class="btn btn-dark text-center margin-top-1rem" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
                                             Ver integrantes del equipo
                                         </a>
-                                            <br>
                                     <% if(!sonTotales){ %>
-                                            <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
-                                                Editar equipo
-                                            </a>
-                                        </div>
-                                        <div class='card-footer'>
-                                            <a class='btn btn-info' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                                Eliminar equipo
-                                            </a>
-                                        </div>
+                                        <a class='btn btn-dark text-center margin-top-1rem' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            Editar equipo
+                                        </a>
+                                    </div>
+                                    <div class='card-footer text-center'>
+                                        <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                            Eliminar equipo
+                                        </a>
+                                    </div>
                                     <% } else{ %>
                                     Division: <strong><%=Division.traducirID(eq.getIDDivision())%> </strong>
                                     </div>   
@@ -135,60 +133,56 @@
                     <%      break;
                         case 2: %>
                     <div class="col-md-4">
-                            <div class="card text-white" style="background-color: #6c757d">
+                            <div class="card text-white align-items-center" style="background-color: #6c757d">
                                     <h5 class="card-header">
                                             <%=eq.getNombre()%>
                                     </h5>
-                                    <div class="card-body">
-                                        <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
+                                    <div class="card-body text-center ">
+                                        Total de empleados: <strong><%=totalesEquipos[i]%></strong>
                                         <br>
-                                        <a class="btn btn-dark" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
+                                        <a class="btn btn-dark text-center margin-top-1rem" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
                                             Ver integrantes del equipo
                                         </a>
-                                            <br>
-                                        <% if(!sonTotales){ %>
-                                            <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
-                                                Editar equipo
-                                            </a>
-                                        </div>
-                                        <div class='card-footer'>
-                                            <a class='btn btn-info' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                                Eliminar equipo
-                                            </a>
-                                        </div>
+                                    <% if(!sonTotales){ %>
+                                        <a class='btn btn-dark text-center margin-top-1rem' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            Editar equipo
+                                        </a>
+                                    </div>
+                                    <div class='card-footer text-center'>
+                                        <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                            Eliminar equipo
+                                        </a>
+                                    </div>
                                     <% } else{ %>
                                     Division: <strong><%=Division.traducirID(eq.getIDDivision())%> </strong>
                                     </div>   
-                                    <% } %>   
+                                    <% } %> 
                             </div>
                     </div><br>
                             <% break;
                         case 0:
                             %>
                     <div class="col-md-4">
-                            <div class="card text-white" style="background-color: #6c757d">
+                            <div class="card text-white align-items-center" style="background-color: #6c757d">
                                     <h5 class="card-header">
                                             <%=eq.getNombre()%>
                                     </h5>
-                                    <div class="card-body">
-                                        <label for='tot_equip_<%=totalesEquipos[i]%>'>Total de empleados</label>
-                                        <input class="h4 form-control" type='number' readonly="readonly" id='tot_equip_<%=eq.getIDEquipo()%>' value='<%=totalesEquipos[i]%>'>
+                                    <div class="card-body text-center ">
+                                        Total de empleados: <strong><%=totalesEquipos[i]%></strong>
                                         <br>
-                                        <a class="btn btn-dark" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
+                                        <a class="btn btn-dark text-center margin-top-1rem" href='listaDeEmpleados.jsp?id=<%=eq.getIDEquipo()%>'>
                                             Ver integrantes del equipo
                                         </a>
-                                            <br>
-                                        <% if(!sonTotales){ %>
-                                            <a class='btn btn-dark' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
-                                                Editar equipo
-                                            </a>
-                                        </div>
-                                        <div class='card-footer'>
-                                            <a class='btn btn-info' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
-                                                Eliminar equipo
-                                            </a>
-                                        </div>
+                                    <% if(!sonTotales){ %>
+                                        <a class='btn btn-dark text-center margin-top-1rem' href='editarEquipo.jsp?id=<%=eq.getIDEquipo()%>'>
+                                            Editar equipo
+                                        </a>
+                                    </div>
+                                    <div class='card-footer text-center'>
+                                        <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                            Eliminar equipo
+                                        </a>
+                                    </div>
                                     <% } else{ %>
                                     Division: <strong><%=Division.traducirID(eq.getIDDivision())%> </strong>
                                     </div>   
