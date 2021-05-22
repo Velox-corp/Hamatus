@@ -83,8 +83,9 @@
                         <div class="form-group">
                             <label for="description">Descripción:</label>
                             <textarea class="form-control" id="description" name="description" rows="3" 
-                                      onchange="return validarStringLong(this)"
-                                        onkeypress="return validarStringLong(this)"
+                                        onchange="return validarStringLong(this)"
+                                        onkeydown="return validarStringLongTecla(event,this)"
+                                        oninput="contadorCatacteres(event)"
                                         maxlength="200" 
                                         autocomplete="off" ondrag="return false"  
                                         required="required" placeholder="Empresa desarrolladora de servicios web"></textarea>

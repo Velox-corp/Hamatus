@@ -56,9 +56,11 @@
                                 <label for="descripcionf">Descripcion</label>
                                 <textarea type="text" class="form-control" id="descripcionf" name="descripcionf" placeholder="Descripción del flujo" required="required"
                                         onchange="return validarStringLong(this)"
+                                        onkeydown="return validarStringLongTecla(event,this)"
                                         ondrag="return validarStringLong(this)"
                                         ondrop="return validarStringLong(this)"
-                                        onkeypress="return validarStringLong(this)"
+                                        oninput="contadorCatacteres(event)"
+                                        
                                         maxlength="200"></textarea>
                                 <span id="contador">0/200</span>
                             </div>

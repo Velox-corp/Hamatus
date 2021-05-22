@@ -46,9 +46,8 @@ function validarString(htmlElement, boolEspacios, boolPuntuaciones){
 function validarStringLong(htmlElement){
     let string= htmlElement.value;
     let actuallong= string.length;
-    let max = htmlElement.maxlength;
-    let good = false;
-    console.log(max);
+    let max = 200;
+    let good;
     let patronFull = /[A-Za-z0-9áéíóúüâäàêëèïîìôöòûùã\s\.\,\:\;]/;
     good =  patronFull.test(string);
     if(!good){
@@ -60,6 +59,31 @@ function validarStringLong(htmlElement){
     return good;
    
 }
+
+function validarStringLongTecla(e, htmlElement){
+    let max = 200;
+    let good;
+    const contador = document.getElementById("contador");
+    const patronFull = /[A-Za-z0-9áéíóúüâäàêëèïîìôöòûùã\s\.\,\:\;]/;
+    let teclado = (document.all)?e.keyCode:e.which;
+    console.log(teclado)
+    if (teclado >=37 && teclado <=40 || teclado==8 || teclado==46){
+        return true;
+    }
+    let tecla =String.fromCharCode(teclado);
+    good = patronFull.test(tecla);
+    return good;
+   
+}
+
+function contadorCatacteres(e){
+    const contador = document.getElementById("contador");
+    const target = e.target;
+    const longitudMax = target.getAttribute('maxlength');
+    const longitudAct = target.value.length;
+    contador.innerHTML = `${longitudAct}/${longitudMax}`;
+}
+
 
 /**
  * Metodo para validar el input de un correo
