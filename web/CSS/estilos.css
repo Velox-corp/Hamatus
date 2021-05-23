@@ -15,7 +15,7 @@ body {
 /*La animacion de los botones :D*/
 .nav-item{
     color: #FFFFFF;
-    padding: 1.2605rem 2.94118rem 1.17647rem;
+    padding: 1rem 1rem 1.3rem 1rem;
     text-transform: uppercase;
     overflow: hidden;
     transition: 0.6s all ease;
@@ -103,7 +103,7 @@ p {
 a {
     font-size: 1rem;
     color: #1DB0EE;
-    font-weight: 400;
+    font-weight: 100;
 }
 
 .pequeno {
@@ -417,7 +417,7 @@ img.per{
 }
 #menu_gral > ul li {
     display: inline-block;
-    width: 20%;
+    width: 14%;
     position: relative;
     background: #303031;
 }

@@ -62,7 +62,7 @@
             <h3 class='text-info'>Datos del equipo</h3>
 	</div>
         <script src='JS/interaccionBotones.js'></script>
-            <form action="editNombreEquipo" method="POST">
+            <form action="cambioNameE" method="POST">
                 <div class="row">
                 <input type='hidden' name='idEquipo' value='<%=id_equipo%>'>
                     <div class="col-md-6 form-group">
@@ -75,19 +75,22 @@
                                 ondrag="return validarString(this, true, false)"
                                 ondrop="return validarString(this, true, false)"
                                >
+                        
                         <button class='btn btn-info' type="button" onclick="cambiarEstado('nombregEquipo','divBtn')" style="margin-top: .5vw">Editar</button>
-                    </div>
+                        
+                        </div>
                     <div class="col-md-6 form-group">
                         <label for='división'>
                             División correspondiente:
                         </label>
                         <input type="text" readonly="readonly" id='division' name='division' value='<%=Division.traducirID(equipo.getIDDivision())%>' class="form-control">
                     </div>
-                </div>
+                
                     <div class="row" id="divBtn" hidden="hidden">
                     <button class='btn btn-dark' type="submit">Cambiar nombre</button>
+                    </div>
+                
                 </div>
-                    
             </form>
             <br>
             <div class="row">

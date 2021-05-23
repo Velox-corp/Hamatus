@@ -1,8 +1,9 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+function habilitarCampo(ide){
+    let campo = document.getElementById(ide);
+    campo.disabled = !campo.disabled;
+}
+
 function alterarPuestos(){
     let selectJer = document.getElementById("newPriv");
     let selectDiv = document.getElementById("newDiv");
@@ -15,13 +16,13 @@ function alterarPuestos(){
             selectJer.options[2] = null;
             break;
         case "Dirección general":
-            let directivo =new Option("Directivo","2");
-            selectJer.options[1] = directivo;
+            let directivoprima =new Option("Directivo","2");
+            selectJer.options[1] = directivoprima;
             selectJer.options[2] = null;
             break;
         case "DirecciÃ³n general":
-            let directivo =new Option("Directivo","2");
-            selectJer.options[1] = directivo;
+            let directivobiprima =new Option("Directivo","2");
+            selectJer.options[1] = directivobiprima;
             selectJer.options[2] = null;
             break;
         case "0":
@@ -37,12 +38,5 @@ function alterarPuestos(){
     }
     selectJer.style.display = 'block';
 }
-
-function habilitarCampo(ide){
-    let campo = document.getElementById(ide);
-    campo.disabled = !campo.disabled;
-    return false;
-}
-
 
 

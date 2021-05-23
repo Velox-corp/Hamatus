@@ -6,7 +6,6 @@
 
 package MDistribucion.Servlets;
 
-import MDistribucion.Clases.EUsuarioEquipo;
 import MDistribucion.Clases.Equipo;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,10 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  * Sevlet para ejecutar función de: 
  * @author Armando Jarillo
  */
-public class editNombreEquipo extends HttpServlet {
+public class cambioNameE extends HttpServlet {
    
-    
-
+   
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
@@ -71,6 +69,6 @@ public class editNombreEquipo extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

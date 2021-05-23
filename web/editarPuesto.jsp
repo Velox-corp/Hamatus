@@ -57,15 +57,22 @@
             <div class='col-md-12 text-center'>
                 <h3>Detalle de empleado de <strong><%=empleado.getAppat()%> <%=empleado.getApmat()%> <%=empleado.getNombre()%>.</strong></h3>
             </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-12 text-center'>
+                <article class="text-secondary"><strong class="text-danger">Nota importante:</strong> El cambio de puesto, pese a que es una acción permitida, debido a las diversas interacciones del sistema cNota importanteon el usuario a partir del tipo de usuario y su división, es una acción desaconsejada a menos de que se se vaya a cambiar los detalles de una cuenta recien creada</article>
+            </div>
         </div> <br>
         <div class="row align-items-center justify-content-center">
             <div class="col-md-2"></div>
             <form class='col-md-8' method="POST" role='form' action='cambioDePuesto'>
                 <input type="hidden" value="<%=empleado.getIDUsuarioE()%>" name='ideUserCambio'>
+                <input type="hidden" value="<%=empleado.getiD_Division()%>" name='ideDivOld'>
+                <input type="hidden" value="<%=empleado.getiD_cat_priv()%>" name='idCatOld'>
                 <div class='row'>
                     <div class='col-md-6 align-items-center'>
                         <p>División actual: <input type='text' id='oldPuesto' value='<%=Division.traducirID(empleado.getiD_Division())%>' readonly='readonly'></p>
-                        <button onclick="return habilitarCampo('newDiv')" class='btn btn-info' type="button">
+                        <button onclick="habilitarCampo('newDiv')" class='btn btn-info' type="button">
                             Hacer cambio de división
                         </button><br>
                         <select id='newDiv' name='newDiv' readonly='readonly'onchange='return alterarPuestos()' disabled>
@@ -78,7 +85,7 @@
                     </div>
                     <div class="col-md-6 align-items-center">
                         <p>Privilegios actulales: <input type='text' id='oldPriv' value='<%=CatPuestos.traducirID(empleado.getiD_cat_priv())%>' readonly='readonly'></p>
-                        <button onclick="return habilitarCampo('newPriv')" class='btn btn-info' type="button">
+                        <button onclick="habilitarCampo('newPriv')" class='btn btn-info' type="button">
                             Hacer cambio de privilegios
                         </button>
                         <select id='newPriv' name='newPriv' readonly='readonly' disabled>
