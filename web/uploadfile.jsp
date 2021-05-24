@@ -91,8 +91,8 @@
                         </div>
                         <label for="pass">Agrege una contraseña al archivo</label>
                         <input class="form-control" name="pass" type="password" placeholder="Inserte contraseña" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
-                        <label for="pass">Agrege una ruta al archivo (de no insertar la ruta solo se guardara en la carpeta principal)</label>
-                        <input class="form-control" name="q" type="text" placeholder="Inserte ruta" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" minlength="2" maxlength="40">
+                        <label for="q">Agrege una ruta al archivo (de no insertar la ruta solo se guardara en la carpeta principal)</label>
+                        <input class="form-control" name="q" type="text" placeholder="/ejemplo" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" minlength="2" maxlength="40">
                         <label for="id_tipo_acceso">Elija tipo acceso</label>
                         <select class="form-control" name="id_tipo_acceso">
                             <%
@@ -111,17 +111,6 @@
                         <select class="form-control" name="tipo_archivo">
                             <option>Digital</option>
                             <option>Escaneado</option>
-                        </select>
-                        <label for="id_e">Elija el equipo al que quiere subir el archivo</label>
-                        <select class="form-control" name="id_e">
-                            <%
-                                ArrayList<Equipo> listaequipos = Equipo.obtenerEquipos(usuario.getiD_Division());
-                                for (Equipo eqq: listaequipos) {
-                                %>
-                                <option><%= eqq.getIDEquipo() %>.<%= eqq.getNombre() %></option>
-                                <%
-                                }
-                            %>
                         </select>
                         <label for="id_cat_clasif_doc">Seleccione si quiere que este archivo sea favorito</label>
                         <select class="form-control" name="id_cat_clasif_doc">

@@ -109,8 +109,10 @@ public class downloadFile extends HttpServlet {
         
         
         int ID_equipo = Integer.parseInt(request.getParameter("e"));
+        String q = request.getParameter("q");
         
-        String filePath = request.getServletContext().getRealPath("/archivos/" + ID_equipo);
+        String filePath = request.getServletContext().getRealPath("/archivos/"
+                + ID_equipo + "/" + q);
         String fileName = request.getParameter("fileName");
         filePath += ("/"+fileName);
         

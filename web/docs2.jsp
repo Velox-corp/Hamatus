@@ -284,7 +284,8 @@
                                                     <tr>
                                                     <!--Nombre del archivo-->
                                                     <td>
-                                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>" 
+                                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>
+                                                           &fileName=<%=file.getName()%>&q=<%= query %>"
                                                            target="_top" data-toggle="tooltip" 
                                                            title="Descargar" id="<%=file.getAbsolutePath()%>"
                                                            ><%= list[i] %></a>
@@ -294,7 +295,8 @@
                                                         <center>
                                                         <a target="_top" data-toggle="tooltip" 
                                                             title="Modificar" 
-                                                            href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>&e=<%= ddoc.getEquipo_ID_Equipo() %>">
+                                                            href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>
+                                                            &e=<%= ddoc.getEquipo_ID_Equipo() %>&q=<%= query %>">
                                                         <i class="fas fa-edit text-dark"></i>
                                                         </a>
                                                         </center>
