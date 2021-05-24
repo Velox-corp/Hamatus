@@ -229,6 +229,7 @@ public class uploadFile extends HttpServlet {
                                     while ((read = filecontent.read(bytes)) != -1) {
                                         outs.write(bytes, 0, read);
                                     }
+                                    
 
                                     if (pass.equals(folio)) {
                                         response.sendRedirect("docs2.jsp?flag=true_pass&pass="+pass);
@@ -240,11 +241,16 @@ public class uploadFile extends HttpServlet {
                                     System.out.println("Algo de que no encontro el archivo"
                                             + " o el folder");
                                     System.out.println(fne.getMessage());
+                                    System.out.println("Basicamente no existe el folder");
                                 } finally {
                                     System.out.println("Aver aver aver que demonios esta pasando");
-                                    outs.close();
-                                    filecontent.close();
-                                    writer.close();
+                                    if (outs != null) {
+                                        outs.close();
+                                        filecontent.close();
+                                        writer.close();
+                                    }else if(outs==null){
+                                        response.sendRedirect("uploadfile.jsp?flag=fol_noexist");
+                                    }
                                 }
                             }else{
                                 System.out.println("Todo mal en ddoc unu");

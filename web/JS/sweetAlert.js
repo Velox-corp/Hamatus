@@ -275,6 +275,12 @@ window.onload = function(){
             title:"El nombre del folder ya esta ocupado",
             icon:'warning'
         });
+    }else if(getParameterByName('flag') == 'fol_noexist'){
+        Swal.fire({
+            title:"No existe el folder que solicito",
+            text:"Porfavor escribir correctamente el nombre del folder, agregue un '/' a cada directorio",
+            icon:'error'
+        });
     }
 }
 
