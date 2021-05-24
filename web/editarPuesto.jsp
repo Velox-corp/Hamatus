@@ -60,14 +60,14 @@
         </div>
         <div class='row'>
             <div class='col-md-12 text-center'>
-                <article class="text-secondary"><strong class="text-danger">Nota importante:</strong> El cambio de puesto, pese a que es una acción permitida, debido a las diversas interacciones del sistema cNota importanteon el usuario a partir del tipo de usuario y su división, es una acción desaconsejada a menos de que se se vaya a cambiar los detalles de una cuenta recien creada</article>
+                <article class="text-secondary"><strong class="text-danger">Nota importante:</strong> El cambio de puesto, pese a que es una acción permitida, debido a las diversas interacciones del sistema con el usuario a partir del tipo de usuario y su división, es una acción desaconsejada a menos de que se se vaya a cambiar los detalles de una cuenta recien creada</article>
             </div>
         </div> <br>
         <div class="row align-items-center justify-content-center">
             <div class="col-md-2"></div>
             <form class='col-md-8' method="POST" role='form' action='cambioDePuesto'>
                 <input type="hidden" value="<%=empleado.getIDUsuarioE()%>" name='ideUserCambio'>
-                <input type="hidden" value="<%=empleado.getiD_Division()%>" name='ideDivOld'>
+                <input type="hidden" value="<%=empleado.getiD_Division()%>" name='idDivOld'>
                 <input type="hidden" value="<%=empleado.getiD_cat_priv()%>" name='idCatOld'>
                 <div class='row'>
                     <div class='col-md-6 align-items-center'>

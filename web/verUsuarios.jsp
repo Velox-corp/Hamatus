@@ -12,10 +12,12 @@
     boolean obtencionAdecuada = true;
     String redirect = "";
     ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
+    ArrayList<Division> divs = new ArrayList<Division>();
     try{
         sesion = request.getSession();
         user = (UsuarioEmpleado) sesion.getAttribute("usuario");
         Empresa emp = (Empresa) sesion.getAttribute("empresa");
+        
         if(user == null || emp == null){
             obtencionAdecuada = false;
             redirect = "inicio_sesion.jsp";
@@ -37,6 +39,7 @@
                 default:
                     break;
             }
+            divs = Division.obtenerDivisiones(emp.getIDEmpresa());
         }
     }catch(Exception e){
         e.getMessage();
@@ -91,7 +94,17 @@
                                 <td><%=empleado.getNombre()%></td>
                                 <td><%=empleado.getFechaNacimiento()%></td>
                                 <td><%=empleado.getCorreo()%></td>
-                                <td><%=Division.traducirID(empleado.getiD_Division())%></td>
+                                <td>
+                                    <% for (int j = 0; j < divs.size(); j++) { 
+                                        Division div = divs.get(j);
+                                        if(div.getId_Division() == empleado.getiD_Division()){
+                                    %>
+                                            <%=div.getNombre()%>
+                                    <%      break;
+                                        }
+                                       } %>            
+                                    
+                                </td>
                                 <td><%=CatPuestos.traducirID(empleado.getiD_cat_priv())%></td>
                                 <td class='justify-content-center'>
                                     <a htef="#" class="active text-primary">Enviar mensaje</a>

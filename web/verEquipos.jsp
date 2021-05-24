@@ -129,7 +129,7 @@
                                         </a>
                                         </div>
                                         <div class='card-footer text-center'>
-                                            <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>'>
+                                            <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>' onclick="return confirmationEquipo()>
                                                 Eliminar equipo
                                             </a>
                                         </div>

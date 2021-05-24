@@ -348,7 +348,7 @@ function valida(f) {
 
 function confirmation() 
      {
-        if(confirm("ADVERTENCIA: Si eliminas esta division, se eliminarán los demás datos relacionados con este, ¿Deseas continuar?"))
+        if(confirm("ADVERTENCIA: Si eliminas esta division, se eliminarán los demás datos relacionados con este, como los son equipos y usuarios pertenecientes a este. ¿Deseas continuar?"))
 	{
 	   return true;
 	}
@@ -357,3 +357,14 @@ function confirmation()
 	   return false;
 	}
      }
+     
+function confirmationEquipo(){
+    if(confirm("ADVERTENCIA: Eliminar un equipo de trabajo, borrará consigo todos los documentos, flujos de trabajo y mensajes relacionados a este. ¿Deseas continuar?"))
+	{
+	   return true;
+	}
+	else
+	{
+	   return false;
+	}
+}

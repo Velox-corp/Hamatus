@@ -57,7 +57,7 @@ public class iniciarSesion extends HttpServlet {
                 reintento = 0;
                 switch(usu.getiD_cat_priv()){
                     case 1:
-                        redirect = "verUsuarios.jsp"; //posiblemente cambia a estádisticas.
+                        redirect = "controlA?accion=home"; //posiblemente cambia a estádisticas. auque lo cambio a anuncios para evitar la sobrecarga de querys
                         break;
                     case 2:
                         redirect = "controlA?accion=home";

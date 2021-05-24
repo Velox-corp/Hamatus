@@ -580,6 +580,22 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE `addLiderDiv` (idU int, idDiv int)
+BEGIN
+	update usuario_empleado set ID_Division= idDiv, id_cat_privilegios = 3 where ID_Usuario_E = idU;
+	INSERT INTO e_usuario_sala (id_usuario, id_sala)
+    select usuario_empleado.ID_Usuario_E, sala_chat.idSala_chat from usuario_empleado inner join sala_chat
+	where ID_Usuario_E = idU and idSala_chat in (
+	select sala_chat.idSala_chat from sala_chat join e_usuario_sala on idSala_chat = id_sala
+	where id_usuario IN (select ID_Usuario_Empleado from e_usuario_equipo 
+		where ID_Equipo IN (select ID_Equipo from equipo where ID_Division = idDiv))
+	);
+END$$
+
+DELIMITER ;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
