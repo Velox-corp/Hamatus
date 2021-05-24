@@ -37,8 +37,10 @@ public class cambioDePuesto extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession sesion;
             String redirect;
-            int ideNewPuesto = 0;
-            int ideNewPrivilegio = 0;
+            int ideNewPuesto;
+            int ideOldPuesto;
+            int ideOldPrivilegio;
+            int ideNewPrivilegio;
             try{
                 sesion = request.getSession();
                 if(((UsuarioEmpleado)sesion.getAttribute("usuario")).getiD_cat_priv() > 2){
@@ -46,16 +48,23 @@ public class cambioDePuesto extends HttpServlet {
                 }else{
                     //aquí meter algo que traduzca las string de div y privilegios a ides
                     Empresa emp = (Empresa)sesion.getAttribute("empresa");
+                    ideOldPuesto = Integer.parseInt(request.getParameter("idDivOld"));
+                    ideOldPrivilegio = Integer.parseInt(request.getParameter("idCatOld"));
                     try{
                         ideNewPrivilegio = Integer.parseInt(request.getParameter("newPriv"));
                     }catch(NullPointerException | NumberFormatException npe){
-                        ideNewPrivilegio = 0;
+                        ideNewPrivilegio = ideOldPrivilegio;
                     }
-                    ideNewPuesto = Division.IDDivision(new Division(request.getParameter("newDiv")), emp.getIDEmpresa());
-                    if(ideNewPuesto == -1){
-                        ideNewPuesto = 0;
+                    try{
+                        ideNewPuesto = Division.IDDivision(new Division(request.getParameter("newDiv")), emp.getIDEmpresa());
+                        if(ideNewPuesto == -1){
+                            ideNewPuesto = ideOldPuesto;
+                        }
+                    }catch(NullPointerException | NumberFormatException npe){
+                        System.out.println("No jalo la div");
+                        ideNewPuesto = ideOldPuesto;
                     }
-                    if(UsuarioEmpleado.modPuestoEmpleado(Integer.parseInt(request.getParameter("ideUserCambio")), ideNewPuesto, ideNewPrivilegio)){
+                    if(UsuarioEmpleado.modPuestoEmpleado(Integer.parseInt(request.getParameter("ideUserCambio")), ideNewPuesto, ideNewPrivilegio, ideOldPuesto, ideOldPrivilegio)){
                         redirect = "verUsuarios.jsp";
                     }else{
                         redirect = "error.jsp";

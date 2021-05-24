@@ -47,9 +47,8 @@
 <html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         
-        <title>Edición de equipo <%=equipo.getNombre()%></title>
+        <title>Edición de equipo: <%=equipo.getNombre()%></title>
         
         <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
         
@@ -63,21 +62,36 @@
             <h3 class='text-info'>Datos del equipo</h3>
 	</div>
         <script src='JS/interaccionBotones.js'></script>
-            <div class="row">
+            <form action="cambioNameE" method="POST">
+                <div class="row">
+                <input type='hidden' name='idEquipo' value='<%=id_equipo%>'>
                     <div class="col-md-6 form-group">
                         <label for=nombreEquipo">
                             Nombre del equipo:
                         </label>
-                        <input type="text" id='nombreEquipo' name='nombregEquipo' value='<%=equipo.getNombre()%>' readonly="readonly" class="form-control">
-                        <button class='btn btn-info' onclick="return cambiarEstado('nombregEquipo')" style="margin-top: .5vw">Editar</button>
-                    </div>
+                        <input type="text" id='nombregEquipo' name='nombregEquipo' value='<%=equipo.getNombre()%>'
+                                readonly="readonly" class="form-control"
+                                onchange="return validarString(this, true, false)"
+                                ondrag="return validarString(this, true, false)"
+                                ondrop="return validarString(this, true, false)"
+                               >
+                        
+                        <button class='btn btn-info' type="button" onclick="cambiarEstado('nombregEquipo','divBtn')" style="margin-top: .5vw">Editar</button>
+                        
+                        </div>
                     <div class="col-md-6 form-group">
                         <label for='división'>
                             División correspondiente:
                         </label>
                         <input type="text" readonly="readonly" id='division' name='division' value='<%=Division.traducirID(equipo.getIDDivision())%>' class="form-control">
                     </div>
-            </div>
+                
+                    <div class="row" id="divBtn" hidden="hidden">
+                    <button class='btn btn-dark' type="submit">Cambiar nombre</button>
+                    </div>
+                
+                </div>
+            </form>
             <br>
             <div class="row">
                 <h3 class='text-info'>Empleados del equipo</h3>
@@ -152,6 +166,9 @@
             <div class="row">
                 <h3 class='text-info'>Empleados disponibles a añadir</h3>
             </div>
+            <div class="row">
+                <small class="text-secondary">Seleccione todos los empleados que quiera añadir y confirme la agregación de estos</small>
+            </div>
             <br>
             <form method='POST' action='addEmpleadosEquipo'>
                 <input type="hidden" name='maxUsers' value='<%=empleadosLibres.size()%>'>
@@ -223,7 +240,7 @@
                 </div>
                 <% } %> 
             <div class='row' style="margin-top: 1vw">
-                <button class='btn btn-dark' type="submit">Ejecutar cambios</button>
+                <button class='btn btn-dark' type="submit">Agregar usuarios</button>
             </div>
             </form><br>
         </div>

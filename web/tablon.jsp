@@ -67,10 +67,11 @@
                                 <label for="descripcion">Descripcion</label>
                                 <textarea type="text" class="form-control" id="descripciona" name="descripciona" 
                                           placeholder="Anuncio" required="required"
-                                          onchange="return validarStringLong(this)"
                                         ondrag="return validarStringLong(this)"
                                         ondrop="return validarStringLong(this)" 
-                                        onkeypress="return validarStringLong(this)"
+                                        onchange="return validarStringLong(this)"
+                                        onkeydown="return validarStringLongTecla(event,this)"
+                                        oninput="contadorCatacteres(event)"
                                         maxlength="200"></textarea>
                                 <span id="contador">0/200</span>
                             </div>

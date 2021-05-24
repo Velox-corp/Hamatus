@@ -60,7 +60,12 @@
                         break;
                     case 4: 
                         isAll = false;
-                        flujos = FlujoDeTrabajo.consultarFlujosEmpleado(EUsuarioEquipo.buscarEquipo(empleado.getIDUsuarioE()));
+                        int idEquipo = EUsuarioEquipo.buscarEquipo(empleado.getIDUsuarioE());
+                        if((idEquipo == 0) || idEquipo == -1 ){
+                           response.sendRedirect("MyEquipo.jsp");
+                        }
+                        flujos = FlujoDeTrabajo.consultarFlujosEmpleado(idEquipo);
+                        equipos.add(Equipo.obtenerEquipo(idEquipo));
                         break;
                     default:
                         
@@ -75,12 +80,26 @@
         
         <div class='row'>
             <div class='col-md-12 align-items-center'>
-                <h2 class="align-items-center text-center">Flujos de trabajo</h2>  
+                <h2 class="align-items-center text-center">Flujos de trabajo</h2> 
             </div>
         </div>
-        <br>
-        <main class='container'>
+        <main class='container margin-top-1rem'>
             
+        <% if(flujos.isEmpty()){ %>
+            <div class='row  justify-content-center'>
+                <div class='col-md-6 card align-items-center text-white' style="background-color: #2291C1">
+                    <h5 class='card-header text-capitalize'>¡No Hay Flujos de trabajo subidos!</h5>
+
+                    <div class='card-body'>
+                        <article class='card-text'>
+                            No se tienen flujos de trabajo subidos
+                        </article>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+            
+        
          <% if(isAll){
                 for (int j = 0; j < divisiones.size(); j++) {
                     Division d = divisiones.get(j);
@@ -90,7 +109,7 @@
                         FlujoDeTrabajo f = flujos.get(i);
                         if(e.getIDDivision() == d.getId_Division() && f.getIdEquipo() == e.getIDEquipo()){
                         %>
-                            <div class="card container-fluid">
+                            <div class="card">
                                 <div class="card-header text-white bg-dark h4 " >
                                     <div class='row text-center'>
                                         <span clas='col-md-12'><%=d.getNombre()%>: <%=e.getNombre()%></span>
@@ -145,7 +164,7 @@
                     for (int i = 0; i < flujos.size(); i++) {
                     FlujoDeTrabajo f = flujos.get(i);
                     if(e.getIDEquipo() == f.getIdEquipo()){ %>
-                        <div class="card container-fluid">
+                        <div class="card">
                             <div class="card-header text-white bg-dark h4 " >
                                 <div class='row text-center'>
                                     <span clas='col-md-12'><%=e.getNombre()%></span>
@@ -191,9 +210,8 @@
 
                         </div>
                         <br>
-                        <%  } %>  
-                        <br>
-                        <%}
+                        <%      }
+                            }
                         }
                             if(empleado.getiD_cat_priv() == 3 ) { 
                         %>

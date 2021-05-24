@@ -76,7 +76,7 @@ public class crearEmpresa extends HttpServlet {
             bufferValidaciones[4] = Validaciones.esEmail(correo);
             bufferValidaciones[5] = pass.equals(pass2);
             bufferValidaciones[6] = Validaciones.esString(nombreEmp, true, true);
-            bufferValidaciones[7] = Validaciones.esString(descripcion, true, true);
+            bufferValidaciones[7] = Validaciones.esStringLong(descripcion);
             bufferValidaciones[8] = Validaciones.esString(razon_social, true, true);
             String tyc = request.getParameter("tYc");
             if (tyc != null) {

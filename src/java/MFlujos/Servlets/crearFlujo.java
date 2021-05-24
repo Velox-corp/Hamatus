@@ -6,6 +6,7 @@
 
 package MFlujos.Servlets;
 
+import ClasesSoporte.Validaciones;
 import MFlujos.Clases.FlujoDeTrabajo;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
@@ -37,29 +38,48 @@ public class crearFlujo extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             HttpSession sesion = request.getSession();
-            boolean procesoCorrecto = false;
-            String redirect;
+            boolean procesoCorrecto = true;
+            boolean[] bufferValidaciones = new boolean[4];
+            String redirect = "";
             try{
                 String titulo = request.getParameter("titulof");
                 String contenido = request.getParameter("descripcionf");
                 String fecha = request.getParameter("fecha_l");
                 String hora = request.getParameter("hora_l");
-                System.out.println(request.getParameter("equipo"));
+                System.out.println(hora);
+                bufferValidaciones[0] = Validaciones.esString(titulo, true, false);
+                bufferValidaciones[1] = Validaciones.esStringLong(contenido);
+                bufferValidaciones[2] = Validaciones.esFecha(fecha);
+                bufferValidaciones[3] = Validaciones.esHora(hora);
+                for (int i = 0; i < bufferValidaciones.length; i++) {
+                    if(!bufferValidaciones[i]){
+                        procesoCorrecto = false;
+                        redirect = "nuevoFlujo.jsp";
+                        System.out.println("Error en la validación" +(i+1));
+                        break;
+                    }
+                }
                 int idEquipo = Integer.parseInt(request.getParameter("equipo"));
-                if(idEquipo != 0){
+                if(idEquipo != 0 && procesoCorrecto){
                     FlujoDeTrabajo flujo = new FlujoDeTrabajo(titulo, contenido, idEquipo, fecha, hora);
-                procesoCorrecto = flujo.ingresarFlujo(flujo);
+                    procesoCorrecto = flujo.ingresarFlujo(flujo);
+                    if(!procesoCorrecto){
+                        redirect = "error.jsp";
+                    }
+                }else{
+                    redirect = "nuevoFlujo.jsp";
                 }
             }catch(Exception e){
                 e.getMessage();
                 e.printStackTrace();
                 procesoCorrecto = false;
-            }
-            if(!procesoCorrecto){
                 redirect = "error.jsp";
-            }else{
-                redirect = "verFlujosTrabajo.jsp";
             }
+            if(procesoCorrecto){
+                redirect = "verFlujosTrabajo.jsp";
+               
+            }
+            
             response.sendRedirect(redirect);
             
             

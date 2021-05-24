@@ -79,7 +79,16 @@ public class agregarEmpleado extends HttpServlet {
                     UsuarioEmpleado newEmpleado = new UsuarioEmpleado(nombreUser, appat, apmat, f_n, correo, pass, Division.IDDivision(divInsert, emp.getIDEmpresa()), jerarquia, null);
                     proceso_correcto = (UsuarioEmpleado.ingresarEmpleado(newEmpleado));
                     if(proceso_correcto){
-                        redirect = "verUsuarios.jsp";
+                        if(jerarquia == 3){
+                            proceso_correcto = UsuarioEmpleado.addLiderDivCons(Division.IDDivision(divInsert, emp.getIDEmpresa()));
+                            if(proceso_correcto){
+                                redirect = "verUsuarios.jsp";
+                            }else{
+                                redirect = "error.jsp";
+                            }
+                        }else{
+                            redirect = "verUsuarios.jsp";
+                        }
                     }else{
                         redirect = "error.jsp";
                     }

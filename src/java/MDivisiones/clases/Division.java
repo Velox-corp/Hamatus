@@ -228,7 +228,9 @@ public class Division implements Serializable{
             try {
                 Division.ps.close();
                 Division.con.close();
-                rs.close();
+                if(idDiv !=-1){
+                    rs.close();
+                }
                 Division.query = "";
             } catch (SQLException ex) {
                 Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);

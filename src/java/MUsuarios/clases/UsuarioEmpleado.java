@@ -6,6 +6,7 @@
 package MUsuarios.clases;
 
 import ClasesSoporte.Conexion;
+import MDistribucion.Clases.EUsuarioEquipo;
 import MSeguridad.Clases.AES;
 import java.io.Serializable;
 import java.sql.CallableStatement;
@@ -54,6 +55,7 @@ public class UsuarioEmpleado implements Serializable {
     private static String q = "";
     private static PreparedStatement ps = null;
     private static ResultSet rs = null;
+    private static CallableStatement cs = null;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -287,35 +289,163 @@ public class UsuarioEmpleado implements Serializable {
     
     /**
      * Meotdo para cambiar del lado de administracion las cuentas de los Usuarios, donde se pueden cambiar, la divsión, el privilegio o ambos
+     * Este método realiza demasiadas consideraciones, y erstas se hacen cada vez más grandes y largas entre más tiempo se use la aplicación
+     * por lo que, este método tratará de trabajar todos los casos posibles
      * @param idUsuario El ide del usuario a cambiar el puesto
-     * @param idDiv El ide del la división a cambiar, ingresar cero si no se va a cambiar
-     * @param idPriv El ide del privilegio a cambiar, ingresar cero si no se va a cambiar
+     * @param idDiv El ide del la división a establecer
+     * @param idPriv El ide del privilegio a establecer
+     * @param idOldDiv El ide de la división actual
+     * @param idOldPriv El ide del privilegio actual
      * @return 
      */
-    public static boolean modPuestoEmpleado(int idUsuario, int idDiv, int idPriv){
+    public static boolean modPuestoEmpleado(int idUsuario, int idDiv, int idPriv, int idOldDiv, int idOldPriv){
         boolean procesoCorrecto = true;
+        int tipeStatement = 0; //1-Prepared. 2-Callable
         try{
+            System.out.println("Modificación de puesto");
             con = Conexion.obtenerConexion();
-            if(idDiv != 0 && idPriv != 0){
-                q = "UPDATE usuario_empleado SET ID_Division = ?, id_cat_privilegios = ? WHERE ID_Usuario_E = ?";
-                ps = con.prepareStatement(q);
-                ps.setInt(1, idDiv);
-                ps.setInt(2, idPriv);
-                ps.setInt(3, idUsuario);
-            }else if(idDiv != 0 && idPriv == 0){
-                q = "UPDATE usuario_empleado SET ID_Division = ? WHERE ID_Usuario_E = ?";
-                ps = con.prepareStatement(q);
-                ps.setInt(1, idDiv);
-                ps.setInt(2, idUsuario);
-            }else if(idDiv == 0 && idPriv != 0){
-                q = "UPDATE usuario_empleado SET id_cat_privilegios = ? WHERE ID_Usuario_E = ?";
-                ps = con.prepareStatement(q);
-                ps.setInt(1, idPriv);
-                ps.setInt(2, idUsuario);
-            }else if(idDiv == 0 && idPriv == 0){
+            boolean sameDiv = idDiv == idOldDiv;
+            boolean samePriv = idPriv == idOldPriv;
+            /*a partir de aquí, hay que manejar a partir de que acción se va a hacer
+            primero, vamos a ejecutar cambios a partir si se cambia el puesto, y luego si se cambia solo la división
+            tambien considerando el puesto anterior y el nuevo
+            */
+            if(sameDiv){ //estamos en la misma división, por lo que las acciones aquí son limitadas, solo se puede bajar o subir en el misma división
+                switch(idOldPriv){ //solo se puede cambiar de lider de diviisón a empleado general y viceversa
+                    case 3: //lider de división baja a empleado general
+                        //se tiene que remover de todas las salas de equipo
+                        tipeStatement= 2;
+                        q = "{call deleteLiderDiv(?,?,?)}";
+                        cs = con.prepareCall(q);
+                        cs.setInt(1, idUsuario);
+                        cs.setInt(2, idDiv);
+                        cs.setInt(3, idPriv);
+                        break; 
+                    case 4: //un empleado sube a lider de división
+                        // se saca de su equipo
+                        boolean hayE = EUsuarioEquipo.buscarEquipo(idUsuario) != -1;
+                        if(EUsuarioEquipo.removerUsuario(idUsuario) && hayE){ //si tiene equipo, hay que sacarlo primero
+                           //y se ingresa como un lider de división, teniendo acceso a los chats de todos los equipos de esa división
+                            tipeStatement= 2; 
+                            q = "{call  addLiderDiv(?,?)}";
+                            cs = con.prepareCall(q);
+                            cs.setInt(1, idUsuario);
+                            cs.setInt(2, idDiv);
+                            }else if(!hayE){
+                                tipeStatement= 2; 
+                                q = "{call  addLiderDiv(?,?)}";
+                                cs = con.prepareCall(q);
+                                cs.setInt(1, idUsuario);
+                                cs.setInt(2, idDiv);
+                            }else{
+                                    procesoCorrecto = false;
+                            }
+                        break;
+                }
+            }else{//hay cambio de división seguro
+                switch(idOldPriv){
+                    case 2://directivo, este no tiene muchas complicaciones
+                        switch(idPriv){ //hayq que ver a donde lo van a segradar
+                            case 3: //lider de división, hay que ejecutar ciertas cosas
+                                tipeStatement= 2; 
+                                q = "{call  addLiderDiv(?,?)}";
+                                cs = con.prepareCall(q);
+                                cs.setInt(1, idUsuario);
+                                cs.setInt(2, idDiv);
+                                break;
+                            case 4: //empleado general, es directo
+                                tipeStatement = 1;
+                                q = "UPDATE usuario_empleado set id_cat_privilegios = 4, ID_Division = ? where ID_Usuario_E = ?";
+                                ps = con.prepareStatement(q);
+                                ps.setInt(1, idDiv);
+                                ps.setInt(2, idUsuario);
+                                break;
+                        }
+                        break;
+                    case 3: //lider división, hay que limpiarlo de las salas antes que nada, así que vamos a ejecutar una actualización primero
+                        String subq = "{call deleteLiderDiv(?,?,?)}";
+                        cs = con.prepareCall(subq);
+                        cs.setInt(1, idUsuario);
+                        cs.setInt(2, idDiv);
+                        cs.setInt(3, idPriv);
+                        if(cs.executeUpdate() == 1){
+                            switch(idPriv){
+                            case 2:
+                                tipeStatement = 1;
+                                q = "UPDATE usuario_empleado set id_cat_privilegios = 2, ID_Division = ? where ID_Usuario_E = ?";
+                                ps = con.prepareStatement(q);
+                                ps.setInt(1, idDiv);
+                                ps.setInt(2, idUsuario);
+                                break;
+                            
+                            case 3:
+                                tipeStatement= 2; 
+                                q = "{call  addLiderDiv(?,?)}";
+                                cs = con.prepareCall(q);
+                                cs.setInt(1, idUsuario);
+                                cs.setInt(2, idDiv);
+                                break;
+                            case 4:
+                                tipeStatement = 1;
+                                q = "UPDATE usuario_empleado set id_cat_privilegios = 4, ID_Division = ? where ID_Usuario_E = ?";
+                                ps = con.prepareStatement(q);
+                                ps.setInt(1, idDiv);
+                                ps.setInt(2, idUsuario);
+                                break;
+                            }
+                        }else{
+                            procesoCorrecto = false;
+                        }
+                        break;
+                    case 4: //empleado general
+                        boolean hayE = EUsuarioEquipo.buscarEquipo(idUsuario) != -1;
+                        if( (EUsuarioEquipo.removerUsuario(idUsuario) && hayE) || !hayE ){
+                            switch(idPriv){
+                                case 2:
+                                    tipeStatement = 1;
+                                    q = "UPDATE usuario_empleado set id_cat_privilegios = 2, ID_Division = ? where ID_Usuario_E = ?";
+                                    ps = con.prepareStatement(q);
+                                    ps.setInt(1, idDiv);
+                                    ps.setInt(2, idUsuario);
+                                    break;
+
+                                case 3:
+                                    tipeStatement= 2; 
+                                    q = "{call  addLiderDiv(?,?)}";
+                                    cs = con.prepareCall(q);
+                                    cs.setInt(1, idUsuario);
+                                    cs.setInt(2, idDiv);
+                                    break;
+                                case 4:
+                                    tipeStatement = 1;
+                                    q = "UPDATE usuario_empleado set id_cat_privilegios = 4, ID_Division = ? where ID_Usuario_E = ?";
+                                    ps = con.prepareStatement(q);
+                                    ps.setInt(1, idDiv);
+                                    ps.setInt(2, idUsuario);
+                                    break;
+                                }
+                        }else{
+                            procesoCorrecto = false;
+                        }
+                        break;
+                        
+                }
+            }
+            if(sameDiv && samePriv){
                 return false;
             }
-            procesoCorrecto = (ps.executeUpdate() == 1);
+            if(procesoCorrecto){
+                switch(tipeStatement){
+                    case 1:
+                        procesoCorrecto = (ps.executeUpdate() == 1);
+                        break;
+                    case 2:
+                        procesoCorrecto = (cs.executeUpdate() == 1);
+                    case 0:
+                        procesoCorrecto = false;
+                }
+            }
+            System.out.println("Cambio de puesto: " + procesoCorrecto);
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             procesoCorrecto = false;
@@ -323,7 +453,14 @@ public class UsuarioEmpleado implements Serializable {
             try {
                 con.close();
                 q = "";
-                ps.close();
+                switch(tipeStatement){
+                    case 1:
+                        ps.close();
+                        break;
+                    case 2:
+                        cs.close();
+                        break;
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -661,6 +798,48 @@ public class UsuarioEmpleado implements Serializable {
         return ides;
     }
     
+    /**
+     * Mpetod para insertar corractemente a un lider de división
+     * @param IDDivision el ide de la división a la que pertenece
+     * @return true si se termino de ingresar el lider de división
+     */
+    public static boolean addLiderDivCons(int IDDivision) {
+        try{
+            con = Conexion.obtenerConexion();
+            int userMax = 0;
+            String subq = "SELECT MAX(ID_Usuario_E) AS maxuser from Usuario_empleado"; //este método se ejecuta poco después de ingresar un usuario
+            ps = con.prepareStatement(subq);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                System.out.println("A meter en salas de chat");
+                userMax = rs.getInt("maxuser");
+                ps.close();
+                q = "call addLiderDiv(?,?)";
+                cs = con.prepareCall(q);
+                cs.setInt(1, userMax);
+                cs.setInt(2, IDDivision);
+                return cs.executeUpdate() == 1;
+            }else{
+                System.out.println("No max user para lider div");
+                return false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No jalo el query");
+            return false;
+        }finally{
+            try {
+                con. close();
+                
+                cs.close();
+                rs.close();
+                q = "";
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     
     public Integer getIDUsuarioE() {
         return iDUsuarioE;

@@ -1,9 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
+/**
+ * Método para cambiar al atributo "readonly" de un <input>
+ * @param {type} nombreInput
+ * @param {type} nombrediv
+ * @returns {Boolean}
+ */
 function cambiarEstado(nombreInput){
     let input = document.getElementById(nombreInput);
     try{
@@ -14,4 +15,24 @@ function cambiarEstado(nombreInput){
         return false;
     }
     return false;
+}
+/**
+ * Método para cambiar al atributo "readonly" de un <input>
+ * y la visibilidad o el "hidden" de un <div>
+ * @param {type} nombreInput
+ * @param {type} nombrediv
+ * @returns {Boolean}
+ */
+function cambiarEstado(nombreInput, nombrediv){
+    let input = document.getElementById(nombreInput);
+    let div = document.getElementById(nombrediv);
+    try{
+        input.readOnly = input.readOnly==false ? true : false;
+    }catch (exception) {
+        input.readOnly= true;
+    } finally {
+        div.style.display = 'block';
+        div.hidden = false;
+    }
+    return true;
 }

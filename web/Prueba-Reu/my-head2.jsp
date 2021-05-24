@@ -102,10 +102,13 @@
                             <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
                             <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
-                                    <li><a href="Administrador_new.jsp" class='sub' >Agregar Empleados</a></li>
+                                    <li><a href="Administrador_new.jsp" class='sub'>Agregar Empleados</a></li>
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
+                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
+                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
+                            
                         </ul>
                     </nav>
                 <%  break;
@@ -127,6 +130,8 @@
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
+                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
+                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
                         </ul>
                     </nav>
                 <%  break;
@@ -148,6 +153,8 @@
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
+                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
+                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
                         </ul>
                     </nav>
                 <%  break;
@@ -163,6 +170,7 @@
                                 </ul>
                             </li>
                             <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
+                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
                         </ul>
                     </nav>
                     <% break;

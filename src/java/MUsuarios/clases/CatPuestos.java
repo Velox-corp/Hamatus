@@ -59,23 +59,22 @@ public class CatPuestos implements Serializable {
     }
     
     public static String traducirID(int idCat) {
-        try{
-            Connection con = Conexion.obtenerConexion();
-            String q = "SELECT tit_permiso from privilegios_jerarquia_u where idprivilegio = ?";
-            PreparedStatement ps = con.prepareStatement(q);
-            ps.setInt(1, idCat);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                
-                return rs.getString("tit_permiso");
-                
-            }else{
-                return null;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CatPuestos.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        String ret = "";
+        switch(idCat){
+            case 1:
+                ret = "Administrador";
+                break;
+            case 2:
+                ret = "Directivo";
+                        break;
+            case 3:
+                ret = "Lider de división";
+                break;
+            case 4:
+                ret = "Empleado general";
+                break;
         }
+        return ret;
     }
     @Id
     @Basic(optional = false)
