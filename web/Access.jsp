@@ -69,6 +69,7 @@
                     <input name="pass" type="password" class="form-control" placeholder="Ingrese contraseña" oncopy="return false" onpaste="return false">
                     <input name="fileName" type="text" hidden="true" value="<%= request.getParameter("fileName") %>">
                     <input name="e" type="text" hidden="true" value="<%= request.getParameter("e") %>">
+                    <input name="q" type="text" hidden="true" value="<%= request.getParameter("q") %>">
                     <br>
                     <div class="justify-content-center">
                         <button type="" class="btn btn-dark">

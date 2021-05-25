@@ -303,7 +303,7 @@
                                                     <td>
                                                         <center>
                                                         <a target="_top" data-toggle="tooltip" title="Compartir" 
-                                                            onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>')">
+                                                           onclick="copy_link('Access.jsp?fileName=<%=file.getName()%>&e=<%= ddoc.getEquipo_ID_Equipo() %>&q=<%= query %>')">
                                                             <i class="fas fa-share text-dark"></i>
                                                         </a>
                                                         </center>

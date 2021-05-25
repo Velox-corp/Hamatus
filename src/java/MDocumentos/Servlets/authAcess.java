@@ -89,13 +89,14 @@ public class authAcess extends HttpServlet {
         }
         String pass = request.getParameter("pass");
         String fileName = request.getParameter("fileName");
+        String q = request.getParameter("q");
         int e = Integer.parseInt(request.getParameter("e"));
         D_Documento ddoc = new D_Documento();
         try {
             ddoc.ConsultarD_Doc(e, fileName);
             if (pass.equals(ddoc.getPass())) {
                 System.out.println("Ok esta todo bien");
-                response.sendRedirect("downloadFile?e="+e+"&fileName="+fileName);
+                response.sendRedirect("downloadFile?e="+e+"&fileName="+fileName+"&q="+q);
             }else{
                 System.out.println("Vaya vaya");
                 response.sendRedirect("Access.jsp?flag=wrong_pass&e="+e+"&fileName="+fileName);

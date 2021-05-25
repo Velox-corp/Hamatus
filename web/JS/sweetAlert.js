@@ -25,7 +25,7 @@ function confirmation_dir(){
 }
 
 function too_w(){
-    var titulo = decode_utf8("Su archivo pesa más de 15Mb");
+    var titulo = decode_utf8(encode_utf8("Su archivo pesa más de 10Mb"));
     Swal.fire({
         title: titulo,
         text:'Contacte al administrador',
