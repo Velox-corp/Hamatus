@@ -80,12 +80,14 @@
                     </select>
                     <input name="dictionary" value="<%= list %>" hidden="true">
                     <input name="nombre" value="<%= request.getParameter("nombre") %>" hidden="true">
+                    <input name="q" value="<%= request.getParameter("q") %>" hidden="true">
+                    <input name="idoc" value="<%= request.getParameter("idoc") %>" hidden="true">
                     <br>
                     <div class="justify-content-center">
                         <button type="" class="btn btn-primary">
                             Actualizar Archivo
                         </button>
-                        <a href="docs.jsp" class="btn btn-primary">Volver</a>
+                        <a href="docs2.jsp" class="btn btn-primary">Volver</a>
                     </div>
                   </form>
               </div>

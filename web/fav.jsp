@@ -74,11 +74,11 @@
                 <!--Aqui adentro vendran los botones de favoritos y documentos-->
                 <!--Caray porque no me salen como los botones de arriba UnU ni modo-->
                 <div class="btn-group-vertical">
-                  <a type="button" class="btn btn-dark">
+                    <a type="button" class="btn btn-dark" href="fav.jsp">
                       Ver favoritos
                       <i class="fas fa-star text-white"></i>
-                  </a>
-                  <a type="button" class="btn btn-dark">
+                    </a>
+                    <a type="button" class="btn btn-dark" href="docs2.jsp">
                       Ver archivos
                       <i class="fas fa-folder-open text-white"></i>
                   </a>

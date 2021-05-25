@@ -65,8 +65,6 @@
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        String ruta_j = request.getServletContext().getRealPath("/archivos/"
-                            +String.valueOf(IDequipo)+"/"+(query != null ? query : ""));
         %>
         <div class="row margin-top-1rem">
             <div class="col-md-1"></div>
@@ -74,18 +72,18 @@
                 <!--Aqui adentro vendran los botones de favoritos y documentos-->
                 <!--Caray porque no me salen como los botones de arriba UnU ni modo-->
                 <div class="btn-group-vertical">
-                  <a type="button" class="btn btn-dark">
+                    <a type="button" class="btn btn-dark" href="fav.jsp">
                       Ver favoritos
                       <i class="fas fa-star text-white"></i>
-                  </a>
-                  <a type="button" class="btn btn-dark">
-                      Ver archivos
-                      <i class="fas fa-folder-open text-white"></i>
-                  </a>
+                    </a>
+                    <a type="button" class="btn btn-dark" href="docs2.jsp">
+                        Ver archivos
+                        <i class="fas fa-folder-open text-white"></i>
+                    </a>
                     <a type="button" class="btn btn-dark" onclick="createFol()">
-                      Crear nueva carpeta
-                      <i class="fas fa-folder-plus text-white"></i>
-                  </a>
+                        Crear nueva carpeta
+                        <i class="fas fa-folder-plus text-white"></i>
+                    </a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -128,6 +126,8 @@
                             ArrayList<Equipo> equipos = Equipo.obtenerEquipos(usuario.getiD_Division());
                             
                             for(Equipo eq: equipos){
+                                String ruta_j = request.getServletContext().getRealPath("/archivos/"
+                                                    +String.valueOf(eq.getIDEquipo())+"/"+(query != null ? query : ""));
                                 if (ruta_j != null) {        
                                     java.io.File file_j;
                                     java.io.File dir_j = new java.io.File(ruta_j);
@@ -147,7 +147,7 @@
                         <tr>
                             <!--Nombre del archivo-->
                             <td>
-                                <a href="downloadFile?e=<%= eq.getIDEquipo() %>&fileName=<%=file_j.getName()%>" 
+                                <a href="downloadFile?e=<%= eq.getIDEquipo() %>&fileName=<%=file_j.getName()%>&q=<%= query %>" 
                                    target="_top" data-toggle="tooltip" 
                                    title="Descargar" id="<%=file_j.getAbsolutePath()%>"
                                    ><%=list_j[i]%></a>
@@ -295,8 +295,7 @@
                                                         <center>
                                                         <a target="_top" data-toggle="tooltip" 
                                                             title="Modificar" 
-                                                            href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>
-                                                            &e=<%= ddoc.getEquipo_ID_Equipo() %>&q=<%= query %>">
+                                                            href="mod_docs.jsp?pass=<%= ddoc.getPass() %>&nombre=<%= ddoc.getNombre() %>&e=<%= ddoc.getEquipo_ID_Equipo() %>&q=<%= query %>&idoc=<%= ddoc.getId_MDocumento() %>">
                                                         <i class="fas fa-edit text-dark"></i>
                                                         </a>
                                                         </center>

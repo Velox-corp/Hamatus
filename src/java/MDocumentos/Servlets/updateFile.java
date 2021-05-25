@@ -76,11 +76,9 @@ public class updateFile extends HttpServlet {
                 }
                 String pass   = request.getParameter("pass");
                 String nombre = request.getParameter("nombre");
-                Integer es_evidencia_flujo = Integer.getInteger(
-                        request.getParameter("es_evidencia_flujo"));
-                Integer id_cat_clasif_doc = Integer.getInteger(
-                        request.getParameter("id_cat_clasif_doc"));
-
+                Integer es_evidencia_flujo = 1;
+                String q = request.getParameter("q");
+                
                 int id_tipo_acceso   = Integer.parseInt(String.valueOf(request
                         .getParameter("id_tipo_acceso").charAt(0)));  
                 Part filePart = null;
@@ -93,15 +91,16 @@ public class updateFile extends HttpServlet {
                     //Listado de datos preparados para entrar en la BD
                     int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
                     D_Documento ddoc = new D_Documento();
-                    ddoc.ConsultarD_Doc(ID_equipo, nombre);
+                    int idoc = Integer.parseInt(request.getParameter("idoc"));
+                    ddoc.ConsultarD_Doc(idoc);
                     if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso,
-                            ddoc.getID_Documento(), es_evidencia_flujo, id_cat_clasif_doc)){
+                            ddoc.getID_Documento(), es_evidencia_flujo, ddoc.getId_cat_clasif_doc())){
                         System.out.println("Ok ahora la parte del archivo");
                         OutputStream outs = null;
                         InputStream filecontent = null;
                         //final PrintWriter writer = response.getWriter();
                         File file = new File(request.getServletContext().getRealPath("/archivos/"
-                                +ID_equipo+"/" + nombre));
+                                +ID_equipo+"/"+(q != null ? q : "")+"/"+ nombre));
                         outs = new FileOutputStream(file);//A donde se diregen los bytes
                         filecontent = filePart.getInputStream();
                         int read = 0;
@@ -110,20 +109,21 @@ public class updateFile extends HttpServlet {
                         while ((read = filecontent.read(bytes)) != -1) {
                             outs.write(bytes, 0, read);
                         }
-                        response.sendRedirect("docs.jsp?flag=true");
+                        response.sendRedirect("docs2.jsp?flag=true");
                     }else{
                         System.out.println("Ni modo ya valio en esta otra parte");
-                        response.sendRedirect("docs.jsp?flag=false");
+                        response.sendRedirect("docs2.jsp?flag=false");
                     }
                 }else{
                     //Listado de datos preparados para entrar en la BD
-                    int ID_equipo = UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE());
-                    D_Documento ddoc = D_Documento.ConsultarD_Doc_sget(ID_equipo, nombre);
+                    int idoc = Integer.parseInt(request.getParameter("idoc"));
+                    D_Documento ddoc = new D_Documento();
+                    ddoc.ConsultarD_Doc(idoc);
                     if(ddoc.UpdateDoc(nombre, pass, id_tipo_acceso, 
-                            ddoc.getID_Documento(), es_evidencia_flujo, id_cat_clasif_doc)){
-                        response.sendRedirect("docs.jsp?flag=true");
+                            ddoc.getID_Documento(), es_evidencia_flujo, ddoc.getId_cat_clasif_doc())){
+                        response.sendRedirect("docs2.jsp?flag=true");
                     }else{
-                        response.sendRedirect("docs.jsp?flag=false");
+                        response.sendRedirect("docs2.jsp?flag=false");
                     }
                 }
                 
