@@ -284,8 +284,7 @@
                                                     <tr>
                                                     <!--Nombre del archivo-->
                                                     <td>
-                                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>
-                                                           &fileName=<%=file.getName()%>&q=<%= query %>"
+                                                        <a href="downloadFile?e=<%= UsuarioEmpleado.consultarID_Equipo(usuario.getIDUsuarioE()) %>&fileName=<%=file.getName()%>&q=<%= query %>"
                                                            target="_top" data-toggle="tooltip" 
                                                            title="Descargar" id="<%=file.getAbsolutePath()%>"
                                                            ><%= list[i] %></a>
