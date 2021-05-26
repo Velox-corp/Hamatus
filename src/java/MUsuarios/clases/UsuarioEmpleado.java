@@ -15,16 +15,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,8 +29,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.sql.DataSource;
-import javax.transaction.UserTransaction;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -186,7 +179,7 @@ public class UsuarioEmpleado implements Serializable {
      * @return 
      */
     public static boolean ingresarAdmin(UsuarioEmpleado admin, int id_emp){
-        CallableStatement cs = null;
+        boolean procesoCorrecto = true;
         try{
             con = Conexion.obtenerConexion();
             q = "{call ingresarAdmin(?,?,?,?,?,?,?,?)}";
@@ -199,11 +192,11 @@ public class UsuarioEmpleado implements Serializable {
             cs.setBytes(6,AES.cifrar(admin.getPassword(),2));
             cs.setBytes(7, null); //chance luego hacemos que pueda meter foto tambien
             cs.setInt(8, id_emp);
-            return cs.executeUpdate() == 1;
+            procesoCorrecto = cs.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No jalo el call");
-            return false;
+            procesoCorrecto =  false;
         }finally{
             try {
                 con. close();
@@ -213,6 +206,7 @@ public class UsuarioEmpleado implements Serializable {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return procesoCorrecto;
     }
     
     /**
@@ -223,6 +217,7 @@ public class UsuarioEmpleado implements Serializable {
      * @return 
      */
     public static boolean ingresarEmpleado(UsuarioEmpleado empleado){
+        boolean procesoCorrecto;
         try{
             con = Conexion.obtenerConexion();
             q = "INSERT INTO usuario_empleado (Nombre, appat, apmat, Fecha_Nacimiento, Correo, pass, ID_Division, id_cat_privilegios, foto) values(?,?,?,?,?,?,?,?,?)";
@@ -237,11 +232,11 @@ public class UsuarioEmpleado implements Serializable {
             System.out.println(empleado.getiD_cat_priv());
             ps.setInt(8, empleado.getiD_cat_priv());
             ps.setBytes(9, empleado.getFoto());
-            return ps.executeUpdate() == 1;
+            procesoCorrecto = ps.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No jalo el query");
-            return false;
+            procesoCorrecto = false;
         }finally{
             try {
                 con. close();
@@ -251,6 +246,7 @@ public class UsuarioEmpleado implements Serializable {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return procesoCorrecto;
     }
     
     /**
@@ -259,6 +255,7 @@ public class UsuarioEmpleado implements Serializable {
      * @return true si el update se eejcutó adecuadamente
      */
     public static boolean modEmpleado(UsuarioEmpleado empleado){
+        boolean procesoCorrecto = true;
         try{
             con = Conexion.obtenerConexion();
             q = "UPDATE usuario_empleado SET Nombre = ?, appat = ?, apmat = ?, Fecha_Nacimiento = ?, Correo = ?, pass = ?, foto= ? WHERE ID_Usuario_E = ?";
@@ -271,11 +268,11 @@ public class UsuarioEmpleado implements Serializable {
             ps.setBytes(6,AES.cifrar(empleado.getPassword(),2));
             ps.setBytes(7, empleado.getFoto());
             ps.setInt(8, empleado.getIDUsuarioE());
-            return ps.executeUpdate() == 1;
+            procesoCorrecto =  ps.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No jalo el update");
-            return false;
+            procesoCorrecto =  false;
         }finally{
             try {
                 con. close();
@@ -285,6 +282,7 @@ public class UsuarioEmpleado implements Serializable {
                 Logger.getLogger(UsuarioEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return procesoCorrecto;
     }
     
     /**
@@ -432,7 +430,8 @@ public class UsuarioEmpleado implements Serializable {
                 }
             }
             if(sameDiv && samePriv){
-                return false;
+                procesoCorrecto = false;
+                tipeStatement = 0;
             }
             if(procesoCorrecto){
                 switch(tipeStatement){

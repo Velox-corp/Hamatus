@@ -275,31 +275,6 @@ public class Division implements Serializable{
         return nombreD;
     }
     
-    public List lista(int id_emp) {
-        List<divi> divisiones = new ArrayList();
-        int idj = 2;
-        try {
-            con = Conexion.obtenerConexion();
-            Division.query = ("SELECT * FROM division WHERE ID_Jerarquia = ? AND ID_Empresa = ?");
-            ps = con.prepareStatement(Division.query);
-            ps.setInt(1, idj);
-            ps.setInt(2, id_emp);          
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                divi p =new divi();
-                p.setId(rs.getInt(1));
-                p.setNombre(rs.getString(2));
-                p.setIdj(rs.getInt(3));
-                p.setIde(rs.getInt(4));
-                divisiones.add(p);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Ocurrio un error Division");
-            Logger.getLogger(Division.class.getName()).log(Level.SEVERE, null, ex);
-            divisiones = null;
-        }
-        return divisiones;
-    }
     
     public static Integer getDivGen(Integer idEmpresa) {
         int idDir;

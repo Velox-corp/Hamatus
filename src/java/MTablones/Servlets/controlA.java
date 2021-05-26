@@ -7,13 +7,11 @@ package MTablones.Servlets;
 
 import ClasesSoporte.Fecha;
 import ClasesSoporte.Validaciones;
-import MDistribucion.Clases.Equipo;
 import MTablones.Clases.Anuncio;
 import MTablones.Clases.AnuncioDAO;
 import MUsuarios.clases.Empresa;
 import MUsuarios.clases.UsuarioEmpleado;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
