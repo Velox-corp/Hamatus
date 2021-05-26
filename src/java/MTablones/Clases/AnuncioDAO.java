@@ -71,7 +71,7 @@ public class AnuncioDAO {
             anuncios = null;
         }finally{
             try {
-                con. close();
+                con.close();
                 ps.close();
                 rs.close();
             } catch (SQLException | NullPointerException ex) {
