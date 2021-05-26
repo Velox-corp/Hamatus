@@ -11,8 +11,11 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -79,6 +82,13 @@ public class M_Documento implements Serializable {
             System.out.println(e.getMessage());
             e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
+        } finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(M_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return correcto;
     }
@@ -100,6 +110,13 @@ public class M_Documento implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(M_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return correcto;
     }
@@ -120,6 +137,13 @@ public class M_Documento implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(M_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return correcto;
     }
@@ -148,6 +172,13 @@ public class M_Documento implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(M_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return correcto;
     }

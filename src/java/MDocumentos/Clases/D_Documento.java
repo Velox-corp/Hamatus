@@ -100,6 +100,13 @@ public class D_Documento implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(D_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -281,6 +288,13 @@ public class D_Documento implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(D_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return correcto;
     }
@@ -304,6 +318,13 @@ public class D_Documento implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(D_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return correcto;
     }
@@ -326,6 +347,13 @@ public class D_Documento implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally{
+            try {
+                this.con.close();
+                this.ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(D_Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return correcto;
     }
