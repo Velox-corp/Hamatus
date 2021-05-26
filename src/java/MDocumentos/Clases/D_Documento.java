@@ -356,9 +356,9 @@ public class D_Documento implements Serializable {
             ps.setBytes(1, AES.cifrar(nombre, 4));
             ps.setBytes(2, AES.cifrar(pass, 4));
             ps.setInt(3, id_tipo_acceso);
-            ps.setInt(4, ID_Documento);
-            ps.setInt(5, es_evidencia_flujo);
-            ps.setInt(6, id_cat_clasif_doc);
+            ps.setInt(4, es_evidencia_flujo);
+            ps.setInt(5, id_cat_clasif_doc);
+            ps.setInt(6, ID_Documento);
             ps.execute();
             correcto = true;
         } catch (Exception e) {
@@ -370,7 +370,10 @@ public class D_Documento implements Serializable {
                 ps.close();
             } catch (SQLException ex) {
                 Logger.getLogger(D_Documento.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }   
         }
         return correcto;
     }
