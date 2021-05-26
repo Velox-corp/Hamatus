@@ -38,6 +38,7 @@ public class CatPuestos implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static int traducirNombre(String division) {
+        int idTrad = 0;
         try{
             Connection con = Conexion.obtenerConexion();
             String q = "SELECT idprivilegio from privilegios_jerarquia_u where tit_permiso = ?";
@@ -47,15 +48,18 @@ public class CatPuestos implements Serializable {
             System.out.println("Ide: "+rs.getInt("idprivilegio"));
             if(rs.next()){
                 
-                return rs.getInt("idprivilegio");
+                idTrad = rs.getInt("idprivilegio");
                 
             }else{
-                return -1;
+                idTrad = -1;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CatPuestos.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+            idTrad = -1;
+        }finally{
+            
         }
+        return idTrad;
     }
     
     public static String traducirID(int idCat) {

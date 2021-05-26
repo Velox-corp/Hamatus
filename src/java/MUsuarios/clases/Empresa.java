@@ -10,7 +10,6 @@ import MSeguridad.Clases.AES;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -123,7 +122,7 @@ public class Empresa implements Serializable{
             try {
                 Empresa.ps.close();
                 Empresa.con.close();
-                
+                query = "";
             } catch (SQLException ex) {
                 Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
                 procesoCorrecto = false;
@@ -156,7 +155,14 @@ public class Empresa implements Serializable{
             e.printStackTrace();
         }
         finally{
-            System.out.println("Termino busqueda");
+            try {
+                System.out.println("Termino busqueda");
+                Empresa.ps.close();
+                Empresa.con.close();
+                query = "";
+            } catch (SQLException ex) {
+                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return emp;
     }

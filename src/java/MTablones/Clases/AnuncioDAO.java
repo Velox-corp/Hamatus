@@ -7,7 +7,6 @@ package MTablones.Clases;
 
 import ClasesSoporte.Conexion;
 import MSeguridad.Clases.AES;
-import MTablones.Clases.Anuncio;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +68,15 @@ public class AnuncioDAO {
                 anuncios.add(p);
             }
         } catch (Exception e) {
-
+            anuncios = null;
+        }finally{
+            try {
+                con. close();
+                ps.close();
+                rs.close();
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return anuncios;
     }
@@ -166,6 +173,13 @@ public class AnuncioDAO {
         } catch (Exception e) {
             e.getMessage();
             e.printStackTrace();
+        }finally{
+            try {
+                con. close();
+                ps.close();
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }
