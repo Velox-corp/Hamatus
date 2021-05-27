@@ -107,7 +107,7 @@
                                 </ul>
                             </li>
                             <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
+                            <li><a href="Stats_Admin.jsp" class="nav-item nav-link btn1">Estadísticas</a></li>
                             
                         </ul>
                     </nav>
@@ -154,7 +154,7 @@
                                 </ul>
                             </li>
                             <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
+                            <li><a href="Stats_Lider.jsp" class="nav-item nav-link btn1">Estadísticas</a></li>
                         </ul>
                     </nav>
                 <%  break;
