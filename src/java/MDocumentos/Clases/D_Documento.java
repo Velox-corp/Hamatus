@@ -380,15 +380,15 @@ public class D_Documento implements Serializable {
             this.con = Conexion.obtenerConexion();
             this.query = ("UPDATE d_Documento SET Nombre=?, Password=?,"
                     + " id_tipo_acceso=?, es_evidencia_flujo=?, id_cat_clasif_doc=? WHERE ID_Documento=?");
-            ps = con.prepareCall(query);
+            ps = con.prepareStatement(query);
             ps.setBytes(1, AES.cifrar(nombre, 4));
             ps.setBytes(2, AES.cifrar(pass, 4));
             ps.setInt(3, id_tipo_acceso);
             ps.setInt(4, es_evidencia_flujo);
             ps.setInt(5, id_cat_clasif_doc);
             ps.setInt(6, ID_Documento);
-            ps.execute();
-            correcto = true;
+            int app = ps.executeUpdate();
+            correcto = (app==1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
