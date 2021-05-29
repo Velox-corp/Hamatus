@@ -38,10 +38,11 @@ public class Last_Messages extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("application/json");
         
-        String jsonObject=request.getParameter("json");
-        
+        MessageModel mm = new MessageModel();
+        //String jsonObject=request.getParameter("json");
+        String jsonObject = new Gson().toJson(mm.get());
         response.getWriter().write(jsonObject);
-        response.sendRedirect("Mensajes.jsp");
+        //response.sendRedirect("Mensajes.jsp");
     
        
         

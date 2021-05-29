@@ -12,7 +12,7 @@
     id_user=usuario.getIDUsuarioE();
     //System.out.println(request.getAttribute("idsla").toString());/*
     //int sla =Integer.parseInt(request.getAttribute("idsla").toString());*/
-    //System.out.println(Integer.parseInt(request.getAttribute("idsla").toString()));
+    
 %>
 <html>
     <head>
@@ -89,17 +89,17 @@
     // Enable pusher logging - don't include this in production
     //Pusher.logToConsole = true;
 
-    var pusher = new Pusher('78f597b507c09cc4229c');//, {
-      //cluster: 'us2'
-      //encrypted: true;//sirve cuando se usa https
-    //});
+    var pusher = new Pusher('78f597b507c09cc4229c', {
+      cluster: 'us2'
+      //encrypted: true//sirve cuando se usa https
+    });
     
     var chat= new ChatWidget(pusher);
-/*canal del usuario
-    var channel = pusher.subscribe('my-channel');
+/*canal del usuario*/
+    /*var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
-      console.log(data);*/
-    //});
+      console.log(data); 
+    });*/
   </script>
     </body>
 </html>

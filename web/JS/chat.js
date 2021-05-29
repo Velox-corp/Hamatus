@@ -21,10 +21,10 @@ function ChatWidget(pusher){
     this.channel = this.pusher.subscribe(this.channelName);
     
     this._latestMessages(); 
-    /*
+    
     this.channel.bind('new-message', function(data){
        self._displayMessage(data);
-    });*/
+    });
     
     this.chatEntry.keydown(function(e){//Presiona enter
         if(e.keyCode === 13){
@@ -48,7 +48,7 @@ ChatWidget.prototype._latestMessages = function(){
     var self = this;
    
     $.ajax({
-        url : 'agregarSala',//latest_messages/addSala
+        url : 'latest_messages',//latest_messages/addSala/agregarSala
         dataType: 'json',
         type: 'get',
         success : function (data){

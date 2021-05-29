@@ -44,25 +44,62 @@ public class UsuarioSala {
             ps = con.prepareStatement(q);
             rs = ps.executeQuery();
             while (rs.next()) {
-                sala_n.add(rs.getInt(idSala_chat));
+                sala_n.add(rs.getInt(1));;
             }
         }catch(Exception e){
             e.getMessage();
             e.printStackTrace();
         }
+        System.out.println(sala_n);
         return sala_n;
+        
     }
 
     private void insertSalaUser(int id_user) {
         int num_salas=num_salas().get(0);
+        System.out.println(num_salas);
         q="insert into e_usuario_sala(id_usuario,id_sala) "
-                + "values("+ id_user +","+ num_salas +");";
+                + "values((Select ID_Usuario_E from usuario_empleado where ID_Usuario_E="+id_user+"),"
+                + "(Select idSala_chat from sala_chat where idSala_chat="+num_salas+"));";
+        try{
+            con = Conexion.obtenerConexion();
+            ps = con.prepareStatement(q);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getMessage();
+        }finally{
+            try {
+                con.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioSala.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
     }
 
     private void insertSalaContacto(int id_contacto) {
         int num_salas=num_salas().get(0);
+        System.out.println(num_salas);
         q="insert into e_usuario_sala(id_usuario,id_sala) "
-                + "values("+ id_contacto +","+ num_salas +");";
+                + "values((Select ID_Usuario_E from usuario_empleado where ID_Usuario_E="+id_contacto+"),"
+                + "(Select idSala_chat from sala_chat where idSala_chat="+num_salas+"));";
+        try{
+            con = Conexion.obtenerConexion();
+            ps = con.prepareStatement(q);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getMessage();
+        }finally{
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioSala.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public int existe(int id_user, int id_contacto, int id_sala_tipo) {
@@ -84,25 +121,25 @@ public class UsuarioSala {
                     + "where s1.id_usuario="+id_user+" and s2.id_tipo_sala="+id_sala_tipo+")\n"
                     + ");";
             List<Sala> anuncios = new ArrayList();
-            
+            int condicion = 0;
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement(q);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                rs.getInt(1);
+                condicion=rs.getInt(1);
             }
 
-            if (rs.getInt(1) == 0) {
+            if (condicion == 0) {
 
                 Sala sala = new Sala();
                 sala.crearSala(id_sala_tipo);
                 insertSalaUser(id_user);
                 insertSalaContacto(id_contacto);
-                idsla=rs.getInt(1);
+                idsla=num_salas().get(0);
 
-            } else if (rs.getInt(1) == 1) {
-                idsla=rs.getInt(1);
+            } else if (condicion != 0) {
+                idsla=condicion;
             }
 
         } catch (Exception e) {

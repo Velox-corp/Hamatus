@@ -76,15 +76,15 @@ public class agregarSala extends HttpServlet {
                
                 MessageModel mm = new MessageModel();
                 
-                String jsonObject = new Gson().toJson(mm.get(idsla, id_user));
+                //String jsonObject = new Gson().toJson(mm.get(idsla, id_user));
+                String jsonObject = new Gson().toJson(mm.get());
+                //response.getWriter().write(jsonObject);
+                //response.sendRedirect("Mensajes.jsp");
+               //response.sendRedirect("latest_messages?json="+jsonObject);
+                request.getSession().setAttribute("idsla", idsla);
+                RequestDispatcher view = request.getRequestDispatcher("Mensajes.jsp");
                 
-                response.getWriter().write(jsonObject);
-                
-               // response.sendRedirect("Last_Messages?json="+jsonObject);
-                
-                /*RequestDispatcher view = request.getRequestDispatcher("Last_Messages?json="+jsonObject+"");
-                request.setAttribute("idsla", idsla);
-                view.forward(request, response);*/
+                view.forward(request, response);
             } catch (NullPointerException e) {
                 System.out.println(e);
             }
@@ -98,10 +98,11 @@ public class agregarSala extends HttpServlet {
 
         if (proceso_nice) {
             System.out.println("Sala ingresada correctamente");
-            response.sendRedirect("Mensajes.jsp");
+            //response.sendRedirect("Mensajes.jsp");
 
         } else {
-            redirect = "error.jsp";
+            System.out.println("algo ha pasado");
+            //redirect = "error.jsp";
         }
         
     }

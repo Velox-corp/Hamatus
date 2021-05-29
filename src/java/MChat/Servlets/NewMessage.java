@@ -32,7 +32,7 @@ public class NewMessage extends HttpServlet {
         
         int id_user = Integer.parseInt(request.getParameter("id_user"));
         String name = request.getParameter("name");
-        int sala = Integer.parseInt(request.getParameter("sala-id"));
+        int sala = Integer.parseInt(request.getParameter("sala"));
         String message = request.getParameter("message");
         
         MessageModel mm = new MessageModel();
@@ -50,10 +50,10 @@ public class NewMessage extends HttpServlet {
         
         Pusher pusher = new Pusher("1201370", "78f597b507c09cc4229c", "52fece1045d7512aa1fc");
         pusher.setCluster("us2");
-        pusher.setEncrypted(true);
+        //pusher.setEncrypted(true);
 
-        pusher.trigger("my-channel", "my-event",msg.getJsonObject());
-        
+        //pusher.trigger("my-channel", "my-event",msg.getJsonObject());
+        pusher.trigger("chat", "new-message",msg.getJsonObject());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
