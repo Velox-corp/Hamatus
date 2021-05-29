@@ -326,11 +326,15 @@
         </session-timeout>
     </session-config>
     <error-page>
-        <error-code>500</error-code>
-        <location>/error.jsp</location>
+        <error-code>404</error-code>
+        <location>/errores/404.jsp</location>
     </error-page>
     <error-page>
-        <error-code>404</error-code>
-        <location>/error.jsp</location>
+        <exception-type>NullPointerException</exception-type>
+        <location>/errores/500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errores/500.jsp</location>
     </error-page>
 </web-app>
