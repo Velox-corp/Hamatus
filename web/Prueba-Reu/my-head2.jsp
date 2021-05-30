@@ -106,8 +106,8 @@
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
-                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
+                            <li><a href="Chat.jsp" class="nav-item nav-link btn1">Chat</a></li>
+                            <li><a href="Stats_Admin.jsp" class="nav-item nav-link btn1">Estadísticas</a></li>
                             
                         </ul>
                     </nav>
@@ -130,7 +130,7 @@
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
-                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
+                            <li><a href="Chat.jsp" class="nav-item nav-link btn1">Chat</a></li>
                             <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
                         </ul>
                     </nav>
@@ -153,8 +153,8 @@
                                     <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
                                 </ul>
                             </li>
-                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
+                            <li><a href="Chat.jsp" class="nav-item nav-link btn1">Chat</a></li>
+                            <li><a href="Stats_Lider.jsp" class="nav-item nav-link btn1">Estadísticas</a></li>
                         </ul>
                     </nav>
                 <%  break;
@@ -170,7 +170,7 @@
                                 </ul>
                             </li>
                             <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Chat</a></li>
+                            <li><a href="Chat.jsp" class="nav-item nav-link btn1">Chat</a></li>
                         </ul>
                     </nav>
                     <% break;

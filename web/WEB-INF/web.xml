@@ -160,6 +160,10 @@
         <servlet-name>cambioNameE</servlet-name>
         <servlet-class>MDistribucion.Servlets.cambioNameE</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>afterFormulario</servlet-name>
+        <servlet-class>ServletsEstadisticas.afterFormulario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>crearEmpresa</servlet-name>
         <url-pattern>/crearEmpresa</url-pattern>
@@ -319,6 +323,10 @@
     <servlet-mapping>
         <servlet-name>cambioNameE</servlet-name>
         <url-pattern>/cambioNameE</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>afterFormulario</servlet-name>
+        <url-pattern>/afterFormulario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -368,3 +368,13 @@ function confirmationEquipo(){
 	   return false;
 	}
 }
+
+//Para validar el mini form (probablemete borre esto xd)
+function fechasStats(esInicio){
+    var fechaminima = "2021-01-01";
+    if (esInicio){
+        
+    } else {
+        
+    }
+}

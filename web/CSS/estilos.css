@@ -539,3 +539,37 @@ img.per{
   bottom: 0;
   width: 100%;
 }
+
+/*Para las estadisticas (son cosas menores, o eso creo...)*/
+.formu_tiempo, .cont_graficas, .alertaxd {
+    padding-left: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    margin: 1rem;
+}
+
+.titxd {
+    padding-right: 1rem;
+}
+
+#titulazoxd {
+    padding-bottom: .2rem;
+}
+
+#btn-dark {
+    color: #fff;
+    background-color: #303031;
+    border-color: #303031;
+}
+
+#eleccion {
+    margin-bottom: 1rem;
+}
+
+.col-5, .col-6 {
+    padding: 1rem;
+}
+
+#hola, #adios {
+    border-radius: 10px;
+}
