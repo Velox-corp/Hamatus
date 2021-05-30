@@ -392,13 +392,13 @@ CREATE TABLE IF NOT EXISTS `heroku_9ad0f74b62bb348`.`Sala_chat` (
   `id_tipo_sala` INT NOT NULL,
   PRIMARY KEY (`idSala_chat`),
   CONSTRAINT `fk_sala_cat_ts`
-    FOREIGN KEY (`id_tipo sala`)
+    FOREIGN KEY (`id_tipo_sala`)
     REFERENCES `heroku_9ad0f74b62bb348`.`catalogo_tipo_sala` (`idtipo_sala`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_sala_cat_ts_idx` ON `heroku_9ad0f74b62bb348`.`Sala_chat` (`id_tipo sala` ASC);
+CREATE INDEX `fk_sala_cat_ts_idx` ON `heroku_9ad0f74b62bb348`.`Sala_chat` (`id_tipo_sala` ASC);
 
 
 -- -----------------------------------------------------
