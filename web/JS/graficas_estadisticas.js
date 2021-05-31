@@ -61,20 +61,7 @@ Morris.Bar({
 });
 
 //esta grafica es para flujos hechos               Para estadisticas del equipo xd
-Morris.Donut({
-  element: 'dona1xd',
-  data: [
-    {value: 70, label: 'Completos'},
-    {value: 30, label: 'Incompletos'}
-  ],
-  backgroundColor: '#ccc',
-  labelColor: '#060',
-  colors: [
-    '#0BA462',
-    '#39B580'
-  ],
-  formatter: function (x) { return x + "%"}
-});
+
 
 
 //Esta es para usuarios activos                    Para estadisticas del equipo

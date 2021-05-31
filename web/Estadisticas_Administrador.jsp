@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Stats_Admin
-    Created on : 13/05/2021, 08:33:23 AM
+    Document   : Estadisticas_Administrador
+    Created on : 31/05/2021, 12:20:59 AM
     Author     : Uzías
 --%>
 
@@ -9,6 +9,7 @@
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.google.gson.JsonObject" %>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%
     
@@ -58,46 +59,12 @@
         <!-- Se me ocurre obtener la sesion del admin, obtener el id_empresa y enviarlo con atributo hidden al servlet -->
         
         <center><h1>Estadisticas</h1></center>
-        <!-- POr si hay error de fechas  -->
-        <% 
-        try {
-            String posibleError = request.getParameter("fecha");
-            if(posibleError.equals("bad")){
-        %>
-        <div class="alertaxd">
-            <div class="alert alert-dismissible alert-warning">
-                <h4 class="alert-heading">¡Ups!</h4>
-                <p class="mb-0">Por favor asegurate de elegir las fechas de manera correcta</p>
-            </div>
-        </div>
         <%
-            }
-        } catch (NullPointerException f){
-            System.out.println("Finisimo, esto es lo que debe pasar, no hay variables en la url");
-        }
-        %>
+        JsonObject js = (JsonObject) request.getAttribute("esemiJSON");
         
-        <!-- POr si hay error de seleccion (la dejó en "blanco" -->
-        <% 
-        try {
-         String posibleError2 = request.getParameter("opcion");    
-          if (posibleError2.equals("bad")){
+        System.out.println("El json es " + js);
+        //int xz = 10;
         %>
-        <div class="alertaxd">
-            <div class="alert alert-dismissible alert-warning">
-                <h4 class="alert-heading">¡Ups!</h4>
-                <p class="mb-0">Por favor asegurate de elegir una división o equipo</p>
-            </div>
-        </div>
-        <%
-              
-          }
-        } catch(NullPointerException f){
-          System.out.println("Fino señores, es normal xd");      
-        }
-            
-        %>
-        
         
         
         <!-- 
@@ -126,7 +93,7 @@
                             <input type="hidden" name="usuario_id" value="<%= id_userxd %>">
                             <input type="hidden" name="privilegio_id" value="<%= id_privilegio %>">
                             <input type="hidden" name="division_id" value="<%= id_division %>">
-                    </div>
+                    </div> 
                     <div class="col-5">
                         <h2>División o equipo</h2>
                         <select id="eleccion" name="seleccion">
@@ -158,7 +125,7 @@
                 </div>
             </div>
         </div>
-              <!-- ##################### A partir de aqui vendrán las gráficas #######################      
+              <!-- ##################### A partir de aqui vendrán las gráficas ####################### -->          
         <div class="cont_graficas">
             <div class="card bg-light" id="adios">
                 <div class="row justify-content-around">
@@ -170,14 +137,10 @@
                     <div class="col-5">
                         <h2>Estadisticas del equipo </h2>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
                                 
                                     <div id="dona1xd"></div>
                                 <center><h3>Flujos hechos</h3></center>
-                            </div>
-                            <div class="col-6">
-                                <div id="dona2xd"></div>
-                                <center><h3>Usuarios activos</h3></center>
                             </div>
                         </div>
                     </div>
@@ -197,8 +160,23 @@
         </div>
         
               
-              
+              <script>
+            Morris.Donut({
+            element: 'dona1xd',
+            data: [
+              {value: <%= js.get("hechos")%>, label: 'Completos'},
+              {value: <%= js.get("noHechos")%>, label: 'Incompletos'}
+            ],
+            backgroundColor: '#FFFFFF',
+            labelColor: '#000000',
+            resize: true,
+            colors: [
+              '#0BA462',
+              '#DB0606'
+            ]
+          });
+        </script>
               <script src="JS/graficas_estadisticas.js"></script>
-    </body> -->     
+    </body>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

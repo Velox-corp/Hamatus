@@ -1,9 +1,13 @@
 package ServletsEstadisticas;
 
+import com.google.gson.JsonObject;
+import MFlujos.Clases.FlujoDeTrabajo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,10 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author Uzías
+ * DE LOS FLUJOS DE TRABAJO OBTENER TODO SIN IMPORTAR LA FECHA
+ * DE LOS DOCUMENTOS ENTREGADOS SÍ ES TOMANDO EN CUENTA LAS FECHAS
  */
 @WebServlet(name = "afterFormulario", urlPatterns = {"/afterFormulario"})
 public class afterFormulario extends HttpServlet {
 
+        
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -24,13 +31,15 @@ public class afterFormulario extends HttpServlet {
         
         try {
             //en cuanto llega del formulario hay que obtener las fechas, la division o equipo, id_empresa, supongo
-            boolean esAdmin = true;
+            boolean esDivision = true;
             String division = "";
             String id_esDiv = "DI3";
+            String id_own_division = "";
             
             //aqui tengo que revisar si es admin o nel xd
             String id_usuario = request.getParameter("usuario_id");
             String id_priv = request.getParameter("privilegio_id");
+            int privilegioXD = Integer.parseInt(id_priv);
             System.out.println("EL id del usuario es " + id_usuario);
             System.out.println("EL id del privilegio es " + id_priv);
             
@@ -47,25 +56,48 @@ public class afterFormulario extends HttpServlet {
             
             int esMenor = fecha1.compareTo(fecha2); // si fecha 1 es menor que fecha2 será un numero menor a 0
             System.out.println("El numero es " + esMenor);
-            if (esMenor > 0){
+            if (esMenor > 0){ 
                 //entonces aqui hay un problema B)
-                if (esAdmin){
-                    response.sendRedirect("Stats_Admin.jsp?fecha=bad");
-                } else {
-                    response.sendRedirect("Stats_Lider.jsp?fecha=bad");
+                switch(privilegioXD){
+                    case 1:
+                        response.sendRedirect("Stats_Admin.jsp?fecha=bad");
+                        return;
+                    case 2:
+                        response.sendRedirect("Stats_Lider.jsp?fecha=bad");
+                        return;
+                    case 3:
+                        
+                        return;
+                    default:
+                        System.out.println("Este usuario no tiene autoridad");
+                        response.sendRedirect("error.jsp");
+                        return;
                 }
             }
             //primer problema abatido
             
             //para ver si dejo la seleccion en "blanco"
             if (seleccion.equals("defaultxd")){
-                if (esAdmin){
-                    response.sendRedirect("Stats_Admin.jsp?opcion=bad");
-                } else {
-                    response.sendRedirect("Stats_Lider.jsp?opcion=bad");
+                switch(privilegioXD){
+                    case 1:
+                        response.sendRedirect("Stats_Admin.jsp?opcion=bad");
+                        return;
+                    case 2:
+                        response.sendRedirect("Stats_Lider.jsp?opcion=bad");
+                        return;
+                    case 3:
+                        
+                        return;
+                    default:
+                        System.out.println("Este usuario no tiene autoridad");
+                        response.sendRedirect("error.jsp");
+                        return;
                 }
             }
             //segundo error abatido
+            
+            //para identificar a la division a la que pertenece el usuario
+            id_own_division = request.getParameter("division_id");;
             
             //despues de que esos dos errores del formulario hayan pasado, vendrá aqui
             //primero tengo que saber de que division o equipo se verán las gráficas
@@ -73,9 +105,11 @@ public class afterFormulario extends HttpServlet {
             if (seleccion.contains(id_esDiv)){
                 //esto significa que es una division
                 division = seleccion.substring(3);
+                esDivision = true;
             } else {
                 //esto significa que no es una division
                 division = seleccion;
+                esDivision = false;
             }
             
                 System.out.println("El final sería "+division);
@@ -84,11 +118,88 @@ public class afterFormulario extends HttpServlet {
             
             
             //como ya tengo el id del privilegio, hay que parsear
-            int privilegioXD = Integer.parseInt(id_priv);
+            int cantFlujos = 0;
+            int flujosHechos = 0;
             switch (privilegioXD){
                 //1 = admin, 2 = directivo, 3 = jefe de area
                 case 1:
-                    
+                    //primero haré las donas que son las fáciles xd
+                    //para flujos hechos               Para estadisticas del equipo xd
+                    //dona1xd
+                    //aqui no importa la fecha
+                    if (esDivision){
+                        //esto significa que hay que revisar todos los equipos
+                        int id_divi = Integer.parseInt(division);
+                        FlujoDeTrabajo fl = new FlujoDeTrabajo();
+                        ArrayList<FlujoDeTrabajo> fluj = fl.consultarFlujosLiderDiv(id_divi);
+                        
+                        if (fluj.isEmpty()){ //con esto evitamos que si es nulo haga algo, maybe tendria que hacer otra pestaña de error
+                            response.sendRedirect("error.jsp");
+                            return;
+                        }
+                        
+                        for (int i = 0; i < fluj.size(); i++) {
+                            cantFlujos += 1;
+                            if (fluj.get(i).isEntregado()){
+                                flujosHechos += 1;
+                            }
+                        }
+                        int faltantes = cantFlujos - flujosHechos;
+                        
+                        String faltante = String.valueOf(faltantes);
+                        String realizados = String.valueOf(flujosHechos);
+                        
+                        JsonObject jsonD = new JsonObject();
+                        jsonD.addProperty("hechos", realizados);
+                        jsonD.addProperty("noHechos", faltante);
+                        request.setAttribute("esemiJSON", jsonD);
+                        
+                        RequestDispatcher rd;
+                        rd = request.getRequestDispatcher("/Estadisticas_Administrador.jsp");
+                        rd.forward(request, response);
+                    } else {
+                        //esto fue para la dona xd
+                        //sencillo, esto significa que es un equipo, por lo que la consulta se hace más simple
+                        int id_equipo = Integer.parseInt(division);
+                        FlujoDeTrabajo f = new FlujoDeTrabajo();
+                        ArrayList<FlujoDeTrabajo> flujos = f.consultarFlujosEmpleado(id_equipo);
+                        
+                        if (flujos.isEmpty()){ //con esto evitamos que si es nulo haga algo, maybe tendria que hacer otra pestaña de error
+                            response.sendRedirect("error.jsp");
+                            return;
+                        }
+                        
+                        for (int i = 0; i < flujos.size(); i++) {
+                            cantFlujos += 1; //con esto obtendré el numero total de flujos realizados
+                            if (flujos.get(i).isEntregado() == true){
+                                flujosHechos += 1;
+                            }
+                        }
+                        //para comprobar
+                        System.out.println("Los flujos totales son " + cantFlujos);
+                        System.out.println("Los flujos hechos del equipo son " + flujosHechos);
+                        //en teoria it works 
+                        //ahora viene lo hardcore, tengo que hacer que estos datos se pasen a la grafica, dona1xd
+                        //request.setAttribute("totales", cantFlujos);
+                        //request.setAttribute("noHechos", cantFlujos-flujosHechos);
+                        //request.setAttribute("hechos", flujosHechos);
+                        int no = cantFlujos - flujosHechos;
+                        
+                        String finish = String.valueOf(flujosHechos);
+                        String finishnt = String.valueOf(no);
+                        
+                        JsonObject json = new JsonObject();
+                        json.addProperty("hechos", finish);
+                        json.addProperty("noHechos", finishnt);
+                        request.setAttribute("esemiJSON", json);
+                        
+                        //AQUI VA PARA FLUJOS REALIZADOS
+                        
+                        
+                        RequestDispatcher rd;
+                        rd = request.getRequestDispatcher("/Estadisticas_Administrador.jsp");
+                        rd.forward(request, response);
+                    }
                     break;
                 case 2:
                     
@@ -103,7 +214,7 @@ public class afterFormulario extends HttpServlet {
         } catch(Exception e){
             e.printStackTrace();
             response.sendRedirect("error.jsp");
-        }
+        } 
     }
 
     /**
