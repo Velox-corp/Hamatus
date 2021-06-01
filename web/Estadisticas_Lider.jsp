@@ -1,13 +1,15 @@
 <%-- 
-    Document   : Stats_Admin
-    Created on : 13/05/2021, 08:33:23 AM
+    Document   : Estadisticas_Lider
+    Created on : 1/06/2021, 07:32:11 AM
     Author     : Uzías
 --%>
+
 <%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.google.gson.JsonObject" %>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%
     
@@ -57,66 +59,18 @@
         <!-- Se me ocurre obtener la sesion del admin, obtener el id_empresa y enviarlo con atributo hidden al servlet -->
         
         <center><h1>Estadisticas</h1></center>
-        <!-- POr si hay error de fechas  -->
-        <% 
-        try {
-            String posibleError = request.getParameter("fecha");
-            if(posibleError.equals("bad")){
-        %>
-        <div class="alertaxd">
-            <div class="alert alert-dismissible alert-warning">
-                <h4 class="alert-heading">¡Ups!</h4>
-                <p class="mb-0">Por favor asegurate de elegir las fechas de manera correcta</p>
-            </div>
-        </div>
         <%
-            }
-        } catch (NullPointerException f){
-            System.out.println("Finisimo, esto es lo que debe pasar, no hay variables en la url");
-        }
+        JsonObject js = (JsonObject) request.getAttribute("esemiJSON");
+        JsonObject jsD = (JsonObject) request.getAttribute("JSONDocumentos");
+        JsonObject jsA = (JsonObject) request.getAttribute("JSONAEm");
+        JsonObject jsDE = (JsonObject) request.getAttribute("JSONDocumentosE");
+        JsonObject jsF = (JsonObject) request.getAttribute("JSONFechas");
+        
+        System.out.println("El json es " + js);
+        System.out.println("El json docs es " + jsD);
+        //int xz = 10;
         %>
         
-        <!-- POr si hay error de seleccion (la dejó en "blanco" -->
-        <% 
-        try {
-         String posibleError2 = request.getParameter("opcion");    
-          if (posibleError2.equals("bad")){
-        %>
-        <div class="alertaxd">
-            <div class="alert alert-dismissible alert-warning">
-                <h4 class="alert-heading">¡Ups!</h4>
-                <p class="mb-0">Por favor asegurate de elegir una división o equipo</p>
-            </div>
-        </div>
-        <%
-              
-          }
-        } catch(NullPointerException f){
-          System.out.println("Fino señores, es normal xd");      
-        }
-            
-        %>
-        
-        <% 
-        try {
-         String posibleError3 = request.getParameter("noteam");    
-          if (posibleError3.equals("bad")){
-        %>
-        <div class="alertaxd">
-            <div class="alert alert-dismissible alert-danger">
-                <h4 class="alert-heading">¡Ups!</h4>
-                <p class="mb-0">Parece que no es posible mostrar las estadisticas para el equipo o división seleccionado</p>
-                <p class="mb-0">Probablemente no haya equipos registrados, o flujos de trabajo para obtener estadisticas</p>
-            </div>
-        </div>
-        <%
-              
-          }
-        } catch(NullPointerException f){
-          System.out.println("Fino señores, es normal xd");      
-        }
-            
-        %>
         
         <!-- 
         Al ser un administrador puede elegir de que division o equipo de su empresa
@@ -144,7 +98,7 @@
                             <input type="hidden" name="usuario_id" value="<%= id_userxd %>">
                             <input type="hidden" name="privilegio_id" value="<%= id_privilegio %>">
                             <input type="hidden" name="division_id" value="<%= id_division %>">
-                    </div>
+                    </div> 
                     <div class="col-5">
                         <input type="hidden" name="seleccion" value="DI3<%= id_division %>">
                         <button type="submit" class="btn-dark">Generar graficas</button>
@@ -153,5 +107,103 @@
                 </div>
             </div>
         </div>
+              <!-- ##################### A partir de aqui vendrán las gráficas ####################### -->          
+        <div class="cont_graficas">
+            <div class="card bg-light" id="adios">
+                <div class="row justify-content-around" id="saltito">
+                    <center><h1>Estadisticas del <%= jsF.get("inicio")%> al <%= jsF.get("fin")%></h1></center>
+                </div>
+                <div class="row justify-content-around">
+                    <div class="col-5">
+                        <h2>Estadisticas generales</h2>
+                        <div id="dona2xd"></div>
+                        <center><h3>Flujos realizados</h3></center>
+                    </div>
+                    <div class="col-5">
+                        <h2>Estadisticas del equipo </h2>
+                        
+                                    <div id="dona1xd"></div>
+                                <center><h3>Flujos hechos</h3></center>
+                    </div>
+                </div>
+                <br>
+                <div class="row justify-content-around">
+                    <div class="col-5">
+                        <div id="barrasxd"></div>
+                        <center><h3>Archivos subidos</h3></center>
+                    </div>
+                    <div class="col-5">
+                        <div id="barras3xd"></div>
+                        <center><h3>Archivos subidos</h3></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+              
+              <script>
+            Morris.Donut({
+            element: 'dona1xd',
+            data: [
+              {value: <%= js.get("hechos")%>, label: 'Completos'},
+              {value: <%= js.get("noHechos")%>, label: 'Incompletos'}
+            ],
+            backgroundColor: '#FFFFFF',
+            labelColor: '#000000',
+            resize: true,
+            colors: [
+              '#0BA462',
+              '#DB0606'
+            ]
+          });
+          
+          Morris.Donut({
+            element: 'dona2xd',
+            data: [
+              {value: <%= jsA.get("hechos")%>, label: 'Completos'},
+              {value: <%= jsA.get("noHechos")%>, label: 'Incompletos'}
+            ],
+            backgroundColor: '#FFFFFF',
+            labelColor: '#000000',
+            resize: true,
+            colors: [
+              '#0BA462',
+              '#DB0606'
+            ]
+          });
+          
+          //archivos subidos                   Para el equipo xd
+            Morris.Bar({
+              element: 'barras3xd',
+              data: [
+                {x: 'Totales', y: <%= jsD.get("empresa")%>},
+                {x: 'Seleccionados', y: <%= jsD.get("equipo")%>}
+              ],
+              resize: true,
+              xkey: 'x',
+              ykeys: ['y'],
+              labels: ['Archivos']
+            }).on('click', function(i, row){
+              console.log(i, row);
+            });
+            
+            
+            //archivos subidos                   Para la empresa
+            Morris.Bar({
+              element: 'barrasxd',
+              data: [
+                {x: 'Totales', y: <%= jsDE.get("empresa")%>},
+                {x: 'Seleccionados', y: <%= jsDE.get("equipo")%>}
+              ],
+              barColors: [
+                  '#0BA462'
+              ],
+              resize: true,
+              xkey: 'x',
+              ykeys: ['y'],
+              labels: ['Archivos']
+            });
+        </script>
+    </body>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>
