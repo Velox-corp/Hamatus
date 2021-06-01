@@ -63,6 +63,8 @@
         JsonObject js = (JsonObject) request.getAttribute("esemiJSON");
         JsonObject jsD = (JsonObject) request.getAttribute("JSONDocumentos");
         JsonObject jsA = (JsonObject) request.getAttribute("JSONAEm");
+        JsonObject jsDE = (JsonObject) request.getAttribute("JSONDocumentosE");
+        JsonObject jsF = (JsonObject) request.getAttribute("JSONFechas");
         
         System.out.println("El json es " + js);
         System.out.println("El json docs es " + jsD);
@@ -131,6 +133,9 @@
               <!-- ##################### A partir de aqui vendrán las gráficas ####################### -->          
         <div class="cont_graficas">
             <div class="card bg-light" id="adios">
+                <div class="row justify-content-around" id="saltito">
+                    <center><h1>Estadisticas del <%= jsF.get("inicio")%> al <%= jsF.get("fin")%></h1></center>
+                </div>
                 <div class="row justify-content-around">
                     <div class="col-5">
                         <h2>Estadisticas generales</h2>
@@ -203,6 +208,23 @@
               labels: ['Archivos']
             }).on('click', function(i, row){
               console.log(i, row);
+            });
+            
+            
+            //archivos subidos                   Para la empresa
+            Morris.Bar({
+              element: 'barrasxd',
+              data: [
+                {x: 'Totales', y: <%= jsDE.get("empresa")%>},
+                {x: 'Seleccionados', y: <%= jsDE.get("equipo")%>}
+              ],
+              barColors: [
+                  '#0BA462'
+              ],
+              resize: true,
+              xkey: 'x',
+              ykeys: ['y'],
+              labels: ['Archivos']
             });
         </script>
               <script src="JS/graficas_estadisticas.js"></script>

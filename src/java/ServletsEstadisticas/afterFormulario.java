@@ -247,6 +247,66 @@ public class afterFormulario extends HttpServlet {
                         jsonDoc.addProperty("equipo", docsDivision);
                         request.setAttribute("JSONDocumentos", jsonDoc);
                         
+                        //
+                        //PARA LA ULTIMA GRAFICA (LA ULTIMA QUE HICE, NO LA ULTIMA EN VISTA XD)
+                        int id_empresaX = 0;
+                        int cuantosDocumentosEX = 0;
+                        int docsParaEquipoX = 0;
+                        doc = new D_Documento();
+                        ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                        equipos = Equipo.obtenerAllEquipos( id_empD );
+                        
+                        // HttpSession sesionUser = request.getSession();
+                        // Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+                         id_empresaX = emp.getIDEmpresa(); //aqui me regresa el valor del ID empresa
+                         System.out.println("El id de la empresa es "+id_empresaX);
+                         if (id_empresaX != 0){
+                             //continua
+                             //ahora necesito obtener todos los id de los equipos de la empresa
+                          //   ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                             ArrayList<D_Documento> documentos = new ArrayList<D_Documento>();
+                             equipos = Equipo.obtenerAllEquipos( id_empresaX );
+                             int cuantosEquipos = 0;
+                             if (equipos.isEmpty()){
+                                 //hay que cambiar esto para mandar un ALERT para que diga no hay tims xd
+                                 response.sendRedirect("Stats_Admin.jsp?noteam=bad");
+                             return;
+                             } else {
+                                 cuantosEquipos = equipos.size();
+                                 //ya tengo los equipos, ahora tengo que consultar los documentos de cada equipo
+                                 for (int i = 0; i < cuantosEquipos; i++) {
+                                     documentos = doc.consultarDocByEquipo(equipos.get(i).getIDEquipo());
+                                     //ya que obtuve los documentos de un equipo, tengo que sumar cada vez que haya un doc
+                                     for (int j = 0; j < documentos.size(); j++) {
+                                         cuantosDocumentosEX += 1; // al final de esta secuencia debería tener el total de docs
+                                         //primero hay que revisar que el documento se haya subido entre las fechas elegidas
+                                         String fechaaux = documentos.get(j).getFecha();
+                                         Date fecha_aux = sdf.parse(fechaaux);
+
+                                         //esta fecha debe ser mayor o igual a la fecha1 y menor o igual a fecha2
+                                         int aux_ini = fecha_aux.compareTo(fecha1);
+                                         int aux_fin = fecha_aux.compareTo(fecha2);
+                                         if (aux_ini >= 0 && aux_fin <=0){
+                                                 docsParaEquipoX += 1;
+                                         }
+                                     }
+
+                                 }
+                                 JsonObject jsonDocE = new JsonObject();
+                                 jsonDocE.addProperty("empresa", cuantosDocumentosEX);
+                                 jsonDocE.addProperty("equipo", docsParaEquipoX);
+                                 request.setAttribute("JSONDocumentosE", jsonDocE);
+                             }
+                         } else  {
+                             response.sendRedirect("error.jsp");
+                             System.out.println("NO HAY ID EMPRESA WEEEEE");
+                             return;
+                         } 
+                         
+                        JsonObject jsonFechas = new JsonObject();
+                                 jsonFechas.addProperty("inicio", fechaxd);
+                                 jsonFechas.addProperty("fin", fechax);
+                                 request.setAttribute("JSONFechas", jsonFechas); 
                         RequestDispatcher rd;
                         rd = request.getRequestDispatcher("/Estadisticas_Administrador.jsp");
                         rd.forward(request, response); 
@@ -383,7 +443,62 @@ public class afterFormulario extends HttpServlet {
                         }
                         
                         //PARA LA ULTIMA GRAFICA (LA ULTIMA QUE HICE, NO LA ULTIMA EN VISTA XD)
+                        id_empresa = 0;
+                        cuantosDocumentosE = 0;
+                        docsParaEquipo = 0;
+                        doc = new D_Documento();
                         
+                       // HttpSession sesionUser = request.getSession();
+                       // Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+                        id_empresa = emp.getIDEmpresa(); //aqui me regresa el valor del ID empresa
+                        System.out.println("El id de la empresa es "+id_empresa);
+                        if (id_empresa != 0){
+                            //continua
+                            //ahora necesito obtener todos los id de los equipos de la empresa
+                         //   ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                            ArrayList<D_Documento> documentos = new ArrayList<D_Documento>();
+                            equipos = Equipo.obtenerAllEquipos( id_empresa );
+                            int cuantosEquipos = 0;
+                            if (equipos.isEmpty()){
+                                //hay que cambiar esto para mandar un ALERT para que diga no hay tims xd
+                                response.sendRedirect("Stats_Admin.jsp?noteam=bad");
+                            return;
+                            } else {
+                                cuantosEquipos = equipos.size();
+                                //ya tengo los equipos, ahora tengo que consultar los documentos de cada equipo
+                                for (int i = 0; i < cuantosEquipos; i++) {
+                                    documentos = doc.consultarDocByEquipo(equipos.get(i).getIDEquipo());
+                                    //ya que obtuve los documentos de un equipo, tengo que sumar cada vez que haya un doc
+                                    for (int j = 0; j < documentos.size(); j++) {
+                                        cuantosDocumentosE += 1; // al final de esta secuencia debería tener el total de docs
+                                        //primero hay que revisar que el documento se haya subido entre las fechas elegidas
+                                        String fechaaux = documentos.get(j).getFecha();
+                                        Date fecha_aux = sdf.parse(fechaaux);
+                                        
+                                        //esta fecha debe ser mayor o igual a la fecha1 y menor o igual a fecha2
+                                        int aux_ini = fecha_aux.compareTo(fecha1);
+                                        int aux_fin = fecha_aux.compareTo(fecha2);
+                                        if (aux_ini >= 0 && aux_fin <=0){
+                                                docsParaEquipo += 1;
+                                        }
+                                    }
+                                    
+                                }
+                                JsonObject jsonDocE = new JsonObject();
+                                jsonDocE.addProperty("empresa", cuantosDocumentosE);
+                                jsonDocE.addProperty("equipo", docsParaEquipo);
+                                request.setAttribute("JSONDocumentosE", jsonDocE);
+                            }
+                        } else  {
+                            response.sendRedirect("error.jsp");
+                            System.out.println("NO HAY ID EMPRESA WEEEEE");
+                            return;
+                        }
+                        
+                        JsonObject jsonFechas = new JsonObject();
+                                 jsonFechas.addProperty("inicio", fechaxd);
+                                 jsonFechas.addProperty("fin", fechax);
+                                 request.setAttribute("JSONFechas", jsonFechas); 
                         
                         RequestDispatcher rd;
                         rd = request.getRequestDispatcher("/Estadisticas_Administrador.jsp");
