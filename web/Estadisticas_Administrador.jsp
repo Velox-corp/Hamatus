@@ -62,6 +62,7 @@
         <%
         JsonObject js = (JsonObject) request.getAttribute("esemiJSON");
         JsonObject jsD = (JsonObject) request.getAttribute("JSONDocumentos");
+        JsonObject jsA = (JsonObject) request.getAttribute("JSONAEm");
         
         System.out.println("El json es " + js);
         System.out.println("El json docs es " + jsD);
@@ -133,25 +134,21 @@
                 <div class="row justify-content-around">
                     <div class="col-5">
                         <h2>Estadisticas generales</h2>
-                        <div id="barrasxd"></div>
-                        <center><h3>Archivos subidos</h3></center>
+                        <div id="dona2xd"></div>
+                        <center><h3>Flujos realizados</h3></center>
                     </div>
                     <div class="col-5">
                         <h2>Estadisticas del equipo </h2>
-                        <div class="row">
-                            <div class="col-12">
-                                
+                        
                                     <div id="dona1xd"></div>
                                 <center><h3>Flujos hechos</h3></center>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <br>
                 <div class="row justify-content-around">
                     <div class="col-5">
-                        <div id="barras2xd"></div>
-                        <center><h3>Flujos realizados</h3></center>
+                        <div id="barrasxd"></div>
+                        <center><h3>Archivos subidos</h3></center>
                     </div>
                     <div class="col-5">
                         <div id="barras3xd"></div>
@@ -178,6 +175,21 @@
             ]
           });
           
+          Morris.Donut({
+            element: 'dona2xd',
+            data: [
+              {value: <%= jsA.get("hechos")%>, label: 'Completos'},
+              {value: <%= jsA.get("noHechos")%>, label: 'Incompletos'}
+            ],
+            backgroundColor: '#FFFFFF',
+            labelColor: '#000000',
+            resize: true,
+            colors: [
+              '#0BA462',
+              '#DB0606'
+            ]
+          });
+          
           //archivos subidos                   Para el equipo xd
             Morris.Bar({
               element: 'barras3xd',
@@ -185,9 +197,10 @@
                 {x: 'Totales', y: <%= jsD.get("empresa")%>},
                 {x: 'Seleccionados', y: <%= jsD.get("equipo")%>}
               ],
+              resize: true,
               xkey: 'x',
               ykeys: ['y'],
-              labels: ['Y']
+              labels: ['Archivos']
             }).on('click', function(i, row){
               console.log(i, row);
             });

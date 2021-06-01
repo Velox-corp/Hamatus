@@ -98,7 +98,26 @@
             
         %>
         
-        
+        <% 
+        try {
+         String posibleError3 = request.getParameter("noteam");    
+          if (posibleError3.equals("bad")){
+        %>
+        <div class="alertaxd">
+            <div class="alert alert-dismissible alert-danger">
+                <h4 class="alert-heading">¡Ups!</h4>
+                <p class="mb-0">Parece que no es posible mostrar las estadisticas para el equipo o división seleccionado</p>
+                <p class="mb-0">Probablemente no haya equipos registrados, o flujos de trabajo para obtener estadisticas</p>
+            </div>
+        </div>
+        <%
+              
+          }
+        } catch(NullPointerException f){
+          System.out.println("Fino señores, es normal xd");      
+        }
+            
+        %>
         
         <!-- 
         Al ser un administrador puede elegir de que division o equipo de su empresa
