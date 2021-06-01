@@ -61,8 +61,10 @@
         <center><h1>Estadisticas</h1></center>
         <%
         JsonObject js = (JsonObject) request.getAttribute("esemiJSON");
+        JsonObject jsD = (JsonObject) request.getAttribute("JSONDocumentos");
         
         System.out.println("El json es " + js);
+        System.out.println("El json docs es " + jsD);
         //int xz = 10;
         %>
         
@@ -175,6 +177,20 @@
               '#DB0606'
             ]
           });
+          
+          //archivos subidos                   Para el equipo xd
+            Morris.Bar({
+              element: 'barras3xd',
+              data: [
+                {x: 'Totales', y: <%= jsD.get("empresa")%>},
+                {x: 'Seleccionados', y: <%= jsD.get("equipo")%>}
+              ],
+              xkey: 'x',
+              ykeys: ['y'],
+              labels: ['Y']
+            }).on('click', function(i, row){
+              console.log(i, row);
+            });
         </script>
               <script src="JS/graficas_estadisticas.js"></script>
     </body>

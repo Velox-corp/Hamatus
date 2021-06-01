@@ -1,7 +1,11 @@
 package ServletsEstadisticas;
 
+import MDistribucion.Clases.Equipo;
+import MDivisiones.clases.Division;
+import MDocumentos.Clases.D_Documento;
 import com.google.gson.JsonObject;
 import MFlujos.Clases.FlujoDeTrabajo;
+import MUsuarios.clases.Empresa;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -13,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -55,7 +60,7 @@ public class afterFormulario extends HttpServlet {
             System.out.println("La fecha 2 es "+fecha2);
             
             int esMenor = fecha1.compareTo(fecha2); // si fecha 1 es menor que fecha2 será un numero menor a 0
-            System.out.println("El numero es " + esMenor);
+            System.out.println("ATENCION AQUI El numero es " + esMenor);
             if (esMenor > 0){ 
                 //entonces aqui hay un problema B)
                 switch(privilegioXD){
@@ -154,13 +159,16 @@ public class afterFormulario extends HttpServlet {
                         jsonD.addProperty("noHechos", faltante);
                         request.setAttribute("esemiJSON", jsonD);
                         
-                        RequestDispatcher rd;
+                        
+                        
+                        /*RequestDispatcher rd;
                         rd = request.getRequestDispatcher("/Estadisticas_Administrador.jsp");
-                        rd.forward(request, response);
+                        rd.forward(request, response); */
                     } else {
                         //esto fue para la dona xd
                         //sencillo, esto significa que es un equipo, por lo que la consulta se hace más simple
                         int id_equipo = Integer.parseInt(division);
+                        
                         FlujoDeTrabajo f = new FlujoDeTrabajo();
                         ArrayList<FlujoDeTrabajo> flujos = f.consultarFlujosEmpleado(id_equipo);
                         
@@ -193,8 +201,63 @@ public class afterFormulario extends HttpServlet {
                         json.addProperty("noHechos", finishnt);
                         request.setAttribute("esemiJSON", json);
                         
-                        //AQUI VA PARA FLUJOS REALIZADOS
+                        //AQUI VA PARA ARCHIVOS SUBIDOS EN LA SECCION DE EQUIPO
+                        int id_empresa = 0;
+                        int cuantosDocumentosE = 0;
+                        int docsParaEquipo = 0;
+                        D_Documento doc = new D_Documento();
                         
+                        HttpSession sesionUser = request.getSession();
+                        Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+                        id_empresa = emp.getIDEmpresa(); //aqui me regresa el valor del ID empresa
+                        System.out.println("El id de la empresa es "+id_empresa);
+                        if (id_empresa != 0){
+                            //continua
+                            //ahora necesito obtener todos los id de los equipos de la empresa
+                            ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                            ArrayList<D_Documento> documentos = new ArrayList<D_Documento>();
+                            equipos = Equipo.obtenerAllEquipos( id_empresa );
+                            int cuantosEquipos = 0;
+                            if (equipos.isEmpty()){
+                                //hay que cambiar esto para mandar un ALERT para que diga no hay tims xd
+                                response.sendRedirect("error.jsp");
+                                return;
+                            } else {
+                                cuantosEquipos = equipos.size();
+                                //ya tengo los equipos, ahora tengo que consultar los documentos de cada equipo
+                                for (int i = 0; i < cuantosEquipos; i++) {
+                                    documentos = doc.consultarDocByEquipo(equipos.get(i).getIDEquipo());
+                                    //ya que obtuve los documentos de un equipo, tengo que sumar cada vez que haya un doc
+                                    for (int j = 0; j < documentos.size(); j++) {
+                                        cuantosDocumentosE += 1; // al final de esta secuencia debería tener el total de docs
+                                        //primero hay que revisar que el documento se haya subido entre las fechas elegidas
+                                        String fechaaux = documentos.get(j).getFecha();
+                                        Date fecha_aux = sdf.parse(fechaaux);
+                                        
+                                        //esta fecha debe ser mayor o igual a la fecha1 y menor o igual a fecha2
+                                        int aux_ini = fecha_aux.compareTo(fecha1);
+                                        int aux_fin = fecha_aux.compareTo(fecha2);
+                                        if (aux_ini >= 0 && aux_fin <=0){
+                                            //aparte ahora hay que revisar si el documento es del equipo que queremos consultar
+                                            if (documentos.get(j).getEquipo_ID_Equipo() == id_equipo){
+                                                docsParaEquipo += 1;
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                System.out.println("Los documentos para la empresa son "+cuantosDocumentosE);
+                                System.out.println("Los documentos para el equipo son " + docsParaEquipo);
+                                JsonObject jsonDoc = new JsonObject();
+                                jsonDoc.addProperty("empresa", cuantosDocumentosE);
+                                jsonDoc.addProperty("equipo", docsParaEquipo);
+                                request.setAttribute("JSONDocumentos", jsonDoc);
+                            }
+                        } else  {
+                            response.sendRedirect("error.jsp");
+                            System.out.println("NO HAY ID EMPRESA WEEEEE");
+                            return;
+                        }
                         
                         RequestDispatcher rd;
                         rd = request.getRequestDispatcher("/Estadisticas_Administrador.jsp");
