@@ -131,7 +131,7 @@
                                 </ul>
                             </li>
                             <li><a href="Chat.jsp" class="nav-item nav-link btn1">Chat</a></li>
-                            <li><a href="" class="nav-item nav-link btn1">Estadísticas</a></li>
+                            <li><a href="Stats_Directivo.jsp" class="nav-item nav-link btn1">Estadísticas</a></li>
                         </ul>
                     </nav>
                 <%  break;

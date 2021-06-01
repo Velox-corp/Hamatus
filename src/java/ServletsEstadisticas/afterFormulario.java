@@ -68,7 +68,7 @@ public class afterFormulario extends HttpServlet {
                         response.sendRedirect("Stats_Admin.jsp?fecha=bad");
                         return;
                     case 2:
-                        response.sendRedirect("Stats_Lider.jsp?fecha=bad");
+                        response.sendRedirect("Stats_Directivo.jsp?fecha=bad");
                         return;
                     case 3:
                         
@@ -88,7 +88,7 @@ public class afterFormulario extends HttpServlet {
                         response.sendRedirect("Stats_Admin.jsp?opcion=bad");
                         return;
                     case 2:
-                        response.sendRedirect("Stats_Lider.jsp?opcion=bad");
+                        response.sendRedirect("Stats_Directivo.jsp?opcion=bad");
                         return;
                     case 3:
                         
@@ -506,7 +506,375 @@ public class afterFormulario extends HttpServlet {
                     }
                     break;
                 case 2:
-                    
+                    //aqui no importa la fecha
+                    if (esDivision){
+                        //para la primera dona
+                        int id_empDx = 0;
+                        HttpSession sesionUserx = request.getSession();
+                        Empresa empx = (Empresa) sesionUserx.getAttribute("empresa");
+                        id_empDx = empx.getIDEmpresa();
+                        ArrayList<Equipo> equiposx = new ArrayList<Equipo>();
+                        equiposx = Equipo.obtenerAllEquipos( id_empDx );
+                        
+                        
+                        FlujoDeTrabajo flu = new FlujoDeTrabajo();
+                        
+                        if (equiposx.isEmpty()){
+                            response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                        } 
+                        for (int i = 0; i < equiposx.size(); i++) {
+                            ArrayList<FlujoDeTrabajo> fluj = flu.consultarFlujosEmpleado(equiposx.get(i).getIDEquipo());
+                            if(fluj.isEmpty()){
+                                response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                            }
+                            for (int j = 0; j < fluj.size(); j++) {
+                                cantFlujos2 += 1;
+                                if (fluj.get(j).isEntregado()){
+                                    flujosHechos +=1;
+                                }
+                            }
+                        }
+                        int ff = cantFlujos2 - flujosHechos2;
+                        
+                        String finish2 = String.valueOf(flujosHechos2);
+                        String finishnt2 = String.valueOf(ff);
+                        
+                        JsonObject jsonAEm = new JsonObject();
+                        jsonAEm.addProperty("hechos", finish2);
+                        jsonAEm.addProperty("noHechos", finishnt2);
+                        request.setAttribute("JSONAEm", jsonAEm);
+                        //esto significa que hay que revisar todos los equipos
+                        int id_divi = Integer.parseInt(division);
+                        FlujoDeTrabajo fl = new FlujoDeTrabajo();
+                        ArrayList<FlujoDeTrabajo> fluj = fl.consultarFlujosLiderDiv(id_divi);
+                        
+                        if (fluj.isEmpty()){ //con esto evitamos que si es nulo haga algo, maybe tendria que hacer otra pestaña de error
+                            response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                        }
+                        
+                        for (int i = 0; i < fluj.size(); i++) {
+                            cantFlujos += 1;
+                            if (fluj.get(i).isEntregado()){
+                                flujosHechos += 1;
+                            }
+                        }
+                        int faltantes = cantFlujos - flujosHechos;
+                        
+                        String faltante = String.valueOf(faltantes);
+                        String realizados = String.valueOf(flujosHechos);
+                        
+                        JsonObject jsonD = new JsonObject();
+                        jsonD.addProperty("hechos", realizados);
+                        jsonD.addProperty("noHechos", faltante);
+                        request.setAttribute("esemiJSON", jsonD);
+                        
+                        //a hacer la segunda grafica pero para una division
+                        int id_empD = 0;
+                        int docsTotales = 0;
+                        int docsDivision = 0;
+                        D_Documento doc = new D_Documento();
+                        
+                        
+                        id_empD = emp.getIDEmpresa();
+                        if(id_empD != 0){
+                            ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                            ArrayList<D_Documento> documentos = new ArrayList<D_Documento>();
+                            equipos = Equipo.obtenerAllEquipos( id_empD );
+                            
+                            if (equipos.isEmpty()){
+                                response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                            } else {
+                                for (int i = 0; i < equipos.size(); i++) {
+                                    documentos = doc.consultarDocByEquipo(equipos.get(i).getIDEquipo());
+                                    
+                                    for (int j = 0; j < documentos.size(); j++) {
+                                        docsTotales += 1;
+                                        String fechaaux = documentos.get(j).getFecha();
+                                        Date fecha_aux = sdf.parse(fechaaux);
+                                        
+                                        //esta fecha debe ser mayor o igual a la fecha1 y menor o igual a fecha2
+                                        int aux_ini = fecha_aux.compareTo(fecha1);
+                                        int aux_fin = fecha_aux.compareTo(fecha2);
+                                        if (aux_ini >= 0 && aux_fin <=0){
+                                            //aparte ahora hay que revisar si el documento es de la division que queremos consultar
+
+                                            int tempIdE = equipos.get(i).getIDDivision();
+                                            if (tempIdE == id_divi){
+                                                docsDivision += 1;
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        System.out.println("Los documentos hechos por la division son "+docsDivision);
+                        JsonObject jsonDoc = new JsonObject();
+                        jsonDoc.addProperty("empresa", docsTotales);
+                        jsonDoc.addProperty("equipo", docsDivision);
+                        request.setAttribute("JSONDocumentos", jsonDoc);
+                        
+                        //
+                        //PARA LA ULTIMA GRAFICA (LA ULTIMA QUE HICE, NO LA ULTIMA EN VISTA XD)
+                        int id_empresaX = 0;
+                        int cuantosDocumentosEX = 0;
+                        int docsParaEquipoX = 0;
+                        doc = new D_Documento();
+                        ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                        equipos = Equipo.obtenerAllEquipos( id_empD );
+                        
+                        // HttpSession sesionUser = request.getSession();
+                        // Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+                         id_empresaX = emp.getIDEmpresa(); //aqui me regresa el valor del ID empresa
+                         System.out.println("El id de la empresa es "+id_empresaX);
+                         if (id_empresaX != 0){
+                             //continua
+                             //ahora necesito obtener todos los id de los equipos de la empresa
+                          //   ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                             ArrayList<D_Documento> documentos = new ArrayList<D_Documento>();
+                             equipos = Equipo.obtenerAllEquipos( id_empresaX );
+                             int cuantosEquipos = 0;
+                             if (equipos.isEmpty()){
+                                 //hay que cambiar esto para mandar un ALERT para que diga no hay tims xd
+                                 response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                             return;
+                             } else {
+                                 cuantosEquipos = equipos.size();
+                                 //ya tengo los equipos, ahora tengo que consultar los documentos de cada equipo
+                                 for (int i = 0; i < cuantosEquipos; i++) {
+                                     documentos = doc.consultarDocByEquipo(equipos.get(i).getIDEquipo());
+                                     //ya que obtuve los documentos de un equipo, tengo que sumar cada vez que haya un doc
+                                     for (int j = 0; j < documentos.size(); j++) {
+                                         cuantosDocumentosEX += 1; // al final de esta secuencia debería tener el total de docs
+                                         //primero hay que revisar que el documento se haya subido entre las fechas elegidas
+                                         String fechaaux = documentos.get(j).getFecha();
+                                         Date fecha_aux = sdf.parse(fechaaux);
+
+                                         //esta fecha debe ser mayor o igual a la fecha1 y menor o igual a fecha2
+                                         int aux_ini = fecha_aux.compareTo(fecha1);
+                                         int aux_fin = fecha_aux.compareTo(fecha2);
+                                         if (aux_ini >= 0 && aux_fin <=0){
+                                                 docsParaEquipoX += 1;
+                                         }
+                                     }
+
+                                 }
+                                 JsonObject jsonDocE = new JsonObject();
+                                 jsonDocE.addProperty("empresa", cuantosDocumentosEX);
+                                 jsonDocE.addProperty("equipo", docsParaEquipoX);
+                                 request.setAttribute("JSONDocumentosE", jsonDocE);
+                             }
+                         } else  {
+                             response.sendRedirect("error.jsp");
+                             System.out.println("NO HAY ID EMPRESA WEEEEE");
+                             return;
+                         } 
+                         
+                        JsonObject jsonFechas = new JsonObject();
+                                 jsonFechas.addProperty("inicio", fechaxd);
+                                 jsonFechas.addProperty("fin", fechax);
+                                 request.setAttribute("JSONFechas", jsonFechas); 
+                        RequestDispatcher rd;
+                        rd = request.getRequestDispatcher("/Estadisticas_Directivo.jsp");
+                        rd.forward(request, response); 
+                    } else {
+                        //para la que ahora será la primera dona 
+                        //estamos en el caso de que es un team, pero eso en realidad no importa
+                        //debo consultar todos los flujos para los equipos de la empresa
+                        int id_empD = 0;
+                        id_empD = emp.getIDEmpresa();
+                        ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                        equipos = Equipo.obtenerAllEquipos( id_empD );
+                        
+                        
+                        FlujoDeTrabajo fl = new FlujoDeTrabajo();
+                        
+                        if (equipos.isEmpty()){
+                            response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                        } 
+                        for (int i = 0; i < equipos.size(); i++) {
+                            ArrayList<FlujoDeTrabajo> fluj = fl.consultarFlujosEmpleado(equipos.get(i).getIDEquipo());
+                            if(fluj.isEmpty()){
+                                response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                            }
+                            for (int j = 0; j < fluj.size(); j++) {
+                                cantFlujos2 += 1;
+                                if (fluj.get(j).isEntregado()){
+                                    flujosHechos +=1;
+                                }
+                            }
+                        }
+                        int ff = cantFlujos2 - flujosHechos2;
+                        
+                        String finish2 = String.valueOf(flujosHechos2);
+                        String finishnt2 = String.valueOf(ff);
+                        
+                        JsonObject jsonAEm = new JsonObject();
+                        jsonAEm.addProperty("hechos", finish2);
+                        jsonAEm.addProperty("noHechos", finishnt2);
+                        request.setAttribute("JSONAEm", jsonAEm);
+                        //esto fue para la dona xd
+                        //sencillo, esto significa que es un equipo, por lo que la consulta se hace más simple
+                        int id_equipo = Integer.parseInt(division);
+                        
+                        FlujoDeTrabajo f = new FlujoDeTrabajo();
+                        ArrayList<FlujoDeTrabajo> flujos = f.consultarFlujosEmpleado(id_equipo);
+                        
+                        if (flujos.isEmpty()){ //con esto evitamos que si es nulo haga algo, maybe tendria que hacer otra pestaña de error
+                            response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                        }
+                        
+                        for (int i = 0; i < flujos.size(); i++) {
+                            cantFlujos += 1; //con esto obtendré el numero total de flujos realizados
+                            if (flujos.get(i).isEntregado() == true){
+                                flujosHechos += 1;
+                            }
+                        }
+                        //para comprobar
+                        System.out.println("Los flujos totales son " + cantFlujos);
+                        System.out.println("Los flujos hechos del equipo son " + flujosHechos);
+                        //en teoria it works 
+                        //ahora viene lo hardcore, tengo que hacer que estos datos se pasen a la grafica, dona1xd
+                        //request.setAttribute("totales", cantFlujos);
+                        //request.setAttribute("noHechos", cantFlujos-flujosHechos);
+                        //request.setAttribute("hechos", flujosHechos);
+                        int no = cantFlujos - flujosHechos;
+                        
+                        String finish = String.valueOf(flujosHechos);
+                        String finishnt = String.valueOf(no);
+                        
+                        JsonObject json = new JsonObject();
+                        json.addProperty("hechos", finish);
+                        json.addProperty("noHechos", finishnt);
+                        request.setAttribute("esemiJSON", json);
+                        
+                        //AQUI VA PARA ARCHIVOS SUBIDOS EN LA SECCION DE EQUIPO
+                        int id_empresa = 0;
+                        int cuantosDocumentosE = 0;
+                        int docsParaEquipo = 0;
+                        D_Documento doc = new D_Documento();
+                        
+                       // HttpSession sesionUser = request.getSession();
+                       // Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+                        id_empresa = emp.getIDEmpresa(); //aqui me regresa el valor del ID empresa
+                        System.out.println("El id de la empresa es "+id_empresa);
+                        if (id_empresa != 0){
+                            //continua
+                            //ahora necesito obtener todos los id de los equipos de la empresa
+                         //   ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                            ArrayList<D_Documento> documentos = new ArrayList<D_Documento>();
+                            equipos = Equipo.obtenerAllEquipos( id_empresa );
+                            int cuantosEquipos = 0;
+                            if (equipos.isEmpty()){
+                                //hay que cambiar esto para mandar un ALERT para que diga no hay tims xd
+                                response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                            } else {
+                                cuantosEquipos = equipos.size();
+                                //ya tengo los equipos, ahora tengo que consultar los documentos de cada equipo
+                                for (int i = 0; i < cuantosEquipos; i++) {
+                                    documentos = doc.consultarDocByEquipo(equipos.get(i).getIDEquipo());
+                                    //ya que obtuve los documentos de un equipo, tengo que sumar cada vez que haya un doc
+                                    for (int j = 0; j < documentos.size(); j++) {
+                                        cuantosDocumentosE += 1; // al final de esta secuencia debería tener el total de docs
+                                        //primero hay que revisar que el documento se haya subido entre las fechas elegidas
+                                        String fechaaux = documentos.get(j).getFecha();
+                                        Date fecha_aux = sdf.parse(fechaaux);
+                                        
+                                        //esta fecha debe ser mayor o igual a la fecha1 y menor o igual a fecha2
+                                        int aux_ini = fecha_aux.compareTo(fecha1);
+                                        int aux_fin = fecha_aux.compareTo(fecha2);
+                                        if (aux_ini >= 0 && aux_fin <=0){
+                                            //aparte ahora hay que revisar si el documento es del equipo que queremos consultar
+                                            if (documentos.get(j).getEquipo_ID_Equipo() == id_equipo){
+                                                docsParaEquipo += 1;
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                System.out.println("Los documentos para la empresa son "+cuantosDocumentosE);
+                                System.out.println("Los documentos para el equipo son " + docsParaEquipo);
+                                JsonObject jsonDoc = new JsonObject();
+                                jsonDoc.addProperty("empresa", cuantosDocumentosE);
+                                jsonDoc.addProperty("equipo", docsParaEquipo);
+                                request.setAttribute("JSONDocumentos", jsonDoc);
+                            }
+                        } else  {
+                            response.sendRedirect("error.jsp");
+                            System.out.println("NO HAY ID EMPRESA WEEEEE");
+                            return;
+                        }
+                        
+                        //PARA LA ULTIMA GRAFICA (LA ULTIMA QUE HICE, NO LA ULTIMA EN VISTA XD)
+                        id_empresa = 0;
+                        cuantosDocumentosE = 0;
+                        docsParaEquipo = 0;
+                        doc = new D_Documento();
+                        
+                       // HttpSession sesionUser = request.getSession();
+                       // Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+                        id_empresa = emp.getIDEmpresa(); //aqui me regresa el valor del ID empresa
+                        System.out.println("El id de la empresa es "+id_empresa);
+                        if (id_empresa != 0){
+                            //continua
+                            //ahora necesito obtener todos los id de los equipos de la empresa
+                         //   ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+                            ArrayList<D_Documento> documentos = new ArrayList<D_Documento>();
+                            equipos = Equipo.obtenerAllEquipos( id_empresa );
+                            int cuantosEquipos = 0;
+                            if (equipos.isEmpty()){
+                                //hay que cambiar esto para mandar un ALERT para que diga no hay tims xd
+                                response.sendRedirect("Stats_Directivo.jsp?noteam=bad");
+                            return;
+                            } else {
+                                cuantosEquipos = equipos.size();
+                                //ya tengo los equipos, ahora tengo que consultar los documentos de cada equipo
+                                for (int i = 0; i < cuantosEquipos; i++) {
+                                    documentos = doc.consultarDocByEquipo(equipos.get(i).getIDEquipo());
+                                    //ya que obtuve los documentos de un equipo, tengo que sumar cada vez que haya un doc
+                                    for (int j = 0; j < documentos.size(); j++) {
+                                        cuantosDocumentosE += 1; // al final de esta secuencia debería tener el total de docs
+                                        //primero hay que revisar que el documento se haya subido entre las fechas elegidas
+                                        String fechaaux = documentos.get(j).getFecha();
+                                        Date fecha_aux = sdf.parse(fechaaux);
+                                        
+                                        //esta fecha debe ser mayor o igual a la fecha1 y menor o igual a fecha2
+                                        int aux_ini = fecha_aux.compareTo(fecha1);
+                                        int aux_fin = fecha_aux.compareTo(fecha2);
+                                        if (aux_ini >= 0 && aux_fin <=0){
+                                                docsParaEquipo += 1;
+                                        }
+                                    }
+                                    
+                                }
+                                JsonObject jsonDocE = new JsonObject();
+                                jsonDocE.addProperty("empresa", cuantosDocumentosE);
+                                jsonDocE.addProperty("equipo", docsParaEquipo);
+                                request.setAttribute("JSONDocumentosE", jsonDocE);
+                            }
+                        } else  {
+                            response.sendRedirect("error.jsp");
+                            System.out.println("NO HAY ID EMPRESA WEEEEE");
+                            return;
+                        }
+                        
+                        JsonObject jsonFechas = new JsonObject();
+                                 jsonFechas.addProperty("inicio", fechaxd);
+                                 jsonFechas.addProperty("fin", fechax);
+                                 request.setAttribute("JSONFechas", jsonFechas); 
+                        
+                        RequestDispatcher rd;
+                        rd = request.getRequestDispatcher("/Estadisticas_Directivo.jsp");
+                        rd.forward(request, response);
+                    }
                     break;
                 case 3:
                     

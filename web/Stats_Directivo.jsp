@@ -1,9 +1,8 @@
 <%-- 
-    Document   : Stats_Admin
-    Created on : 13/05/2021, 08:33:23 AM
+    Document   : Stats_Directivo
+    Created on : 1/06/2021, 07:07:58 AM
     Author     : Uzías
 --%>
-
 <%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
@@ -43,7 +42,7 @@
 <html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html">
-        <title>Estadisticas - Administrador</title>
+        <title>Estadisticas - Directivo</title>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         

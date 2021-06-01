@@ -227,7 +227,6 @@
               labels: ['Archivos']
             });
         </script>
-              <script src="JS/graficas_estadisticas.js"></script>
     </body>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>
