@@ -29,6 +29,7 @@
                     
                     response.sendRedirect("inicio_sesion.jsp");
                 }
+               
                 if(liderDiv.getiD_cat_priv() != 3) response.sendRedirect("error.jsp");
                 equipos = Equipo.obtenerEquipos(liderDiv.getiD_Division());
             }catch(Exception e){

@@ -39,15 +39,15 @@ public class Message {
     
 
     
-/*
-    public Message(int id, String message, String name, int sala, String created_at) {
+
+    public Message(int id, String message, int sala, String created_at,String name) {
         this.id = id;
         this.message = message;
         this.name = name;
         this.sala = sala;
         this.created_at = created_at;
 
-    }*/
+    }
 
     public int getId() {
         return id;

@@ -4,14 +4,19 @@
     Author     : Uzías
 --%>
 
+<%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%
+    
     HttpSession sesion = request.getSession();
     ArrayList<Division> divisiones = new ArrayList<Division>();
+    ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+    int id_userxd = -1;
+    int id_privilegio = 0;
     
     //para que no explote (o eso espero)
     try {
@@ -20,13 +25,17 @@
             response.sendRedirect("inicio_sesion.jsp");
         } else {
             divisiones = Division.obtenerDivisiones( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
-            int id_userxd = usuario.getIDUsuarioE(); //aqui me quede xd
+            equipos = Equipo.obtenerAllEquipos( ((Empresa)sesion.getAttribute("empresa")).getIDEmpresa() );
+            id_userxd = usuario.getIDUsuarioE(); //aqui me quede xd
+            if (id_userxd > -1){
+                id_privilegio = usuario.getiD_cat_priv();
+            }
         }
     } catch (Exception e){
         e.getMessage();
         e.printStackTrace();
         response.sendRedirect("error.jsp");
-    }
+    } 
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -49,34 +58,44 @@
         <center><h1>Estadisticas</h1></center>
         <!-- POr si hay error de fechas  -->
         <% 
-        String posibleError = request.getParameter("fecha");    
-            if (posibleError.equals("bad")){
+        try {
+            String posibleError = request.getParameter("fecha");
+            if(posibleError.equals("bad")){
         %>
         <div class="alertaxd">
             <div class="alert alert-dismissible alert-warning">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 <h4 class="alert-heading">¡Ups!</h4>
                 <p class="mb-0">Por favor asegurate de elegir las fechas de manera correcta</p>
             </div>
         </div>
         <%
             }
+        } catch (NullPointerException f){
+            System.out.println("Finisimo, esto es lo que debe pasar, no hay variables en la url");
+        }
         %>
+        
         <!-- POr si hay error de seleccion (la dejó en "blanco" -->
         <% 
-        String posibleError2 = request.getParameter("opcion");    
-            if (posibleError2.equals("bad")){
+        try {
+         String posibleError2 = request.getParameter("opcion");    
+          if (posibleError2.equals("bad")){
         %>
         <div class="alertaxd">
             <div class="alert alert-dismissible alert-warning">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 <h4 class="alert-heading">¡Ups!</h4>
                 <p class="mb-0">Por favor asegurate de elegir una división o equipo</p>
             </div>
         </div>
         <%
-            }
+              
+          }
+        } catch(NullPointerException f){
+          System.out.println("Fino señores, es normal xd");      
+        }
+            
         %>
+        
         
         
         <!-- 
@@ -103,16 +122,33 @@
                             
                             <!-- Aqui van a ir los parametros invisibles, el id del usuario y el de la empresa -->
                             <input type="hidden" name="empresa_id" value="">
-                            <input type="hidden" name="usuario_id" value="">
+                            <input type="hidden" name="usuario_id" value="<%= id_userxd %>">
+                            <input type="hidden" name="privilegio_id" value="<%= id_privilegio %>">
                     </div>
                     <div class="col-5">
                         <h2>División o equipo</h2>
-                        <select id="eleccion" name="seleccionxd">
+                        <select id="eleccion" name="seleccion">
                             <option value="defaultxd">Seleccione una</option>
                             <% 
                             //aqui debe ir el for para imprimir las divisiones y equipos
                             //<option value="?">?</option>
+                            for (int x=0; x < divisiones.size(); x++){
+                                Division division = divisiones.get(x);
+                                int temp = division.getId_Division();
                             %>
+                                <option value='DI3<%=division.getId_Division() %>'><%=division.getNombre()%></option>
+                            <%
+                            }
+                            %>
+                            <!-- Aqui es para poner los equipos xd -->
+                             <% 
+                                for (int i=0; i<equipos.size(); i++){
+                                    Equipo eq = equipos.get(i);
+                                %>
+                                <option value="<%= eq.getIDEquipo()%>"><%= eq.getNombre()%></option>
+                                <%
+                                }
+                                %>
                         </select> <br>
                         <button type="submit" class="btn-dark">Generar graficas</button>
                     </div>

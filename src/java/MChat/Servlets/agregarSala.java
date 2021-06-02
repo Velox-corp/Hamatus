@@ -77,7 +77,7 @@ public class agregarSala extends HttpServlet {
                 MessageModel mm = new MessageModel();
                 
                 //String jsonObject = new Gson().toJson(mm.get(idsla, id_user));
-                String jsonObject = new Gson().toJson(mm.get());
+               // String jsonObject = new Gson().toJson(mm.get());
                 //response.getWriter().write(jsonObject);
                 //response.sendRedirect("Mensajes.jsp");
                //response.sendRedirect("latest_messages?json="+jsonObject);
