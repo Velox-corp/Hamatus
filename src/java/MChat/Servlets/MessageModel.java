@@ -43,28 +43,27 @@ public class MessageModel {
         return nombre;
     }
 
-    public ArrayList<Message> get() {
+    public ArrayList<Message> get(int idsala) {
         //int idsala, int id_user
         ArrayList<Message> messages = new ArrayList<>();
 
         try {
             con = Conexion.obtenerConexion();
             ps = con.prepareStatement //("SELECT idMensaje, contenido, id_usuario, id_sala, DATE_FORMAT(fecha_envio, '%d-%m-%y a las %h:%i:%s %p') as date FROM mensaje ORDER BY fecha_envio ASC LIMIT 100 ");
-                    ("SELECT idMensaje,"
+            /*        ("SELECT idMensaje,"
                             + " contenido,"
                             + " (Select Nombre from usuario_empleado where ID_Usuario_E=id_usuario) as nombre,"
                             + " id_sala,"
                             + " DATE_FORMAT(fecha_envio, '%d-%m-%y a las %h:%i:%s %p') as date \n"
                             + "FROM mensaje ORDER BY fecha_envio ASC LIMIT 100;");
-            /*
-        ("SELECT idMensaje, "
+            */
+                    ("SELECT idMensaje, "
                     + "contenido, "
-                    + "id_usuario,"
-                    + "(Select Nombre from usuario_empleado where ID_Usuario_E="+id_user+") as usuarioname,"
+                    + "(Select Nombre from usuario_empleado where ID_Usuario_E=id_usuario) as nombre,"
                     + " id_sala,"
                     + " DATE_FORMAT(fecha_envio, '%d-%m-%y a las %h:%i:%s %p') as date "
                     + "FROM mensaje where id_sala="+idsala+" ORDER BY fecha_envio ASC LIMIT 100 ;");
-             */
+             
             rs = ps.executeQuery();
 
             while (rs.next()) {

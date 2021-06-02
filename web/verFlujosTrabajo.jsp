@@ -10,6 +10,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MUsuarios.clases.Empresa"%>
+<%@page import="java.io.File"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 <!DOCTYPE html>
 <html lang='es'>
@@ -22,6 +23,12 @@
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
         <%
+            String carpetaEv = request.getServletContext().getRealPath("/");
+            File capEv = new File(carpetaEv+"/evidencias");
+            if(!capEv.exists()){
+                capEv.mkdirs();
+            }
+            
             HttpSession sesion;
             UsuarioEmpleado empleado = null;
             ArrayList<FlujoDeTrabajo> flujos = new ArrayList<FlujoDeTrabajo>();
@@ -77,12 +84,7 @@
             }
             
         %>
-        
-        <div class='row'>
-            <div class='col-md-12 align-items-center'>
-                <h2 class="align-items-center text-center">Flujos de trabajo</h2> 
-            </div>
-        </div>
+        <center><h1>Flujos de trabajo</h1></center>
         <main class='container margin-top-1rem'>
             
         <% if(flujos.isEmpty()){ %>
@@ -112,7 +114,7 @@
                             <div class="card">
                                 <div class="card-header text-white bg-dark h4 " >
                                     <div class='row text-center'>
-                                        <span clas='col-md-12'><%=d.getNombre()%>: <%=e.getNombre()%></span>
+                                        <span clas='col-md-12'>&nbsp;&nbsp;<%=d.getNombre()%>: <%=e.getNombre()%></span>
                                     </div>
                                     <div class='row'>
                                         <div class="col-md-6 text-left">

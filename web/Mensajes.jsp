@@ -29,7 +29,7 @@
     </head>
     <body>
         <div class="row ">
-            <div class="col-md-4 chat-box ">
+            <div class="col-md-6 chat-box ">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         

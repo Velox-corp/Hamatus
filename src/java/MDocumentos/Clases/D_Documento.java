@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -152,6 +153,45 @@ public class D_Documento implements Serializable {
                 exe.getStackTrace();
             }
         }
+    }
+    
+    public static ArrayList<D_Documento> consultarDocByEquipo(int id_equipo){
+        ArrayList<D_Documento> docs = new ArrayList<D_Documento>();
+        try {
+            con = Conexion.obtenerConexion();
+            String q = "SELECT * FROM d_Documento WHERE equipo_id_equipo = ?";
+            ps = con.prepareStatement(q);
+            ps.setInt(1, id_equipo);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                D_Documento ddoc = new D_Documento();
+                ddoc.setFecha(AES.descifrar(rs.getBytes("fecha_subida"), 4));
+                ddoc.setEquipo_ID_Equipo(rs.getInt("Equipo_ID_Equipo"));
+                ddoc.setFolio(AES.descifrar(rs.getBytes("Folio"), 4));
+                ddoc.setHora(AES.descifrar(rs.getBytes("hora_subida"), 4));
+                ddoc.setID_Documento(rs.getInt("ID_Documento"));
+                ddoc.setId_MDocumento(rs.getInt("Id_MDocumento"));
+                ddoc.setId_tipo_acceso(rs.getInt("Id_tipo_acceso"));
+                ddoc.setNombre(AES.descifrar(rs.getBytes("Nombre"), 4));
+                ddoc.setPass(AES.descifrar(rs.getBytes("Password"), 4));
+                ddoc.setRuta(AES.descifrar(rs.getBytes("Ruta"), 4));
+                ddoc.setEs_evidencia_flujo(rs.getInt("es_evidencia_flujo"));
+                ddoc.setId_cat_clasif_doc(rs.getInt("id_cat_clasif_doc"));
+                docs.add(ddoc);
+            }
+        } catch(SQLException ex){
+            System.out.println("El sql explotó en D_Documento");
+            docs = null;
+        }finally{
+            try {
+                con.close();
+                ps.close();
+                rs.close();
+            } catch (SQLException ex) {
+                System.out.println("El sql explotó en D_Documento");
+            } 
+        }
+        return docs;
     }
     
     /**

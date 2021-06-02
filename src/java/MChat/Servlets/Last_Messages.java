@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import MChat.Servlets.agregarSala;
 /**
  *
  * @author roberto
@@ -39,10 +39,14 @@ public class Last_Messages extends HttpServlet {
         response.setContentType("application/json");
         
         HttpSession sesion = request.getSession();
-        int id_user=((UsuarioEmpleado)sesion.getAttribute("usuario")).getIDUsuarioE();
+        //int id_user=((UsuarioEmpleado)sesion.getAttribute("usuario")).getIDUsuarioE();
+        int idsla=(int) sesion.getAttribute("idsla");
+        System.out.println("Donde sala es: "+idsla);
+        //int id_contacto = ((int) request.getServletContext().getAttribute("id_contacto"))-1;
         MessageModel mm = new MessageModel();
         //String jsonObject=request.getParameter("json");
-        String jsonObject = new Gson().toJson(mm.get());
+        String jsonObject = new Gson().toJson(mm.get(idsla));
+        //agregarSala as = new agregarSala();
         response.getWriter().write(jsonObject);
         //response.sendRedirect("Mensajes.jsp");
     
