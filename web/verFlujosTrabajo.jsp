@@ -10,6 +10,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page import="MUsuarios.clases.Empresa"%>
+<%@page import="java.io.File"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" session="true"%>
 <!DOCTYPE html>
 <html lang='es'>
@@ -22,6 +23,12 @@
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
         <%
+            String carpetaEv = request.getServletContext().getRealPath("/");
+            File capEv = new File(carpetaEv+"/evidencias");
+            if(!capEv.exists()){
+                capEv.mkdirs();
+            }
+            
             HttpSession sesion;
             UsuarioEmpleado empleado = null;
             ArrayList<FlujoDeTrabajo> flujos = new ArrayList<FlujoDeTrabajo>();
