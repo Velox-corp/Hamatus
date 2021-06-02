@@ -77,12 +77,7 @@
             }
             
         %>
-        
-        <div class='row'>
-            <div class='col-md-12 align-items-center'>
-                <h2 class="align-items-center text-center">Flujos de trabajo</h2> 
-            </div>
-        </div>
+        <center><h1>Flujos de trabajo</h1></center>
         <main class='container margin-top-1rem'>
             
         <% if(flujos.isEmpty()){ %>
@@ -112,7 +107,7 @@
                             <div class="card">
                                 <div class="card-header text-white bg-dark h4 " >
                                     <div class='row text-center'>
-                                        <span clas='col-md-12'><%=d.getNombre()%>: <%=e.getNombre()%></span>
+                                        <span clas='col-md-12'>&nbsp;&nbsp;<%=d.getNombre()%>: <%=e.getNombre()%></span>
                                     </div>
                                     <div class='row'>
                                         <div class="col-md-6 text-left">

@@ -123,11 +123,12 @@
                         } %>
                     </tbody>
                 </table>
+                    <hr>
                     <br><% if(user.getiD_cat_priv() == 1){ %>
                     <a class='text-center btn btn-dark' href='Administrador_new.jsp'>Agregar más Usuarios</a>
                             <% }%>
             </div>
-        </div>
+        </div><br>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>
