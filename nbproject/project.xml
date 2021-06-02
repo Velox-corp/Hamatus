@@ -55,6 +55,9 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (bb9caa7) - Preparando para deploy}</file>
+                </library>
+                <library dirs="200">
                     <file>${file.reference.gson-2.7.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
