@@ -48,6 +48,15 @@ public class Message {
         this.created_at = created_at;
 
     }
+    
+    public Message(String message, int sala, String created_at,String name) {
+        this.id = id;
+        this.message = message;
+        this.name = name;
+        this.sala = sala;
+        this.created_at = created_at;
+
+    }
 
     public int getId() {
         return id;
@@ -104,6 +113,7 @@ public class Message {
         jo.addProperty("id", this.getId());
         jo.addProperty("id_sala", this.getSala());
         jo.addProperty("id_usuario", this.getId_user());
+        jo.addProperty("name", this.getName());
         jo.addProperty("message", this.getMessage());
         jo.addProperty("created_at", this.getCreated_at());
         

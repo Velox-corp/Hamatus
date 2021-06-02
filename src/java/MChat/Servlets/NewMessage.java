@@ -42,18 +42,20 @@ public class NewMessage extends HttpServlet {
         Date date = new Date(); 
         
         Message msg = new Message(message, id_user, sala, dateFormat.format(date));
+        Message msg1 = new Message(message, sala, dateFormat.format(date), name);
         
         mm.create(msg);
         
         DateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yy 'a las' hh:mm:ss a");
         msg.setCreated_at(dateFormat2.format(date));
+        msg1.setCreated_at(dateFormat2.format(date));
         
         Pusher pusher = new Pusher("1201370", "78f597b507c09cc4229c", "52fece1045d7512aa1fc");
         pusher.setCluster("us2");
         //pusher.setEncrypted(true);
 
         //pusher.trigger("my-channel", "my-event",msg.getJsonObject());
-        pusher.trigger("chat", "new-message",msg.getJsonObject());
+        pusher.trigger("chat", "new-message",msg1.getJsonObject());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
