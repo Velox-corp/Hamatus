@@ -49,42 +49,75 @@ public class agregarSala extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("application/json");
-        PrintWriter out = response.getWriter(); 
+        //PrintWriter out = response.getWriter();
 
         HttpSession sesion = request.getSession();
         int idsla = 0;
+        int id_contacto=0;
         boolean proceso_nice = true;
         String redirect = "";
-        
+
+        int id_user = ((UsuarioEmpleado) sesion.getAttribute("usuario")).getIDUsuarioE();
+        //int privilegio=Integer.parseInt(request.getParameter("priv"));
+        id_contacto=Integer.parseInt(request.getParameter("id_contacto"));
+       // int id_contacto= ((int) request.getServletContext().getAttribute("id_contacto"))-1;
+        System.out.println("Contacto:"+id_contacto);
+        //int id_contacto = Integer.parseInt(request.getParameter("id_contacto"));
+        System.out.println("user:" + id_user);
+        int id_sala_tipo = Integer.parseInt(request.getParameter("id_sala_tipo"));
+        String jsonObject = "";
 
         try {
             // processRequest(request, response);
-            
 
-            //int id_user=((UsuarioEmpleado)sesion.getAttribute("usuario")).getIDUsuarioE();
             UsuarioSala newRelacion = new UsuarioSala();
 
             try {
 
-                int id_user =  Integer.parseInt(request.getParameter("id_usuario"));
-       
-        int id_contacto = Integer.parseInt(request.getParameter("id_contacto"));
-        int id_sala_tipo = Integer.parseInt(request.getParameter("id_sala_tipo"));
                 Sala sala = new Sala();
-                idsla = newRelacion.existe(id_user, id_contacto, id_sala_tipo);
-                System.out.println(idsla);
-               
-                MessageModel mm = new MessageModel();
-                
+
+                if (id_sala_tipo == 1) {
+                    idsla = newRelacion.existe(
+                            ((UsuarioEmpleado) sesion.getAttribute("usuario")).getIDUsuarioE(),
+                            (id_contacto ));
+
+                    if (idsla == 0) {
+
+                        sala.crearSala(1);
+                        newRelacion.insertSalaUser(id_user);
+                        newRelacion.insertSalaContacto(id_contacto );
+                        idsla = newRelacion.num_salas().get(newRelacion.num_salas().size()-1);
+
+                    } else if (idsla != 0) {
+                        newRelacion.existe(
+                            ((UsuarioEmpleado) sesion.getAttribute("usuario")).getIDUsuarioE(),
+                            (id_contacto ));
+                    }
+                }else if(id_sala_tipo == 2){
+                    /*if(privilegio==3){
+                        
+                    }else if(privilegio==4){
+                        
+                    }*/
+                    //System.out.println("ID EQUIPO: "+request.getServletContext().getAttribute("id_contacto"));
+                    idsla=newRelacion.salaEquipoLider(2, 
+                            ((UsuarioEmpleado) sesion.getAttribute("usuario")).getIDUsuarioE(),
+                            (id_contacto));
+                    System.out.println("La Sala grupal es: "+idsla);
+                }
+
+                //mostrarmensajes(request,response);
+                //MessageModel mm = new MessageModel();
                 //String jsonObject = new Gson().toJson(mm.get(idsla, id_user));
-               // String jsonObject = new Gson().toJson(mm.get());
-                //response.getWriter().write(jsonObject);
-                //response.sendRedirect("Mensajes.jsp");
-               //response.sendRedirect("latest_messages?json="+jsonObject);
+                //out.println(jsonObject);
+                //getServletContext().setAttribute("id_contacto", id_contacto);
+                System.out.println(idsla);
                 request.getSession().setAttribute("idsla", idsla);
                 RequestDispatcher view = request.getRequestDispatcher("Mensajes.jsp");
-                
                 view.forward(request, response);
+
+                //jsonObject = new Gson().toJson(mm.get(idsla));
+                //response.getWriter().print(jsonObject);
             } catch (NullPointerException e) {
                 System.out.println(e);
             }
@@ -104,7 +137,8 @@ public class agregarSala extends HttpServlet {
             System.out.println("algo ha pasado");
             //redirect = "error.jsp";
         }
-        
+
+
     }
 
     /**
@@ -135,4 +169,14 @@ public class agregarSala extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    /*  private void mostrarmensajes(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.setContentType("application/json");
+            MessageModel mm = new MessageModel();
+            String jsonObject = new Gson().toJson(mm.get());
+            response.getWriter().println(jsonObject);
+        } catch (IOException ex) {
+            Logger.getLogger(agregarSala.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
 }
