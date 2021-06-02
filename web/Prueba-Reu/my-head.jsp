@@ -18,11 +18,11 @@
         </div>
     </div>
     <div class="row">
-            <div class="col-md-12 nav center-block justify-content-center">
-                <a class="nav-item nav-link btn1" href="index.jsp">Inicio<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link btn1" href="tutorial.jsp">¿Como funciona?</a>
-                <a class="nav-item nav-link btn1" href="alcance.jsp">Alcance</a>
-                <a class="nav-item nav-link btn1" href="nosotros.jsp">Acerca de nosotros</a>
-            </div>
+        <div class="col-md-12 nav center-block justify-content-center">
+            <a class="nav-item nav-link btn1 nav1" href="index.jsp">Inicio<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link btn1 nav1" href="tutorial.jsp">¿Como funciona?</a>
+            <a class="nav-item nav-link btn1 nav1" href="alcance.jsp">Alcance</a>
+            <a class="nav-item nav-link btn1 nav1" href="nosotros.jsp">Acerca de nosotros</a>
+        </div>
     </div>
 </header>

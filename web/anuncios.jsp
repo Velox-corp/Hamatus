@@ -51,7 +51,8 @@
                   
                             <% if(anuncios.isEmpty()){ %>
                                 <div class='row  justify-content-center'>
-                                    <div class='col-md-6 card align-items-center text-white' style="background-color: #2291C1">
+                                    <br>
+                                    <div class='col-md-6 card align-items-center cb'>
                                         <h5 class='card-header text-capitalize'>¡No Hay Anuncios publicados!</h5>
 
                                         <div class='card-body'>
@@ -60,7 +61,7 @@
                                             </article>
                                         </div>
                                     </div>
-                                </div>
+                                </div><br><br><br>
                             <% } else{
                              for (int i = 0; i < anuncios.size(); i++) {
                                 Anuncio ad = anuncios.get(i);
@@ -96,10 +97,7 @@
                             <a href="tablon.jsp"  class="btn btn-primary">Agregar Nuevo</a>
                         <% }
                         }%> 
-        </main>
-        
-        <jsp:include page="Prueba-Reu/my-footer.jsp" />
-        
+        </main>       
     </body>
-    
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>
