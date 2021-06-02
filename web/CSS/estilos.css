@@ -577,3 +577,27 @@ img.per{
 #saltito {
     margin-top: 1rem;
 }
+
+/*-------------------------------------------*/
+/*Nav 2.0*/
+
+.nav1 {
+  padding-right: 8vh;
+  padding-left: 8vh;
+}
+
+.sub2 {
+    font-family: Graphik,sans-serif;
+    background-color: #303031;
+    color: #FFFFFF;
+    padding: 15%;
+    padding-right: 20vh;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.cb {
+    border-radius: 15px;
+    background-color: #E6E6E6;
+    padding: 1rem;
+}

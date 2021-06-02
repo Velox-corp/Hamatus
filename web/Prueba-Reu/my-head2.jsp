@@ -94,16 +94,16 @@
                             <li><a href="empresa.jsp" class="nav-item nav-link btn1">Mi empresa</a></li>
                             <li><a href="" class="nav-item nav-link btn1">Organigrama</a>
                                 <ul>
-                                    <li><a href="divisiones.jsp" class="sub">Divisiones</a></li>
-                                    <li><a href="verEquipos.jsp" class="sub">Equipos</a></li>
-                                    <li><a href="verFlujosTrabajo.jsp" class="sub">Ver Flujos de trabajo</a></li>
+                                    <li><a href="divisiones.jsp" class="sub2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Divisiones</a></li>
+                                    <li><a href="verEquipos.jsp" class="sub2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equipos</a></li>
+                                    <li><a href="verFlujosTrabajo.jsp" class="sub2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ver <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flujos <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;de <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trabajo</a></li>
                                 </ul>
                             </li>
                             <li><a href="docs2.jsp" class="nav-item nav-link btn1">Documentos</a></li>
                             <li><a class="nav-item nav-link btn1">Empleados</a>
                                 <ul>
-                                    <li><a href="Administrador_new.jsp" class='sub'>Agregar Empleados</a></li>
-                                    <li><a href="verUsuarios.jsp" class='sub' >Ver Empleados</a></li>
+                                    <li><a href="Administrador_new.jsp" class='sub2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agregar <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empleados</a></li>
+                                    <li><a href="verUsuarios.jsp" class='sub2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ver <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empleados</a></li>
                                 </ul>
                             </li>
                             <li><a href="Chat.jsp" class="nav-item nav-link btn1">Chat</a></li>
