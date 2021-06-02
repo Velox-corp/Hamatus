@@ -22,7 +22,7 @@
     </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-
+        <center><h1>Chat</h1></center>
         <%  HttpSession sesionUser = request.getSession();
             HttpSession sesion;
             boolean sonTotales = false;
@@ -238,9 +238,8 @@
 
                 </div>
             </div>
-
-            <jsp:include page="Prueba-Reu/my-footer.jsp" />
             <br>
             </body>
+            <jsp:include page="Prueba-Reu/my-footer.jsp" />
 
             </html>

@@ -135,7 +135,7 @@
                                                               ondrop="return false" onpaste="return false"
                                                               required="required" onchange="return fechasStats(true)"
                                                               >
-                            <h3 class="titxd">Al</h3> <input id="fecha_fin" name="fecha_fin" type="date" min="2021-01-01"
+                            <h3 class="titxd"><br>Al</h3> <input id="fecha_fin" name="fecha_fin" type="date" min="2021-01-01"
                                                              oncopy="return false" ondrag="return false"
                                                               ondrop="return false" onpaste="return false"
                                                               required="required" onchange="return fechasStats(false)"
