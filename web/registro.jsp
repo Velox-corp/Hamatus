@@ -71,7 +71,8 @@
                           </div>
                     </div>
                 <div class="col-sm-6" id='div_line_left'>
-                        <h2 class="text-center">Información de la Empresa</h2>
+                    <br>
+                    <h2 class="text-center">Información de la Empresa</h2>
                         <hr>
                         <div class="form-group">
                             <label for="nameEmpresa">Nombre de la empresa:</label>
@@ -113,6 +114,7 @@
                             <input type="checkbox" id='tYc' value='true' name='tYc' required="required">
                             <label for="tYc">Acepto los <a href="Terminos_Condiciones.pdf" target="_blank">Términos y condiciones</a></label>
                         </div>
+                        <hr>
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="submit"></label>
                             <div class="col-md-8">

@@ -24,6 +24,7 @@
   </head>
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
+        <center><h1>Documentos</h1></center>
         <%
         HttpSession sesionUser = request.getSession();
         boolean obtencionAdecuada = false;
@@ -422,7 +423,7 @@
                                         documentos si necesita acceder a alguno por favor
                                     solicitar un link de acceso</center>
                                     </td>
-                                </tr>
+                                </tr><br><br>
                                 <%
                             }else if(usuario.getiD_cat_priv() == 2 && IDequipo == 0){
                                 %>

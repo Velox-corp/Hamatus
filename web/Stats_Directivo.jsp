@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Stats_Admin
-    Created on : 13/05/2021, 08:33:23 AM
+    Document   : Stats_Directivo
+    Created on : 1/06/2021, 07:07:58 AM
     Author     : Uzías
 --%>
 <%@page import="MDistribucion.Clases.Equipo"%>
@@ -42,7 +42,7 @@
 <html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html">
-        <title>Estadisticas - Lider</title>
+        <title>Estadisticas - Directivo</title>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         
@@ -146,7 +146,30 @@
                             <input type="hidden" name="division_id" value="<%= id_division %>">
                     </div>
                     <div class="col-5">
-                        <input type="hidden" name="seleccion" value="DI3<%= id_division %>">
+                        <h2>División o equipo</h2>
+                        <select id="eleccion" name="seleccion">
+                            <option value="defaultxd">Seleccione una</option>
+                            <% 
+                            //aqui debe ir el for para imprimir las divisiones y equipos
+                            //<option value="?">?</option>
+                            for (int x=0; x < divisiones.size(); x++){
+                                Division division = divisiones.get(x);
+                                int temp = division.getId_Division();
+                            %>
+                                <option value='DI3<%=division.getId_Division() %>'><%=division.getNombre()%></option>
+                            <%
+                            }
+                            %>
+                            <!-- Aqui es para poner los equipos xd -->
+                             <% 
+                                for (int i=0; i<equipos.size(); i++){
+                                    Equipo eq = equipos.get(i);
+                                %>
+                                <option value="<%= eq.getIDEquipo()%>"><%= eq.getNombre()%></option>
+                                <%
+                                }
+                                %>
+                        </select> <br>
                         <button type="submit" class="btn-dark">Generar graficas</button>
                     </div>
                     </form>

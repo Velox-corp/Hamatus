@@ -120,6 +120,7 @@
                         <input type="password" class="form-control" id="pwd2" name="pwd2" 
                                onchange="return validarPass(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" minlength="10" maxlength="30">
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-md-6">
                             <select class="form-select" name="division" id="division" onchange="return alterarPuestos()">
@@ -138,7 +139,7 @@
                         <div class="col-md-6">
                             <div class="row">
 
-                                <button type="submit" class="btn btn-dark">
+                                <button type="submit" class="btn btn-dark mr">
                                     Guardar empleado
                                 </button>
                                 <button type="reset" class="btn btn-danger">
@@ -146,7 +147,7 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div><br>
                 </form>
                 <%
                     }
