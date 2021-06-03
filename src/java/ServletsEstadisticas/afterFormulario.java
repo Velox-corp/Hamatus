@@ -161,7 +161,7 @@ public class afterFormulario extends HttpServlet {
                             for (int j = 0; j < fluj.size(); j++) {
                                 cantFlujos2 += 1;
                                 if (fluj.get(j).isEntregado()){
-                                    flujosHechos +=1;
+                                    flujosHechos2 +=1;
                                 }
                             }
                         }
@@ -335,7 +335,7 @@ public class afterFormulario extends HttpServlet {
                             for (int j = 0; j < fluj.size(); j++) {
                                 cantFlujos2 += 1;
                                 if (fluj.get(j).isEntregado()){
-                                    flujosHechos +=1;
+                                    flujosHechos2 +=1;
                                 }
                             }
                         }
@@ -532,7 +532,7 @@ public class afterFormulario extends HttpServlet {
                             for (int j = 0; j < fluj.size(); j++) {
                                 cantFlujos2 += 1;
                                 if (fluj.get(j).isEntregado()){
-                                    flujosHechos +=1;
+                                    flujosHechos2 +=1;
                                 }
                             }
                         }
