@@ -107,7 +107,7 @@
                                 </td>
                                 <td><%=CatPuestos.traducirID(empleado.getiD_cat_priv())%></td>
                                 <td class='justify-content-center'>
-                                    <a htef="agregarSala?id_sala_tipo=1&&id_contacto=<%=empleado.getIDUsuarioE()%>" class="active text-primary">Enviar mensaje<br></a>
+                                    <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=empleado.getIDUsuarioE()%>" class="active text-primary">Enviar mensaje<br></a>
                                     <% if ((empleado.getiD_cat_priv() > 1 && user.getiD_cat_priv() == 1) || (empleado.getiD_cat_priv() > 2 && user.getiD_cat_priv() == 2) ){ %>
                                     <a href='editarPuesto.jsp?id=<%=empleado.getIDUsuarioE()%>' class="active text-danger">Cambiar puesto<br></a>
                                     <a href="borrarEmpleado?id=<%=empleado.getIDUsuarioE()%>" class="active text-danger">Eliminar<br></a>
