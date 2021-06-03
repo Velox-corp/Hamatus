@@ -27,9 +27,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         
     </head>
-    <body>
-        <div class="row ">
-            <div class="col-md-6 chat-box ">
+    <body >
+        <div class="row " style="margin-left: 25%; margin-top: 10%;">
+            <div class="col-md-6 chat-box " style="" >
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         
@@ -39,14 +39,14 @@
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
                             <ul class="dropdown-menu slidedown">
-                                <li><a href=""><span class="glyphicon glyphicon-off"></span>Salir</a></li>
+                                <li><a href="Chat.jsp"><span class="glyphicon glyphicon-off"></span>Salir</a></li>
                                 
                             </ul>
                         </div>
                         
                     </div>
                     
-                    <div class="panel-body chat-widget">
+                    <div class="panel-body chat-widget" >
                         <ul class="chat chat-messages">                
                             <li>
                                 <span class="chat-img pull-left">

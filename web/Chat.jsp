@@ -166,7 +166,7 @@
 
                                 <li class="p-2">
                                     <a href="agregarSala?id_sala_tipo=2&&id_contacto=<%=equipo.getIDEquipo()%>" class="d-flex justify-content-between">
-                                        <img src="https://th.bing.com/th/id/Ree7152e8726a45d295373b446058d4a2?rik=pkHhcsYFi5k%2bhA&pid=ImgRaw" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <img src="https://th.bing.com/th/id/OIP.lOAfoyrDQDO2YEwkQh1h_wHaHa?pid=ImgDet&rs=1" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
                                         <div class="text-small">
                                             <strong><%=equipo.getNombre()%></strong>
                                             <!--  
@@ -204,7 +204,7 @@
                                     
                                 <li class="p-2">
                                     <a href="agregarSala?id_sala_tipo=2&&id_contacto=<%=eq.getIDEquipo()%>" class="d-flex justify-content-between">
-                                        <img src="https://th.bing.com/th/id/Ree7152e8726a45d295373b446058d4a2?rik=pkHhcsYFi5k%2bhA&pid=ImgRaw" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <img src="https://th.bing.com/th/id/OIP.lOAfoyrDQDO2YEwkQh1h_wHaHa?pid=ImgDet&rs=1" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
                                         <div class="text-small">
                                             <strong><%=eq.getNombre()%></strong>
                                             
@@ -256,7 +256,7 @@
 
                                 <li class="p-2">
                                     <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=empleado.getIDUsuarioE()%>" class="d-flex justify-content-between">
-                                        <img src="https://th.bing.com/th/id/Ree7152e8726a45d295373b446058d4a2?rik=pkHhcsYFi5k%2bhA&pid=ImgRaw" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <img src="https://th.bing.com/th/id/Rdc8b1732c919ca17845aab44dc3afb27?rik=cV%2b6wvH3pV874w&pid=ImgRaw" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
                                         <div class="text-small">
                                             <strong><%=empleado.getNombre()%></strong>
                                             <%
