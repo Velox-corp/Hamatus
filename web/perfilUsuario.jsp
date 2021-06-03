@@ -57,11 +57,13 @@
                                                     </ul>
                                                 </td>
                                             </tr>
+                                            <!-- NO IMPLEMENTADO
                                             <tr>
                                                 <td>
                                                     <a class="btn btn-dark">Enviar mensaje</a>
                                                 </td>
                                             </tr>
+                                            -->
                                         </table>
                                     </div>
                                 </div>

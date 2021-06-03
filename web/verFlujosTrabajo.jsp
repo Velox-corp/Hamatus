@@ -167,9 +167,9 @@
                     FlujoDeTrabajo f = flujos.get(i);
                     if(e.getIDEquipo() == f.getIdEquipo()){ %>
                         <div class="card">
-                            <div class="card-header text-white bg-dark h4 " >
+                            <div class="card-header text-white bc h4 " >
                                 <div class='row text-center'>
-                                    <span clas='col-md-12'><%=e.getNombre()%></span>
+                                    <span clas='col-md-12'>&nbsp;&nbsp;<%=e.getNombre()%></span>
                                 </div>
                                 <div class='row'>
                                     <div class="col-md-6 text-left">
@@ -200,13 +200,13 @@
                             </div>
 
                                 <% if(empleado.getiD_cat_priv() == 3 && f.isEntregado()){ %>
-                                    <div class="card-footer  text-center">
-                                        <a class="btn btn-dark text-center" href="descargaEvidencia?idF=<%=f.getIdFlujodetrabajo()%>"
+                                    <div class="card-footer">
+                                        <a class="btn btn-dark btn-large bg-dark text-center" href="descargaEvidencia?idF=<%=f.getIdFlujodetrabajo()%>"
                                            target="_top" data-toggle="tooltip" >Descargar Documento</a>
                                     </div>
                                 <% } else if(empleado.getiD_cat_priv() == 4 && !f.isEntregado()) { %>
-                                    <div class="card-footer text-center">
-                                        <a class="btn btn-dark text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencía</a>
+                                    <div class="card-footer">
+                                        <a class="btn btn-dark btn-large bg-dark  text-center" href="subirEvidencia.jsp?idf=<%=f.getIdFlujodetrabajo()%>">Subir evidencia</a>
                                     </div>
                                 <% }%>
 
@@ -217,7 +217,7 @@
                         }
                             if(empleado.getiD_cat_priv() == 3 ) { 
                         %>
-                        <a  class="btn btn-primary" href="nuevoFlujo.jsp">Publicar un nuevo flujo de trabajo</a>
+                        <hr><a  class="btn btn-dark btn-large" href="nuevoFlujo.jsp">Publicar un nuevo flujo de trabajo</a><br><br>
                         <% 
                     }
                 }%>

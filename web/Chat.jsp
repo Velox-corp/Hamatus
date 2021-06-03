@@ -135,7 +135,7 @@
         %>
         <br>
         <br>
-        <div class="card grey lighten-3 chat-room">
+        <div class="card grey lighten-3 chat-room" style="background-color: #F3F3F3">
             <div class="card-body">
 
                 <!-- Grid row -->
@@ -146,7 +146,7 @@
 
                         <!--Equipos -->
 
-                        <div class="white z-depth-1 px-3 pt-3 pb-0">
+                        <div class="white z-depth-1 px-3 pt-3 pb-0" style="margin-left: 5rem">
                             <h6 class="font-weight-bold mb-3 text-center text-lg-left">Equipo</h6>
                             <ul class="list-unstyled friend-list">
                                 <%if(liderDiv.getiD_cat_priv()==4){
@@ -162,7 +162,7 @@
 
                                 <li class="p-2">
                                     <a href="agregarSala?id_sala_tipo=2&&id_contacto=<%=equipo.getIDEquipo()%>" class="d-flex justify-content-between">
-                                        <img src="https://th.bing.com/th/id/OIP.lOAfoyrDQDO2YEwkQh1h_wHaHa?pid=ImgDet&rs=1" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <img src="img/persona.png" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
                                         <div class="text-small">
                                             <strong><%=equipo.getNombre()%></strong>
                                             <!--  
@@ -200,7 +200,7 @@
                                     
                                 <li class="p-2">
                                     <a href="agregarSala?id_sala_tipo=2&&id_contacto=<%=eq.getIDEquipo()%>" class="d-flex justify-content-between">
-                                        <img src="https://th.bing.com/th/id/OIP.lOAfoyrDQDO2YEwkQh1h_wHaHa?pid=ImgDet&rs=1" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <img src="img/persona.png" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
                                         <div class="text-small">
                                             <strong><%=eq.getNombre()%></strong>
                                             
@@ -241,8 +241,8 @@
 
                         <!--Usuarios -->
 
-                        <h6 class="font-weight-bold mb-3 text-center text-lg-left">Contactos Personales</h6>
-                        <div class="white z-depth-1 px-3 pt-3 pb-0">
+                        <h6 class="font-weight-bold mb-3 text-center text-lg-left" style="margin-left: 5.8rem">Contactos Personales</h6>
+                        <div class="white z-depth-1 px-3 pt-3 pb-0" style="margin-left: 5rem">
                             <ul class="list-unstyled friend-list">
                                 <%if (empleados != null) {
                                         for (int i = 0; i < empleados.size(); i++) { //va tocar meter alguna función que traduzca los ides de división y jerarquía
@@ -252,7 +252,7 @@
 
                                 <li class="p-2">
                                     <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=empleado.getIDUsuarioE()%>" class="d-flex justify-content-between">
-                                        <img src="https://th.bing.com/th/id/Rdc8b1732c919ca17845aab44dc3afb27?rik=cV%2b6wvH3pV874w&pid=ImgRaw" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <img src="img/persona.png" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
                                         <div class="text-small">
                                             <strong><%=empleado.getNombre()%></strong>
                                             <%
@@ -298,7 +298,7 @@
                     <!-- Grid row -->
 
                 </div>
-            </div>
+            </div></div>
             <br>
             </body>
             <jsp:include page="Prueba-Reu/my-footer.jsp" />

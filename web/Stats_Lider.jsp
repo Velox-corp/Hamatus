@@ -124,17 +124,17 @@
         -->
         <!-- Seleccion del periodo de tiempo -->
         <div class="formu_tiempo">
-            <div class="card bg-light" id="hola">
+            <div class="container bs" id="hola">
                 <div class="row justify-content-around">
                     <div class="col-5">
                             <form method="POST" action="afterFormulario">
-                            <h2 id="titulazoxd">Periodo de tiempo</h2>
-                            <h3 class="titxd">Del</h3> <input id="fecha_in" name="fecha_in" type="date" min="2021-01-01"
+                            <h2 id="titulazoxd" class="text-white">Periodo de tiempo</h2>
+                            <h3 class="titxd text-white">Del</h3> <input id="fecha_in" name="fecha_in" type="date" min="2021-01-01"
                                                               oncopy="return false" ondrag="return false"
                                                               ondrop="return false" onpaste="return false"
                                                               required="required" onchange="return fechasStats(true)"
                                                               >
-                            <h3 class="titxd">Al</h3> <input id="fecha_fin" name="fecha_fin" type="date" min="2021-01-01"
+                            <h3 class="titxd text-white"><br>Al</h3> <input id="fecha_fin" name="fecha_fin" type="date" min="2021-01-01"
                                                              oncopy="return false" ondrag="return false"
                                                               ondrop="return false" onpaste="return false"
                                                               required="required" onchange="return fechasStats(false)"
@@ -147,7 +147,7 @@
                     </div>
                     <div class="col-5">
                         <input type="hidden" name="seleccion" value="DI3<%= id_division %>">
-                        <button type="submit" class="btn-dark">Generar graficas</button>
+                        <button type="submit" class="btn btn-dark btn-large">Generar graficas</button><br>
                     </div>
                     </form>
                 </div>

@@ -68,7 +68,7 @@
                                         <br><br>
                                         <a class="btn btn-dark" href="listaDeEmpleados.jsp?id=<%=equipo.getIDEquipo()%>">Ver integrantes del equipo</a>
                                         <br><br>
-                                        <a class="btn btn-dark" href="docs.jsp">Trabajar con el equipo</a>
+                                        <a class="btn btn-dark" href="docs2.jsp">Trabajar con el equipo</a>
                                         <br><br>
                                     </div>
                                 </div>

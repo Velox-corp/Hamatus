@@ -456,7 +456,7 @@
                  </table>
             </div>
             <div class="col-md-1"></div>
-        </div>
+        </div><br><br>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
     <script src="./JS/enable_tooltip.js"></script>

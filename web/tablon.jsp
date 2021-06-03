@@ -41,7 +41,8 @@
             }
                     
         %>
-        <jsp:include page="Prueba-Reu/my-head2.jsp" />
+        <jsp:include page="Prueba-Reu/my-head2.jsp" /><br>
+        <center><h1>Nuevo anuncio</h1></center><br>
         <div class="row margin-top-1rem">
             <div class="col-md-3">
             </div>
@@ -75,8 +76,8 @@
                                         maxlength="200"></textarea>
                                 <span id="contador">0/200</span>
                             </div>
-                            <br>
-                            <button type="submit" name="enviar" class="btn btn-primary">Guardar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                            <hr>
+                            <button type="submit" name="enviar" class="btn btn-dark btn-large">Guardar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                         </form> 
 
                     </div>
