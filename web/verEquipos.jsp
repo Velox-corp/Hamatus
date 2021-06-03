@@ -253,6 +253,6 @@
              <% } 
         } %>
     </div>
-        <jsp:include page="Prueba-Reu/my-footer.jsp" />
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>
