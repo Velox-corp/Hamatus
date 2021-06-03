@@ -50,7 +50,8 @@
                                     <label class='input-group-text' for="mod_titulo">Titulo</label>
                                 </div>
                                 <input type="text" value="<%=f.getTituloFlujo()%>" readonly="readonly" class="form-control" id="mod_titulo" name="mod_titulo" required="required">
-                                <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_titulo')">Editar</button>
+                                <button class='btn btn-info input-group-append' 
+                                        type="button" onclick="return cambiarEstado('mod_titulo')">Editar</button>
                             </div>
                                 <br>
                             <div class="input-group mb-2">
@@ -58,7 +59,8 @@
                                     <label class='input-group-text' for="mod_des">Descripción</label>
                                 </div>
                                 <textarea type="text" readonly="readonly" class="form-control" id="mod_des" name="mod_des" required="required"><%=f.getDescripcionFlujo()%></textarea>
-                                <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_des')">Editar</button>
+                                <button class='btn btn-info input-group-append' type="button"
+                                        onclick="return cambiarEstado('mod_des')">Editar</button>
                             </div>
                             <br>
                             <div class="input-group mb-2">
@@ -66,7 +68,8 @@
                                     <label class='input-group-text' for="mod_fecha">Fecha Limite</label>
                                 </div>
                                 <input type="date" value="<%=f.getFechaLimite()%>" readonly="readonly" class="form-control" id="mod_fecha" name="mod_fecha" required="required">
-                                <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_fecha')">Editar</button>
+                                <button class='btn btn-info input-group-append' type="button"
+                                        onclick="return cambiarEstado('mod_fecha')">Editar</button>
                             </div>
                                 <br>
                             <div class="input-group mb-2">
@@ -74,7 +77,8 @@
                                     <label class='input-group-text' for="mod_hora">Hora Limite</label>
                                 </div>
                                 <input type=time value="<%=f.getHoraLimite()%>" readonly="readonly" class="form-control" id="mod_hora" name="mod_hora" required="required">
-                                <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_hora')">Editar</button>
+                                <button class='btn btn-info input-group-append' type="button"
+                                        onclick="return cambiarEstado('mod_hora')">Editar</button>
                             </div>
                             
                     </div>

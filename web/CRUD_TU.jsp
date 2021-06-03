@@ -80,7 +80,8 @@
                                    ondrag="return validarString(this, true, false)"
                                    ondrop="return validarString(this, true, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                             <div class='input-group-append'>
-                                <button class="btn btn-info" onclick='return cambiarEstado("nombre")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("nombre")'>Editar</button>
                             </div>
 
                         </div>
@@ -96,7 +97,8 @@
                                    ondrag="return validarString(this, false, false)"
                                    ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                             <div class='input-group-append'>
-                                <button class="btn btn-info" onclick='return cambiarEstado("appat")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("appat")'>Editar</button>
                             </div>
                         </div>
                         <div class="input-group mb-3">		 
@@ -111,7 +113,8 @@
                                    ondrag="return validarString(this, false, false)"
                                    ondrop="return validarString(this, false, false)">
                             <div class="input-group-append" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
-                                <button class="btn btn-info" onclick='return cambiarEstado("apmat")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("apmat")'>Editar</button>
                             </div>
                         </div>
                         <div class="input-group mb-3">
@@ -124,7 +127,8 @@
                                    <%}%>
                                    onchange="return validarEmail(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="250">
                             <div class='input-group-append'>
-                                <button class="btn btn-info" onclick='return cambiarEstado("Email")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("Email")'>Editar</button>
                             </div>
                         </div>
                         <div class="input-group mb-3">		 
@@ -137,7 +141,8 @@
                                    <%}%>
                                    onchange="return validarDate(this)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required">
                             <div class='input-group-append'>
-                                <button class="btn btn-info" onclick='return cambiarEstado("fecha_nacimiento")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("fecha_nacimiento")'>Editar</button>
                             </div>
                         </div>
 
