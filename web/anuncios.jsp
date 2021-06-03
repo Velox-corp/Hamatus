@@ -57,7 +57,7 @@
 
                                         <div class='card-body'>
                                             <article class='card-text'>
-                                                Cuando se comparta ifnromación por medio de anuncios, estos apareceran en esta sección
+                                                Cuando se comparta infromación por medio de anuncios, estos apareceran en esta sección
                                             </article>
                                         </div>
                                     </div>
@@ -93,8 +93,8 @@
                                 <br>
                                  <% } %>
                                  
-                        <% if( liderDiv.getiD_cat_priv() <= 3 ) {  %>
-                            <a href="tablon.jsp"  class="btn btn-primary">Agregar Nuevo</a>
+                        <% if( liderDiv.getiD_cat_priv() != 4 ) {  %>
+                            <a href="tablon.jsp" class="btn btn-primary">Agregar Nuevo anuncio</a>
                         <% }
                         }%> 
         </main>       
