@@ -57,13 +57,13 @@
                                                     </ul>
                                                 </td>
                                             </tr>
-                                            <!-- NO IMPLEMENTADO
+                                            
                                             <tr>
                                                 <td>
-                                                    <a class="btn btn-dark">Enviar mensaje</a>
+                                                   <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=user.getIDUsuarioE()%>" class="active text-primary">Enviar mensaje</a>
                                                 </td>
                                             </tr>
-                                            -->
+                                            
                                         </table>
                                     </div>
                                 </div>
