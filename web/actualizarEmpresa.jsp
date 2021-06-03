@@ -73,7 +73,8 @@
                                    ondrag="return validarString(this, true, false)"
                                    ondrop="return validarString(this, true, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                             <div class='input-group-append'>
-                                <button class="btn btn-info" onclick='return cambiarEstado("nombre")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("nombre")'>Editar</button>
                             </div>
                         </div>
                         <div class="input-group mb-3">		 
@@ -88,7 +89,8 @@
                                    ondrag="return validarString(this, false, false)"
                                    ondrop="return validarString(this, false, false)" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
                             <div class='input-group-append'>
-                                <button class="btn btn-info" onclick='return cambiarEstado("razon")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("razon")'>Editar</button>
                             </div>
                         </div>
                         <div class="input-group mb-3">		 
@@ -103,7 +105,8 @@
                                    ondrag="return validarString(this, false, false)"
                                    ondrop="return validarString(this, false, false)">
                             <div class="input-group-append" oncopy="return false" onpaste="return false" autocomplete="off" ondrag="return false"  ondrop="return false" required="required" maxlength="30">
-                                <button class="btn btn-info" onclick='return cambiarEstado("descripcion")'>Editar</button>
+                                <button class="btn btn-info" type="button"
+                                        onclick='return cambiarEstado("descripcion")'>Editar</button>
                             </div>
                         </div>                        
                         <button type="submit" class="btn btn-dark">

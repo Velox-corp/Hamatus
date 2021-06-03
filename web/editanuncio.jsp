@@ -64,7 +64,8 @@
                                         <label class='input-group-text' for="mod_titulo">Titulo</label>
                                     </div>
                                     <input type="text" value="<%=p.getTitulo()%>" readonly="readonly" class="form-control" id="mod_titulo" name="mod_titulo" required="required">
-                                    <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_titulo')">Editar</button>
+                                    <button class='btn btn-info input-group-append' type="button"
+                                            onclick="return cambiarEstado('mod_titulo')">Editar</button>
                                 </div>
                                 
                         </div>  
@@ -73,7 +74,8 @@
                                 <label class='input-group-text' for="mod_descripcion">Descripción:</label>
                             </div>
                             <textarea type="text" readonly="readonly" class="form-control" id="mod_descripcion" name="mod_descripcion" required="required"><%=p.getDescripcion()%></textarea>
-                            <button class='btn btn-info input-group-append' onclick="return cambiarEstado('mod_descripcion')">Editar</button>
+                            <button class='btn btn-info input-group-append' type="button"
+                                    onclick="return cambiarEstado('mod_descripcion')">Editar</button>
                         </div>
                         <div class='card-footer align-items-center'>
                             <button type="submit" name="enviar" class="btn btn-primary">Guardar cambios<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
