@@ -65,7 +65,7 @@
       <br>
       <main class="cubridor d-flex align-items-center justify-content-center container jumbotron">
         <div>
-            <center><h1 style="margin-right: 38vw">Alcance</h1></center>
+            <center><h1 style="margin-right: 38vw">Alcance</h1></center><hr>
             <div class="row">
                 <div class="col-md-2">
                     <img class="img-fluid" src="img/social-reach.png" style="height: 10vw">

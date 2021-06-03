@@ -112,7 +112,7 @@
                         if(e.getIDDivision() == d.getId_Division() && f.getIdEquipo() == e.getIDEquipo()){
                         %>
                             <div class="card">
-                                <div class="card-header text-white bg-dark h4 " >
+                                <div class="card-header text-white bc h4 " >
                                     <div class='row text-center'>
                                         <span clas='col-md-12'>&nbsp;&nbsp;<%=d.getNombre()%>: <%=e.getNombre()%></span>
                                     </div>

@@ -94,10 +94,10 @@
                                  <% } %>
                                  
                         <% if( liderDiv.getiD_cat_priv() != 4 ) {  %>
-                            <a href="tablon.jsp" class="btn btn-primary">Agregar Nuevo anuncio</a>
+                            <a href="tablon.jsp" class="btn btn-dark btn-large">Agregar Nuevo anuncio</a>
                         <% }
                         }%> 
         </main>       
-    </body>
+    </body><br><br>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

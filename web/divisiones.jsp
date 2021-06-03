@@ -53,8 +53,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-8">
-                          <button id="submit" name="submit" class="btn btn-dark" value="1">Registrar</button>
-                          <a href="" id="cancel" name="cancel" class="btn btn-default">Cancelar</a>
+                          <button id="submit" name="submit" class="btn btn-dark mrd" value="1">Registrar</button>
+                          <a href="" id="cancel" name="cancel" class="btn btn-secondary btn-large">Cancelar</a>
                         </div>
                     </div>
                 </form>
@@ -71,7 +71,7 @@
                                     <% if(division.getId_Jerarquia() != 1){ %>
                                     <div class="input-group-append">
                                         <a href="javascript:funcion()">
-                                            <a class="btn btn-secondary btn-large" href="eliminarDivision?id=<%=division.getId_Division()%>" onclick="return confirmation()">ELIMINAR</a>
+                                            <a class="btn btn-danger btn-large" href="eliminarDivision?id=<%=division.getId_Division()%>" onclick="return confirmation()">ELIMINAR</a>
                                     </div>
                                     <% } %>
                                 </div>                                
