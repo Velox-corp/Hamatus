@@ -1,108 +1,306 @@
-<%@page import="MChat.Clases.UsuarioSala"%>
+<%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="MUsuarios.clases.Empresa"%>
+<%@page import="MChat.Clases.UsuarioSala"%>
+<%@page import="MDistribucion.Clases.EUsuarioEquipo"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    HttpSession sesionUser = request.getSession();
-    String username = "";
-    int id_user=0;
-   
-    UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
-    username = usuario.getNombre();
-    id_user=usuario.getIDUsuarioE();
-    //System.out.println(request.getAttribute("idsla").toString());/*
-    //int sla =Integer.parseInt(request.getAttribute("idsla").toString());*/
-   
-%>
-<html>
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html" session = "true" %>
+
+<!DOCTYPE html>
+<html lang='es'>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mensajes</title>
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="CSS/style.css">
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-       
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <title>Chat</title>
+
+        <jsp:include page="Prueba-Reu/my-links-boostrap.html" />
+
     </head>
     <body>
-        <jsp:include page="Prueba-Reu/my-head3.jsp" /><br><br>
-    <center><h1 style="font-size: 36px">Mensajes</h1></center><br><br>
-    <center>
-        <div class="d-flex justify-content-center">
-            <div class="col-md-6 chat-box " style="" >
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                       
-                        <span class="glyphicon glyphicon-comment"></span> Chat
-                        <div class="btn-group pull-right">
-                            <button type="button" class="btn btn-default btn-xs dropdown toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-chevron-down"></span>
-                            </button>
-                            <ul class="dropdown-menu slidedown">
-                                <li><a href="Chat.jsp"><span class="glyphicon glyphicon-off"></span>Salir</a></li>
-                               
+        <jsp:include page="Prueba-Reu/my-head2.jsp"/>
+        <center><h1>Chat</h1></center>
+        <%  HttpSession sesionUser = request.getSession();
+            HttpSession sesion;
+            boolean sonTotales = false;
+            boolean hayEquipos = true;
+            ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+            int[] totalesEquipos = null;
+            Equipo equipo = null;
+            String username = "";
+            int id_user = 0;
+            int idEquipo = 0;
+            boolean obtencionAdecuada = true;
+            String redirect = "";
+            UsuarioEmpleado liderDiv = null;
+            ArrayList<UsuarioEmpleado> empleados = new ArrayList<UsuarioEmpleado>();
+
+            UsuarioEmpleado usuario = (UsuarioEmpleado) sesionUser.getAttribute("usuario");
+            username = usuario.getNombre();
+
+            //UsuarioSala ussala = new UsuarioSala();
+            try {
+
+                id_user = usuario.getIDUsuarioE();
+                //Se supone que uno debe ingresar siendo ya un usuario registrado y con los privilegios adecuados
+                sesion = request.getSession();
+                liderDiv = (UsuarioEmpleado) sesion.getAttribute("usuario");
+
+                if (liderDiv == null) {
+                    System.out.println("No hay sesión");
+                    obtencionAdecuada = false;
+                    redirect = "inicio_sesion.jsp";
+                } else {
+                    idEquipo = EUsuarioEquipo.buscarEquipo(id_user);
+                    if (idEquipo != 0 && idEquipo != -1) {
+                        equipo = Equipo.obtenerEquipo(idEquipo);
+                    }
+                }
+
+            } catch (Exception e) {
+                obtencionAdecuada = false;
+                redirect = "error.jsp";
+                //hayEquipos = false;
+                e.getMessage();
+                e.printStackTrace();
+            }
+
+            if (!obtencionAdecuada) {
+                response.sendRedirect(redirect);
+            }
+//**********************************************
+            try {
+                Empresa emp = (Empresa) sesionUser.getAttribute("empresa");
+
+                if (usuario == null || emp == null) {
+                    obtencionAdecuada = false;
+                    redirect = "inicio_sesion.jsp";
+                } else {
+                    empleados = UsuarioEmpleado.obtenerUsuarios(emp.getIDEmpresa());
+                }
+            
+            
+                            if (liderDiv == null) {
+                    obtencionAdecuada = false;
+                    redirect = "inicio_sesion.jsp";
+                } else {
+                    switch (liderDiv.getiD_cat_priv()) {
+                        case 1:
+                            equipos = Equipo.obtenerAllEquipos(((Empresa) sesionUser.getAttribute("empresa")).getIDEmpresa());
+                            sonTotales = true;
+                            break;
+                        case 2:
+                            equipos = Equipo.obtenerAllEquipos(((Empresa) sesionUser.getAttribute("empresa")).getIDEmpresa());
+                            sonTotales = true;
+                            break;
+                        case 3:
+                            equipos = Equipo.obtenerEquipos(liderDiv.getiD_Division());
+                            sonTotales = false;
+                            break;
+                        case 4:
+                            equipos = Equipo.obtenerAllEquipos(((Empresa) sesionUser.getAttribute("empresa")).getIDEmpresa());
+                            sonTotales = true;
+                            /*obtencionAdecuada = false;
+                            redirect = "error.jsp";*/
+                            break;
+                    }
+                            
+                
+                
+            if(equipos == null || equipos.size() == 0){
+                hayEquipos = false;
+            }else{
+                hayEquipos = true;
+                totalesEquipos = new int[equipos.size()];
+                for (int i = 0; i < equipos.size(); i++) {
+                    Equipo equip = equipos.get(i);
+                    totalesEquipos[i] = EUsuarioEquipo.getTotalEmpleadosEquipo(equip.getIDEquipo());
+                    if(totalesEquipos[i] == -1){
+                        obtencionAdecuada = false;
+                        redirect = "error.jsp";
+                        break;
+                    }
+                }
+            }  
+            
+            }
+                
+
+            } catch (Exception e) {
+                e.getMessage();
+                e.printStackTrace();
+                obtencionAdecuada = false;
+                redirect = "error.jsp";
+            }
+
+        %>
+        <br>
+        <br>
+        <div class="card grey lighten-3 chat-room" style="background-color: #F3F3F3">
+            <div class="card-body">
+
+                <!-- Grid row -->
+                <div class="row px-lg-2 px-2">
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-xl-4 px-0">
+
+                        <!--Equipos -->
+
+                        <div class="white z-depth-1 px-3 pt-3 pb-0" style="margin-left: 5rem">
+                            <h6 class="font-weight-bold mb-3 text-center text-lg-left">Equipo</h6>
+                            <ul class="list-unstyled friend-list">
+                                <%if(liderDiv.getiD_cat_priv()==4){
+                                    
+                                    if(idEquipo == 0 || idEquipo == -1){
+                                %>
+                                    <li>
+                                    No se puede mostrar los equipos
+                                    </li>
+                                <%
+                                    }else{
+                                %>
+
+                                <li class="p-2">
+                                    <a href="agregarSala?id_sala_tipo=2&&id_contacto=<%=equipo.getIDEquipo()%>" class="d-flex justify-content-between">
+                                        <img src="img/persona.png" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <div class="text-small">
+                                            <strong><%=equipo.getNombre()%></strong>
+                                            <!--  
+                                            <input type="hidden" id="id_contacto" name="id_contacto" class="id_contacto" value="#">
+                                            -->
+                                            <%
+                                            /*int id = equipo.getIDEquipo();
+                                                getServletContext().setAttribute("id_contacto", id);*/
+                                            %>
+                                            <p class="last-message text-muted">
+                                                Enviar mensaje
+                                            </p>
+                                        </div>
+                                        <div class="chat-footer">
+                                            <p class="text-smaller text-muted mb-0">Estado</p>
+                                            <span class="text-muted float-right"><i class="fas fa-mail-reply" aria-hidden="true"></i></span>
+
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <%            
+                                        }
+                                    }else if(liderDiv.getiD_cat_priv()==3){
+                                        if(hayEquipos){
+                                            for (int i = 0; i < equipos.size(); i++) {
+                                                Equipo eq = equipos.get(i);
+                                                int mod = (i + 1) % 3;
+                                                switch (mod) {}
+
+                                    /*int id = eq.getIDDivision();
+                                                getServletContext().setAttribute("id_contacto", id);*/
+
+                                %>
+                                    
+                                <li class="p-2">
+                                    <a href="agregarSala?id_sala_tipo=2&&id_contacto=<%=eq.getIDEquipo()%>" class="d-flex justify-content-between">
+                                        <img src="img/persona.png" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <div class="text-small">
+                                            <strong><%=eq.getNombre()%></strong>
+                                            
+                                            <!--  
+                                            <input type="hidden" id="id_contacto" name="id_contacto" class="id_contacto" value="#">
+                                            -->
+                                            <p class="last-message text-muted">
+                                                Enviar mensaje
+                                            </p>
+                                        </div>
+                                        <div class="chat-footer">
+                                            <p class="text-smaller text-muted mb-0">Estado</p>
+                                            <span class="text-muted float-right"><i class="fas fa-mail-reply" aria-hidden="true"></i></span>
+
+                                        </div>
+                                    </a>
+                                </li>
+                                    
+<%
+                                             }
+                                        }else{
+%>
+
+                                        No hay equipos para mostrar
+
+<%
+                                        }
+                                    }else{%>
+                                    No puedes ver los equipos de la empresa
+                                        
+                                        <%
+                                        
+}
+
+                                %>
                             </ul>
                         </div>
-                       
-                    </div>
-                   
-                    <div class="panel-body chat-widget" >
-                        <ul class="chat chat-messages">                
-                            <li>
-                                <span class="chat-img pull-left">
-                                    <img src=""/>
-                                </span>
-                                <div class="chat-body clear-fix">
-                                    <div class="header">
-                                        <strong class="primary-font">Mensage Predeterminado</strong>
-                                        <small class="pull-right text-muted">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                            A las 12:30
-                                        </small>
-                                        <p>
-                                            Aqui se visualizaran los mensajes :)
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                   
-                    <div class="panel-footer">
-                        <div class="form-group">
-                            <input type="text" class="form-control input-sm chat-name" value="<%=username%>" readonly>
-                            <input type="hidden"  class="user-id" value="<%=id_user%>">
-                            <input type="hidden"  class="sala-id" value="${idsla}">
+
+                        <!--Usuarios -->
+
+                        <h6 class="font-weight-bold mb-3 text-center text-lg-left" style="margin-left: 5.8rem">Contactos Personales</h6>
+                        <div class="white z-depth-1 px-3 pt-3 pb-0" style="margin-left: 5rem">
+                            <ul class="list-unstyled friend-list">
+                                <%if (empleados != null) {
+                                        for (int i = 0; i < empleados.size(); i++) { //va tocar meter alguna función que traduzca los ides de división y jerarquía
+                                            UsuarioEmpleado empleado = empleados.get(i);
+
+                                %> 
+
+                                <li class="p-2">
+                                    <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=empleado.getIDUsuarioE()%>" class="d-flex justify-content-between">
+                                        <img src="img/persona.png" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" width="50" height="50">
+                                        <div class="text-small">
+                                            <strong><%=empleado.getNombre()%></strong>
+                                            <%
+                                                /*int id = empleado.getIDUsuarioE();
+                                                getServletContext().setAttribute("id_contacto", id);*/
+                                                //,PageContext.APPLICATION_SCOPE
+%>
+                                               
+                                            <p class="last-message text-muted">
+                                                Enviar mensaje
+                                            </p>
+                                        </div>
+                                        <div class="chat-footer">
+                                            <p class="text-smaller text-muted mb-0">Estado</p>
+                                            <span class="text-muted float-right"><i class="fas fa-mail-reply" aria-hidden="true"></i></span>
+
+                                        </div>
+                                    </a>
+                                </li>
+                                <%   }
+                                    }%>
+                            </ul>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control input-sm chat-entry" placeholder="Escriba un mensaje y presione enter para enviar">
-                        </div>
+
                     </div>
-                   
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-6 col-xl-8 pl-md-3 px-lg-auto px-0">
+                        <!--
+                                                <div class="chat-message">
+                                                    <center>
+                                                        <iframe src="Mensajes.jsp" height="500" width="500">
+                        
+                                                        </iframe>
+                                                    </center>
+                                                </div>
+                        
+                    </div>
+                        <!-- Grid column -->
+
+                    </div>
+                    <!-- Grid row -->
+
                 </div>
-            </div>
-        </div></center>
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-    <script src="JS/chat.js"></script>
-    <script>
+            </div></div>
+            <br>
+            </body>
+            <jsp:include page="Prueba-Reu/my-footer.jsp" />
 
-    // Enable pusher logging - don't include this in production
-    //Pusher.logToConsole = true;
-
-    var pusher = new Pusher('78f597b507c09cc4229c', {
-      cluster: 'us2'
-      //encrypted: true//sirve cuando se usa https
-    });
-   
-    var chat= new ChatWidget(pusher);
-/*canal del usuario*/
-    /*var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      console.log(data);
-    });*/
-  </script>
-    </body><br><br>
-  <jsp:include page="Prueba-Reu/my-footer.jsp" />
-</html>
+            </html>
