@@ -48,7 +48,7 @@
             %>
             <div class="cubridor3 d-flex justify-content-center align-items-center">
                 <div class="container_6">
-                    <img alt="Bootstrap Image Preview" src="img/grupo.png" class="rounded-circle">
+                    <img alt="Bootstrap Image Preview" src="img/integrante.png">
                 </div>
                 <div>
                     <center>
@@ -63,7 +63,7 @@
                                                 <a class="btn btn-dark" href='perfilUsuario.jsp?id=<%=userx.getIDUsuarioE()%>'>Ver perfíl de usuario</a>
                                             </td>
                                             <td class="td2">
-                                                <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=userx.getIDUsuarioE()%>" class="btn btn-dark">Enviar mensaje</a>
+                                                <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=userx.getIDUsuarioE()%>" class="btn btn-secondary btn-large">Enviar mensaje</a>
                                             </td>
                                         </tr>
                                     </table>

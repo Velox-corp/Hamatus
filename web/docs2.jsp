@@ -1,8 +1,3 @@
-<%-- 
-    Document   : docs2
-    Created on : 13/05/2021, 06:39:19 PM
-    Author     : taspi
---%>
 
 <%@page import="MDocumentos.Clases.cat_clasif_doc"%>
 <%@page import="MDistribucion.Clases.Equipo"%>
@@ -461,7 +456,7 @@
                  </table>
             </div>
             <div class="col-md-1"></div>
-        </div>
+        </div><br><br>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
     <script src="./JS/enable_tooltip.js"></script>

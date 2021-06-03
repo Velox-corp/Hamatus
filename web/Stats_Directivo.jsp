@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Stats_Directivo
-    Created on : 1/06/2021, 07:07:58 AM
-    Author     : Uzías
---%>
 <%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
@@ -124,17 +119,17 @@
         -->
         <!-- Seleccion del periodo de tiempo -->
         <div class="formu_tiempo">
-            <div class="card bg-light" id="hola">
+            <div class="container bs" id="hola">
                 <div class="row justify-content-around">
                     <div class="col-5">
                             <form method="POST" action="afterFormulario">
-                            <h2 id="titulazoxd">Periodo de tiempo</h2>
-                            <h3 class="titxd">Del</h3> <input id="fecha_in" name="fecha_in" type="date" min="2021-01-01"
+                            <h2 id="titulazoxd" class="text-white">Periodo de tiempo</h2>
+                            <h3 class="titxd text-white">Del</h3> <input id="fecha_in" name="fecha_in" type="date" min="2021-01-01"
                                                               oncopy="return false" ondrag="return false"
                                                               ondrop="return false" onpaste="return false"
                                                               required="required" onchange="return fechasStats(true)"
                                                               >
-                            <h3 class="titxd">Al</h3> <input id="fecha_fin" name="fecha_fin" type="date" min="2021-01-01"
+                            <h3 class="titxd text-white"><br>Al</h3> <input id="fecha_fin" name="fecha_fin" type="date" min="2021-01-01"
                                                              oncopy="return false" ondrag="return false"
                                                               ondrop="return false" onpaste="return false"
                                                               required="required" onchange="return fechasStats(false)"
@@ -146,7 +141,7 @@
                             <input type="hidden" name="division_id" value="<%= id_division %>">
                     </div>
                     <div class="col-5">
-                        <h2>División o equipo</h2>
+                        <h2 class="text-white">División o equipo</h2>
                         <select id="eleccion" name="seleccion">
                             <option value="defaultxd">Seleccione una</option>
                             <% 
@@ -170,11 +165,11 @@
                                 }
                                 %>
                         </select> <br>
-                        <button type="submit" class="btn-dark">Generar graficas</button>
+                        <button type="submit" class="btn btn-dark btn-large">Generar graficas</button>
                     </div>
                     </form>
                 </div>
             </div>
-        </div>
+        </div><br><br>
     <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

@@ -70,7 +70,7 @@
                             </div>
                         <% } %>
                     </div>
-                        <hr><br>
+                    <hr><br><br>
                   <%switch( admin.getiD_cat_priv() ){ 
                         case 1:
                     %>
@@ -107,12 +107,12 @@
 
                                 <div class='row'>
                                     <div class='col-md-4'>
-                                        <a href='divisiones.jsp' class='btn-dark btn-large'>
+                                        <a href='divisiones.jsp' class='btn btn-dark btn-large'>
                                             Construir distribución de la empresa
                                         </a>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br><br>
                     <%
                             break;
                         default: 

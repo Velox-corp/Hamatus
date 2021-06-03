@@ -50,7 +50,8 @@
     
     <body>
         <jsp:include page="Prueba-Reu/my-head2.jsp" />
-        <div class="container margin-top-1rem">
+        <main class="container">
+        <div class="container">
             <center><h1>Crear equipos</h1></center>    
         <br>
         <form method="post" action="crearEquipoTrabajo">
@@ -140,15 +141,15 @@
                 <div class="col-md-6 card text-white bg-danger text-center ">
                     <h2 class='card-body text-white '><strong>No hay empleados Disponibles a asignar</strong></h2>
                 </div>
-            </div>
+            </div><br><hr>
             <% } %>
-                    <br>
                     <div class='row align-items-center'>
                     <div class='col-md-10'>
                         <button class='btn btn-dark btn-large' type="submit">Crear equipo de trabajo</button>
                     </div>
                 </div>
             </form>
-        <jsp:include page="Prueba-Reu/my-footer.jsp" />
-    </body>
+        </main>
+        </body><br><br>
+    <jsp:include page="Prueba-Reu/my-footer.jsp" />
 </html>

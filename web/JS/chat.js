@@ -63,7 +63,7 @@ ChatWidget.prototype._latestMessages = function(){
 
 ChatWidget.prototype._displayMessage = function(message){
     
-    var m = '<li class="left clearfix"><span class="chat-img pull-left"><img src="https://th.bing.com/th/id/Rb5191f32201ffaa11c934ef5e8336aa6?rik=8jEQlkM7qd2a8A&pid=ImgRaw" width="30" height="30"/></span><div class="chat-body clear-fix"><div class="header"><strong class="primary-font">'+ message.name +'</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + message.created_at + '</small></div><p>'+ message.message +'</p></div></li>';
+    var m = '<li class="left clearfix"><span class="chat-img pull-left"><img src="https://th.bing.com/th/id/Rb5191f32201ffaa11c934ef5e8336aa6?rik=8jEQlkM7qd2a8A&pid=ImgRaw" width="30" height="30"/></span><div class="chat-body clear-fix"><div class="header2-chat"><strong class="primary-font">'+ message.name +'</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + message.created_at + '</small></div><p>'+ message.message +'</p></div></li>';
     this.messageContainer.prepend(m);//append si se visualizan en la parte de abajo
     
 };

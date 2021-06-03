@@ -60,7 +60,7 @@
             <div class="col-md-2">
             </div>
             <div class="col-md-8">
-                <center><h1>Ingrese un nuevo empleado en el sistema</h1></center>
+                <center><h1>Ingrese un nuevo empleado en el sistema</h1></center><hr>
                 <br>
                     <%
                         if (divisiones.size() <= 1) {

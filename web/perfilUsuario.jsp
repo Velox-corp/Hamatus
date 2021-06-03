@@ -45,7 +45,7 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="col-md-4"><img src="img/iniciar-sesion.png"></div>
+                                                    <div class="col-md-4"><img class="ht" src="img/persona.png"></div>
                                                     <br>
                                                 </td>
                                                 <td>
@@ -57,11 +57,13 @@
                                                     </ul>
                                                 </td>
                                             </tr>
+                                            
                                             <tr>
                                                 <td>
-                                                    <a class="btn btn-dark">Enviar mensaje</a>
+                                                   <a href="agregarSala?id_sala_tipo=1&&id_contacto=<%=user.getIDUsuarioE()%>" class="active text-primary">Enviar mensaje</a>
                                                 </td>
                                             </tr>
+                                            
                                         </table>
                                     </div>
                                 </div>

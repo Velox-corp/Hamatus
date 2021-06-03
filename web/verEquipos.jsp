@@ -1,8 +1,3 @@
-<%-- 
-    Document   : verEquipos
-    Created on : 8/12/2020, 01:41:46 AM
-    Author     : maste
---%>
 
 <%@page import="MDivisiones.clases.Division"%>
 <%@page import="MUsuarios.clases.Empresa"%>
@@ -129,7 +124,7 @@
                                         </a>
                                         </div>
                                         <div class='card-footer text-center'>
-                                            <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>' onclick="return confirmationEquipo()">
+                                            <a class='btn btn-danger btn-large text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>' onclick="return confirmationEquipo()">
                                                 Eliminar equipo
                                             </a>
                                         </div>
@@ -164,7 +159,7 @@
                                         </a>
                                         </div>
                                         <div class='card-footer text-center'>
-                                            <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>' onclick="return confirmationEquipo()">
+                                            <a class='btn btn-danger btn-large text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>' onclick="return confirmationEquipo()">
                                                 Eliminar equipo
                                             </a>
                                         </div>
@@ -200,7 +195,7 @@
                                             </a>
                                             </div>
                                             <div class='card-footer text-center'>
-                                                <a class='btn btn-info text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>' onclick="return confirmationEquipo()">
+                                                <a class='btn btn-danger btn-large text-center' href='eliminarEquipo?id=<%=eq.getIDEquipo()%>' onclick="return confirmationEquipo()">
                                                     Eliminar equipo
                                                 </a>
                                             </div>
@@ -214,9 +209,9 @@
                 if(equipos.size() % 3 != 0){ %>
                 </div>
             <% } %>
-            <br>
+            <hr>
             <%if(liderDiv.getiD_cat_priv() == 3){ %>
-                <a class='btn btn-primary ' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+            <a class='btn btn-dark btn-large' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a><br><br>
                 
             <%  }
              }else{
@@ -232,7 +227,7 @@
                             </article>
                         </div>
                         <div class='card-footer'>
-                            <a class='btn btn-dark capitalize' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
+                            <a class='btn btn-dark btn-large capitalize' href='Creacion_equipos.jsp'>¡Registrar un nuevo equipo!</a>
                         </div>
                     </div>
                 </div>

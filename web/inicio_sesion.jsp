@@ -82,7 +82,7 @@
       -->
         <div class="container cubridor d-flex justify-content-center align-items-center">
             <div>
-                <center><h1>Iniciar sesión</h1></center><br> 
+                <center><h1>Iniciar sesión</h1></center><hr><br> 
                 <div class="row d-flex justify-content-center">
                   <div class="col-sm-6">
                     <img align="right" src="img/iniciar-sesion.png">

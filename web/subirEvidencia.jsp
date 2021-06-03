@@ -42,17 +42,16 @@
                 response.sendRedirect("error.jsp");
             }
         %>
-        <div class="row text-center">
-            <h2 class="text-primary text-center col-md-12">Subir evidencía</h2>
-        </div>
-        <div class="row container align-items-center">
+    <center><h1>Subir evidencia</h1></center><br>
+        <main class="container" style="margin-right: 6rem">
+        <div>
             <div class="card col-md-10">
                 <div class='card-header text-center'>
                     Adjunte el archivo aquí
                 </div>
                     <form class="card-body form-group" action="subirEvidencia" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="file" class="form-label">Insertar evidencía <small>(El tamaño del archivo no debe superar los 15 MB)</small></label>
+                            <label for="file" class="form-label">Insertar evidencia <small>&nbsp;&nbsp;(El tamaño del archivo no debe superar los 15 MB)</small></label>
                             <input class="form-control-file" type="file" id="file" name="file" required>
                         </div>
                         <div class="mb-3">
@@ -67,11 +66,11 @@
                             <button type="submit" class="btn btn-dark">
                                 Subir Archivo
                             </button>
-                            <button  type='reset' class="btn btn-dark">Cancelar</button>
+                            <button  type='reset' class="btn btn-danger btn-large">Cancelar</button>
                         </div>
                     </form>
                 </div>
-        </div>
+        </div></main><br><br>
         <jsp:include page="Prueba-Reu/my-footer.jsp" />
     </body>
 </html>
