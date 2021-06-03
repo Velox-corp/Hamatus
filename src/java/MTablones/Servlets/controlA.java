@@ -63,7 +63,10 @@ public class controlA extends HttpServlet {
                 String mod_titulo = request.getParameter("mod_titulo");
                 String mod_descripcion = request.getParameter("mod_descripcion");
                 if (! Validaciones.esString(mod_titulo, true, true) || ! Validaciones.esString(mod_descripcion, true, true)){
-                    response.sendRedirect("editanuncio.jsp");
+                    anunciosID.clear();
+                    anunciosID=adao.listarId(idmod);
+                    request.setAttribute("anuncios", anunciosID);
+                    request.getRequestDispatcher("editanuncio.jsp").forward(request, response);
                     break;
                 }
                 Anuncio modanuncio= new Anuncio(mod_titulo,mod_descripcion,Fecha.hora(),divEdit);
