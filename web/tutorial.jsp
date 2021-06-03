@@ -71,16 +71,15 @@
                     </div>
                     <div class="col-md-12 card">
                         <div class="card-body">
-                            <H1>Tutorial</H1>
-                            <label>Por el momento no contamos con un tutorial sobre las funcionalidades del software</label>
+                            <H1>Tutorial</H1><hr>
+                            <label>
+                                <iframe src="https://drive.google.com/file/d/1pJeW3TMddNrirS7zjXAc2NdvdYTphTPt/preview" width="590" height="345"></iframe>
+                            </label>
                         </div>
                     </div>
                     <div class="col-md-3">
                     </div>
-                      </div>
-                    <%--
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/taWzoLpdxaI?autoplay=1&mute=1&loop=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    --%>
+                    </div>
                 </center>
             </div>
         </div>

@@ -105,7 +105,7 @@
           <div>
               <br>
     <div class="jumbotron">
-        <center><H1>Hamatus</H1></center>
+        <center><H1>Hamatus</H1></center><hr>
         <img align="left" src="img/Hamatus.png" style="width: 25%" >
         <h3>Problemática</h3>
         <h6>La falta de organización, control y comunicación de los archivos o documentación en general que se recibe y se genera en las empresas pequeñas.</h6><br>
@@ -114,7 +114,7 @@
     </div>
               <div class="jumbotron">
         <center>
-            <H1>Beneficios</H1>
+            <H1>Beneficios</H1><hr>
             <h6 align="justify">
                 Con Hamatus puedes administrar los documentos que se necesitan en tu empresa, así como la administración de los equipos dentro de esta misma a través de un sistema que permite: crear diferentes equipos de trabajo dentro de la empresa, compartir diferentes documentos necesarios con cierto nivel de accesibilidad (dependiendo del orden jerárquico dentro de la empresa y en los equipos) hasta que se comparte el documento, en cada equipo de trabajo se podrá poseer folios en donde se podrán guardar los documentos.
             </h6><br>
