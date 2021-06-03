@@ -45,7 +45,7 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="col-md-4"><img src="img/iniciar-sesion.png"></div>
+                                                    <div class="col-md-4"><img class="ht" src="img/persona.png"></div>
                                                     <br>
                                                 </td>
                                                 <td>

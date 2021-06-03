@@ -1,5 +1,3 @@
-
-
 <%@page import="MDistribucion.Clases.Equipo"%>
 <%@page import="MUsuarios.clases.Empresa"%>
 <%@page import="MChat.Clases.UsuarioSala"%>
@@ -7,10 +5,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="MUsuarios.clases.UsuarioEmpleado"%>
 <%@page language="java" pageEncoding="UTF-8" contentType="text/html" session = "true" %>
+
 <!DOCTYPE html>
-
-
-
 <html lang='es'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +17,7 @@
 
     </head>
     <body>
-        <jsp:include page="Prueba-Reu/my-head2.jsp" />
+        <jsp:include page="Prueba-Reu/my-head2.jsp"/>
         <center><h1>Chat</h1></center>
         <%  HttpSession sesionUser = request.getSession();
             HttpSession sesion;

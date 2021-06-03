@@ -48,7 +48,7 @@
             %>
             <div class="cubridor3 d-flex justify-content-center align-items-center">
                 <div class="container_6">
-                    <img alt="Bootstrap Image Preview" src="img/grupo.png" class="rounded-circle">
+                    <img alt="Bootstrap Image Preview" src="img/integrante.png">
                 </div>
                 <div>
                     <center>
